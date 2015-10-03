@@ -1,2 +1,2 @@
-# angular-voldb
-A volunteer database using angular and laravel
+# laravel-voldb
+A volunteer database using laravel
