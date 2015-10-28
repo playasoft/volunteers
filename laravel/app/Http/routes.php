@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('app');
+    return view('pages/home');
 });
+
+Route::get('/register', function () {
+    return view('pages/register');
+});
+

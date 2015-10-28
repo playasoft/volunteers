@@ -14,7 +14,7 @@
         @include('partials/header')
 
         <section class="content container-fluid">
-            Hi there!
+            @yield('content')
         </section>
     </body>
 </html>
