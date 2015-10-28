@@ -14,6 +14,12 @@
         @include('partials/header')
 
         <section class="content container-fluid">
+            @if(Session::has('success'))
+                <div class="general-alert alert alert-success" role="alert">
+                    <b>Success!</b> {{ Session::get('success') }}
+                </div>
+            @endif
+
             @yield('content')
         </section>
     </body>

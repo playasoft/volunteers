@@ -18,10 +18,14 @@ Route::get('/', function ()
 
 Route::get('/register', function ()
 {
-    return view('pages/register');
+    return view('pages/register')->with(Input::get());
 });
 
 Route::get('/login', function ()
 {
     return view('pages/login');
 });
+
+Route::get('/logout', 'UserController@logout');
+Route::post('/register', 'UserController@create');
+Route::post('/login', 'UserController@login');

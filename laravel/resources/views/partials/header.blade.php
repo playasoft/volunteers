@@ -11,10 +11,14 @@
                 <li><a href="#">Link</a></li>
             </ul>
             -->
-            
+
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                @if(Session::has('user'))
+                    <li><a href="/logout">Logout</a></li>
+                @else
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                @endif
             </ul>
         </div>
     </div>

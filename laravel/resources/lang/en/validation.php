@@ -87,10 +87,12 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+    'custom' =>
+    [
+        'password' =>
+        [
+            'hashed' => "Invalid password entered"
+        ]
     ],
 
     /*
