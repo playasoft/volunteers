@@ -11,11 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('pages/home');
 });
 
-Route::get('/register', function () {
+Route::get('/register', function ()
+{
     return view('pages/register');
 });
 
+Route::get('/login', function ()
+{
+    return view('pages/login');
+});
