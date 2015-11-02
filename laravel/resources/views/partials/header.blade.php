@@ -13,7 +13,7 @@
             -->
 
             <ul class="nav navbar-nav navbar-right">
-                @if(Session::has('user'))
+                @if(Auth::check())
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login</a></li>
