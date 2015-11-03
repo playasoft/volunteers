@@ -13,7 +13,14 @@
 
 Route::get('/', function ()
 {
-    return view('pages/home');
+    if(Auth::check())
+    {
+        return view('pages/dashboard');
+    }
+    else
+    {
+        return view('pages/home');
+    }
 });
 
 Route::get('/register', function ()
