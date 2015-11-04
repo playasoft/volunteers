@@ -45,15 +45,18 @@ class UserController extends Controller
     // Log a user in
     public function login(UserRequest $request)
     {
-    //    $user = User::where('name', $request->get('name'))->get()[0];
+        $credentials = array
+        (
+            'name' => $request->get('name'),
+            'password' => $request->get('password')
+        );
 
-        if ($this->auth->attempt(['name' => $request->get('name'), 'password' => $request->get('password')])) {
-            // The user is being remembered...
+        if($this->auth->attempt($credentials))
+        {
+            $request->session()->flash('success', 'You are now logged in!');
         }
 
-        
-        $request->session()->flash('success', 'You are now logged in!');
-        return redirect('/');
+       return redirect('/');
     }
 
     // Log a user out
