@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('content')
-    <h1>This is the dashboard!</h1>
+    <h1>Welcome to the {{ ucfirst(Auth::user()->role) }} Dashboard!</h1>
 
-    <p>You are a [type of user]</p>
-
-    <a href="/events" class="btn btn-primary">Create an Event</a>
+    @can('create-events')
+        <a href="/events" class="btn btn-primary">Create an Event</a>
+    @endcan
 
     <h2>[List of upcoming events]</h2>
 
@@ -13,5 +13,7 @@
 
     <h2>[List of past events]</h2>
 
-    <a href="/events" class="btn btn-primary">Create an Event</a>
+    @can('create-events')
+        <a href="/events" class="btn btn-primary">Create an Event</a>
+    @endcan
 @endsection
