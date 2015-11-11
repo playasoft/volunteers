@@ -19,11 +19,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('hashed', function($attribute, $value, $parameters)
         {
-            $user = User::where('name', Input::get('name'))->get()[0];
-            
-            if(Hash::check($value, $user->password))
+            $user = User::where('name', Input::get('name'))->get();
+
+            if($user->count())
             {
-                return true;
+                $user = $user[0];
+                
+                if(Hash::check($value, $user->password))
+                {
+                    return true;
+                }
             }
             
             return false;

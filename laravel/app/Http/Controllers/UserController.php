@@ -30,12 +30,13 @@ class UserController extends Controller
     // Create a new user
     public function create(UserRequest $request)
     {
+        // Create user based on post input
         $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
 
-        $user = new User;
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = bcrypt($input['password']);
+        // Assign to volunteer role by default
+        $user->role = 'volunteer';        
         $user->save();
 
         $request->session()->flash('success', 'Your account has been registered, you may now log in.');
