@@ -4,16 +4,21 @@
             <a class="navbar-brand" href="/">VolunteerDB</a>
         </div>
 
-        <div class="collapse navbar-collapse">
-            <!-- 
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
-            -->
+        <div class="collapse navbar-collapse"> 
+            @if(Auth::check())
+                <ul class="nav navbar-nav">
+                    @if(Auth::user()->role == 'admin')
+                        <li><a href="/event">New Event</a></li>
+                        <li><a href="/profile/list">View Users</a></li>
+                    @endif;
 
+                    <li><a href="/profile/events">Your Events</a></li>
+                </ul>
+            @endif
+            
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())
+                    <li><a href="/profile">{{ Auth::user()->name }}</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login</a></li>

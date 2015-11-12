@@ -28,7 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         'auth' =>
         [
             'take-shift',
-            'release-shift'
+            'release-shift',
+            'view-self'
         ],
         
         'admin' =>
