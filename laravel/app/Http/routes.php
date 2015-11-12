@@ -11,32 +11,13 @@
 |
 */
 
-Route::get('/', function ()
-{
-    if(Auth::check())
-    {
-        return view('pages/dashboard');
-    }
-    else
-    {
-        return view('pages/home');
-    }
-});
+Route::get('/', 'PageController@home');
 
-Route::get('/register', function ()
-{
-    return view('pages/register')->with(Input::get());
-});
-
-Route::post('/register', 'UserController@create');
-
-Route::get('/login', function ()
-{
-    return view('pages/login');
-});
-
-Route::post('/login', 'UserController@login');
+Route::get('/register', 'PageController@view');
+Route::get('/login', 'PageController@view');
 Route::get('/logout', 'UserController@logout');
 
+Route::post('/register', 'UserController@create');
+Route::post('/login', 'UserController@login');
 
 Route::get('/event', 'EventController@get');

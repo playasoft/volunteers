@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 // Laravel
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
@@ -14,19 +13,6 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    /**
-     * The Guard implementation.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     */
-
-    protected $auth;
-
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-    
     // Create a new user
     public function create(UserRequest $request)
     {
@@ -43,7 +29,7 @@ class UserController extends Controller
         return redirect('/login');
     }
 
-    // Log a user in
+    // Handle a user logging in
     public function login(UserRequest $request)
     {
         $credentials = array
