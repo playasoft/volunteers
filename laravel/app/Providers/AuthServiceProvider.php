@@ -33,14 +33,14 @@ class AuthServiceProvider extends ServiceProvider
         
         'admin' =>
         [
-            'create-events',
-            'edit-events',
-            'create-departments',
-            'edit-departments',
-            'create-shifts',
-            'edit-shifts',
-            'view-users',
-            'edit-users'
+            'create-event',
+            'edit-event',
+            'create-department',
+            'edit-department',
+            'create-shift',
+            'edit-shift',
+            'view-user',
+            'edit-user'
         ],
 
         'volunteer' =>
@@ -50,8 +50,8 @@ class AuthServiceProvider extends ServiceProvider
 
         'veteran' =>
         [
-            'create-shifts',
-            'edit-shifts',
+            'create-shift',
+            'edit-shift',
             'take-veteran-shift',
         ],
 
