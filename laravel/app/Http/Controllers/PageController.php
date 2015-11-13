@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 
 class PageController extends Controller
 {
@@ -14,7 +15,12 @@ class PageController extends Controller
     {
         if($this->auth->check())
         {
-            return view('pages/dashboard');
+            $events = new Event();
+            $future = $events->future();
+            $present = $events->present();
+            $past = $events->past();
+
+            return view('pages/dashboard', compact('future', 'present', 'past'));
         }
         else
         {

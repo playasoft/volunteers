@@ -11,11 +11,47 @@
         <a href="/event" class="btn btn-primary">Create an Event</a>
     @endcan
 
-    <h2>[List of upcoming events]</h2>
+    @if(count($present))
+        <h2>Ongoing Events</h2>
+        <hr>
 
-    <hr>
+        @foreach($present as $event)
+            <p>
+                <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
+                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+            </p>
+        @endforeach
 
-    <h2>[List of past events]</h2>
+        <br>
+    @endif
+
+    @if(count($future))
+        <h2>Upcoming Events</h2>
+        <hr>
+
+        @foreach($future as $event)
+            <p>
+                <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
+                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+            </p>
+        @endforeach
+
+        <br>
+    @endif
+
+    @if(count($past))
+        <h2>Past Events</h2>
+        <hr>
+
+        @foreach($past as $event)
+            <p>
+                <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
+                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+            </p>
+        @endforeach
+
+        <br>
+    @endif
 
     @can('create-event')
         <a href="/event" class="btn btn-primary">Create an Event</a>
