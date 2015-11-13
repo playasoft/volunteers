@@ -5,3 +5,8 @@ section.content {
 .jumbotron, .general-alert {
     margin-top: 1em;
 }
+
+.btn-file input[type=file] {
+    outline: none;
+    cursor: inherit;
+}

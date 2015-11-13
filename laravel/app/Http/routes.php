@@ -11,8 +11,10 @@
 |
 */
 
+// Home page
 Route::get('/', 'PageController@home');
 
+// User authentication routes
 Route::get('/register', 'PageController@view');
 Route::get('/login', 'PageController@view');
 Route::get('/logout', 'UserController@logout');
@@ -20,4 +22,6 @@ Route::get('/logout', 'UserController@logout');
 Route::post('/register', 'UserController@create');
 Route::post('/login', 'UserController@login');
 
+// Event routes
 Route::get('/event', 'EventController@get');
+Route::post('/event', 'EventController@create');
