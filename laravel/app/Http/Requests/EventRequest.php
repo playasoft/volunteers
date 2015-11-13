@@ -27,8 +27,8 @@ class EventRequest extends Request
         return
         [
             'name' => 'required',
-            'start_date' => 'required|min:10|max:10',
-            'end_date' => 'required|min:10|max:10'
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d'
         ];
     }
 }
