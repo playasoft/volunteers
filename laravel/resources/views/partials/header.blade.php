@@ -10,7 +10,7 @@
                     @if(Auth::user()->role == 'admin')
                         <li><a href="/event">New Event</a></li>
                         <li><a href="/profile/list">View Users</a></li>
-                    @endif;
+                    @endif
 
                     <li><a href="/profile/events">Your Events</a></li>
                 </ul>

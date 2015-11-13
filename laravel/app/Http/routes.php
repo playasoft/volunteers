@@ -23,5 +23,6 @@ Route::post('/register', 'UserController@create');
 Route::post('/login', 'UserController@login');
 
 // Event routes
-Route::get('/event', 'EventController@get');
+Route::get('/event', 'EventController@createForm');
 Route::post('/event', 'EventController@create');
+Route::get('/event/{id}', 'EventController@view');

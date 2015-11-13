@@ -7,3 +7,7 @@ section.content {
 .btn-file input[type=file] {
   outline: none;
   cursor: inherit; }
+
+.event img {
+  max-width: 400px;
+  max-height: 400px; }

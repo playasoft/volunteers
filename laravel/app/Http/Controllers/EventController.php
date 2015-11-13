@@ -12,10 +12,10 @@ use App\Models\Event;
 class EventController extends Controller
 {
     // Display event creation page
-    public function get(Request $request)
+    public function createForm(Request $request)
     {
         $this->authorize('create-event');
-        return view('pages/event');
+        return view('pages/event/create');
     }
 
     // Create a new event
@@ -46,5 +46,12 @@ class EventController extends Controller
 
         $request->session()->flash('success', 'Your event has been created.');
         return redirect('/event/' . $event->id);
+    }
+
+    // View an existing event
+    public function view(Request $request, $id)
+    {
+        $event = Event::find($id);
+        return view('pages/event/view', compact('event'));
     }
 }

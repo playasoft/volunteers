@@ -36,10 +36,13 @@ class AuthServiceProvider extends ServiceProvider
         [
             'create-event',
             'edit-event',
+            'delete-event',
             'create-department',
             'edit-department',
+            'delete-department',
             'create-shift',
             'edit-shift',
+            'delete-shift',
             'view-user',
             'edit-user'
         ],
@@ -53,6 +56,7 @@ class AuthServiceProvider extends ServiceProvider
         [
             'create-shift',
             'edit-shift',
+            'delete-shift',
             'take-veteran-shift',
         ],
 
