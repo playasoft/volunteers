@@ -17,16 +17,20 @@ class Event extends Model
     // Helper functions to select events by date
     public function future()
     {
-        return $this->where('start_date', '>', Carbon::now())->get();
+        return $this->where('start_date', '>', Carbon::now())
+                    ->orderBy('start_date', 'desc')->get();
     }
 
     public function present()
     {
-        return $this->where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->get();
+        return $this->where('start_date', '<', Carbon::now())
+                    ->where('end_date', '>', Carbon::now())
+                    ->orderBy('start_date', 'desc')->get();
     }
 
     public function past()
     {
-        return $this->where('end_date', '<', Carbon::now())->get();
+        return $this->where('end_date', '<', Carbon::now())
+                    ->orderBy('start_date', 'desc')->get();
     }
 }

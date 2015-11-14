@@ -15,7 +15,9 @@
         <h1>Viewing Event: {{ $event->name }}</h1>
         <hr>
 
-        <img class="pull-right" src="/img/upload/{{ $event->image }}">
+        @if($event->image)
+            <img class="pull-right" src="/img/upload/{{ $event->image }}">
+        @endif
 
         <div>
             <label>Start Date</label>
