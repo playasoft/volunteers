@@ -22,6 +22,7 @@ Route::get('/logout', 'UserController@logout');
 Route::post('/register', 'UserController@create');
 Route::post('/login', 'UserController@login');
 
+
 // Event routes
 Route::get('/event', 'EventController@createForm');
 Route::post('/event', 'EventController@create');
@@ -33,3 +34,14 @@ Route::get('/event/{event}/delete', 'EventController@deleteForm');
 Route::post('/event/{event}/delete', 'EventController@delete');
 
 Route::get('/event/{event}', 'EventController@view');
+
+
+// Department routes
+Route::get('/event/{event}/department', 'DepartmentController@createForm');
+Route::post('/department', 'DepartmentController@create');
+
+Route::get('/department/{department}/edit', 'DepartmentController@editForm');
+Route::post('/department/{department}/edit', 'DepartmentController@edit');
+
+Route::get('/department/{department}/delete', 'DepartmentController@deleteForm');
+Route::post('/department/{department}/delete', 'DepartmentController@delete');
