@@ -20,9 +20,9 @@
  - [x] Dates
 
 - Departments
- - [ ] Department name
- - [ ] Description
- - [ ] Allowed user groups
+ - [-] Department name
+ - [-] Description
+ - [-] Allowed user groups
  
 - Shifts
  - [ ] Start
@@ -34,18 +34,35 @@
 ## Pages
 - [ ] Viewing your own profile
 - [ ] Editing your own profile
-- [ ] Viewing list of events you've signed up for
+- [ ] Viewing list of shifts you've signed up for
 - [ ] Admin list of profiles
 - [ ] Admin editing other profiles
-- [ ] Admin edit event
-- [ ] Admin delete event
-- [ ] Create department
-- [ ] Edit department
+- [-] Admin edit event
+- [-] Admin delete event
+- [-] Create department
+- [-] Edit department
 - [ ] Create shift
 - [ ] Edit shift
 
 
+## Event Triggers
+- [ ] User Registered
+- [ ] Event Created
+- [ ] Event Edited
+- [ ] Event Deleted
+- [ ] Department Created
+- [ ] Shift Created
+- [ ] Shift taken
+
+
+## Event Handlers
+- [ ] Send user email when user is registered
+- [ ] Send admin email when user is registered
+- [ ] Notify users on an event page when the event is changed
+- [ ] Automatically display taken shifts
+
+
 ## Misc
-- [ ] Prevent non-authed users from viewing events
-- [ ] Table to display departments / shifts by day
+- [x] Prevent non-authed users from viewing events
+- [-] Table to display departments / shifts by day
 - [ ] Javascript to sign up for shifts

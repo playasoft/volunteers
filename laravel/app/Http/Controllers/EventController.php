@@ -11,19 +11,16 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-    // Display event creation page
-    public function createForm(Request $request)
+    public function __construct()
     {
-        $this->authorize('create-event');
-        return view('pages/event/create');
+        $this->middleware('auth');
     }
-
-    // Create a new event
-    public function create(EventRequest $request)
+    
+    // Private function to manage file uploads
+    private function handleUpload($request)
     {
-        $input = $request->all();
-        $event = Event::create($input);
-
+        $fileName = false;
+        
         // Save event image with a unique name
         if($request->hasFile('image'))
         {
@@ -38,10 +35,34 @@ class EventController extends Controller
             $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
 
             // Move file to uploads directory
-            $event->image = time() . '-' . $fileName;
-            $request->file('image')->move(public_path() . '/img/upload', $event->image);
+            $fileName = time() . '-' . $fileName;
+            $request->file('image')->move(public_path() . '/img/upload', $fileName);
         }
 
+        return $fileName;
+    }
+
+    // Display event creation page
+    public function createForm(Request $request)
+    {
+        $this->authorize('create-event');
+        return view('pages/event/create');
+    }
+
+    // Create a new event
+    public function create(EventRequest $request)
+    {
+        $this->authorize('create-event');
+
+        $input = $request->all();
+        $event = Event::create($input);
+
+        // Save event image if a file was uploaded
+        if($request->hasFile('image'))
+        {
+            $event->image = $this->handleUpload($request);
+        }
+        
         $event->save();
 
         $request->session()->flash('success', 'Your event has been created.');
@@ -49,9 +70,50 @@ class EventController extends Controller
     }
 
     // View an existing event
-    public function view(Request $request, $id)
+    public function view(Request $request, Event $event)
     {
-        $event = Event::find($id);
         return view('pages/event/view', compact('event'));
+    }
+
+    // View form to edit an existing event
+    public function editForm(Request $request, Event $event)
+    {
+        $this->authorize('edit-event');
+        return view('pages/event/edit', compact('event'));
+    }
+
+    // Save edits to an existing event
+    public function edit(EventRequest $request, Event $event)
+    {
+        $this->authorize('edit-event');
+        $input = $request->all();
+        $event->update($input);
+
+        if($request->hasFile('image'))
+        {
+            $event->image = $this->handleUpload($request);
+        }
+
+        $event->save();
+
+        $request->session()->flash('success', 'Event has been updated.');
+        return redirect('/event/' . $event->id);
+    }
+
+    // View confirmation page before deleting an event
+    public function deleteForm(Request $request, Event $event)
+    {
+        $this->authorize('delete-event');
+        return view('pages/event/delete', compact('event'));
+    }
+
+    // Delete an event
+    public function delete(Request $request, Event $event)
+    {
+        $this->authorize('delete-event');
+        $event->delete();
+
+        $request->session()->flash('success', 'Event has been deleted.');
+        return redirect('/');
     }
 }

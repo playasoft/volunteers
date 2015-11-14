@@ -31,7 +31,7 @@
         
         @if($event->description)
             <label>Description</label>
-            <p>{{ $event->description }}</p>
+            <p>{!! nl2br(e($event->description)) !!}</p>
         @endif
 
         @can('create-department')
