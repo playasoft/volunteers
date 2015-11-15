@@ -18,7 +18,6 @@
         @if($event->image)
             <img class="pull-right" src="/img/upload/{{ $event->image }}">
         @endif
-
         <div>
             <label>Start Date</label>
             {{ $event->start_date->format('Y-m-d') }}
@@ -37,5 +36,11 @@
         @can('create-department')
             <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
         @endcan
+
+        <div>
+            @foreach($event->departments as $department)
+                <a href='/department/{{ $department->id }}/edit'>{{ $department->name }}</a><br>
+            @endforeach
+        </div>
     </section>
 @endsection

@@ -14,7 +14,7 @@ class Event extends Model
     
     public function getDates()
     {
-        return array('created_at', 'updated_at', 'deleted_at', 'start_date', 'end_date', 'deleted_at');
+        return array('created_at', 'updated_at', 'deleted_at', 'start_date', 'end_date');
     }
 
     // Helper functions to select events by date
@@ -35,5 +35,11 @@ class Event extends Model
     {
         return $this->where('end_date', '<', Carbon::now())
                     ->orderBy('start_date', 'desc')->get();
+    }
+
+    // Events have departments, which in turn have shifts
+    public function departments()
+    {
+        return $this->hasMany('App\Models\Department');
     }
 }

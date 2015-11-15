@@ -1,15 +1,23 @@
 @extends('app')
 
 @section('content')
-    <h1>Editing Department: {{ $department->name }}</h1>
+    <div class="header-buttons pull-right">
+        @can('delete-department')
+            <a href="/department/{{ $department->id }}/delete" class="btn btn-danger">Delete Department</a>
+        @endcan
+    </div>
+
+    <h1>Editing Department for: {{ $department->event->name }}</h1>
     <hr>
 
     {!! Form::open() !!}
-        @include('partials/form/input', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name"])
-        @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department'])
-        @include('partials/roles');
+        <input type="hidden" name="event_id" value="{{ $department->event->id }}">
+    
+        @include('partials/form/input', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name", 'value' => $department->name])
+        @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department', 'value' => $department->description])
+        @include('partials/roles', ['roles' => json_decode($department->roles)])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
-        <a href="/department/{{ $department->id }}" class="btn btn-primary">Cancel</a>
+        <a href="/event/{{ $department->event->id }}" class="btn btn-primary">Cancel</a>
     {!! Form::close() !!}
 @endsection

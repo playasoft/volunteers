@@ -39,9 +39,9 @@
 - [ ] Admin editing other profiles
 - [x] Admin edit event
 - [x] Admin delete event
-- [-] Create department
-- [-] Edit department
-- [-] Delete department
+- [x] Create department
+- [x] Edit department
+- [x] Delete department
 - [ ] Create shift
 - [ ] Edit shift
 - [ ] Delete shift

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Http\Requests\DepartmentRequest;
+use App\Models\Department;
 use App\Models\Event;
 
 class DepartmentController extends Controller
@@ -25,15 +28,15 @@ class DepartmentController extends Controller
     public function create(DepartmentRequest $request)
     {
         $this->authorize('create-department');
-        return "Todo";
-/*
         $input = $request->all();
+
+        // Convert roles into JSON
+        $input['roles'] = json_encode($input['roles']);
+
         $department = Department::create($input);
-        $department->save();
 
         $request->session()->flash('success', 'Your department has been created.');
-        return redirect('/department/' . $department->id);
-*/
+        return redirect('/event/' . $department->event->id);
     }
 
     // View form to edit an existing department
@@ -47,16 +50,15 @@ class DepartmentController extends Controller
     public function edit(DepartmentRequest $request, Department $department)
     {
         $this->authorize('edit-department');
-        return "Todo";
-        
-/*
         $input = $request->all();
+
+        // Convert roles into JSON
+        $input['roles'] = json_encode($input['roles']);
+
         $department->update($input);
-        $department->save();
 
         $request->session()->flash('success', 'Department has been updated.');
-        return redirect('/department/' . $department->id);
-*/
+        return redirect('/event/' . $department->event->id);
     }
 
     // View confirmation page before deleting an department
@@ -70,13 +72,10 @@ class DepartmentController extends Controller
     public function delete(Request $request, Department $department)
     {
         $this->authorize('delete-department');
-        return "Todo";
-
-/*
+        $event = $department->event;
         $department->delete();
 
         $request->session()->flash('success', 'Department has been deleted.');
-        return redirect('/');
-*/
+        return redirect('/event/' . $event->id);
     }
 }

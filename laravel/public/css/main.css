@@ -8,6 +8,9 @@ section.content {
   outline: none;
   cursor: inherit; }
 
+.header-buttons {
+  margin-top: 1.4em; }
+
 .event img {
   max-width: 400px;
   max-height: 400px; }

@@ -5,11 +5,11 @@
     <hr>
     
     {!! Form::open(['url' => '/department']) !!}
-        <input type="hidden" name="event" value="{{ $event->id }}">
+        <input type="hidden" name="event_id" value="{{ $event->id }}">
         
         @include('partials/form/input', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name"])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department'])
-        @include('partials/roles');
+        @include('partials/roles')
 
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}
