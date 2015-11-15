@@ -14,3 +14,7 @@ section.content {
 .event img {
   max-width: 400px;
   max-height: 400px; }
+
+.days .heading {
+  width: 100%;
+  text-align: center; }

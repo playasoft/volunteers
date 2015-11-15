@@ -37,9 +37,29 @@
             <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
         @endcan
 
-        <div>
-            @foreach($event->departments as $department)
-                <a href='/department/{{ $department->id }}/edit'>{{ $department->name }}</a><br>
+        <div class="clearfix"></div>
+
+        <h2>Sign up for a shift!</h2>
+        <hr>
+
+        <div class="days">
+            @foreach($event->days() as $day)
+                <div class="day">
+                    <div class="heading">
+                        <h3>{{ $day->name }}</h3>
+                        <i>{{ $day->date->format('Y-m-d') }}</i>
+                    </div>
+
+                    <div class="shifts">
+                        @foreach($event->departments as $department)
+                            @can('edit-department')
+                                <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
+                            @else
+                                <b>{{ $department->name }}</b><br>
+                            @endcan
+                        @endforeach
+                    </div>
+                </div>
             @endforeach
         </div>
     </section>
