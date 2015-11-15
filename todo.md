@@ -45,6 +45,7 @@
 - [ ] Create shift
 - [ ] Edit shift
 - [ ] Delete shift
+- [ ] About page
 
 
 ## Event Triggers
@@ -71,7 +72,7 @@
 ## Misc
 - [x] Prevent non-authed users from viewing events
 - [-] Table to display departments by day
-- [-] Relationship between events and departments
+- [x] Relationship between events and departments
 - [ ] Relationship between departments and shifts
 - [ ] Relationship between shifts and users
 - [ ] Include shifts / hours in event table

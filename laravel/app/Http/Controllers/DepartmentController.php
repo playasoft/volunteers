@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 
 class DepartmentController extends Controller
 {
@@ -14,10 +15,10 @@ class DepartmentController extends Controller
     }
 
     // Display department creation page
-    public function createForm(Request $request)
+    public function createForm(Request $request, Event $event)
     {
         $this->authorize('create-department');
-        return view('pages/department/create');
+        return view('pages/department/create', compact('event'));
     }
 
     // Create a new department
