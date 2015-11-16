@@ -21,8 +21,17 @@ class UserController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        // Assign to volunteer role by default
-        $user->role = 'volunteer';        
+        // Is this the first user?
+        if($user->id == 1)
+        {
+            $user->role = 'admin';
+        }
+        else
+        {
+            // Otherwise assign to volunteer role by default
+            $user->role = 'volunteer';
+        }
+
         $user->save();
 
         $request->session()->flash('success', 'Your account has been registered, you may now log in.');
