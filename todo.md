@@ -20,16 +20,22 @@
  - [x] Dates
 
 - Departments
+ - [x] Event
  - [x] Department name
  - [x] Description
  - [x] Allowed user groups
  
 - Shifts
+ - [x] Department
  - [x] Start
  - [x] End
  - [x] Duration
  - [x] Allowed user groups
 
+- Slots
+ - [ ] Shift
+ - [ ] Start
+ - [ ] User
 
 ## Pages
 - [ ] Viewing your own profile
@@ -58,15 +64,15 @@
 - [ ] Shift Created
 - [ ] Shift Deleted
 - [ ] Shift Edited
-- [ ] Shift Taken
-- [ ] Shift Released
+- [ ] Slot Taken
+- [ ] Slot Released
 
 
 ## Event Handlers
 - [ ] Send user email when user is registered
 - [ ] Send admin email when user is registered
 - [ ] Notify users on an event page when the event is changed
-- [ ] Automatically display taken shifts
+- [ ] Automatically display taken slots
 
 
 ## Misc
@@ -76,8 +82,9 @@
 - [-] Relationship between departments and shifts
 - [ ] Relationship between shifts and users
 - [ ] Include shifts / hours in event table
-- [ ] Javascript to sign up for shifts
+- [ ] Javascript to sign up for slots
 - [ ] Footer
 - [ ] Look into simplifying shift -> event relationships 
 - [ ] Restrict editing event IDs when editing departments
-- [ ] Restrict editing department IDs when editing shifts 
+- [ ] Restrict editing department IDs when editing shifts
+- [ ] Set up inheritance for form field partials

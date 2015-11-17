@@ -46,5 +46,7 @@ elseif(!isset($roles))
       
     @if($errors->has('roles'))
         <span class="help-block">{{ $errors->first('roles') }}</span>
+    @elseif(isset($help))
+        <span class="help-block">{{ $help }}</span>
     @endif
 </div>

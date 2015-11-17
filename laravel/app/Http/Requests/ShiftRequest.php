@@ -25,7 +25,11 @@ class ShiftRequest extends Request
     {
         return
         [
-            //
+            'department_id' => 'required|integer',
+            'name' => 'required',
+            'start' => 'required|date_format:h:i a',
+            'end' => 'required|date_format:h:i a',
+            'duration' => 'required|date_format:h:i',
         ];
     }
 }
