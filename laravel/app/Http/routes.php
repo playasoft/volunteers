@@ -45,3 +45,14 @@ Route::post('/department/{department}/edit', 'DepartmentController@edit');
 
 Route::get('/department/{department}/delete', 'DepartmentController@deleteForm');
 Route::post('/department/{department}/delete', 'DepartmentController@delete');
+
+
+// Shift routes
+Route::get('/event/{event}/shift', 'ShiftController@createForm');
+Route::post('/shift', 'ShiftController@create');
+
+Route::get('/shift/{shift}/edit', 'ShiftController@editForm');
+Route::post('/shift/{shift}/edit', 'ShiftController@edit');
+
+Route::get('/shift/{shift}/delete', 'ShiftController@deleteForm');
+Route::post('/shift/{shift}/delete', 'ShiftController@delete');

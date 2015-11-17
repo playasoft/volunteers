@@ -78,3 +78,6 @@
 - [ ] Include shifts / hours in event table
 - [ ] Javascript to sign up for shifts
 - [ ] Footer
+- [ ] Look into simplifying shift -> event relationships 
+- [ ] Restrict editing event IDs when editing departments
+- [ ] Restrict editing department IDs when editing shifts 

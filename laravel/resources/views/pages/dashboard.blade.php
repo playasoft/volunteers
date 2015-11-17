@@ -52,8 +52,4 @@
 
         <br>
     @endif
-
-    @can('create-event')
-        <a href="/event" class="btn btn-primary">Create an Event</a>
-    @endcan
 @endsection

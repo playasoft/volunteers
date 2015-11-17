@@ -37,6 +37,10 @@
             <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
         @endcan
 
+        @can('create-shift')
+            <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
+        @endcan
+
         <div class="clearfix"></div>
 
         <h2>Sign up for a shift!</h2>

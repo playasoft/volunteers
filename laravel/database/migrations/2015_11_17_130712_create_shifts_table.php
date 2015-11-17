@@ -17,6 +17,7 @@ class CreateShiftsTable extends Migration
             $table->increments('id');
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->string('name');
             $table->time('start');
             $table->time('end');
             $table->time('duration');
