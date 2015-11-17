@@ -28,6 +28,7 @@ class EventRequest extends Request
         return
         [
             'name' => 'required',
+            'photo' => 'mimes:jpeg,gif,png',
             'start_date' => 'required|date_format:Y-m-d',
             'end_date' => 'required|date_format:Y-m-d'
         ];

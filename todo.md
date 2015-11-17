@@ -25,10 +25,10 @@
  - [x] Allowed user groups
  
 - Shifts
- - [ ] Start
- - [ ] End
- - [ ] Duration
- - [ ] Allowed user groups
+ - [x] Start
+ - [x] End
+ - [x] Duration
+ - [x] Allowed user groups
 
 
 ## Pages
@@ -42,9 +42,9 @@
 - [x] Create department
 - [x] Edit department
 - [x] Delete department
-- [ ] Create shift
-- [ ] Edit shift
-- [ ] Delete shift
+- [-] Create shift
+- [-] Edit shift
+- [-] Delete shift
 - [ ] About page
 
 
@@ -73,7 +73,7 @@
 - [x] Prevent non-authed users from viewing events
 - [x] Table to display departments by day
 - [x] Relationship between events and departments
-- [ ] Relationship between departments and shifts
+- [-] Relationship between departments and shifts
 - [ ] Relationship between shifts and users
 - [ ] Include shifts / hours in event table
 - [ ] Javascript to sign up for shifts
