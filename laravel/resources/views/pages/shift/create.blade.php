@@ -33,7 +33,7 @@
             </div>
         @endif
         
-        @include('partials/form/input', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift"])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift"])
         @include('partials/form/time', ['name' => 'start', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts"])
         @include('partials/form/time', ['name' => 'end', 'label' => 'End Time', 'help' => "The time of day when the last shift ends"])
         @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift"])

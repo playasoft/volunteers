@@ -13,7 +13,7 @@
     {!! Form::open() !!}
         <input type="hidden" name="department_id" value="{{ $shift->department->id }}">
     
-        @include('partials/form/input', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "General department name", 'value' => $department->name])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "General department name", 'value' => $department->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department', 'value' => $department->description])
         @include('partials/roles', ['roles' => json_decode($department->roles)])
 

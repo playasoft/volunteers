@@ -87,4 +87,4 @@
 - [ ] Look into simplifying shift -> event relationships 
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Restrict editing department IDs when editing shifts
-- [ ] Set up inheritance for form field partials
+- [x] Set up inheritance for form field partials

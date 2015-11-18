@@ -5,7 +5,7 @@
     <hr>
     
     {!! Form::open(['files' => true]) !!}
-        @include('partials/form/input', ['name' => 'name', 'label' => 'Event Name', 'placeholder' => "What's it called?", 'value' => $event->name])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Event Name', 'placeholder' => "What's it called?", 'value' => $event->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'Tell me as much as you want', 'value' => $event->description])
         @include('partials/form/file', ['name' => 'image', 'label' => 'Promotional Image / Logo', 'value' => $event->image])
         @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'value' => $event->start_date->format('Y-m-d')])

@@ -1,10 +1,10 @@
 @extends('partials/form/_bootstrap')
 
 @section('html')
-    <input type="time"
+    <input type="text"
             class="form-control"
             name="{{ $name }}"
             id="{{ $name }}-field"
-            placeholder="{{ $placeholder or 'hh:mm' }}"
+            placeholder="{{ $placeholder or '' }}"
             value="{{ $value or '' }}">
 @overwrite

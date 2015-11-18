@@ -5,7 +5,7 @@
     <hr>
 
     {!! Form::open() !!}
-        @include('partials/form/input', ['name' => 'name', 'label' => 'Username', 'placeholder' => 'Your login name'])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Username', 'placeholder' => 'Your login name'])
         @include('partials/form/password', ['name' => 'password', 'label' => 'Password', 'placeholder' => 'Your password'])
  
         <button type="submit" class="btn btn-primary">Submit</button>
