@@ -25,7 +25,7 @@ class DepartmentRequest extends Request
     {
         return
         [
-            'event_id' => 'required|integer',
+            'event_id' => 'required|integer|exists:event,id',
             'name' => 'required',
             'roles' => 'required',
         ];

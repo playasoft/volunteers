@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\ShiftRequest;
 use App\Models\Shift;
+use App\Models\Department;
 use App\Models\Event;
 
 class ShiftController extends Controller
@@ -28,19 +29,23 @@ class ShiftController extends Controller
     public function create(ShiftRequest $request)
     {
         $this->authorize('create-shift');
-        return 'todo';
-
-/*
         $input = $request->all();
+        $department = Department::find($input['department_id']);
 
         // Convert roles into JSON
         $input['roles'] = json_encode($input['roles']);
 
+        // Check if the current roles match the department roles
+        if(json_encode($input['roles']) == $department->roles)
+        {
+            // Unset the roles, use department as default instead
+            unset($input['roles']);
+        }
+
         $shift = Shift::create($input);
 
         $request->session()->flash('success', 'Your shift has been created.');
-        return redirect('/event/' . $shift->event->id);
-*/
+        return redirect('/event/' . $department->event->id);
     }
 
     // View form to edit an existing shift

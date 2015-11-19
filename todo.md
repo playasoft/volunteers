@@ -37,6 +37,7 @@
  - [ ] Start
  - [ ] User
 
+
 ## Pages
 - [ ] Viewing your own profile
 - [ ] Editing your own profile
@@ -48,10 +49,25 @@
 - [x] Create department
 - [x] Edit department
 - [x] Delete department
-- [-] Create shift
+- [x] Create shift
 - [-] Edit shift
 - [-] Delete shift
 - [ ] About page
+
+
+## Shift Availability Table
+- [x] Table to display departments by day
+- [ ] Automatically create slots when a shift is created / edited
+- [ ] Create custom validation rule for time fields (12 hour + 24 hour)
+- [ ] Include shifts / hours in event table
+- [ ] Javascript to sign up for slots
+
+
+## Relationships
+- [x] Relationship between events and departments
+- [x] Relationship between departments and shifts
+- [ ] Relationship between shifts and slots
+- [ ] Relationship between slots and users
 
 
 ## Event Triggers
@@ -77,14 +93,8 @@
 
 ## Misc
 - [x] Prevent non-authed users from viewing events
-- [x] Table to display departments by day
-- [x] Relationship between events and departments
-- [-] Relationship between departments and shifts
-- [ ] Relationship between shifts and users
-- [ ] Include shifts / hours in event table
-- [ ] Javascript to sign up for slots
 - [ ] Footer
-- [ ] Look into simplifying shift -> event relationships 
+- [x] Look into simplifying shift -> event relationships 
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Restrict editing department IDs when editing shifts
 - [x] Set up inheritance for form field partials
