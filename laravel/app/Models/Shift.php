@@ -20,6 +20,17 @@ class Shift extends Model
     // Convenience for getting the event of a shift
     public function event()
     {
-        return $this->deparment->event;
+//        return $this->deparment->event;
+    }
+
+    // Convenience function for getting the current roles or the parent department's roles
+    public function getRoles()
+    {
+        if($this->roles)
+        {
+            return $this->roles;
+        }
+
+        return $this->department->roles;
     }
 }

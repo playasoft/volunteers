@@ -5,8 +5,6 @@
     <hr>
     
     {!! Form::open(['url' => '/shift']) !!}
-        <input type="hidden" name="event_id" value="{{ $event->id }}">
-
         @if($event->departments->count())
             <div class="form-group {{ ($errors->has('department_id')) ? 'has-error' : '' }}">
                 <label class="control-label" for="department-field">Department</label>

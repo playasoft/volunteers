@@ -12,8 +12,31 @@
     <hr>
 
     {!! Form::open() !!}
-{{ $shift->department->event->name }}
     
-        {{ dd($shift->event) }}
+        <div class="form-group {{ ($errors->has('department_id')) ? 'has-error' : '' }}">
+            <label class="control-label" for="department-field">Department</label>
+    
+            <select name="department_id" class="form-control" id="department-field">
+                <option value="">Select a department</option>
+                
+                @foreach($shift->department->event->departments as $department)
+                    <option value="{{ $department->id }}" {{ $shift->department->id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                @endforeach
+            </select>
+
+            @if($errors->has('department_id'))
+                <span class="help-block">{{ $errors->first('department_id') }}</span>
+            @endif
+        </div>
+        
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
+        @include('partials/form/time', ['name' => 'start', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start])
+        @include('partials/form/time', ['name' => 'end', 'label' => 'End Time', 'help' => "The time of day when the last shift ends", 'value' => $shift->end])
+        @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift", 'value' => $shift->duration])
+        @include('partials/roles', ['roles' => json_decode($shift->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="/event/{{ $shift->department->event->id }}" class="btn btn-primary">Cancel</a>
+        
     {!! Form::close() !!}
 @endsection

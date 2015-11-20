@@ -59,19 +59,22 @@ class ShiftController extends Controller
     public function edit(ShiftRequest $request, Shift $shift)
     {
         $this->authorize('edit-shift');
-        return 'todo';
-
-/*
         $input = $request->all();
+        $department = Department::find($input['department_id']);
 
         // Convert roles into JSON
         $input['roles'] = json_encode($input['roles']);
 
-        $shift->update($input);
+        // Check if the current roles match the department roles
+        if($input['roles'] == $department->roles)
+        {
+            // Unset the roles, use department as default instead
+            unset($input['roles']);
+        }
 
+        $shift->update($input);
         $request->session()->flash('success', 'Shift has been updated.');
-        return redirect('/event/' . $shift->event->id);
-*/
+        return redirect('/event/' . $shift->department->event->id);
     }
 
     // View confirmation page before deleting an shift
