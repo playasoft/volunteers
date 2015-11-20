@@ -94,7 +94,7 @@
 ## Misc
 - [x] Prevent non-authed users from viewing events
 - [ ] Footer
-- [x] Look into simplifying shift -> event relationships 
+- [-] Look into simplifying shift -> event relationships 
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Restrict editing department IDs when editing shifts
 - [x] Set up inheritance for form field partials

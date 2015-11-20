@@ -36,7 +36,7 @@ class ShiftController extends Controller
         $input['roles'] = json_encode($input['roles']);
 
         // Check if the current roles match the department roles
-        if(json_encode($input['roles']) == $department->roles)
+        if($input['roles'] == $department->roles)
         {
             // Unset the roles, use department as default instead
             unset($input['roles']);

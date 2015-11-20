@@ -16,4 +16,10 @@ class Department extends Model
     {
         return $this->belongsTo('App\Models\Event');
     }
+
+    // Departments have shifts, which in turn have slots
+    public function shifts()
+    {
+        return $this->hasMany('App\Models\Shift');
+    }
 }
