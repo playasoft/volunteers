@@ -88,14 +88,10 @@ class ShiftController extends Controller
     public function delete(Request $request, Shift $shift)
     {
         $this->authorize('delete-shift');
-        return 'todo';
-
-/*
-        $event = $shift->event;
+        $event = $shift->department->event;
         $shift->delete();
 
         $request->session()->flash('success', 'Shift has been deleted.');
         return redirect('/event/' . $event->id);
-*/
     }
 }

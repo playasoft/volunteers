@@ -50,8 +50,8 @@
 - [x] Edit department
 - [x] Delete department
 - [x] Create shift
-- [-] Edit shift
-- [-] Delete shift
+- [x] Edit shift
+- [x] Delete shift
 - [ ] About page
 
 
@@ -96,5 +96,4 @@
 - [ ] Footer
 - [-] Look into simplifying shift -> event relationships 
 - [ ] Restrict editing event IDs when editing departments
-- [ ] Restrict editing department IDs when editing shifts
 - [x] Set up inheritance for form field partials
