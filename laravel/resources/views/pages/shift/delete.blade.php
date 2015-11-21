@@ -10,6 +10,6 @@
         </p>
         
         <button type="submit" class="btn btn-danger">Delete Shift</button>
-        <a href="/event/{{ $shift->department->event->id }}" class="btn btn-primary">Cancel</a>
+        <a href="/event/{{ $shift->event->id }}" class="btn btn-primary">Cancel</a>
     {!! Form::close() !!}
 @endsection

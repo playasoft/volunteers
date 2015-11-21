@@ -19,7 +19,7 @@
             <select name="department_id" class="form-control" id="department-field">
                 <option value="">Select a department</option>
                 
-                @foreach($shift->department->event->departments as $department)
+                @foreach($shift->event->departments as $department)
                     <option value="{{ $department->id }}" {{ $shift->department->id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                 @endforeach
             </select>
@@ -36,7 +36,7 @@
         @include('partials/roles', ['roles' => json_decode($shift->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
-        <a href="/event/{{ $shift->department->event->id }}" class="btn btn-primary">Cancel</a>
+        <a href="/event/{{ $shift->event->id }}" class="btn btn-primary">Cancel</a>
         
     {!! Form::close() !!}
 @endsection
