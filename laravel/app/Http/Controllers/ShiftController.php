@@ -7,9 +7,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\ShiftRequest;
-use App\Models\Shift;
-use App\Models\Department;
 use App\Models\Event;
+use App\Models\Department;
+use App\Models\Shift;
+use App\Models\Slot;
 
 class ShiftController extends Controller
 {
@@ -44,6 +45,9 @@ class ShiftController extends Controller
 
         $shift = Shift::create($input);
 
+        // Generate slots based on shift options
+        Slot::generate($shift);
+
         $request->session()->flash('success', 'Your shift has been created.');
         return redirect('/event/' . $department->event->id);
     }
@@ -72,7 +76,24 @@ class ShiftController extends Controller
             unset($input['roles']);
         }
 
+        // Check if the start time, end time, or duration are changing
+        $regenerateSlots = false;
+        
+        if($shift->start != $input['start'] ||
+            $shift->end != $input['end'] ||
+            $shift->duration != $input['duration'])
+        {
+            $regenerateSlots = true;
+        }
+
         $shift->update($input);
+
+        // Regenerate slots after the updated shift information is saved
+        if($regenerateSlots)
+        {
+            Slot::generate($shift);
+        }
+        
         $request->session()->flash('success', 'Shift has been updated.');
         return redirect('/event/' . $shift->department->event->id);
     }
@@ -84,7 +105,7 @@ class ShiftController extends Controller
         return view('pages/shift/delete', compact('shift'));
     }
 
-    // Delete an shift
+    // Delete a shift
     public function delete(Request $request, Shift $shift)
     {
         $this->authorize('delete-shift');
