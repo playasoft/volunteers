@@ -41,7 +41,7 @@
             <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
         @endcan
 
-        <a href="/event/{{ $event->id }}/grid" class="btn btn-success">Find Shift by Time</a>
+        <a href="/event/{{ $event->id }}/grid" class="btn btn-success">View Shifts by Time</a>
 
         <div class="clearfix"></div>
 
@@ -80,7 +80,7 @@
                 <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
             @endcan
 
-            <a href="/event/{{ $event->id }}/grid" class="btn btn-success">Find Shift by Time</a>
+            <a href="/event/{{ $event->id }}/grid" class="btn btn-success">View Shifts by Time</a>
         @endif
     </section>
 @endsection

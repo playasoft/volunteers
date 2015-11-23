@@ -33,9 +33,10 @@
  - [x] Allowed user groups
 
 - Slots
- - [ ] Shift
- - [ ] Start
- - [ ] User
+ - [x] Shift
+ - [x] User
+ - [x] Start
+ - [x] End
 
 
 ## Pages
@@ -57,8 +58,8 @@
 
 ## Shift Availability Table
 - [x] Table to display departments by day
+- [-] Automatically create slots when a shift is created / edited
 - [ ] Include shifts / hours in event table
-- [ ] Automatically create slots when a shift is created / edited
 - [ ] Create custom validation rule for time fields (12 hour + 24 hour)
 - [ ] Javascript to sign up for slots
 
