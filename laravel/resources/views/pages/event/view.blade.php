@@ -41,30 +41,46 @@
             <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
         @endcan
 
+        <a href="/event/{{ $event->id }}/grid" class="btn btn-success">Find Shift by Time</a>
+
         <div class="clearfix"></div>
 
-        <h2>Sign up for a shift!</h2>
-        <hr>
+        @if($event->departments->count())
+            <h2>Available Shifts by Department</h2>
+            <hr>
 
-        <div class="days">
-            @foreach($event->days() as $day)
-                <div class="day">
-                    <div class="heading">
-                        <h3>{{ $day->name }}</h3>
-                        <i>{{ $day->date->format('Y-m-d') }}</i>
-                    </div>
+            <div class="days">
+                @foreach($event->days() as $day)
+                    <div class="day">
+                        <div class="heading">
+                            <h3>{{ $day->name }}</h3>
+                            &mdash; <i>{{ $day->date->format('Y-m-d') }}</i>
+                        </div>
 
-                    <div class="shifts">
-                        @foreach($event->departments as $department)
-                            @can('edit-department')
-                                <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
-                            @else
-                                <b>{{ $department->name }}</b><br>
-                            @endcan
-                        @endforeach
+                        <div class="shifts">
+                            @foreach($event->departments as $department)
+                                @can('edit-department')
+                                    <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
+                                @else
+                                    <b>{{ $department->name }}</b><br>
+                                @endcan
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+
+            <hr>
+
+            @can('create-department')
+                <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
+            @endcan
+
+            @can('create-shift')
+                <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
+            @endcan
+
+            <a href="/event/{{ $event->id }}/grid" class="btn btn-success">Find Shift by Time</a>
+        @endif
     </section>
 @endsection

@@ -34,6 +34,7 @@ Route::get('/event/{event}/delete', 'EventController@deleteForm');
 Route::post('/event/{event}/delete', 'EventController@delete');
 
 Route::get('/event/{event}', 'EventController@view');
+Route::get('/event/{event}/grid', 'EventController@viewGrid');
 
 
 // Department routes

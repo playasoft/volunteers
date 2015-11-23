@@ -16,5 +16,7 @@ section.content {
   max-height: 400px; }
 
 .days .heading {
-  width: 100%;
-  text-align: center; }
+  width: 100%; }
+
+.days h3 {
+  display: inline-block; }
