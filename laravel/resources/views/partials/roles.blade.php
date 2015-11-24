@@ -24,23 +24,23 @@ elseif(!isset($roles))
         </label>
 
         <label>
-          <input type="checkbox" name="roles[]" value="admin" {{ in_array('admin', $roles) ? 'checked' : ''}}> Admin
+          <input type="checkbox" class="role" name="roles[]" value="admin" {{ in_array('admin', $roles) ? 'checked' : ''}}> Admin
         </label>
 
         <label>
-          <input type="checkbox" name="roles[]" value="volunteer" {{ in_array('volunteer', $roles) ? 'checked' : ''}}> Volunteer
+          <input type="checkbox" class="role" name="roles[]" value="volunteer" {{ in_array('volunteer', $roles) ? 'checked' : ''}}> Volunteer
         </label>
 
         <label>
-          <input type="checkbox" name="roles[]" value="veteran" {{ in_array('veteran', $roles) ? 'checked' : ''}}> Veteran
+          <input type="checkbox" class="role" name="roles[]" value="veteran" {{ in_array('veteran', $roles) ? 'checked' : ''}}> Veteran
         </label>
 
         <label>
-          <input type="checkbox" name="roles[]" value="fire" {{ in_array('fire', $roles) ? 'checked' : ''}}> Fire
+          <input type="checkbox" class="role" name="roles[]" value="fire" {{ in_array('fire', $roles) ? 'checked' : ''}}> Fire
         </label>
 
         <label>
-          <input type="checkbox" name="roles[]" value="medical" {{ in_array('medical', $roles) ? 'checked' : ''}}> Medical
+          <input type="checkbox" class="role" name="roles[]" value="medical" {{ in_array('medical', $roles) ? 'checked' : ''}}> Medical
         </label>
       </div>
       
