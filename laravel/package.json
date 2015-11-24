@@ -1,11 +1,12 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "gulp-webpack": "^1.5.0",
+    "gulp-sass": "^2.0.4"
   },
   "dependencies": {
     "bootstrap-sass": "^3.0.0",
-    "gulp-sass": "^2.0.4",
-    "laravel-elixir": "^3.0.0"
+    "wetfish-basic": "^0.7.7"
   }
 }

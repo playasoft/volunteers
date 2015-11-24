@@ -1,5 +1,16 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var webpack = require('gulp-webpack');
+
+var scripts =
+{
+    compile: function()
+    {
+        return gulp.src('./resources/js/main')
+            .pipe(webpack(require('./webpack-config')))
+            .pipe(gulp.dest('./public/js/'));
+    }
+}
 
 var scss =
 {
@@ -18,6 +29,7 @@ var scss =
     }
 }
 
-gulp.task('default', ['scss', 'scss:watch']);
+gulp.task('default', ['scripts', 'scss', 'scss:watch']);
+gulp.task('scripts', scripts.compile);
 gulp.task('scss', scss.compile);
 gulp.task('scss:watch', scss.watch);

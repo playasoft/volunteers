@@ -9,6 +9,9 @@
 
         <!-- Custom styles -->
         <link rel="stylesheet" href="/css/main.css">
+
+        <!-- Custom scripts -->
+        <script src="/js/bundle.js"></script>
     </head>
     <body>
         @include('partials/header')
