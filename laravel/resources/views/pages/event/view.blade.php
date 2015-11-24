@@ -64,6 +64,16 @@
                                 @else
                                     <b>{{ $department->name }}</b><br>
                                 @endcan
+
+                                <ul>
+                                    @foreach($department->shifts as $shift)
+                                        @can('edit-shift')
+                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a><br>
+                                        @else
+                                            <b>{{ $shift->name }}</b><br>
+                                        @endcan
+                                    @endforeach
+                                </ul>
                             @endforeach
                         </div>
                     </div>
