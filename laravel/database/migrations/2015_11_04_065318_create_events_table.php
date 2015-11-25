@@ -18,8 +18,8 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->softDeletes();
             $table->timestamps();
         });

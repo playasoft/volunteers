@@ -30,8 +30,8 @@
         </div>
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
-        @include('partials/form/time', ['name' => 'start', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start])
-        @include('partials/form/time', ['name' => 'end', 'label' => 'End Time', 'help' => "The time of day when the last shift ends", 'value' => $shift->end])
+        @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start])
+        @include('partials/form/time', ['name' => 'end_time', 'label' => 'End Time', 'help' => "The time of day when the last shift ends", 'value' => $shift->end])
         @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift", 'value' => $shift->duration])
         @include('partials/roles', ['roles' => json_decode($shift->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
