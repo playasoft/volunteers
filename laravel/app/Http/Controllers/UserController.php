@@ -33,9 +33,10 @@ class UserController extends Controller
         }
 
         $user->save();
+        $this->auth->loginUsingID($user->id);
 
-        $request->session()->flash('success', 'Your account has been registered, you may now log in.');
-        return redirect('/login');
+        $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
+        return redirect('/');
     }
 
     // Handle a user logging in
