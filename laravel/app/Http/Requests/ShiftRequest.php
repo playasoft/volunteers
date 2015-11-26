@@ -27,8 +27,8 @@ class ShiftRequest extends Request
         [
             'department_id' => 'required|integer|exists:departments,id',
             'name' => 'required',
-            'start' => 'required|date_format:h:i a',
-            'end' => 'required|date_format:h:i a',
+            'start_time' => 'required|date_format:h:i a',
+            'end_time' => 'required|date_format:h:i a',
             'duration' => 'required|date_format:h:i',
         ];
     }
