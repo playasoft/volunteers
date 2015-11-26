@@ -44,7 +44,15 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(1);
+	__webpack_require__(1);
+	__webpack_require__(3);
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(2);
 
 	$(document).ready(function()
 	{
@@ -75,7 +83,7 @@
 
 
 /***/ },
-/* 1 */
+/* 2 */
 /***/ function(module, exports) {
 
 	(function()
@@ -1335,6 +1343,33 @@
 	        return output;
 	    }
 	})();
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(2);
+
+	$(document).ready(function()
+	{
+	    $('.shift-type').on('change', function()
+	    {
+	        if($(this).value() == 'all')
+	        {
+	            $('.shift.start-date, .shift.end-date').addClass('hidden');
+	        }
+	        else if($(this).value() == 'some')
+	        {
+	            $('.shift.start-date, .shift.end-date').removeClass('hidden');
+	        }
+	        else if($(this).value() == 'one')
+	        {
+	            $('.shift.start-date').removeClass('hidden');
+	            $('.shift.end-date').addClass('hidden');
+	        }
+	    });
+	});
+
 
 /***/ }
 /******/ ]);

@@ -36,18 +36,18 @@
         <div class="form-group">
             <label class="control-label" for="date-field">Shift Type</label>
     
-            <select class="form-control" id="date-field">
+            <select class="form-control shift-type" id="date-field">
                 <option value="all">Recurring, every day</option>
                 <option value="some">Recurring, date range</option>
                 <option value="one">Single day</option>
             </select>
         </div>
 
-        <div class="start-date hidden">
+        <div class="shift start-date hidden">
             @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date'])
         </div>
 
-        <div class="end-date hidden">
+        <div class="shift end-date hidden">
             @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date'])
         </div>
         
