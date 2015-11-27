@@ -61,13 +61,7 @@ class ShiftController extends Controller
         $this->authorize('edit-shift');
 
         // Format the shift start, end, and duration times
-        $start = date_parse_from_format('H:i', $shift->start_time);
-        $end = date_parse_from_format('H:i', $shift->end_time);
-        $duration = date_parse_from_format('H:i', $shift->duration);
-
-        $shift->start_time = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
-        $shift->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
-        $shift->duration = $duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
+        $shift->formatTimes();
 
         return view('pages/shift/edit', compact('shift'));
     }
@@ -89,9 +83,10 @@ class ShiftController extends Controller
             unset($input['roles']);
         }
 
-        // Set start and end dates if not included 
+        // Make sure dates and times are set properly and formatted
         $input = Shift::setDates($department, $input);
         $input = Shift::setTimes($input);
+        $shift->formatTimes();
 
         // Check if the start time, end time, or duration are changing
         $regenerateSlots = false;
