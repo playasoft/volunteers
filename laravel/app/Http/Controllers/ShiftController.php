@@ -45,6 +45,7 @@ class ShiftController extends Controller
 
         // Set start and end dates if not included 
         $input = Shift::setDates($department, $input);
+        $input = Shift::setTimes($input);
         $shift = Shift::create($input);
 
         // Generate slots based on shift options
@@ -58,6 +59,16 @@ class ShiftController extends Controller
     public function editForm(Request $request, Shift $shift)
     {
         $this->authorize('edit-shift');
+
+        // Format the shift start, end, and duration times
+        $start = date_parse_from_format('H:i', $shift->start_time);
+        $end = date_parse_from_format('H:i', $shift->end_time);
+        $duration = date_parse_from_format('H:i', $shift->duration);
+
+        $shift->start_time = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+        $shift->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
+        $shift->duration = $duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
+
         return view('pages/shift/edit', compact('shift'));
     }
 
@@ -80,12 +91,15 @@ class ShiftController extends Controller
 
         // Set start and end dates if not included 
         $input = Shift::setDates($department, $input);
+        $input = Shift::setTimes($input);
 
         // Check if the start time, end time, or duration are changing
         $regenerateSlots = false;
         
-        if($shift->start != $input['start'] ||
-            $shift->end != $input['end'] ||
+        if($shift->start_date != $input['start_date'] ||
+            $shift->end_date != $input['end_date'] ||
+            $shift->start_time != $input['start_time'] ||
+            $shift->end_time != $input['end_time'] ||
             $shift->duration != $input['duration'])
         {
             $regenerateSlots = true;

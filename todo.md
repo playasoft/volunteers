@@ -60,7 +60,7 @@
 - [x] Table to display departments by day
 - [-] Automatically create slots when a shift is created / edited
 - [ ] Include shifts / hours in event table
-- [-] Create custom validation rule for time fields (12 hour + 24 hour)
+- [x] Create custom validation rule for time fields (12 hour + 24 hour)
 - [ ] Javascript to sign up for slots
 
 

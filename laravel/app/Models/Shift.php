@@ -58,4 +58,53 @@ class Shift extends Model
 
         return $input;
     }
+
+    // Function which returns a parsed date regardless of 12 or 24 hour times
+    static private function getTime($value)
+    {
+        $value = trim($value);
+
+        $twelve = date_parse_from_format('h:i a', $value);
+        $twentyfour = date_parse_from_format('H:i', $value);
+
+        if(!$twelve['error_count'])
+        {
+            return $twelve;
+        }
+        elseif(!$twentyfour['error_count'])
+        {
+            return $twentyfour;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // Helper function to make sure timestamps are properly formatted
+    static public function setTimes($input)
+    {
+        $start = Shift::getTime($input['start_time']);
+        $end = Shift::getTime($input['end_time']);
+
+        // Return original input if there was an error parsing timestamps
+        if(!$start || !$end)
+        {
+            return $input;
+        }
+
+        $input['start_time'] = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+
+        // Convert end time to 24 if "12:00 AM" is used
+        if($end['hour'] === 0 && $end['minute'] === 0)
+        {
+            $input['end_time'] == "24:00";
+        }
+        else
+        {
+            $input['end_time'] = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
+        }
+
+        return $input;
+    }
 }

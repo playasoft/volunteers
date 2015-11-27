@@ -13,7 +13,7 @@
                     <option value="">Select a department</option>
                     
                     @foreach($event->departments as $department)
-                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                     @endforeach
                 </select>
 

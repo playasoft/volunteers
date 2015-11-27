@@ -29,11 +29,11 @@
             @endif
         </div>
         
-        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])1
-        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date'])
-        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date'])
-        @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start])
-        @include('partials/form/time', ['name' => 'end_time', 'label' => 'End Time', 'help' => "The time of day when the last shift ends", 'value' => $shift->end])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
+        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'value' => $shift->start_date])
+        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'value' => $shift->end_date])
+        @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start_time])
+        @include('partials/form/time', ['name' => 'end_time', 'label' => 'End Time', 'help' => "The time of day when the last shift ends", 'value' => $shift->end_time])
         @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift", 'value' => $shift->duration])
         @include('partials/roles', ['roles' => json_decode($shift->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
