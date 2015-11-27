@@ -9,7 +9,7 @@ class Shift extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['department_id', 'name', 'start', 'end', 'duration', 'roles'];
+    protected $fillable = ['department_id', 'name', 'start_date', 'end_date', 'start_time', 'end_time', 'duration', 'roles'];
     
     // Shifts belong to an department
     public function department()
@@ -32,5 +32,30 @@ class Shift extends Model
         }
 
         return $this->department->roles;
+    }
+
+    // Helper function to check if a start / end date needs to be set
+    static public function setDates($department, $input)
+    {
+        if(empty($input['end_date']))
+        {
+            // When the end date is empty, but the start isn't, use the start as the end
+            if(!empty($input['start_date']))
+            {
+                $input['end_date'] = $input['start_date'];
+            }
+            else
+            {
+                // Otherwise, use the event end date
+                $input['end_date'] = $department->event->end_date;
+            }
+        }
+
+        if(empty($input['start_date']))
+        {
+            $input['start_date'] = $department->event->start_date;
+        }
+
+        return $input;
     }
 }

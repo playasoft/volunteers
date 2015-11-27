@@ -43,6 +43,8 @@ class ShiftController extends Controller
             unset($input['roles']);
         }
 
+        // Set start and end dates if not included 
+        $input = Shift::setDates($department, $input);
         $shift = Shift::create($input);
 
         // Generate slots based on shift options
@@ -75,6 +77,9 @@ class ShiftController extends Controller
             // Unset the roles, use department as default instead
             unset($input['roles']);
         }
+
+        // Set start and end dates if not included 
+        $input = Shift::setDates($department, $input);
 
         // Check if the start time, end time, or duration are changing
         $regenerateSlots = false;

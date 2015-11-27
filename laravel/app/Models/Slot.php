@@ -14,7 +14,7 @@ class Slot extends Model
 
         // Start looping from the start time
         
-        dd($shift->start);
+        dd($shift);
 
         // Have we reached the time of the last shift?
     }
