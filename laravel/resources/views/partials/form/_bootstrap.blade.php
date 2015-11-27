@@ -1,12 +1,3 @@
-<?php
-
-if(old($name))
-{
-    $value = old($name);
-}
-
-?>
-
 <div class="form-group {{ ($errors->has($name)) ? 'has-error' : '' }}">
     <label class="control-label" for="{{ $name }}-field">{{ $label }}</label>
     @yield('html')
