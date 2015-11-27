@@ -33,6 +33,22 @@ class AppServiceProvider extends ServiceProvider
             
             return false;
         });
+
+        Validator::extend('time', function($attribute, $value, $parameters)
+        {
+            $value = trim($value);
+            
+            // Check against 12 hour time (with AM/PM) or 24 hour time
+            $twelve = date_parse_from_format('h:i a', $value);
+            $twentyfour = date_parse_from_format('H:i', $value);
+
+            if($twelve['error_count'] === 0 || $twentyfour['error_count'] === 0)
+            {
+                return true;
+            }
+
+            return false;
+        });
     }
 
     /**
