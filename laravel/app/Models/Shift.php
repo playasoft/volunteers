@@ -10,7 +10,12 @@ class Shift extends Model
     use SoftDeletes;
 
     protected $fillable = ['department_id', 'name', 'start_date', 'end_date', 'start_time', 'end_time', 'duration', 'roles'];
-    
+
+    public function getDates()
+    {
+        return array('created_at', 'updated_at', 'deleted_at', 'start_date', 'end_date');
+    }
+
     // Shifts belong to an department
     public function department()
     {
