@@ -59,6 +59,7 @@
 ## Shift Availability Table
 - [x] Table to display departments by day
 - [x] Automatically create slots when a shift is created / edited
+- [ ] Only display shifts on the days they occur
 - [ ] Include shifts / hours in event table
 - [x] Create custom validation rule for time fields (12 hour + 24 hour)
 - [ ] Javascript to sign up for slots
@@ -67,7 +68,7 @@
 ## Relationships
 - [x] Relationship between events and departments
 - [x] Relationship between departments and shifts
-- [ ] Relationship between shifts and slots
+- [x] Relationship between shifts and slots
 - [ ] Relationship between slots and users
 
 

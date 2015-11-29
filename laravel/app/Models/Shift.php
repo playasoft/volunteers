@@ -16,10 +16,16 @@ class Shift extends Model
         return array('created_at', 'updated_at', 'deleted_at', 'start_date', 'end_date');
     }
 
-    // Shifts belong to an department
+    // Shifts belong to a department
     public function department()
     {
         return $this->belongsTo('App\Models\Department');
+    }
+
+    // Shifts have slots
+    public function slots()
+    {
+        return $this->hasMany('App\Models\Slot');
     }
 
     // Convenience for getting the event of a shift

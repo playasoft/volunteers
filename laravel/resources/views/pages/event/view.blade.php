@@ -68,10 +68,14 @@
                                 <ul>
                                     @foreach($department->shifts as $shift)
                                         @can('edit-shift')
-                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a><br>
+                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
                                         @else
-                                            <b>{{ $shift->name }}</b><br>
+                                            <b>{{ $shift->name }}</b>
                                         @endcan
+
+                                        @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
+                                            [ Slot ]
+                                        @endforeach
                                     @endforeach
                                 </ul>
                             @endforeach

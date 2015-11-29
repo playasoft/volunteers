@@ -8,6 +8,12 @@ use Carbon\Carbon;
 class Slot extends Model
 {
     protected $fillable = ['shift_id', 'start_date', 'start_time', 'duration'];
+
+    // Slots belong to a shift
+    public function shift()
+    {
+        return $this->belongsTo('App\Models\Shift');
+    }
     
     // Helper function to get the number of seconds in a timestamp
     static private function timeToSeconds($time)

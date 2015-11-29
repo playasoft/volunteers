@@ -60,7 +60,7 @@ class Event extends Model
                 $days[] = (object)
                 [
                     'name' => $date->formatLocalized('%A'),
-                    'date' => $date
+                    'date' => clone $date
                 ];
 
                 $date->addDay();
