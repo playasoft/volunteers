@@ -41,8 +41,6 @@
             <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
         @endcan
 
-        <a href="/event/{{ $event->id }}/grid" class="btn btn-success">View Shifts by Time</a>
-
         <div class="clearfix"></div>
 
         @if($event->departments->count())
@@ -93,8 +91,6 @@
             @can('create-shift')
                 <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
             @endcan
-
-            <a href="/event/{{ $event->id }}/grid" class="btn btn-success">View Shifts by Time</a>
         @endif
     </section>
 @endsection

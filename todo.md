@@ -40,11 +40,6 @@
 
 
 ## Pages
-- [ ] Viewing your own profile
-- [ ] Editing your own profile
-- [ ] Viewing list of shifts you've signed up for
-- [ ] Admin list of profiles
-- [ ] Admin editing other profiles
 - [x] Admin edit event
 - [x] Admin delete event
 - [x] Create department
@@ -53,16 +48,26 @@
 - [x] Create shift
 - [x] Edit shift
 - [x] Delete shift
+- [ ] Viewing your own profile
+- [ ] Editing your own profile
+- [ ] Viewing list of shifts you've signed up for
+- [ ] Admin list of profiles
+- [ ] Admin editing other profiles
 - [ ] About page
 
 
 ## Shift Availability Table
 - [x] Table to display departments by day
 - [x] Automatically create slots when a shift is created / edited
-- [ ] Only display shifts on the days they occur
-- [ ] Include shifts / hours in event table
 - [x] Create custom validation rule for time fields (12 hour + 24 hour)
-- [ ] Javascript to sign up for slots
+- [x] Remove separate grid page
+- [-] Only display shifts on the days they occur
+- [ ] Display open / taken slots
+- [ ] Link slots to description page with times and a button to sign up
+- [ ] Add option to cancel your volunteer shift after signing up
+- [ ] Javascript to position the times grid
+- [ ] Javascript to resize slots based on duration
+- [ ] Javascript to show / hide days, departments, and shifts
 
 
 ## Relationships
@@ -95,7 +100,7 @@
 
 ## Misc
 - [x] Prevent non-authed users from viewing events
-- [ ] Footer
 - [x] Look into simplifying shift -> event relationships 
-- [ ] Restrict editing event IDs when editing departments
 - [x] Set up inheritance for form field partials
+- [ ] Restrict editing event IDs when editing departments
+- [ ] Footer
