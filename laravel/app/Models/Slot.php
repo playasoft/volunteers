@@ -14,6 +14,12 @@ class Slot extends Model
     {
         return $this->belongsTo('App\Models\Shift');
     }
+
+    // Slots can also belong to a user
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
     
     // Helper function to get the number of seconds in a timestamp
     static private function timeToSeconds($time)

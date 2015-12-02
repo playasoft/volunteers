@@ -61,20 +61,21 @@
 - [x] Automatically create slots when a shift is created / edited
 - [x] Create custom validation rule for time fields (12 hour + 24 hour)
 - [x] Remove separate grid page
-- [-] Only display shifts on the days they occur
+- [-] Only display shifts and departments on the days they occur
 - [ ] Display open / taken slots
 - [ ] Link slots to description page with times and a button to sign up
 - [ ] Add option to cancel your volunteer shift after signing up
 - [ ] Javascript to position the times grid
 - [ ] Javascript to resize slots based on duration
 - [ ] Javascript to show / hide days, departments, and shifts
+- [ ] Prevent signing up for shifts after events have passed
 
 
 ## Relationships
 - [x] Relationship between events and departments
 - [x] Relationship between departments and shifts
 - [x] Relationship between shifts and slots
-- [ ] Relationship between slots and users
+- [x] Relationship between slots and users
 
 
 ## Event Triggers

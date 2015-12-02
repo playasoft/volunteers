@@ -20,4 +20,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $table = 'users';
 
     protected $fillable = ['name', 'email', 'password'];
+
+    // Users can have slots
+    public function slots()
+    {
+        return $this->hasMany('App\Models\Slot');
+    }
 }
