@@ -11,11 +11,7 @@ class Event extends Model
     use SoftDeletes;
     
     protected $fillable = ['name', 'description', 'start_date', 'end_date'];
-    
-    public function getDates()
-    {
-        return array('created_at', 'updated_at', 'deleted_at', 'start_date', 'end_date');
-    }
+    protected $dates = ['start_date', 'end_date'];
 
     // Helper functions to select events by date
     public function future()

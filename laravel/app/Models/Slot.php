@@ -46,7 +46,7 @@ class Slot extends Model
         Slot::where('shift_id', $shift->id)->delete();
 
         // Loop over shift days
-        $date = $shift->start_date;
+        $date = new Carbon($shift->start_date);
 
         while($date <= $shift->end_date)
         {

@@ -62,8 +62,8 @@
 - [x] Create custom validation rule for time fields (12 hour + 24 hour)
 - [x] Remove separate grid page
 - [-] Only display shifts and departments on the days they occur
-- [ ] Display open / taken slots
-- [ ] Link slots to description page with times and a button to sign up
+- [-] Display open / taken slots
+- [-] Link slots to description page with times and a button to sign up
 - [ ] Add option to cancel your volunteer shift after signing up
 - [ ] Javascript to position the times grid
 - [ ] Javascript to resize slots based on duration
