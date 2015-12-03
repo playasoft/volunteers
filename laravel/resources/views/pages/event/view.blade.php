@@ -57,6 +57,13 @@
 
                         <div class="shifts">
                             @foreach($event->departments as $department)
+                                <?php
+
+                                if($department->shifts->isEmpty())
+                                    continue;
+
+                                ?>
+                            
                                 @can('edit-department')
                                     <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
                                 @else
@@ -65,15 +72,24 @@
 
                                 <ul>
                                     @foreach($department->shifts as $shift)
-                                        @can('edit-shift')
-                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
-                                        @else
-                                            <b>{{ $shift->name }}</b>
-                                        @endcan
+                                        <?php
 
-                                        @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
-                                            [ Slot ]
-                                        @endforeach
+                                        if($shift->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                            continue;
+
+                                        ?>
+
+                                        <li>
+                                            @can('edit-shift')
+                                                <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
+                                            @else
+                                                <b>{{ $shift->name }}</b>
+                                            @endcan
+
+                                            @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
+                                                [ Slot ]
+                                            @endforeach
+                                        </li>
                                     @endforeach
                                 </ul>
                             @endforeach
