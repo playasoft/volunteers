@@ -20,6 +20,12 @@ class Slot extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    // Convenience for getting the event of a slot
+    public function getEventAttribute()
+    {
+        return $this->shift->event;
+    }
     
     // Helper function to get the number of seconds in a timestamp
     static private function timeToSeconds($time)

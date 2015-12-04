@@ -112,7 +112,7 @@ class ShiftController extends Controller
         return redirect('/event/' . $shift->department->event->id);
     }
 
-    // View confirmation page before deleting an shift
+    // View confirmation page before deleting a shift
     public function deleteForm(Request $request, Shift $shift)
     {
         $this->authorize('delete-shift');

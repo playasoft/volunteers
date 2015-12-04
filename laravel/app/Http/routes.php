@@ -57,3 +57,11 @@ Route::post('/shift/{shift}/edit', 'ShiftController@edit');
 
 Route::get('/shift/{shift}/delete', 'ShiftController@deleteForm');
 Route::post('/shift/{shift}/delete', 'ShiftController@delete');
+
+
+// Slot routes
+Route::get('/slot/{slot}/take', 'SlotController@takeForm');
+Route::post('/slot/{slot}/take', 'SlotController@take');
+
+Route::get('/slot/{slot}/release', 'SlotController@releaseForm');
+Route::post('/slot/{slot}/release', 'SlotController@release');

@@ -79,15 +79,17 @@
 
                                         ?>
 
-                                        <li>
-                                            @can('edit-shift')
-                                                <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
-                                            @else
-                                                <b>{{ $shift->name }}</b>
-                                            @endcan
+                                        <li class="row">
+                                            <div class="col-sm-2">
+                                                @can('edit-shift')
+                                                    <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
+                                                @else
+                                                    <b>{{ $shift->name }}</b>
+                                                @endcan
+                                            </div>
 
                                             @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
-                                                [ Slot ]
+                                                <a href="/slot/{{ $slot->id}}/take" class="slot col-sm-1"></a>
                                             @endforeach
                                         </li>
                                     @endforeach

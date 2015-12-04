@@ -29,6 +29,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('event', 'App\Models\Event');
         $router->model('department', 'App\Models\Department');
         $router->model('shift', 'App\Models\Shift');
+        $router->model('slot', 'App\Models\Slot');
     }
 
     /**

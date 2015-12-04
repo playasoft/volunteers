@@ -12,11 +12,51 @@ section.content {
   margin-top: 1.4em; }
 
 .event img {
-  max-width: 400px;
-  max-height: 400px; }
+  max-width: 100%;
+  max-height: 500px; }
+  @media (min-width: 768px) {
+    .event img {
+      max-width: 500px;
+      margin-left: 1em; } }
 
 .days .heading {
   width: 100%; }
 
 .days h3 {
   display: inline-block; }
+
+.shifts .row {
+  line-height: 2em; }
+
+.shifts ul {
+  list-style: none; }
+
+.slot {
+  background-color: #ccc;
+  border: 1px solid #fff;
+  border-radius: 1em;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0.25em;
+  text-align: center;
+  height: 1.75em;
+  font-size: 12pt;
+  margin-top: -0.25em;
+  margin-left: -0.25em;
+  margin-right: 0.30em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  min-width: 100px; }
+
+.slot.taken {
+  background-color: #d83664;
+  border: 1px solid #fff; }
+
+.slot.taken:hover, .slot.taken.active {
+  background-color: #dd2559;
+  border: 1px solid #000; }
+
+.slot:hover, .slot.active {
+  background-color: #eee;
+  border: 1px solid #000; }

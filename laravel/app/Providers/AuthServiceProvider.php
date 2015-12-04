@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         // General permissions for all authed users
         'auth' =>
         [
-            'take-shift',
-            'release-shift',
+            'take-slot',
+            'release-slot',
             'view-self'
         ],
         
@@ -57,17 +57,17 @@ class AuthServiceProvider extends ServiceProvider
             'create-shift',
             'edit-shift',
             'delete-shift',
-            'take-veteran-shift',
+            'take-veteran-slot',
         ],
 
         'medical' =>
         [
-            'take-medical-shift',
+            'take-medical-slot',
         ],
 
         'fire' =>
         [
-            'take-fire-shift',
+            'take-fire-slot',
         ]
     ];
 
@@ -119,6 +119,12 @@ class AuthServiceProvider extends ServiceProvider
         {
             $gate->define($ability, function($user) use ($roles)
             {
+                // Always include default "auth" role
+                if(in_array('auth', $roles))
+                {
+                    return true;
+                }
+
                 if(in_array($user->role, $roles))
                 {
                     return true;
