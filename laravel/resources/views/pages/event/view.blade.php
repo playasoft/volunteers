@@ -59,7 +59,7 @@
                             @foreach($event->departments as $department)
                                 <?php
 
-                                if($department->shifts->isEmpty())
+                                if($department->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
                                     continue;
 
                                 ?>
