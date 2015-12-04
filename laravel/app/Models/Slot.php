@@ -47,8 +47,9 @@ class Slot extends Model
 
         // Loop over shift days
         $date = new Carbon($shift->start_date);
+        $end_date = new Carbon($shift->end_date);
 
-        while($date <= $shift->end_date)
+        while($date->lte($end_date))
         {
             // Convert shift times to seconds
             $start = Slot::timeToSeconds($shift->start_time);

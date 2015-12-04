@@ -46,12 +46,12 @@ class Event extends Model
         $days = [];
         
         // This only works when the start date is before the end date
-        if($this->start_date <= $this->end_date)
+        if($this->start_date->lte($this->end_date))
         {
             // $date keeps track of the current date as we loop towards the end
             $date = $this->start_date;
 
-            while($date <= $this->end_date)
+            while($date->lte($this->end_date))
             {
                 $days[] = (object)
                 [
