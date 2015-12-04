@@ -21,7 +21,7 @@ class CreateSlotsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('start_date');
             $table->time('start_time');
-            $table->time('duration');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

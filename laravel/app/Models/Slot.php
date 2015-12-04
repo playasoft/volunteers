@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Slot extends Model
 {
-    protected $fillable = ['shift_id', 'start_date', 'start_time', 'duration'];
+    protected $fillable = ['shift_id', 'start_date', 'start_time', 'end_time'];
 
     // Slots belong to a shift
     public function shift()
@@ -19,6 +19,12 @@ class Slot extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    // Convenience for getting the department of a slot
+    public function getDepartmentAttribute()
+    {
+        return $this->shift->department;
     }
 
     // Convenience for getting the event of a slot
@@ -70,7 +76,7 @@ class Slot extends Model
                     'shift_id' => $shift->id,
                     'start_date' => $date->format('Y-m-d'),
                     'start_time' => Slot::secondsToTime($time),
-                    'duration' => $shift->duration,
+                    'end_time' => Slot::secondsToTime($time + $duration),
                 ];
                 
                 Slot::create($slot);
@@ -80,3 +86,4 @@ class Slot extends Model
         }
     }
 }
+
