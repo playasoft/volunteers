@@ -64,7 +64,7 @@
 - [x] Only display shifts and departments on the days they occur
 - [x] Link slots to description page with times and a button to sign up
 - [x] Add option to cancel your volunteer shift after signing up
-- [-] Display open / taken slots
+- [x] Display open / taken slots
 - [ ] Javascript to position the times grid
 - [ ] Javascript to resize slots based on duration
 - [ ] Javascript to show / hide days, departments, and shifts

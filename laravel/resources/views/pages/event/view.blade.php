@@ -90,7 +90,15 @@
                                             </div>
 
                                             @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
-                                                <a href="/slot/{{ $slot->id}}/take" class="slot col-sm-1"></a>
+                                                @if(is_null($slot->user))
+                                                    <a href="/slot/{{ $slot->id }}/take" class="slot col-sm-1"></a>
+                                                @else
+                                                    @if($slot->user->id === Auth::user()->id)
+                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                    @else
+                                                        <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                    @endif
+                                                @endif
                                             @endforeach
                                         </li>
                                     @endforeach
