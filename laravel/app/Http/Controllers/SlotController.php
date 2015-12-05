@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SlotRequest;
 use App\Models\Slot;
 
+use Illuminate\Support\Facades\Auth;
+
 class SlotController extends Controller
 {
     public function __construct()
@@ -26,7 +28,20 @@ class SlotController extends Controller
     // Add yourself to an existing slot
     public function take(SlotRequest $request, Slot $slot)
     {
-        $request->session()->flash('success', 'Slot has been taken.');
+        $this->authorize('take-slot');
+
+        if(is_null($slot->user))
+        {
+            $slot->user_id = Auth::user()->id;
+            $slot->save();
+            
+            $request->session()->flash('success', 'You signed up for a volunteer shift.');
+        }
+        else
+        {
+            $request->session()->flash('error', 'This slot has already been taken by someone else.');
+        }
+        
         return redirect('/event/' . $slot->event->id);
     }
 
@@ -41,7 +56,19 @@ class SlotController extends Controller
     public function release(Request $request, Slot $slot)
     {
         $this->authorize('release-slot');
-        $request->session()->flash('success', 'Slot has been released.');
+
+        if(!is_null($slot->user) && $slot->user->id === Auth::user()->id)
+        {
+            $slot->user_id = null;
+            $slot->save();
+            
+            $request->session()->flash('success', 'You are no longer volunteering for your shift.');
+        }
+        else
+        {
+            $request->session()->flash('error', 'You are not currently scheduled to volunteer for this shift.');
+        }
+
         return redirect('/event/' . $slot->event->id);
     }
 }

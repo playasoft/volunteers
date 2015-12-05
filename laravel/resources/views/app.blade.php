@@ -23,6 +23,12 @@
                 </div>
             @endif
 
+            @if(Session::has('error'))
+                <div class="general-alert alert alert-danger" role="alert">
+                    <b>Error!</b> {{ Session::get('error') }}
+                </div>
+            @endif
+
             @yield('content')
         </section>
     </body>

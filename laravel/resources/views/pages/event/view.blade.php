@@ -18,6 +18,7 @@
         @if($event->image)
             <img class="pull-right" src="/img/upload/{{ $event->image }}">
         @endif
+        
         <div>
             <label>Start Date</label>
             {{ $event->start_date->format('Y-m-d') }}
