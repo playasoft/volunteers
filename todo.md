@@ -65,9 +65,9 @@
 - [x] Link slots to description page with times and a button to sign up
 - [x] Add option to cancel your volunteer shift after signing up
 - [x] Display open / taken slots
-- [-] Javascript to position the times grid
-- [-] Javascript to resize slots based on duration
-- [ ] Javascript to show / hide days
+- [x] Javascript to position the times grid
+- [x] Javascript to resize slots based on duration
+- [ ] Javascript to show / hide days and shifts
 - [ ] Prevent signing up for shifts after events have passed
 
 

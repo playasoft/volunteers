@@ -56,7 +56,7 @@
                             &mdash; <i>{{ $day->date->format('Y-m-d') }}</i>
                         </div>
 
-                        <div class="shifts">
+                        <div class="shift-wrap">
                             <div class="row hidden-xs hidden-sm">
                                 <div class="col-sm-2"><!-- Spacing --></div>
                                 <div class="grid-wrap col-sm-10">
@@ -73,13 +73,15 @@
                                 ?>
 
                                 <div class="department">
-                                    @can('edit-department')
-                                        <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
-                                    @else
-                                        <b>{{ $department->name }}</b><br>
-                                    @endcan
-
-                                    <ul>
+                                    <div class="title">
+                                        @can('edit-department')
+                                            <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
+                                        @else
+                                            <b>{{ $department->name }}</b><br>
+                                        @endcan
+                                    </div>
+                                    
+                                    <ul class="shifts">
                                         @foreach($department->shifts as $shift)
                                             <?php
 
@@ -88,8 +90,8 @@
 
                                             ?>
 
-                                            <li class="row">
-                                                <div class="col-sm-2">
+                                            <li class="shift row">
+                                                <div class="title col-sm-2">
                                                     @can('edit-shift')
                                                         <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
                                                     @else
@@ -97,7 +99,7 @@
                                                     @endcan
                                                 </div>
 
-                                                <div class="col-sm-10">
+                                                <div class="slots col-sm-10">
                                                     @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
                                                         <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $shift->duration }}">
                                                             @if(is_null($slot->user))

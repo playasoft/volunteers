@@ -25,6 +25,12 @@ section.content {
 .days h3 {
   display: inline-block; }
 
+.shift-wrap .row {
+  line-height: 2em; }
+
+.shift-wrap ul {
+  list-style: none; }
+
 .grid-wrap {
   padding-left: 3em; }
 
@@ -38,12 +44,24 @@ section.content {
 .department {
   border-top: 1px solid #000;
   padding: 1em 0 0.5em 0.5em; }
+  .department .title {
+    margin-bottom: 1em; }
 
-.shifts .row {
-  line-height: 2em; }
+.shift {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em; }
+  .shift .title {
+    margin: 0; }
 
-.shifts ul {
-  list-style: none; }
+.shift:hover, .shift.active {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background-color: rgba(50, 50, 50, 0.1); }
+
+.slots {
+  position: relative; }
 
 .slot {
   background-color: #ccc;
@@ -55,13 +73,15 @@ section.content {
   text-align: center;
   height: 1.75em;
   font-size: 12pt;
-  margin-top: -0.25em;
   margin-left: -0.25em;
   margin-right: 0.30em;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
   min-width: 100px; }
+  @media (min-width: 768px) {
+    .slot {
+      min-width: 100%; } }
 
 .slot.taken {
   background-color: #d83664;
