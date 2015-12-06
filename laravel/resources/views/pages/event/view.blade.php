@@ -57,6 +57,13 @@
                         </div>
 
                         <div class="shifts">
+                            <div class="row hidden-xs hidden-sm">
+                                <div class="col-sm-2"><!-- Spacing --></div>
+                                <div class="grid-wrap col-sm-10">
+                                    @include('partials/timegrid')
+                                </div>
+                            </div>
+                            
                             @foreach($event->departments as $department)
                                 <?php
 
@@ -89,17 +96,19 @@
                                                 @endcan
                                             </div>
 
-                                            @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
-                                                @if(is_null($slot->user))
-                                                    <a href="/slot/{{ $slot->id }}/take" class="slot col-sm-1"></a>
-                                                @else
-                                                    @if($slot->user->id === Auth::user()->id)
-                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                            <div class="col-sm-10">                                                
+                                                @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
+                                                    @if(is_null($slot->user))
+                                                        <a href="/slot/{{ $slot->id }}/take" class="slot"></a>
                                                     @else
-                                                        <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                        @if($slot->user->id === Auth::user()->id)
+                                                            <a href="/slot/{{ $slot->id }}/release" class="slot taken">{{ $slot->user->name }}</a>
+                                                        @else
+                                                            <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                        @endif
                                                     @endif
-                                                @endif
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         </li>
                                     @endforeach
                                 </ul>

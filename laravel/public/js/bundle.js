@@ -46,6 +46,7 @@
 
 	__webpack_require__(1);
 	__webpack_require__(3);
+	__webpack_require__(4);
 
 
 /***/ },
@@ -1368,6 +1369,18 @@
 	            $('.shift.end-date').addClass('hidden');
 	        }
 	    });
+	});
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(2);
+
+	$(document).ready(function()
+	{
+	    
 	});
 
 

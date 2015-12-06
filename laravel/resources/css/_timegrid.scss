@@ -1,3 +1,17 @@
+.grid-wrap {
+    padding-left: 3em;
+}
+
+.timegrid {
+    width: 50%;
+    margin: 0;
+    padding: 0;
+
+    .time {
+        border-left: 1px solid #000;
+    }
+}
+
 .shifts {
     .row {
         line-height: 2em;
