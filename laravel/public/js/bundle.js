@@ -1426,11 +1426,73 @@
 	{
 	    $(window).trigger('resize');
 
-	    $('.shift-wrap').on('mouseenter mousemove', function()
+	    $('.shift-wrap').each(function()
 	    {
-	        
+	        new Highlight(this);
 	    });
 	});
+
+	// Class to highlight the current time based on your mouse position
+	var Highlight = function(wrap)
+	{
+	    this.wrap = wrap;
+	    this.bind();
+	}
+
+	// Bind events
+	Highlight.prototype.bind = function()
+	{
+	    // Save the current scope
+	    var current = this;
+	    
+	    $(this.wrap).on('mouseenter', function(event)
+	    {
+	        // Save the Y position of the times header
+	        var position = $(current.wrap).find('.times').position();
+
+	        current.y = position.top;
+	        current.x = event.clientX;
+
+	        current.clear();
+	        current.check();
+	    });
+
+	    $(this.wrap).on('mousemove', function(event)
+	    {
+	        current.x = event.clientX;
+
+	        current.clear();
+	        current.check();
+	    });
+
+	    $(this.wrap).on('mouseleave', function(event)
+	    {
+	        current.clear();
+	    });
+	}
+
+	// Clear any previously active times
+	Highlight.prototype.clear = function()
+	{
+	    $(this.wrap).find('.time').removeClass('active');
+	}
+
+	// Check if the mouse is over a specific time
+	Highlight.prototype.check = function()
+	{
+	    // Adjust Y position based on scroll
+	    var scrollY = this.y - $(window).scroll().top;
+	    var target = document.elementFromPoint(this.x, scrollY);
+
+	    if($(target).hasClass('time'))
+	    {
+	        var group = $(target).parents('.group').index();
+	        var time = $(target).index();
+
+	        $(target).addClass('active');
+	        $(this.wrap).find('.background .group').eq(group).find('.time').eq(time).addClass('active');
+	    }
+	}
 
 
 /***/ }
