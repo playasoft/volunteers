@@ -58,62 +58,65 @@
 
                         <div class="shift-wrap">
                             @include('partials/timegrid')
-                            @foreach($event->departments as $department)
-                                <?php
 
-                                if($department->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
-                                    continue;
+                            <div class="department-wrap">
+                                @foreach($event->departments as $department)
+                                    <?php
 
-                                ?>
+                                    if($department->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                        continue;
 
-                                <div class="department">
-                                    <div class="title">
-                                        @can('edit-department')
-                                            <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
-                                        @else
-                                            <b>{{ $department->name }}</b><br>
-                                        @endcan
-                                    </div>
-                                    
-                                    <ul class="shifts">
-                                        @foreach($department->shifts as $shift)
-                                            <?php
+                                    ?>
 
-                                            if($shift->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
-                                                continue;
+                                    <div class="department">
+                                        <div class="title">
+                                            @can('edit-department')
+                                                <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
+                                            @else
+                                                <b>{{ $department->name }}</b><br>
+                                            @endcan
+                                        </div>
+                                        
+                                        <ul class="shifts">
+                                            @foreach($department->shifts as $shift)
+                                                <?php
 
-                                            ?>
+                                                if($shift->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                                    continue;
 
-                                            <li class="shift row">
-                                                <div class="title col-sm-2">
-                                                    @can('edit-shift')
-                                                        <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
-                                                    @else
-                                                        <b>{{ $shift->name }}</b>
-                                                    @endcan
-                                                </div>
+                                                ?>
 
-                                                <div class="slots col-sm-10">
-                                                    @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
-                                                        <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $shift->duration }}">
-                                                            @if(is_null($slot->user))
-                                                                <a href="/slot/{{ $slot->id }}/take" class="slot"></a>
-                                                            @else
-                                                                @if($slot->user->id === Auth::user()->id)
-                                                                    <a href="/slot/{{ $slot->id }}/release" class="slot taken">{{ $slot->user->name }}</a>
+                                                <li class="shift row">
+                                                    <div class="title col-sm-2">
+                                                        @can('edit-shift')
+                                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
+                                                        @else
+                                                            <b>{{ $shift->name }}</b>
+                                                        @endcan
+                                                    </div>
+
+                                                    <div class="slots col-sm-10">
+                                                        @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
+                                                            <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $shift->duration }}">
+                                                                @if(is_null($slot->user))
+                                                                    <a href="/slot/{{ $slot->id }}/take" class="slot"></a>
                                                                 @else
-                                                                    <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                                    @if($slot->user->id === Auth::user()->id)
+                                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken">{{ $slot->user->name }}</a>
+                                                                    @else
+                                                                        <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                                    @endif
                                                                 @endif
-                                                            @endif
-                                                        </span>
-                                                    @endforeach
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endforeach
-                        </div>
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endforeach
+                            </div> <!-- / .department-wrap -->
+                        </div> <!-- / .shift-wrap -->
                     </div>
                 @endforeach
             </div>

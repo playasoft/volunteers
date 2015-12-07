@@ -1,3 +1,6 @@
+body {
+  overflow-x: hidden; }
+
 section.content {
   margin-top: 4em; }
 
@@ -36,11 +39,21 @@ section.content {
   padding: 0;
   margin: 0; }
 
-.timegrid .times .time {
-  border-left: 1px solid #000; }
+.timegrid .times {
+  position: relative; }
+  .timegrid .times .time {
+    border-left: 1px solid #000; }
 
-.timegrid .background .time {
-  border-left: 1px solid #ccc; }
+.timegrid .background {
+  position: absolute;
+  right: 0;
+  height: 5.9em; }
+  .timegrid .background .group {
+    height: 100%; }
+  .timegrid .background .time {
+    border-left: 1px solid #ccc;
+    height: 100%;
+    margin-top: 0.2em; }
 
 .department {
   border-top: 1px solid #000;
@@ -74,8 +87,7 @@ section.content {
   text-align: center;
   height: 1.75em;
   font-size: 12pt;
-  margin-left: -0.25em;
-  margin-right: 0.30em;
+  margin-left: -1.4em;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
