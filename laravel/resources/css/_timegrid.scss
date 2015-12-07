@@ -8,17 +8,23 @@
     }
 }
 
-.grid-wrap {
-    padding-left: 3em;
-}
-
 .timegrid {
-    width: 50%;
-    margin: 0;
-    padding: 0;
+    .group {
+        width: 50%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .times {
+        .time {
+            border-left: 1px solid #000;
+        }
+    }
 
-    .time {
-        border-left: 1px solid #000;
+    .background {
+        .time {
+            border-left: 1px solid #ccc;
+        }
     }
 }
 

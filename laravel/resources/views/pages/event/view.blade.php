@@ -57,13 +57,7 @@
                         </div>
 
                         <div class="shift-wrap">
-                            <div class="row hidden-xs hidden-sm">
-                                <div class="col-sm-2"><!-- Spacing --></div>
-                                <div class="grid-wrap col-sm-10">
-                                    @include('partials/timegrid')
-                                </div>
-                            </div>
-                            
+                            @include('partials/timegrid')
                             @foreach($event->departments as $department)
                                 <?php
 

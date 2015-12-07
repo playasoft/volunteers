@@ -31,15 +31,16 @@ section.content {
 .shift-wrap ul {
   list-style: none; }
 
-.grid-wrap {
-  padding-left: 3em; }
-
-.timegrid {
+.timegrid .group {
   width: 50%;
-  margin: 0;
-  padding: 0; }
-  .timegrid .time {
-    border-left: 1px solid #000; }
+  padding: 0;
+  margin: 0; }
+
+.timegrid .times .time {
+  border-left: 1px solid #000; }
+
+.timegrid .background .time {
+  border-left: 1px solid #ccc; }
 
 .department {
   border-top: 1px solid #000;
