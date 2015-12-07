@@ -54,7 +54,7 @@
         @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts"])
         @include('partials/form/time', ['name' => 'end_time', 'label' => 'End Time', 'help' => "The time of day when the last shift ends"])
         @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift"])
-        @include('partials/roles', ['roles' => json_decode($department->roles), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/roles', ['help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}

@@ -67,8 +67,8 @@
 - [x] Display open / taken slots
 - [x] Javascript to position the times grid
 - [x] Javascript to resize slots based on duration
+- [ ] Trigger time hover based on width instead of elmentFromPoint
 - [ ] Javascript to show / hide days and shifts
-- [ ] Prevent signing up for shifts after events have passed
 
 
 ## Relationships
@@ -103,6 +103,7 @@
 - [x] Prevent non-authed users from viewing events
 - [x] Look into simplifying shift -> event relationships 
 - [x] Set up inheritance for form field partials
+- [ ] Prevent signing up for shifts after events have passed
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Mobile nav menu
 - [ ] Footer

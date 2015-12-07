@@ -33,16 +33,19 @@ class ShiftController extends Controller
         $input = $request->all();
         $department = Department::find($input['department_id']);
 
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
-
-        // Check if the current roles match the department roles
-        if($input['roles'] == $department->roles)
+        if(isset($input['roles']))
         {
-            // Unset the roles, use department as default instead
-            unset($input['roles']);
-        }
+            // Convert roles into JSON
+            $input['roles'] = json_encode($input['roles']);
 
+            // Check if the current roles match the department roles
+            if($input['roles'] == $department->roles)
+            {
+                // Unset the roles, use department as default instead
+                unset($input['roles']);
+            }
+        }
+        
         // Set start and end dates if not included 
         $input = Shift::setDates($department, $input);
         $input = Shift::setTimes($input);
