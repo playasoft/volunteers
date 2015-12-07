@@ -47,4 +47,9 @@ $(window).on('resize', function()
 $(document).ready(function()
 {
     $(window).trigger('resize');
+
+    $('.shift-wrap').on('mouseenter mousemove', function()
+    {
+        
+    });
 });

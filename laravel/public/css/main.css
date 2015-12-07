@@ -42,6 +42,7 @@ section.content {
 .timegrid .times {
   position: relative; }
   .timegrid .times .time {
+    padding-left: 0.5em;
     border-left: 1px solid #000; }
 
 .timegrid .background {
@@ -87,14 +88,14 @@ section.content {
   text-align: center;
   height: 1.75em;
   font-size: 12pt;
-  margin-left: -1.4em;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
   min-width: 100px; }
-  @media (min-width: 768px) {
+  @media (min-width: 992px) {
     .slot {
-      min-width: 100%; } }
+      min-width: 100%;
+      margin-left: -1.4em; } }
 
 .slot.taken {
   background-color: #d83664;
