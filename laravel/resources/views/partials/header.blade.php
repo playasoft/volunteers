@@ -9,7 +9,6 @@
                 <ul class="nav navbar-nav">
                     @if(Auth::user()->role == 'admin')
                         <li><a href="/event">New Event</a></li>
-                        <li><a href="/users">View Users</a></li>
                     @endif
 
                     <li><a href="/profile/shifts">Your Shifts</a></li>
