@@ -78,7 +78,7 @@
 - [x] Display open / taken slots
 - [x] Javascript to position the times grid
 - [x] Javascript to resize slots based on duration
-- [ ] Trigger time hover based on width instead of elmentFromPoint
+- [x] Trigger time hover based on width instead of elmentFromPoint
 - [ ] Javascript to show / hide days and shifts
 - [ ] Display burner name if available
 
