@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use Event;
 
 // Custom
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Events\UserRegistered;
 
 class UserController extends Controller
 {
@@ -34,6 +36,9 @@ class UserController extends Controller
 
         $user->save();
         $this->auth->loginUsingID($user->id);
+
+        // Send notification emails
+        Event::fire(new UserRegistered($user));
 
         $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
         return redirect('/');

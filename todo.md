@@ -64,6 +64,8 @@
 - [ ] Viewing your own profile
 - [ ] Editing your own profile
 - [ ] Viewing list of shifts you've signed up for
+- [ ] Admin list of profiles
+- [ ] Admin editing other profiles
 - [ ] About page
 
 
@@ -97,19 +99,22 @@
 - [x] User Registered
 - [x] Event Changed
 - [x] Slot Changed
+- [ ] File Uploaded
 
 ## Event Triggers
-- [-] When user is registered
+- [x] When user is registered
 - [ ] When event is edited or deleted
 - [ ] When a department is created, edited, or deleted
 - [ ] When a shift is created, edited, or deleted
 - [ ] When a slot is taken or released
+- [ ] When a file is uploaded
 
 ## Event Handlers
-- [-] Send user email when user is registered
-- [-] Send admin email when user is registered
+- [x] Send user email when user is registered
+- [x] Send admin email when user is registered
 - [ ] Notify users on an event page when the event is changed
 - [ ] Automatically display taken slots
+- [ ] Send admin email when a file is uploaded
 
 
 ## Misc
