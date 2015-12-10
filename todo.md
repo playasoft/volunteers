@@ -103,10 +103,10 @@
 
 ## Event Triggers
 - [x] When user is registered
-- [-] When event is edited or deleted
-- [-] When a department is created, edited, or deleted
-- [-] When a shift is created, edited, or deleted
-- [-] When a slot is taken or released
+- [x] When event is edited or deleted
+- [x] When a department is created, edited, or deleted
+- [x] When a shift is created, edited, or deleted
+- [x] When a slot is taken or released
 - [ ] When a file is uploaded
 
 ## Event Handlers

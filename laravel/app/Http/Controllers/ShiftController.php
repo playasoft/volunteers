@@ -12,6 +12,9 @@ use App\Models\Department;
 use App\Models\Shift;
 use App\Models\Slot;
 
+use App\Events\EventChanged;
+use Event;
+
 class ShiftController extends Controller
 {
     public function __construct()
@@ -53,6 +56,7 @@ class ShiftController extends Controller
 
         // Generate slots based on shift options
         Slot::generate($shift);
+        Event::fire(new EventChanged($event, ['type' => 'shift', 'status' => 'created']));
 
         $request->session()->flash('success', 'Your shift has been created.');
         return redirect('/event/' . $department->event->id);
@@ -110,6 +114,8 @@ class ShiftController extends Controller
         {
             Slot::generate($shift);
         }
+
+        Event::fire(new EventChanged($event, ['type' => 'shift', 'status' => 'edited']));
         
         $request->session()->flash('success', 'Shift has been updated.');
         return redirect('/event/' . $shift->department->event->id);
@@ -128,6 +134,8 @@ class ShiftController extends Controller
         $this->authorize('delete-shift');
         $event = $shift->department->event;
         $shift->delete();
+
+        Event::fire(new EventChanged($event, ['type' => 'shift', 'status' => 'deleted']));
 
         $request->session()->flash('success', 'Shift has been deleted.');
         return redirect('/event/' . $event->id);

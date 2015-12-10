@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 
+use App\Events\EventChanged;
+use Event;
+
 class EventController extends Controller
 {
     public function __construct()
@@ -95,6 +98,7 @@ class EventController extends Controller
         }
 
         $event->save();
+        Event::fire(new EventChanged($event, ['type' => 'event', 'status' => 'edited']));
 
         $request->session()->flash('success', 'Event has been updated.');
         return redirect('/event/' . $event->id);
@@ -112,6 +116,8 @@ class EventController extends Controller
     {
         $this->authorize('delete-event');
         $event->delete();
+
+        Event::fire(new EventChanged($event, ['type' => 'event', 'status' => 'deleted']));
 
         $request->session()->flash('success', 'Event has been deleted.');
         return redirect('/');
