@@ -113,7 +113,7 @@
 - [x] Send user email when user is registered
 - [x] Send admin email when user is registered
 - [-] Notify users on an event page when the event is changed
-- [-] Automatically display taken slots
+- [x] Automatically display taken slots
 - [ ] Send admin email when a file is uploaded
 
 

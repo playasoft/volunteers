@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <section class="event">
+    <section class="event" data-id="{{ $event->id }}">
         <div class="pull-right">
             @can('edit-event')
                 <a href="/event/{{ $event->id }}/edit" class="btn btn-primary">Edit Event</a>
@@ -99,12 +99,12 @@
                                                         @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
                                                             <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $shift->duration }}">
                                                                 @if(is_null($slot->user))
-                                                                    <a href="/slot/{{ $slot->id }}/take" class="slot"></a>
+                                                                    <a href="/slot/{{ $slot->id }}/take" class="slot" data-id="{{ $slot->id }}"></a>
                                                                 @else
                                                                     @if($slot->user->id === Auth::user()->id)
-                                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken">{{ $slot->user->name }}</a>
+                                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken" data-id="{{ $slot->id }}">{{ $slot->user->name }}</a>
                                                                     @else
-                                                                        <a class="slot taken col-sm-1">{{ $slot->user->name }}</a>
+                                                                        <a class="slot taken col-sm-1" data-id="{{ $slot->id }}">{{ $slot->user->name }}</a>
                                                                     @endif
                                                                 @endif
                                                             </span>
