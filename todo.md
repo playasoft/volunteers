@@ -103,17 +103,17 @@
 
 ## Event Triggers
 - [x] When user is registered
-- [ ] When event is edited or deleted
-- [ ] When a department is created, edited, or deleted
-- [ ] When a shift is created, edited, or deleted
-- [ ] When a slot is taken or released
+- [-] When event is edited or deleted
+- [-] When a department is created, edited, or deleted
+- [-] When a shift is created, edited, or deleted
+- [-] When a slot is taken or released
 - [ ] When a file is uploaded
 
 ## Event Handlers
 - [x] Send user email when user is registered
 - [x] Send admin email when user is registered
-- [ ] Notify users on an event page when the event is changed
-- [ ] Automatically display taken slots
+- [-] Notify users on an event page when the event is changed
+- [-] Automatically display taken slots
 - [ ] Send admin email when a file is uploaded
 
 
