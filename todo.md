@@ -20,36 +20,38 @@
  - [x] Dates
 
 - Departments
- - [x] Event
  - [x] Department name
  - [x] Description
  - [x] Allowed user groups
+ - [x] Event ID
  
 - Shifts
- - [x] Department
  - [x] Start
  - [x] End
  - [x] Duration
  - [x] Allowed user groups
+ - [x] Department ID
 
 - Slots
- - [x] Shift
- - [x] User
  - [x] Start
  - [x] End
+ - [x] Shift ID
+ - [x] User ID
 
 - User Data
- - [ ] Burner Name
- - [ ] Real Name
- - [ ] Birthday
+ - [x] Burner Name
+ - [x] Real Name
+ - [x] Birthday
+ - [x] User ID
 
 - User Uploads
- - [ ] Name
- - [ ] Description
- - [ ] File
- - [ ] Notes
- - [ ] Status
- - [ ] Admin
+ - [x] Name
+ - [x] Description
+ - [x] File
+ - [x] Notes
+ - [x] Status
+ - [x] User ID
+ - [x] Admin ID
 
 
 ## Pages
