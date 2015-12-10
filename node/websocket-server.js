@@ -17,7 +17,7 @@ function handler(req, res)
 
 io.on('connection', function(socket)
 {
-    //
+    console.log('User connected!');
 });
 
 redis.psubscribe('*', function(err, count)

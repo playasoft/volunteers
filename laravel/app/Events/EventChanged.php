@@ -35,4 +35,14 @@ class EventChanged extends Event implements ShouldBroadcast
     {
         return ['event-' . $this->event->id];
     }
+
+    /**
+     * Get the broadcast event name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'event-changed';
+    }
 }

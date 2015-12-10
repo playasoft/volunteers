@@ -35,4 +35,14 @@ class SlotChanged extends Event implements ShouldBroadcast
     {
         return ['event-' . $this->slot->event->id];
     }
+
+    /**
+     * Get the broadcast event name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'slot-changed';
+    }
 }
