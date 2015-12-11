@@ -63,9 +63,9 @@
 - [x] Create shift
 - [x] Edit shift
 - [x] Delete shift
-- [ ] Viewing your own profile
-- [ ] Editing your own profile
-- [ ] Viewing list of shifts you've signed up for
+- [-] Viewing your own profile
+- [-] Editing your own profile
+- [-] Viewing list of shifts you've signed up for
 - [ ] Admin list of profiles
 - [ ] Admin editing other profiles
 - [ ] About page
@@ -92,9 +92,9 @@
 - [x] Relationship between departments and shifts
 - [x] Relationship between shifts and slots
 - [x] Relationship between slots and users
-- [ ] Relationship between users and user data
-- [ ] Relationship between users and user uploads
-- [ ] Relationship between user uploads and admins
+- [x] Relationship between users and user data
+- [x] Relationship between users and user uploads
+- [x] Relationship between user uploads and admins
 
 
 ## Defined Events

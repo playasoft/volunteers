@@ -14,6 +14,7 @@
 // Home page
 Route::get('/', 'PageController@home');
 
+
 // User authentication routes
 Route::get('/register', 'PageController@view');
 Route::get('/login', 'PageController@view');
@@ -65,3 +66,9 @@ Route::post('/slot/{slot}/take', 'SlotController@take');
 
 Route::get('/slot/{slot}/release', 'SlotController@releaseForm');
 Route::post('/slot/{slot}/release', 'SlotController@release');
+
+
+// User profile routes
+Route::get('/profile', 'ProfileController@view');
+Route::get('/profile/edit', 'ProfileController@edit');
+Route::get('/profile/shifts', 'ProfileController@shifts');
