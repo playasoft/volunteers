@@ -63,9 +63,10 @@
 - [x] Create shift
 - [x] Edit shift
 - [x] Delete shift
-- [-] Viewing your own profile
+- [x] Viewing your own profile
 - [-] Editing your own profile
 - [-] Viewing list of shifts you've signed up for
+- [ ] Profile page to upload files
 - [ ] Admin list of profiles
 - [ ] Admin editing other profiles
 - [ ] About page

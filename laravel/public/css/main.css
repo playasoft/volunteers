@@ -114,3 +114,8 @@ section.content {
 .slot:hover, .slot.active {
   background-color: #eee;
   border: 1px solid #000; }
+
+.profile {
+  margin-bottom: 1em; }
+  .profile .title {
+    font-weight: bold; }

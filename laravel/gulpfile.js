@@ -25,7 +25,7 @@ var scss =
     // Watch SCSS for changes
     watch: function()
     {
-        gulp.watch('./resources/css/**/*.scss', ['scss']);
+        gulp.watch('./resources/css/**/**/*.scss', ['scss']);
     }
 }
 

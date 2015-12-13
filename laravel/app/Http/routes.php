@@ -71,4 +71,5 @@ Route::post('/slot/{slot}/release', 'SlotController@release');
 // User profile routes
 Route::get('/profile', 'ProfileController@view');
 Route::get('/profile/edit', 'ProfileController@edit');
+Route::get('/profile/upload', 'ProfileController@upload');
 Route::get('/profile/shifts', 'ProfileController@shifts');
