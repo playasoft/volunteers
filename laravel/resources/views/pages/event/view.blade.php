@@ -21,12 +21,12 @@
         
         <div>
             <label>Start Date</label>
-            {{ $event->start_date->format('Y-m-d') }}
+            {{ $event->start_date }}
         </div>
 
         <div>
             <label>End Date</label>
-            {{ $event->end_date->format('Y-m-d') }}
+            {{ $event->end_date }}
         </div>
         
         @if($event->description)

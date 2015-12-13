@@ -11,7 +11,6 @@ use App\Models\Department;
 use App\Models\Event;
 
 use App\Events\EventChanged;
-use Event;
 
 class DepartmentController extends Controller
 {
@@ -38,7 +37,7 @@ class DepartmentController extends Controller
 
         $department = Department::create($input);
 
-        Event::fire(new EventChanged($event, ['type' => 'department', 'status' => 'created']));
+        event(new EventChanged($department->event, ['type' => 'department', 'status' => 'created']));
 
         $request->session()->flash('success', 'Your department has been created.');
         return redirect('/event/' . $department->event->id);
@@ -62,7 +61,7 @@ class DepartmentController extends Controller
 
         $department->update($input);
 
-        Event::fire(new EventChanged($event, ['type' => 'department', 'status' => 'edited']));
+        event(new EventChanged($department->event, ['type' => 'department', 'status' => 'edited']));
 
         $request->session()->flash('success', 'Department has been updated.');
         return redirect('/event/' . $department->event->id);
@@ -82,7 +81,7 @@ class DepartmentController extends Controller
         $event = $department->event;
         $department->delete();
 
-        Event::fire(new EventChanged($event, ['type' => 'department', 'status' => 'deleted']));
+        event(new EventChanged($event, ['type' => 'department', 'status' => 'deleted']));
 
         $request->session()->flash('success', 'Department has been deleted.');
         return redirect('/event/' . $event->id);

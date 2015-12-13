@@ -6,7 +6,7 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use App\Models\Event;
+use App\Models\Event as EventModel;
 
 class EventChanged extends Event implements ShouldBroadcast
 {
@@ -20,7 +20,7 @@ class EventChanged extends Event implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Event $event, $change)
+    public function __construct(EventModel $event, $change)
     {
         $this->event = $event;
         $this->change = $change;

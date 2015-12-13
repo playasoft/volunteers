@@ -18,7 +18,7 @@
         @foreach($present as $event)
             <p>
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
-                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+                <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
             </p>
         @endforeach
 
@@ -32,7 +32,7 @@
         @foreach($future as $event)
             <p>
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
-                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+                <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
             </p>
         @endforeach
 
@@ -46,7 +46,7 @@
         @foreach($past as $event)
             <p>
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
-                <i>from {{ $event->start_date->format('Y-m-d') }} until {{ $event->end_date->format('Y-m-d') }}</i>
+                <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
             </p>
         @endforeach
 

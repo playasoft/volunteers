@@ -23,14 +23,17 @@
             <tbody>
                 @foreach($upcoming as $slot)
                     <tr>
-                        <td>{{ $slot->event->name }}</td>
+                        <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
                         <td>{{ $slot->department->name }}</td>
                         <td>{{ $slot->shift->name }}</td>
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>
-                        <td><a href="/slot/{{ $slot->id }}/release" class="btn btn-danger">Delete</a></td>
-                    </tr>                
+                        <td>
+                            <a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">Description</a>
+                            <a href="/slot/{{ $slot->id }}/release" class="btn btn-danger">Cancel</a>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -48,6 +51,7 @@
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
 
@@ -60,6 +64,7 @@
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>
+                        <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">Description</a></td>
                     </tr>                
                 @endforeach
             </tbody>

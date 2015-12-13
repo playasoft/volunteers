@@ -11,7 +11,6 @@ class Event extends Model
     use SoftDeletes;
     
     protected $fillable = ['name', 'description', 'start_date', 'end_date'];
-    protected $dates = ['start_date', 'end_date'];
 
     // Helper functions to select events by date
     public function future()
@@ -42,16 +41,20 @@ class Event extends Model
     // Helper function to generate a list of days the event will take place
     public function days()
     {
+        // Use carbon!
+        $start_date = new Carbon($this->start_date);
+        $end_date = new Carbon($this->end_date);
+        
         // Array for output
         $days = [];
         
         // This only works when the start date is before the end date
-        if($this->start_date->lte($this->end_date))
+        if($start_date->lte($end_date))
         {
             // $date keeps track of the current date as we loop towards the end
-            $date = $this->start_date;
+            $date = $start_date;
 
-            while($date->lte($this->end_date))
+            while($date->lte($end_date))
             {
                 $days[] = (object)
                 [
