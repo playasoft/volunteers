@@ -69,6 +69,7 @@
 - [-] Profile page to upload files
 - [ ] Admin list of profiles
 - [ ] Admin editing other profiles
+- [ ] Admin list of pending uploads
 - [ ] About page
 
 

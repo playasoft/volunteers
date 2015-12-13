@@ -10,6 +10,12 @@ use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
+    // All profile functions require authentication
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     // View your profile
     function view()
     {

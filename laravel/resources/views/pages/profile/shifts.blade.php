@@ -30,7 +30,7 @@
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>
                         <td>
-                            <a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">Description</a>
+                            <a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a>
                             <a href="/slot/{{ $slot->id }}/release" class="btn btn-danger">Cancel</a>
                         </td>
                     </tr>
@@ -64,7 +64,7 @@
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>
-                        <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">Description</a></td>
+                        <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a></td>
                     </tr>                
                 @endforeach
             </tbody>
