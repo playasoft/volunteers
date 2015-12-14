@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
+use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\UploadRequest;
+
 class ProfileController extends Controller
 {
     // All profile functions require authentication
@@ -46,7 +49,7 @@ class ProfileController extends Controller
     }
 
     // Handle editing profiles
-    function edit()
+    function edit(ProfileRequest $request)
     {
         return "// Edit";
     }
@@ -59,7 +62,7 @@ class ProfileController extends Controller
     }
 
     // Handle uploading files
-    function upload()
+    function upload(UploadRequest $request)
     {
         return "// Upload";
     }
