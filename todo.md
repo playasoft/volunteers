@@ -104,6 +104,8 @@
 - [x] Event Changed
 - [x] Slot Changed
 - [ ] File Uploaded
+- [ ] File Changed
+
 
 ## Event Triggers
 - [x] When user is registered
@@ -112,6 +114,8 @@
 - [x] When a shift is created, edited, or deleted
 - [x] When a slot is taken or released
 - [ ] When a file is uploaded
+- [ ] When a file is approved or denied
+
 
 ## Event Handlers
 - [x] Send user email when user is registered
@@ -119,6 +123,7 @@
 - [-] Notify users on an event page when the event is changed
 - [x] Automatically display taken slots
 - [ ] Send admin email when a file is uploaded
+- [ ] Send a user email when a file is approved or denied
 
 
 ## Misc
