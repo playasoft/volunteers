@@ -23,20 +23,6 @@ class ProfileController extends Controller
         return view('pages/profile/view', compact('user'));
     }
 
-    // Edit your profile
-    function edit()
-    {
-        $user = Auth::user();
-        return view('pages/profile/edit', compact('user'));
-    }
-
-    // Upload a file
-    function upload()
-    {
-        $user = Auth::user();
-        return view('pages/profile/upload', compact('user'));
-    }
-
     // View a list of your shifts
     function shifts()
     {
@@ -50,5 +36,31 @@ class ProfileController extends Controller
                                 ->orderBy('start_time', 'desc')->get();
                                 
         return view('pages/profile/shifts', compact('user', 'upcoming', 'past'));
+    }
+
+    // View page to edit your profile
+    function editForm()
+    {
+        $user = Auth::user();
+        return view('pages/profile/edit', compact('user'));
+    }
+
+    // Handle editing profiles
+    function edit()
+    {
+        return "// Edit";
+    }
+
+    // View page to upload a file
+    function uploadForm()
+    {
+        $user = Auth::user();
+        return view('pages/profile/upload', compact('user'));
+    }
+
+    // Handle uploading files
+    function upload()
+    {
+        return "// Upload";
     }
 }
