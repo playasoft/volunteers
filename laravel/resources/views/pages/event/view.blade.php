@@ -16,7 +16,7 @@
         <hr>
 
         @if($event->image)
-            <img class="pull-right" src="/img/upload/{{ $event->image }}">
+            <img class="pull-right" src="/uploads/event/{{ $event->image }}">
         @endif
         
         <div>

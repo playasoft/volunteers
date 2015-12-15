@@ -27,9 +27,9 @@ class EventController extends Controller
         if($request->hasFile('image'))
         {
             // Create upload folder if it doesn't exist
-            if(!file_exists(public_path() . '/img/upload'))
+            if(!file_exists(public_path() . '/uploads/event'))
             {
-                mkdir(public_path() . '/img/upload', 0755, true);
+                mkdir(public_path() . '/uploads/event', 0755, true);
             }
 
             // Make sure the original filename is sanitized
@@ -38,7 +38,7 @@ class EventController extends Controller
 
             // Move file to uploads directory
             $fileName = time() . '-' . $fileName;
-            $request->file('image')->move(public_path() . '/img/upload', $fileName);
+            $request->file('image')->move(public_path() . '/uploads/event', $fileName);
         }
 
         return $fileName;
