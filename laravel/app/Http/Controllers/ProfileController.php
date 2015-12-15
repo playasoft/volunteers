@@ -11,6 +11,10 @@ use Carbon\Carbon;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\UploadRequest;
 
+use App\Models\User;
+use App\Models\UserData;
+use App\Models\UserUpload;
+
 class ProfileController extends Controller
 {
     // All profile functions require authentication
@@ -64,6 +68,32 @@ class ProfileController extends Controller
     // Handle uploading files
     function upload(UploadRequest $request)
     {
-        return "// Upload";
+        // Create upload folder if it doesn't exist
+        if(!file_exists(public_path() . '/uploads/user'))
+        {
+            mkdir(public_path() . '/uploads/user', 0755, true);
+        }
+
+        // Make sure the original filename is sanitized
+        $file = pathinfo($request->file('file')->getClientOriginalName());
+        $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+
+        // Move file to uploads directory
+        $fileName = time() . '-' . $fileName;
+        $request->file('file')->move(public_path() . '/uploads/user', $fileName);
+
+        // Create a new user upload
+        $upload = new UserUpload(); 
+        $upload->file = $fileName;
+        $upload->status = 'pending';
+        $upload->user_id = Auth::user()->id;
+        $upload->save();
+
+        // Save additional form data
+        $input = $request->all();
+        $upload->update($input);
+
+        $request->session()->flash('success', 'Your file was uploaded.');
+        return redirect('/profile');
     }
 }

@@ -66,7 +66,7 @@
 - [x] Viewing your own profile
 - [-] Editing your own profile
 - [x] Viewing list of shifts you've signed up for
-- [-] Profile page to upload files
+- [x] Profile page to upload files
 - [ ] Admin list of profiles
 - [ ] Admin editing other profiles
 - [ ] Admin list of pending uploads
@@ -103,7 +103,7 @@
 - [x] User Registered
 - [x] Event Changed
 - [x] Slot Changed
-- [ ] File Uploaded
+- [-] File Uploaded
 - [ ] File Changed
 
 
@@ -113,7 +113,7 @@
 - [x] When a department is created, edited, or deleted
 - [x] When a shift is created, edited, or deleted
 - [x] When a slot is taken or released
-- [ ] When a file is uploaded
+- [-] When a file is uploaded
 - [ ] When a file is approved or denied
 
 
@@ -122,7 +122,7 @@
 - [x] Send admin email when user is registered
 - [-] Notify users on an event page when the event is changed
 - [x] Automatically display taken slots
-- [ ] Send admin email when a file is uploaded
+- [-] Send admin email when a file is uploaded
 - [ ] Send a user email when a file is approved or denied
 
 
@@ -132,5 +132,6 @@
 - [x] Set up inheritance for form field partials
 - [ ] Prevent signing up for shifts after events have passed
 - [ ] Restrict editing event IDs when editing departments
+- [ ] Prevent users from uploading more than 3 files at a time
 - [ ] Mobile nav menu
 - [ ] Footer
