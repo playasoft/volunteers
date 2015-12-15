@@ -8,8 +8,8 @@
         @include('partials/form/text', ['name' => 'name', 'label' => 'Event Name', 'placeholder' => "What's it called?", 'value' => $event->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'Tell me as much as you want', 'value' => $event->description])
         @include('partials/form/file', ['name' => 'image', 'label' => 'Promotional Image / Logo', 'value' => $event->image])
-        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'value' => $event->start_date->format('Y-m-d')])
-        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'value' => $event->end_date->format('Y-m-d')])
+        @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'value' => $event->start_date])
+        @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'value' => $event->end_date])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $event->id }}" class="btn btn-primary">Cancel</a>
