@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,16 +20,28 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('hashed', function($attribute, $value, $parameters)
         {
-            $user = User::where('name', Input::get('name'))->get();
-
-            if($user->count())
+            // If we're already logged in
+            if(Auth::check())
             {
-                $user = $user[0];
-                
-                if(Hash::check($value, $user->password))
+                $user = Auth::user();
+            }
+            else
+            {
+                // Otherwise, try to get the username from form input
+                $user = User::where('name', Input::get('name'))->get();
+
+                if(!$user->count())
                 {
-                    return true;
+                    return false;
                 }
+
+                $user = $user[0];
+            }
+            
+                
+            if(Hash::check($value, $user->password))
+            {
+                return true;
             }
             
             return false;

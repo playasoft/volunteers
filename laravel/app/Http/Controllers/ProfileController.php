@@ -55,7 +55,27 @@ class ProfileController extends Controller
     // Handle editing profiles
     function edit(ProfileRequest $request)
     {
-        return "// Edit";
+        $input = $request->all();
+        $user = Auth::user();
+
+        if($input['type'] == 'account')
+        {
+            $user->name = $input['name'];
+            $user->email = $input['email'];
+            $user->save();
+        }
+        elseif($input['type'] == 'password')
+        {
+            $user->password = bcrypt($input['new_password']);
+            $user->save();
+        }
+        elseif($input['type'] == 'data')
+        {
+            
+        }
+
+        $request->session()->flash('success', 'Your profile was updated.');
+        return redirect('/profile');
     }
 
     // View page to upload a file
