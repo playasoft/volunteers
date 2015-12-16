@@ -14,6 +14,7 @@ use App\Http\Requests\UploadRequest;
 use App\Models\User;
 use App\Models\UserData;
 use App\Models\UserUpload;
+use App\Events\FileUploaded;
 
 class ProfileController extends Controller
 {
@@ -71,6 +72,9 @@ class ProfileController extends Controller
         }
         elseif($input['type'] == 'data')
         {
+            // Remove empty inputs
+            $input = array_filter($input);
+            
             // Create new row in user data if none exists
             if(is_null($user->data))
             {
@@ -124,6 +128,8 @@ class ProfileController extends Controller
         // Save additional form data
         $input = $request->all();
         $upload->update($input);
+
+        event(new FileUploaded($upload));
 
         $request->session()->flash('success', 'Your file was uploaded.');
         return redirect('/profile');
