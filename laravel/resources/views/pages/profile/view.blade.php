@@ -43,9 +43,26 @@
         <hr>
         <h2>Uploaded Files</h2>
 
-        @foreach($user->uploads as $upload)
-            // Insert table here
-            {{ print_r($upload) }}
-        @endforeach
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>File</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($user->uploads as $upload)
+                    <tr>
+                        <td>{{ $upload->name }}</td>
+                        <td>{{ $upload->description }}</td>
+                        <td><a href='/uploads/user/{{ $upload->file }}'>{{ $upload->file }}</a></td>
+                        <td>{{ ucwords($upload->status) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @endif
 @endsection
