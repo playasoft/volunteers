@@ -64,7 +64,7 @@
 - [x] Edit shift
 - [x] Delete shift
 - [x] Viewing your own profile
-- [-] Editing your own profile
+- [x] Editing your own profile
 - [x] Viewing list of shifts you've signed up for
 - [x] Profile page to upload files
 - [ ] Admin list of profiles
@@ -86,7 +86,6 @@
 - [x] Javascript to resize slots based on duration
 - [x] Trigger time hover based on width instead of elmentFromPoint
 - [-] Display burner name if available
-- [ ] Javascript to show / hide days and shifts
 
 
 ## Relationships

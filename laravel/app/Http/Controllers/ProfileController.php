@@ -71,7 +71,17 @@ class ProfileController extends Controller
         }
         elseif($input['type'] == 'data')
         {
-            
+            // Create new row in user data if none exists
+            if(is_null($user->data))
+            {
+                $data = new UserData();
+                $data->user_id = $user->id;
+                $data->save($input);
+            }
+            else
+            {
+                $user->data->update($input);
+            }
         }
 
         $request->session()->flash('success', 'Your profile was updated.');
