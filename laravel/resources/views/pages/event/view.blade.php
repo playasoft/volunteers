@@ -102,9 +102,9 @@
                                                                     <a href="/slot/{{ $slot->id }}/take" class="slot" data-id="{{ $slot->id }}"></a>
                                                                 @else
                                                                     @if($slot->user->id === Auth::user()->id)
-                                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken" data-id="{{ $slot->id }}">{{ $slot->user->name }}</a>
+                                                                        <a href="/slot/{{ $slot->id }}/release" class="slot taken" data-id="{{ $slot->id }}">{{ (!is_null($slot->user->data) && !is_null($slot->user->data->burner_name)) ? $slot->user->data->burner_name : $slot->user->name }}</a>
                                                                     @else
-                                                                        <a class="slot taken col-sm-1" data-id="{{ $slot->id }}">{{ $slot->user->name }}</a>
+                                                                        <a class="slot taken col-sm-1" data-id="{{ $slot->id }}">{{ (!is_null($slot->user->data) && !is_null($slot->user->data->burner_name)) ? $slot->user->data->burner_name : $slot->user->name }}</a>
                                                                     @endif
                                                                 @endif
                                                             </span>

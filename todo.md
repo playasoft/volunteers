@@ -85,7 +85,7 @@
 - [x] Javascript to position the times grid
 - [x] Javascript to resize slots based on duration
 - [x] Trigger time hover based on width instead of elmentFromPoint
-- [-] Display burner name if available
+- [x] Display burner name if available
 
 
 ## Relationships
