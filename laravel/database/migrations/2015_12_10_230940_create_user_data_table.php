@@ -12,7 +12,8 @@ class CreateUserDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_data', function (Blueprint $table) {
+        Schema::create('user_data', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('burner_name')->nullable();
             $table->string('real_name')->nullable();

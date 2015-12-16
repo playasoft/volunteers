@@ -76,7 +76,9 @@ class ProfileController extends Controller
             {
                 $data = new UserData();
                 $data->user_id = $user->id;
-                $data->save($input);
+                $data->save();
+
+                $data->update($input);
             }
             else
             {
