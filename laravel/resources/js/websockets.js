@@ -12,7 +12,12 @@ $(document).ready(function()
 
     socket.on('event-'+event+':event-changed', function(data)
     {
-        console.log("Event changed!", data);
+        var reload = confirm('An administrator made changes to this event while you were viewing it.\nWould you like to refresh the page?');
+
+        if(reload)
+        {
+            window.location.reload();
+        }
     });
 
     socket.on('event-'+event+':slot-changed', function(data)

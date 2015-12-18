@@ -119,9 +119,9 @@
 ## Event Handlers
 - [x] Send user email when user is registered
 - [x] Send admin email when user is registered
-- [-] Notify users on an event page when the event is changed
+- [x] Notify users on an event page when the event is changed
 - [x] Automatically display taken slots
-- [-] Send admin email when a file is uploaded
+- [x] Send admin email when a file is uploaded
 - [-] Send a user email when a file is approved or denied
 
 
@@ -130,6 +130,7 @@
 - [x] Look into simplifying shift -> event relationships 
 - [x] Set up inheritance for form field partials
 - [ ] Prevent signing up for shifts after events have passed
+- [ ] Restrict signing up for slots based user role
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Prevent users from uploading more than 3 files at a time
 - [ ] Mobile nav menu
