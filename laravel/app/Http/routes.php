@@ -11,8 +11,9 @@
 |
 */
 
-// Home page
+// Basic pages
 Route::get('/', 'PageController@home');
+Route::get('/about', 'PageController@view');
 
 
 // User authentication routes
@@ -78,3 +79,11 @@ Route::post('/profile/edit', 'ProfileController@edit');
 Route::get('/profile/upload', 'ProfileController@uploadForm');
 Route::post('/profile/upload', 'ProfileController@upload');
 
+
+// Admin routes
+Route::get('/users', 'AdminController@userList');
+Route::get('/user/{user}', 'AdminController@userProfile');
+Route::post('/user/{user}', 'AdminController@userEdit');
+
+Route::get('/uploads', 'AdminController@uploadList');
+Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 

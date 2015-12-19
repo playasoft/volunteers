@@ -9,13 +9,14 @@
         </p>
 
         <p>
-            There are probably lots of other festivals that have similar systems, but I've never used them. :)
+            There are probably lots of other things that have similar systems, but I've never used them. :)
         </p>
 
         <hr>
         
         <p>
-            <a class="btn btn-primary btn-lg" href="/register" role="button">Register an Account</a>
+            <a class="btn btn-primary btn-lg" href="/about" role="button">Learn More</a>
+            <a class="btn btn-success btn-lg" href="/register" role="button">Register an Account</a>
         </p>
     </div>
 @endsection

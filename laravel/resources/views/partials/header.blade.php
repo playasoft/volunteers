@@ -5,15 +5,18 @@
         </div>
 
         <div class="collapse navbar-collapse"> 
-            @if(Auth::check())
-                <ul class="nav navbar-nav">
-                    @if(Auth::user()->role == 'admin')
-                        <li><a href="/event">New Event</a></li>
-                    @endif
+            <ul class="nav navbar-nav">
+                <li><a href="/about">About</a></li>
+                
+                @if(Auth::check())
+                        @if(Auth::user()->role == 'admin')
+                            <li><a href="/event">New Event</a></li>
+                            <li><a href="/users">User List</a></li>
+                        @endif
 
-                    <li><a href="/profile/shifts">Your Shifts</a></li>
-                </ul>
-            @endif
+                        <li><a href="/profile/shifts">Your Shifts</a></li>
+                @endif
+            </ul>
             
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::check())

@@ -30,6 +30,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('department', 'App\Models\Department');
         $router->model('shift', 'App\Models\Shift');
         $router->model('slot', 'App\Models\Slot');
+        $router->model('user', 'App\Models\User');
+        $router->model('upload', 'App\Models\UserUpload');
     }
 
     /**
@@ -40,7 +42,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace], function ($router) {
+        $router->group(['namespace' => $this->namespace], function ($router)
+        {
             require app_path('Http/routes.php');
         });
     }

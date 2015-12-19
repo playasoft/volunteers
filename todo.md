@@ -67,10 +67,10 @@
 - [x] Editing your own profile
 - [x] Viewing list of shifts you've signed up for
 - [x] Profile page to upload files
-- [ ] Admin list of profiles
-- [ ] Admin editing other profiles
-- [ ] Admin list of pending uploads
-- [ ] About page
+- [-] Admin list of profiles
+- [-] Admin list of pending uploads
+- [-] Admin editing other profiles
+- [-] About page
 
 
 ## Shift Availability Table
