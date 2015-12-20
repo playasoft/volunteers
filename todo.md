@@ -129,7 +129,7 @@
 - [x] Prevent non-authed users from viewing events
 - [x] Look into simplifying shift -> event relationships 
 - [x] Set up inheritance for form field partials
-- [ ] Prevent signing up for shifts after events have passed
+- [x] Prevent signing up for shifts after events have passed
 - [ ] Restrict signing up for slots based user role
 - [ ] Restrict editing event IDs when editing departments
 - [ ] Prevent users from uploading more than 3 files at a time

@@ -121,11 +121,4 @@ class EventController extends Controller
         $request->session()->flash('success', 'Event has been deleted.');
         return redirect('/');
     }
-
-    // View grid of time slots for an event
-    public function viewGrid(Request $request, Event $event)
-    {
-        return view('pages/event/grid', compact('event'));
-    }
-
 }

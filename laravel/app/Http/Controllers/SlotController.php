@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Events\SlotChanged;
 use Event;
+use Carbon\Carbon;
 
 class SlotController extends Controller
 {
@@ -21,6 +22,19 @@ class SlotController extends Controller
         $this->middleware('auth');
     }
 
+    // Helper function to determine if an event has passed
+    private function eventHasPassed(Slot $slot)
+    {
+        $start_date = new Carbon($slot->start_date);
+
+        if($start_date->lt(Carbon::now()))
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
     // View form to take an existing slot
     public function takeForm(Request $request, Slot $slot)
     {
@@ -33,17 +47,24 @@ class SlotController extends Controller
     {
         $this->authorize('take-slot');
 
-        if(is_null($slot->user))
+        if($this->eventHasPassed($slot))
         {
-            $slot->user_id = Auth::user()->id;
-            $slot->save();
-            
-            Event::fire(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
-            $request->session()->flash('success', 'You signed up for a volunteer shift.');
+            $request->session()->flash('error', 'This event has already passed, you are no longer able to sign up for shifts.');
         }
         else
         {
-            $request->session()->flash('error', 'This slot has already been taken by someone else.');
+            if(is_null($slot->user))
+            {
+                $slot->user_id = Auth::user()->id;
+                $slot->save();
+                
+                Event::fire(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
+                $request->session()->flash('success', 'You signed up for a volunteer shift.');
+            }
+            else
+            {
+                $request->session()->flash('error', 'This slot has already been taken by someone else.');
+            }
         }
         
         return redirect('/event/' . $slot->event->id);
@@ -61,19 +82,26 @@ class SlotController extends Controller
     {
         $this->authorize('release-slot');
 
-        if(!is_null($slot->user) && $slot->user->id === Auth::user()->id)
+        if($this->eventHasPassed($slot))
         {
-            $slot->user_id = null;
-            $slot->save();
-
-            Event::fire(new SlotChanged($slot, ['status' => 'released']));
-            $request->session()->flash('success', 'You are no longer volunteering for your shift.');
+            $request->session()->flash('error', 'This event has already passed, you are no longer able to sign up for shifts.');
         }
         else
         {
-            $request->session()->flash('error', 'You are not currently scheduled to volunteer for this shift.');
-        }
+            if(!is_null($slot->user) && $slot->user->id === Auth::user()->id)
+            {
+                $slot->user_id = null;
+                $slot->save();
 
+                Event::fire(new SlotChanged($slot, ['status' => 'released']));
+                $request->session()->flash('success', 'You are no longer volunteering for your shift.');
+            }
+            else
+            {
+                $request->session()->flash('error', 'You are not currently scheduled to volunteer for this shift.');
+            }
+        }
+        
         return redirect('/event/' . $slot->event->id);
     }
 }
