@@ -132,7 +132,7 @@
 - [x] Prevent signing up for shifts after events have passed
 - [x] Restrict signing up for slots based user role
 - [-] Prevent users from uploading more than 3 files at a time
-- [ ] Restrict editing event IDs when editing departments
+- [-] Restrict editing event IDs when editing departments
 - [ ] Mobile nav menu
 - [ ] Footer
 

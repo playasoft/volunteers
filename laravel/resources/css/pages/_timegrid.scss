@@ -75,7 +75,17 @@
     position: relative;
 }
 
+.slot-wrap {
+    overflow: hidden;
+
+    @media (min-width: 992px) {
+        margin-left: -1.7em;
+    }
+}
+
 .slot {
+    overflow: hidden;
+    text-overflow: ellipsis;
     background-color: #ccc;
     border: 1px solid #fff;
     border-radius: 1em;
@@ -85,14 +95,12 @@
     text-align: center;
     height: 1.75em;
     font-size: 12pt;
-    overflow: hidden;
-    text-overflow: ellipsis;
     cursor: pointer;
     min-width: 100px;
 
     @media (min-width: 992px) {
         min-width: 100%;
-        margin-left: -1.4em;
+        max-width: 100%;
     }
 }
 

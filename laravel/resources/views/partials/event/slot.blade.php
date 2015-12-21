@@ -19,7 +19,7 @@ else
     // If the slot is taken by the current user, display a link to the release page
     if($slot->user->id === Auth::user()->id)
     {
-        $href = "/slot/{{ $slot->id }}/release";
+        $href = "/slot/{$slot->id}/release";
     }
 
     // If the user has profile data saved, and has a burner name
@@ -45,5 +45,5 @@ if($start_date->lt(\Carbon\Carbon::now()))
 ?>
 
 <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $shift->duration }}">
-    <a {!! $href !!} class="{{ $class }}" data-id="{{ $slot->id }}">{{ $name }}</a>
+    <a {!! $href !!} class="{{ $class }}" data-id="{{ $slot->id }}" title="{{ $name }}">{{ $name }}</a>
 </span>
