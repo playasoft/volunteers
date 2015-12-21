@@ -114,9 +114,9 @@ class ProfileController extends Controller
         }
         
         // Create upload folder if it doesn't exist
-        if(!file_exists(public_path() . '/uploads/user'))
+        if(!file_exists(public_path() . '/files/user'))
         {
-            mkdir(public_path() . '/uploads/user', 0755, true);
+            mkdir(public_path() . '/files/user', 0755, true);
         }
 
         // Make sure the original filename is sanitized
@@ -125,7 +125,7 @@ class ProfileController extends Controller
 
         // Move file to uploads directory
         $fileName = time() . '-' . $fileName;
-        $request->file('file')->move(public_path() . '/uploads/user', $fileName);
+        $request->file('file')->move(public_path() . '/files/user', $fileName);
 
         // Create a new user upload
         $upload = new UserUpload(); 

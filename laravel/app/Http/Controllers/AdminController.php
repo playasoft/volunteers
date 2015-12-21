@@ -12,13 +12,13 @@ class AdminController extends Controller
     // List of users
     function userList()
     {
-        return "// todo";
+        return view('pages/admin/user-list');
     }
 
     // View an indivual user profile
     function userProfile()
     {
-        return "// todo";
+        return view('pages/admin/user-profile');
     }
 
     // Update information about a user
@@ -30,7 +30,7 @@ class AdminController extends Controller
     // List of uploaded files
     function uploadList()
     {
-        return "// todo";
+        return view('pages/admin/user-uploads');
     }
 
     // Update information about an uploaded file

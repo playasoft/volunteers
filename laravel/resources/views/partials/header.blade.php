@@ -9,12 +9,13 @@
                 <li><a href="/about">About</a></li>
                 
                 @if(Auth::check())
+                        <li><a href="/profile/shifts">Your Shifts</a></li>
+
                         @if(Auth::user()->role == 'admin')
                             <li><a href="/event">New Event</a></li>
-                            <li><a href="/users">User List</a></li>
+                            <li><a href="/users">Users</a></li>
+                            <li><a href="/uploads">Uploads</a></li>
                         @endif
-
-                        <li><a href="/profile/shifts">Your Shifts</a></li>
                 @endif
             </ul>
             

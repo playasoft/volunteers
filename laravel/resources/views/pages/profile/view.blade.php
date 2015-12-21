@@ -58,7 +58,7 @@
                     <tr>
                         <td>{{ $upload->name }}</td>
                         <td>{{ $upload->description }}</td>
-                        <td><a href='/uploads/user/{{ $upload->file }}'>{{ $upload->file }}</a></td>
+                        <td><a href='/files/user/{{ $upload->file }}'>{{ $upload->file }}</a></td>
                         <td>{{ ucwords($upload->status) }}</td>
                     </tr>
                 @endforeach
