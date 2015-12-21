@@ -9,7 +9,7 @@ class Department extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['event_id', 'name', 'description', 'roles'];
+    protected $fillable = ['name', 'description', 'roles'];
 
     // Departments belong to an event
     public function event()

@@ -35,8 +35,11 @@ class DepartmentController extends Controller
         // Convert roles into JSON
         $input['roles'] = json_encode($input['roles']);
 
-        $department = Department::create($input);
-
+        $department = new Department;
+        $department->event_id = $input['event_id'];
+        $department->save();
+        $department->update($input);
+        
         event(new EventChanged($department->event, ['type' => 'department', 'status' => 'created']));
 
         $request->session()->flash('success', 'Your department has been created.');
