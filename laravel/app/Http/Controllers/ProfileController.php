@@ -104,6 +104,15 @@ class ProfileController extends Controller
     // Handle uploading files
     function upload(UploadRequest $request)
     {
+        $user = Auth::user();
+
+        // If this user already has at least 3 pending uploads, tell them to wait
+        if($user->uploads->where('status', 'pending')->count() >= 3)
+        {
+            $request->session()->flash('error', "You've already uploaded 3 files. Please wait for an admin to review them before uploading more.");
+            return redirect('/profile');
+        }
+        
         // Create upload folder if it doesn't exist
         if(!file_exists(public_path() . '/uploads/user'))
         {
@@ -122,7 +131,7 @@ class ProfileController extends Controller
         $upload = new UserUpload(); 
         $upload->file = $fileName;
         $upload->status = 'pending';
-        $upload->user_id = Auth::user()->id;
+        $upload->user_id = $User->id;
         $upload->save();
 
         // Save additional form data
