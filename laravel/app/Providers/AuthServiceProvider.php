@@ -27,13 +27,15 @@ class AuthServiceProvider extends ServiceProvider
         // General permissions for all authed users
         'auth' =>
         [
-            'take-slot',
-            'release-slot',
-            'view-self'
+            'take-volunteer-slot',
+            'release-volunteer-slot',
+            'view-self',
         ],
         
         'admin' =>
         [
+            'take-admin-slot',
+            'release-admin-slot',
             'create-event',
             'edit-event',
             'delete-event',
@@ -44,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
             'edit-shift',
             'delete-shift',
             'view-user',
-            'edit-user'
+            'edit-user',
         ],
 
         'volunteer' =>
@@ -58,16 +60,19 @@ class AuthServiceProvider extends ServiceProvider
             'edit-shift',
             'delete-shift',
             'take-veteran-slot',
+            'release-veteran-slot',
         ],
 
         'medical' =>
         [
             'take-medical-slot',
+            'release-medical-slot',
         ],
 
         'fire' =>
         [
             'take-fire-slot',
+            'release-fire-slot',
         ]
     ];
 
