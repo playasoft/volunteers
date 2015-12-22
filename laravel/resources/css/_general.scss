@@ -18,3 +18,9 @@ section.content {
 .header-buttons {
     margin-top: 1.4em;
 }
+
+a.save {
+    cursor: pointer;
+    opacity: 0;
+    transition: all 1s;
+}

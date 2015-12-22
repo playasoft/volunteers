@@ -67,8 +67,8 @@
 - [x] Editing your own profile
 - [x] Viewing list of shifts you've signed up for
 - [x] Profile page to upload files
-- [-] Admin list of profiles
-- [-] Admin list of pending uploads
+- [x] Admin list of profiles
+- [x] Admin list of pending uploads
 - [-] Admin editing other profiles
 - [-] About page
 
