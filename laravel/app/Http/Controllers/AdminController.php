@@ -20,13 +20,13 @@ class AdminController extends Controller
     }
 
     // View an indivual user profile
-    function userProfile()
+    function userProfile(User $user)
     {
-        return view('pages/admin/user-profile');
+        return view('pages/admin/user-profile', compact('user'));
     }
 
     // Update information about a user
-    function userEdit()
+    function userEdit(User $user)
     {
         return "// todo";
     }

@@ -69,7 +69,7 @@
 - [x] Profile page to upload files
 - [x] Admin list of profiles
 - [x] Admin list of pending uploads
-- [-] Admin editing other profiles
+- [x] Admin editing other profiles
 - [-] About page
 
 
