@@ -133,6 +133,7 @@
 - [x] Restrict signing up for slots based user role
 - [x] Prevent users from uploading more than 3 files at a time
 - [x] Restrict editing event IDs when editing departments
-- [ ] Mobile nav menu
+- [x] Mobile nav menu
+- [ ] Require admin role to view admin pages
 - [ ] Footer
 
