@@ -12,6 +12,13 @@ use App\Models\UserUpload;
 
 class AdminController extends Controller
 {
+    // All profile functions require admin authentication
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+    
     // List of users
     function userList()
     {

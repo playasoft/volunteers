@@ -134,6 +134,6 @@
 - [x] Prevent users from uploading more than 3 files at a time
 - [x] Restrict editing event IDs when editing departments
 - [x] Mobile nav menu
-- [ ] Require admin role to view admin pages
+- [x] Require admin role to view admin pages
 - [ ] Footer
 
