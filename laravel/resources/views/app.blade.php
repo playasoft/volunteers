@@ -32,6 +32,8 @@
             @yield('content')
         </section>
 
+        @include('partials/footer')
+
         <!-- Media query elements for js -->
         <div class="mobile hidden-md hidden-lg"></div>
         <div class="desktop hidden-xs hidden-sm"></div>
