@@ -32,16 +32,22 @@ $statuses = ['pending', 'approved', 'denied'];
                         <select class="status">
                             @foreach($statuses as $status)
                                 @if($status == $upload->status)
-                                    <option selected>{{ ucwords($status) }}</option>
+                                    <option value="{{ $status }}" selected>{{ ucwords($status) }}</option>
                                 @else
-                                    <option>{{ ucwords($status) }}</option>
+                                    <option value="{{ $status }}">{{ ucwords($status) }}</option>
                                 @endif
                             @endforeach
                         </select>
 
-                        <a class="save">
-                            Save
-                        </a>
+                        <span class="buttons">
+                            <a class="save-upload">
+                                Save
+                            </a>
+
+                            <a class="cancel-upload">
+                                Cancel
+                            </a>
+                        </span>
                     </td>
                 </tr>
             @endforeach

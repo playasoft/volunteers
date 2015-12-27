@@ -135,7 +135,7 @@
 - [x] Restrict editing event IDs when editing departments
 - [x] Mobile nav menu
 - [x] Require admin role to view admin pages
-- [ ] Allow editing user role
+- [x] Allow editing user role
 - [ ] Allow editing upload status
 - [x] Footer
 

@@ -33,9 +33,12 @@ class AdminController extends Controller
     }
 
     // Update information about a user
-    function userEdit(User $user)
+    function userEdit(User $user, Request $request)
     {
-        return "// todo";
+        $user->role = $request->get('role');
+        $user->save();
+        
+        return;
     }
 
     // List of uploaded files
@@ -46,7 +49,7 @@ class AdminController extends Controller
     }
 
     // Update information about an uploaded file
-    function uploadEdit()
+    function uploadEdit(UserUpload $upload, Request $request)
     {
         return "// todo";
     }

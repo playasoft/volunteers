@@ -1,3 +1,9 @@
+<?php
+
+$roles = ['admin', 'volunteer', 'veteran', 'medical', 'fire'];
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -31,9 +37,26 @@
             <div class="col-sm-2 title">Birthday</div>
             <div class="col-sm-10 value">{{ $user->data->birthday or 'Not Provided' }}</div>
         </div>
-    </div>
 
-    // User role form
+        <h3>User Role</h3>
+
+        <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+
+        <select class="user-role form-control" data-role="{{ $user->role }}">
+            @foreach($roles as $role)
+                @if($role == $user->role)
+                    <option value="{{ $role }}" selected>{{ ucwords($role) }}</option>
+                @else
+                    <option value="{{ $role }}">{{ ucwords($role) }}</option>
+                @endif
+            @endforeach
+        </select>
+
+        <div class="buttons">
+            <a class="save-role btn btn-success">Save</a>
+            <a class="cancel-role btn btn-danger">Cancel</a>
+        </div>
+    </div>
 
     @if($user->uploads->count())
         <hr>
