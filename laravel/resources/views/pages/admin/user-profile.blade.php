@@ -40,6 +40,7 @@ $roles = ['admin', 'volunteer', 'veteran', 'medical', 'fire'];
 
         <h3>User Role</h3>
 
+        <input type="hidden" class="user-id" value="{{ $user->id }}">
         <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
 
         <select class="user-role form-control" data-role="{{ $user->role }}">

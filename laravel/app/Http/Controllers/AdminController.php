@@ -51,6 +51,9 @@ class AdminController extends Controller
     // Update information about an uploaded file
     function uploadEdit(UserUpload $upload, Request $request)
     {
-        return "// todo";
+        $upload->status = $request->get('status');
+        $upload->save();
+
+        return;
     }
 }

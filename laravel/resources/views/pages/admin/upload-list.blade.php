@@ -10,6 +10,8 @@ $statuses = ['pending', 'approved', 'denied'];
     <h1>Uploaded Files</h1>
     <hr>
 
+    <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+
     <table class="table table-hover">
         <thead>
             <tr>
@@ -29,7 +31,7 @@ $statuses = ['pending', 'approved', 'denied'];
                     <td>{{ $upload->description }}</td>
                     <td><a href='/files/user/{{ $upload->file }}'>{{ $upload->file }}</a></td>
                     <td>
-                        <select class="status">
+                        <select class="upload-status" data-status="{{ $upload->status }}">
                             @foreach($statuses as $status)
                                 @if($status == $upload->status)
                                     <option value="{{ $status }}" selected>{{ ucwords($status) }}</option>
