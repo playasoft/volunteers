@@ -113,7 +113,7 @@
 - [x] When a shift is created, edited, or deleted
 - [x] When a slot is taken or released
 - [x] When a file is uploaded
-- [-] When a file is approved or denied
+- [x] When a file is approved or denied
 
 
 ## Event Handlers
@@ -122,7 +122,7 @@
 - [x] Notify users on an event page when the event is changed
 - [x] Automatically display taken slots
 - [x] Send admin email when a file is uploaded
-- [-] Send a user email when a file is approved or denied
+- [x] Send a user email when a file is approved or denied
 
 
 ## Misc
@@ -136,6 +136,6 @@
 - [x] Mobile nav menu
 - [x] Require admin role to view admin pages
 - [x] Allow editing user role
-- [ ] Allow editing upload status
+- [x] Allow editing upload status
 - [x] Footer
 

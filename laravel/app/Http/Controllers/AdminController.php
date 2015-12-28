@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use App\Models\UserUpload;
+use App\Events\FileChanged;
 
 class AdminController extends Controller
 {
@@ -53,6 +54,8 @@ class AdminController extends Controller
     {
         $upload->status = $request->get('status');
         $upload->save();
+
+        event(new FileChanged($upload));
 
         return;
     }

@@ -23,6 +23,11 @@ class EventServiceProvider extends ServiceProvider
         [
             'App\Listeners\SendAdminFileUploaded',
         ],
+
+        'App\Events\FileChanged' =>
+        [
+            'App\Listeners\SendUserFileChanged',
+        ],
     ];
 
     /**
