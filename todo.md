@@ -70,7 +70,7 @@
 - [x] Admin list of profiles
 - [x] Admin list of pending uploads
 - [x] Admin editing other profiles
-- [-] About page
+- [x] About page
 
 
 ## Shift Availability Table

@@ -38,3 +38,17 @@ section.content {
 .heart {
     color: #ef3e99;
 }
+
+.image-caption {
+    width: 50%;
+
+    img {
+        max-width: 100%;
+    }
+
+    p {
+        text-align: center;
+        font-style: italic;
+        font-size: 90%;
+    }
+}
