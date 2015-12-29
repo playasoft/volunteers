@@ -70,13 +70,13 @@
 
     <p>
         Obviously, this website is a work in progress.
-        There are several features that should be fleshed out, but overall the system is complete enough for real-world use.
+        The design needs work and there are several features that should be fleshed out, but overall the system is complete enough for real-world use.
         If there is enough interest from the community, or the project is approved for use by a festival, the project could be moved on GitHub into the control of an organization instead of a single user account. 
     </p>
 
     <p>
         Moving forward, it will be important to get feedback from people who have volunteered at regionals in the past.
-        If you have hands on experience managing a festival and would like to suggest features to help you do your job better, feel free to <a href="mailto:rachel@wetfish.net">send rachel an email</a>. 
+        If you have hands on experience managing a festival and would like to suggest features to help you do your job better, feel free to <a href="mailto:rachel@wetfish.net">send Rachel an email</a>. 
     </p>
 
     <hr>
@@ -90,9 +90,9 @@
     </p>
 
     <p>
-        This project was started in the November of 2015 as an experiment in learning the <a href="http://laravel.com/">Laravel framework</a>.
+        This project was started in November of 2015 as an experiment in learning the <a href="http://laravel.com/">Laravel framework</a>.
         Over time, what started as a learning exercise turned into a fully featured system that might actually be useful to someone.
-        Rachel's previous experience with the old Apogaea database gave her insight into the some problems the team was facing and inspired her to try something new.
+        Rachel's previous experience with the old Apogaea database gave her insight into some of the problems the team was facing and inspired her to try something new.
     </p>
 
     <p>

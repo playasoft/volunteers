@@ -1,4 +1,4 @@
-var socket = require('socket.io-client')('http://voldb.local:6001');
+var socket = require('socket.io-client')(window.location.protocol + '//' + window.location.host + ':6001');
 var $ = require('wetfish-basic');
 
 $(document).ready(function()

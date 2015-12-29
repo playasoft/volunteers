@@ -4,8 +4,8 @@
         <title>Volunteer Database</title>
 
         <!-- Bootstrap styles -->
-        <link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 
         <!-- Custom styles -->
         <link rel="stylesheet" href="/css/main.css">

@@ -69,7 +69,7 @@ class Slot extends Model
             $duration = Slot::timeToSeconds($shift->duration);
 
             // Now loop over the times based on the slot duration
-            for($time = $start; $time + $duration < $end; $time += $duration)
+            for($time = $start; $time + $duration <= $end; $time += $duration)
             {
                 $slot =
                 [
