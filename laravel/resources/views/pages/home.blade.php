@@ -9,7 +9,12 @@
         </p>
 
         <p>
-            There are probably lots of other things that have similar systems, but I've never used them. :)
+            We are currently in <b>open beta</b>!
+        </p>
+
+        <p>
+            Feel free to register and sign up for some shifts.
+            All of the jobs here are only being used for testing&mdash;you won't be held responsible for your imaginary duties.
         </p>
 
         <hr>

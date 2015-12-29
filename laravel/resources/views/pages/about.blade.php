@@ -54,7 +54,7 @@
 
     <p>
         Portions of this website use websockets, a modern web technology that allows real-time communication between the server and users.
-        When someone signs up for a shift, all other users on the event page will see the changes immediately without needing to refresh the page.
+        When someone signs up for a shift, all other users on the event page will see the changes immediately without needing to refresh.
     </p>
 
     <hr>
