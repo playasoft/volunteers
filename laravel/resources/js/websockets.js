@@ -1,4 +1,5 @@
-var socket = require('socket.io-client')(window.location.protocol + '//' + window.location.host + ':6001');
+var config = require('./config');
+var socket = require('socket.io-client')(config.websocket.server);
 var $ = require('wetfish-basic');
 
 $(document).ready(function()

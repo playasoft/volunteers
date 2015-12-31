@@ -1,7 +1,7 @@
 <h1>Welcome to the Volunteer Database!</h1>
 
 <p>
-    This email is a confirmation of your newly registered account on <a href="https://env('SITE_URL')">{{ env('SITE_URL') }}</a>.
+    This email is a confirmation of your newly registered account on <a href="{{ env('SITE_URL') }} ">{{ env('SITE_NAME') }}</a>.
 </p>
 
 <p>
