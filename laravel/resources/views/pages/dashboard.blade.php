@@ -7,6 +7,8 @@
     </h1>
     <hr>
 
+    <a href="/profile" class="btn btn-primary">View Your Profile</a>
+
     @can('create-event')
         <a href="/event" class="btn btn-primary">Create an Event</a>
     @endcan
