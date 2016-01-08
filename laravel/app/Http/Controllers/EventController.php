@@ -121,4 +121,37 @@ class EventController extends Controller
         $request->session()->flash('success', 'Event has been deleted.');
         return redirect('/');
     }
+
+    // View confirmation page before cloning an event
+    public function cloneForm(Request $request, Event $event)
+    {
+        $this->authorize('create-event');
+        return view('pages/event/clone', compact('event'));
+    }
+
+    // Clone an event
+    public function cloneEvent(Request $request, Event $event)
+    {
+        $this->authorize('create-event');
+        $this->validate($request,
+        [
+            'start_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        // Get current event information
+        // Loop through event dates
+        // Create a map of old vs new dates
+        // Create new event with updated dates
+
+        // Loop through event departments
+        // Create new departments
+        // Create a map of old vs new department IDs
+
+        // Loop through shifts
+        // Adjust shift dates based on date map
+        // Create new shifts based on new department IDs
+
+        $request->session()->flash('success', 'Event has been cloned.');
+        return redirect('/');
+    }
 }

@@ -3,6 +3,10 @@
 @section('content')
     <section class="event" data-id="{{ $event->id }}">
         <div class="pull-right">
+            @can('create-event')
+                <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a>
+            @endcan
+
             @can('edit-event')
                 <a href="/event/{{ $event->id }}/edit" class="btn btn-primary">Edit Event</a>
             @endcan
