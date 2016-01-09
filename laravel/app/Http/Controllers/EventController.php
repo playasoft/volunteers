@@ -8,8 +8,12 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
+use App\Models\Department;
+use App\Models\Shift;
+use App\Models\Slot;
 
 use App\Events\EventChanged;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -138,20 +142,76 @@ class EventController extends Controller
             'start_date' => 'required|date_format:Y-m-d',
         ]);
 
-        // Get current event information
-        // Loop through event dates
-        // Create a map of old vs new dates
-        // Create new event with updated dates
+        // Set up event information
+        $startDate = new Carbon($event->start_date);
+        $endDate = new Carbon($event->end_date);
+        $newStartDate = new Carbon($request->input('start_date'));
+        $departments = $event->departments;
+
+        // Find the difference of the start dates
+        $difference = $startDate->diffInSeconds($newStartDate);
+
+        // Create new event from old event data
+        $newEvent = Event::create([
+            'name' => $event->name,
+            'description' => $event->description,
+            'start_date' => $startDate->addSeconds($difference)->format('Y-m-d'),
+            'end_date' => $endDate->addSeconds($difference)->format('Y-m-d'),
+        ]);
+
+        // Add the image manually because it's not automatically fillable
+        if($event->image)
+        {
+            $newEvent->image = $event->image;
+            $newEvent->save();
+        }
 
         // Loop through event departments
-        // Create new departments
-        // Create a map of old vs new department IDs
+        foreach($departments as $department)
+        {
+            // Create new department
+            $newDepartment = new Department;
+            $newDepartment->event_id = $newEvent->id;
+            $newDepartment->save();
 
-        // Loop through shifts
-        // Adjust shift dates based on date map
-        // Create new shifts based on new department IDs
+            // Because the event_id isn't fillable, we have to define it first and then update
+            $newDepartment->update([
+                'name' => $department->name,
+                'description' => $department->description,
+                'roles' => $department->roles,
+            ]);
+
+            // Loop through shifts
+            $shifts = $department->shifts;
+
+            foreach($shifts as $shift)
+            {
+                // Adjust shift dates
+                $shift->start_date = new Carbon($shift->start_date);
+                $shift->end_date = new Carbon($shift->end_date);
+
+                $shift->start_date = $shift->start_date->addSeconds($difference)->format('Y-m-d');
+                $shift->end_date = $shift->end_date->addSeconds($difference)->format('Y-m-d');
+
+                // Update the department ID
+                $shift->department_id = $newDepartment->id;
+
+                $newShift = Shift::create([
+                    'department_id' => $newDepartment->id,
+                    'name' => $shift->name,
+                    'start_date' => $shift->start_date,
+                    'end_date' => $shift->end_date,
+                    'start_time' => $shift->start_time,
+                    'end_time' => $shift->end_time,
+                    'duration' => $shift->duration,
+                    'roles' => $shift->roles,
+                ]);
+
+                Slot::generate($newShift);
+            }
+        }
 
         $request->session()->flash('success', 'Event has been cloned.');
-        return redirect('/');
+        return redirect('/event/' . $newEvent->id);
     }
 }
