@@ -131,7 +131,7 @@ class ProfileController extends Controller
         $upload = new UserUpload(); 
         $upload->file = $fileName;
         $upload->status = 'pending';
-        $upload->user_id = $User->id;
+        $upload->user_id = $user->id;
         $upload->save();
 
         // Save additional form data
