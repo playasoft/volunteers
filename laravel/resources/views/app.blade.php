@@ -12,6 +12,9 @@
 
         <!-- Custom scripts -->
         <script src="/js/bundle.js"></script>
+
+        <!-- Mobile friendly viewport -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         @include('partials/header')
