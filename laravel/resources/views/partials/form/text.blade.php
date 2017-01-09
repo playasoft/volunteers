@@ -15,5 +15,9 @@ if(old($name))
             name="{{ $name }}"
             id="{{ $name }}-field"
             placeholder="{{ $placeholder or '' }}"
-            value="{{ $value or '' }}">
+            value="{{ $value or '' }}"
+            @if(isset($limit))
+                maxlength="{{ $limit }}"
+            @endif
+            >
 @overwrite

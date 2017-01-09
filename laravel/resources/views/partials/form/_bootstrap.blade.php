@@ -1,5 +1,7 @@
 <div class="form-group {{ ($errors->has($name)) ? 'has-error' : '' }}">
     <label class="control-label" for="{{ $name }}-field">{{ $label }}</label>
+    <span class="pull-right"><span class="status"></span></span>
+
     @yield('html')
 
     @if($errors->has($name))

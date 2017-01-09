@@ -1,9 +1,3 @@
-<?php
-
-$statuses = ['pending', 'approved', 'denied'];
-
-?>
-
 @extends('app')
 
 @section('content')
