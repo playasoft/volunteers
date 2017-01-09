@@ -19,6 +19,7 @@
                             <li><a href="/event">New Event</a></li>
                             <li><a href="/users">Users</a></li>
                             <li><a href="/uploads">Uploads</a></li>
+                            <li><a href="/reports">Reports</a></li>
                         @endif
                 @endif
             </ul>

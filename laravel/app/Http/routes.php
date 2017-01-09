@@ -89,3 +89,5 @@ Route::post('/user/{user}/edit', 'AdminController@userEdit');
 
 Route::get('/uploads', 'AdminController@uploadList');
 Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 
+
+Route::get('/reports', 'ReportController@reportList');
