@@ -1,10 +1,21 @@
+<?php
+
+$eventList = [0 => 'Select an event'];
+
+foreach($events as $event)
+{
+    $eventList[$event->id] = $event->name;
+}
+
+?>
+
 @extends('app')
 
 @section('content')
     <h1>CSV Report Generator</h1>
     <hr>
 
-    [Select from list of 10 most recent events]
+    @include('partials/form/select', ['name' => 'event', 'label' => 'Event', 'options' => $eventList])
 
     [Radio buttons to control type of report]
 
