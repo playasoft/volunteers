@@ -11,6 +11,13 @@ use App\Models\Event;
 
 class ReportController extends Controller
 {
+    // Require admin authentication
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     // Main page for reports
     function reportList()
     {
