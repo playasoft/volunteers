@@ -56,3 +56,29 @@ section.content {
 textarea {
     min-height: 250px;
 }
+
+.loading {
+    font-size: 12pt;
+    font-style: italic;
+    margin: 2em 0;
+}
+
+.spinner {
+    height: 32px;
+    width: 32px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2em;
+    animation: spinner-rotate .6s infinite linear;
+    border-left: 6px solid rgba(0, 174, 239, .15);
+    border-right: 6px solid rgba(0, 174, 239, .15);
+    border-bottom: 6px solid rgba(0, 174, 239, .15);
+    border-top: 6px solid rgba(0, 174, 239, .8);
+    border-radius: 100%;
+}
+
+@keyframes spinner-rotate {
+    from { transform: rotate(0deg) }
+    to { transform: rotate(359deg) }
+}

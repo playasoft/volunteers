@@ -25,57 +25,208 @@ foreach($events as $event)
         'options' =>
         [
             '0' => '----',
-            'user' => "Reports by User",
-            'department' => "Reports by Department",
+            'user' => "User Reports",
+            'department' => "Department Reports",
             'day' => "Reports by Day",
             'misc' => "Miscellaneous Reports",
         ]
     ])
 
     <div class="report-options hidden" data-type="user">
-        Reports by User
+        @include('partials/form/select',
+        [
+            'name' => 'options',
+            'label' => 'Report options',
+            'class' => 'user-options',
+            'options' =>
+            [
+                '0' => '----',
+                'all' => "Use data from all users",
+                'specific' => "Search for specific users",
+            ]
+        ])
 
-        <pre>
-            [When selected, these options appear:]
-            - All users
-            - Specific user
-                - When selected, a box appears:
-                "Search for user by ID, name, or email"
-                - User clicks "submit" and results appear
-                - In each row of results there is a checkbox to select this user
-        </pre>
+        <div class="row">
+            <div class="col-md-11">
+                @include('partials/form/text',
+                [
+                    'name' => 'user-search',
+                    'label' => 'Search for a user',
+                    'class' => 'user-search',
+                    'placeholder' => 'rachel@apogaea.com',
+                    'help' => 'You can search by user ID, name, or email'
+                ])
+            </div>
+
+            <div class="col-md-1 search">
+                <button class="btn btn-success">Search</button>
+            </div>
+        </div>
+
+        <div class="loading">
+            Loading user data...
+
+            <div class="spinner"></div>
+        </div>
+
+        <div class="user-results">
+            <h3>Search results</h3>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Real Name</th>
+                        <th>Email</th>
+                        <th>Include in report?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td><a href="/user/1">username</a></td>
+                        <td>Example User</td>
+                        <td>example@user.com</td>
+                        <td>
+                            <input type="checkbox" name="user-report[]" value="1">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>2</b></td>
+                        <td><a href="/user/2">user2</a></td>
+                        <td>Another User</td>
+                        <td>another@user.com</td>
+                        <td>
+                            <input type="checkbox" name="user-report[]" value="2">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="report-options hidden" data-type="department">
-        Reports by Department
+        @include('partials/form/select',
+        [
+            'name' => 'options',
+            'label' => 'Report options',
+            'class' => 'department-options',
+            'options' =>
+            [
+                '0' => '----',
+                'all' => "Use data from all departments",
+                'specific' => "Select specific departments",
+            ]
+        ])
 
-        <pre>
-            [When selected, these options appear:]
-            - All departments
-            - Specific department
-                - When selected, a list of departments appears with checkboxes to select each
-        </pre>
+        <div class="loading">
+            Loading department data...
+
+            <div class="spinner"></div>
+        </div>
+
+        <div class="departments">
+            <h3>Departments</h3>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Department</th>
+                        <th>Include in report?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td><a href="/department/1/edit">BAMF</a></td>
+                        <td>
+                            <input type="checkbox" name="department-report[]" value="1">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>2</b></td>
+                        <td><a href="/department/2/edit">DPW</a></td>
+                        <td>
+                            <input type="checkbox" name="department-report[]" value="2">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="report-options hidden" data-type="day">
-        Reports by Day
+        @include('partials/form/select',
+        [
+            'name' => 'options',
+            'label' => 'Report options',
+            'class' => 'day-options',
+            'options' =>
+            [
+                '0' => '----',
+                'all' => "Use data from all days",
+                'specific' => "Select specific days",
+            ]
+        ])
 
-        <pre>
-            [When selected, these options appear:]
-            - All days
-            - Specific day
-                - When selected, a list of all event days appears with checkboxes to select each
-        </pre>
+        <div class="loading">
+            Loading event data...
+
+            <div class="spinner"></div>
+        </div>
+
+        <div class="days">
+            <h3>Event Days</h3>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th>Include in report?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><b>1/11/2017</b></td>
+                        <td>Wednesday</td>
+                        <td>
+                            <input type="checkbox" name="day-report[]" value="2017-1-11">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>1/12/2017</b></td>
+                        <td>Thursday</td>
+                        <td>
+                            <input type="checkbox" name="day-report[]" value="2017-1-12">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="report-options hidden" data-type="misc">
-        Miscellaneous reports
-
-        <pre>
-            [When selected, these options appear:]
-            - Total hours volunteered by volunteer
-            - Total shifts filled by department
-        </pre>
+        @include('partials/form/select',
+        [
+            'name' => 'misc',
+            'label' => 'Miscellaneous reports',
+            'class' => 'misc-options',
+            'options' =>
+            [
+                '0' => '----',
+                'hours-volunteered' => "Total hours volunteered by user",
+                'shifts-filled' => "Total shifts filled by department",
+            ]
+        ])
     </div>
 
     <button class="btn btn-primary">Generate Report</button>
