@@ -50,6 +50,25 @@ $(document).ready(function()
         }
     });
 
+    $('.user-search form').on('submit', function(event)
+    {
+        event.preventDefault();
+
+        var data =
+        {
+            search: $('.user-search input').value(),
+            _token: $('.csrf-token').value()
+        };
+
+        ajaxOptions.body = JSON.stringify(data);
+
+        // Submit data
+        fetch('/report/users', ajaxOptions).then(function(response)
+        {
+            console.log(response);
+        });
+    });
+
     $('.department-options').on('change', function()
     {
         if($(this).value() == 'specific')

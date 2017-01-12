@@ -58,19 +58,21 @@ foreach($events as $event)
             ])
 
             <div class="row user-search hidden">
-                <div class="col-md-11">
-                    @include('partials/form/text',
-                    [
-                        'name' => 'user-search',
-                        'label' => 'Search for a user',
-                        'placeholder' => 'rachel@apogaea.com',
-                        'help' => 'You can search by user ID, name, or email'
-                    ])
-                </div>
+                <form>
+                    <div class="col-md-11">
+                        @include('partials/form/text',
+                        [
+                            'name' => 'user-search',
+                            'label' => 'Search for a user',
+                            'placeholder' => 'rachel@apogaea.com',
+                            'help' => 'You can search by user ID, username, or email'
+                        ])
+                    </div>
 
-                <div class="col-md-1 search">
-                    <button class="btn btn-success">Search</button>
-                </div>
+                    <div class="col-md-1 search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                </form>
             </div>
 
             <div class="loading hidden">

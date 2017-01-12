@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\User;
 use App\Models\Event;
 use Carbon\Carbon;
 
@@ -26,9 +27,32 @@ class ReportController extends Controller
         return view('pages/admin/report-list', compact('events'));
     }
 
-    function searchUsers()
+    function searchUsers(Request $request)
     {
-        
+        $search = $request->get('search');
+        $users = [];
+
+        if(is_numeric($search))
+        {
+            $userSearch = [User::find($search)];
+        }
+        else
+        {
+            $userSearch = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->take(5)->get();
+        }
+
+        foreach($userSearch as $user)
+        {
+            $users[] =
+            [
+                'id' => $user->id,
+                'name' => $user->name,
+                'real_name' => !empty($user->data) ? $user->data->real_name : '',
+                'email' => $user->email
+            ];
+        }
+
+        return json_encode($users);
     }
 
     function getDepartments(Request $request)
