@@ -91,3 +91,6 @@ Route::get('/uploads', 'AdminController@uploadList');
 Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 
 
 Route::get('/reports', 'ReportController@reportList');
+Route::post('/report/users', 'ReportController@searchUsers');
+Route::post('/report/departments', 'ReportController@getDepartments');
+Route::post('/report/days', 'ReportController@getDays');

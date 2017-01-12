@@ -13,25 +13,35 @@ foreach($events as $event)
 
 @section('content')
     <div class="report-generator">
+        <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+
         <h1>CSV Report Generator</h1>
         <hr>
 
-        @include('partials/form/select', ['name' => 'event', 'label' => 'Event', 'options' => $eventList])
-
         @include('partials/form/select',
         [
-            'name' => 'type',
-            'label' => 'Type of report',
-            'class' => 'report-type',
-            'options' =>
-            [
-                '0' => '----',
-                'user' => "User Reports",
-                'department' => "Department Reports",
-                'day' => "Reports by Day",
-                'misc' => "Miscellaneous Reports",
-            ]
+            'name' => 'event',
+            'label' => 'Event',
+            'class' => 'report-event',
+            'options' => $eventList
         ])
+
+        <div class="report-types hidden">
+            @include('partials/form/select',
+            [
+                'name' => 'type',
+                'label' => 'Type of report',
+                'class' => 'report-type',
+                'options' =>
+                [
+                    '0' => '----',
+                    'user' => "User Reports",
+                    'department' => "Department Reports",
+                    'day' => "Reports by Day",
+                    'misc' => "Miscellaneous Reports",
+                ]
+            ])
+        </div>
 
         <div class="report-options hidden" data-type="user">
             @include('partials/form/select',

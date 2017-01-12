@@ -1,8 +1,36 @@
 var $ = require('wetfish-basic');
+var ajaxOptions =
+{
+    method: 'post',
+    credentials: 'include',
+    headers:
+    {
+        'Content-Type': 'application/json'
+    }
+};
 
 $(document).ready(function()
 {
-    // Show report options when the report type is changed 
+    // Make sure we're on the reports page
+    if(!$('.report-generator').el.length)
+    {
+        return;
+    }
+
+    // Only show report options when an event is selected
+    $('.report-event').on('change', function()
+    {
+        if(parseInt($(this).value()))
+        {
+            $('.report-types').removeClass('hidden');
+        }
+        else
+        {
+            $('.report-types, .report-options').addClass('hidden');
+        }
+    });
+
+    // Show additional report options when the report type is changed
     $('.report-type').on('change', function()
     {
         var type = $(this).value();
@@ -27,6 +55,21 @@ $(document).ready(function()
         if($(this).value() == 'specific')
         {
             $('.departments-wrap .loading').removeClass('hidden');
+
+            // Fetch list of departments based on the currently selected event
+            var data =
+            {
+                event: parseInt($('.report-event').value()),
+                _token: $('.csrf-token').value()
+            };
+
+            ajaxOptions.body = JSON.stringify(data);
+
+            // Submit data
+            fetch('/report/departments', ajaxOptions).then(function(response)
+            {
+                console.log(response);
+            });
         }
         else
         {
@@ -39,6 +82,21 @@ $(document).ready(function()
         if($(this).value() == 'specific')
         {
             $('.days-wrap .loading').removeClass('hidden');
+
+            // Fetch list of event days based on the currently selected event
+            var data =
+            {
+                event: parseInt($('.report-event').value()),
+                _token: $('.csrf-token').value()
+            };
+
+            ajaxOptions.body = JSON.stringify(data);
+
+            // Submit data
+            fetch('/report/days', ajaxOptions).then(function(response)
+            {
+                console.log(response);
+            });
         }
         else
         {
