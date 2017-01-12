@@ -23,6 +23,7 @@ $(document).ready(function()
         if(parseInt($(this).value()))
         {
             $('.report-types').removeClass('hidden');
+            $('.report-options select').trigger('change');
         }
         else
         {
