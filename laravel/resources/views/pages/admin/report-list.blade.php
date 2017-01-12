@@ -13,52 +13,52 @@ foreach($events as $event)
 
 @section('content')
     <div class="report-generator">
-        <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+        <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
 
-        <h1>CSV Report Generator</h1>
-        <hr>
+        {!! Form::open(['url' => 'report/generate']) !!}
+            <h1>CSV Report Generator</h1>
+            <hr>
 
-        @include('partials/form/select',
-        [
-            'name' => 'event',
-            'label' => 'Event',
-            'class' => 'report-event',
-            'options' => $eventList
-        ])
-
-        <div class="report-types hidden">
             @include('partials/form/select',
             [
-                'name' => 'type',
-                'label' => 'Type of report',
-                'class' => 'report-type',
-                'options' =>
-                [
-                    '0' => '----',
-                    'user' => "User Reports",
-                    'department' => "Department Reports",
-                    'day' => "Reports by Day",
-                    'misc' => "Miscellaneous Reports",
-                ]
-            ])
-        </div>
-
-        <div class="report-options hidden" data-type="user">
-            @include('partials/form/select',
-            [
-                'name' => 'options',
-                'label' => 'Report options',
-                'class' => 'user-options',
-                'options' =>
-                [
-                    '0' => '----',
-                    'all' => "Use data from all users",
-                    'specific' => "Search for a specific user",
-                ]
+                'name' => 'event',
+                'label' => 'Event',
+                'class' => 'report-event',
+                'options' => $eventList
             ])
 
-            <div class="row user-search hidden">
-                <form>
+            <div class="report-types hidden">
+                @include('partials/form/select',
+                [
+                    'name' => 'type',
+                    'label' => 'Type of report',
+                    'class' => 'report-type',
+                    'options' =>
+                    [
+                        '0' => '----',
+                        'user' => "User Reports",
+                        'department' => "Department Reports",
+                        'day' => "Reports by Day",
+                        'misc' => "Miscellaneous Reports",
+                    ]
+                ])
+            </div>
+
+            <div class="report-options hidden" data-type="user">
+                @include('partials/form/select',
+                [
+                    'name' => 'options',
+                    'label' => 'Report options',
+                    'class' => 'user-options',
+                    'options' =>
+                    [
+                        '0' => '----',
+                        'all' => "Use data from all users",
+                        'specific' => "Search for a specific user",
+                    ]
+                ])
+
+                <div class="row user-search hidden">
                     <div class="col-md-11">
                         @include('partials/form/text',
                         [
@@ -70,210 +70,210 @@ foreach($events as $event)
                     </div>
 
                     <div class="col-md-1 search">
-                        <button class="btn btn-success" type="submit">Search</button>
+                        <button class="btn btn-success">Search</button>
                     </div>
-                </form>
-            </div>
-
-            <div class="user-wrap">
-                <div class="loading hidden">
-                    Loading user data...
-
-                    <div class="spinner"></div>
                 </div>
 
-                <div class="users hidden">
-                    <h3>Search results</h3>
+                <div class="user-wrap">
+                    <div class="loading hidden">
+                        Loading user data...
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>User</th>
-                                <th>Real Name</th>
-                                <th>Email</th>
-                                <th>Include in report?</th>
-                            </tr>
+                        <div class="spinner"></div>
+                    </div>
 
-                            <tr class="template hidden">
-                                <td><b>{user_id}</b></td>
-                                <td><a href="/user/{user_id}">{username}</a></td>
-                                <td>{real_name}</td>
-                                <td>{email}</td>
-                                <td>
-                                    <input type="checkbox" name="user-report[]" value="{user_id}">
-                                </td>
-                            </tr>
-                        </thead>
+                    <div class="users hidden">
+                        <h3>Search results</h3>
 
-                        <tbody>
-                            <tr>
-                                <td><b>1</b></td>
-                                <td><a href="/user/1">username</a></td>
-                                <td>Example User</td>
-                                <td>example@user.com</td>
-                                <td>
-                                    <input type="checkbox" name="user-report[]" value="1">
-                                </td>
-                            </tr>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Real Name</th>
+                                    <th>Email</th>
+                                    <th>Include in report?</th>
+                                </tr>
 
-                            <tr>
-                                <td><b>2</b></td>
-                                <td><a href="/user/2">user2</a></td>
-                                <td>Another User</td>
-                                <td>another@user.com</td>
-                                <td>
-                                    <input type="checkbox" name="user-report[]" value="2">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr class="template hidden">
+                                    <td><b>{user_id}</b></td>
+                                    <td><a href="/user/{user_id}">{username}</a></td>
+                                    <td>{real_name}</td>
+                                    <td>{email}</td>
+                                    <td>
+                                        <input type="checkbox" name="user-report[]" value="{user_id}">
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><b>1</b></td>
+                                    <td><a href="/user/1">username</a></td>
+                                    <td>Example User</td>
+                                    <td>example@user.com</td>
+                                    <td>
+                                        <input type="checkbox" name="user-report[]" value="1">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>2</b></td>
+                                    <td><a href="/user/2">user2</a></td>
+                                    <td>Another User</td>
+                                    <td>another@user.com</td>
+                                    <td>
+                                        <input type="checkbox" name="user-report[]" value="2">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="report-options hidden" data-type="department">
-            @include('partials/form/select',
-            [
-                'name' => 'options',
-                'label' => 'Report options',
-                'class' => 'department-options',
-                'options' =>
+            <div class="report-options hidden" data-type="department">
+                @include('partials/form/select',
                 [
-                    '0' => '----',
-                    'all' => "Use data from all departments",
-                    'specific' => "Select specific departments",
-                ]
-            ])
+                    'name' => 'options',
+                    'label' => 'Report options',
+                    'class' => 'department-options',
+                    'options' =>
+                    [
+                        '0' => '----',
+                        'all' => "Use data from all departments",
+                        'specific' => "Select specific departments",
+                    ]
+                ])
 
-            <div class="departments-wrap">
-                <div class="loading hidden">
-                    Loading department data...
+                <div class="departments-wrap">
+                    <div class="loading hidden">
+                        Loading department data...
 
-                    <div class="spinner"></div>
-                </div>
+                        <div class="spinner"></div>
+                    </div>
 
 
-                <div class="departments hidden">
-                    <h3>Departments</h3>
+                    <div class="departments hidden">
+                        <h3>Departments</h3>
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Department</th>
-                                <th>Include in report?</th>
-                            </tr>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Department</th>
+                                    <th>Include in report?</th>
+                                </tr>
 
-                            <tr class="template hidden">
-                                <td><b>{department_id}</b></td>
-                                <td><a href="/department/{department_id}/edit">{department_name}</a></td>
-                                <td>
-                                    <input type="checkbox" name="department-report[]" value="{department_id}">
-                                </td>
-                            </tr>
-                        </thead>
+                                <tr class="template hidden">
+                                    <td><b>{department_id}</b></td>
+                                    <td><a href="/department/{department_id}/edit">{department_name}</a></td>
+                                    <td>
+                                        <input type="checkbox" name="department-report[]" value="{department_id}">
+                                    </td>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            <tr>
-                                <td><b>1</b></td>
-                                <td><a href="/department/1/edit">BAMF</a></td>
-                                <td>
-                                    <input type="checkbox" name="department-report[]" value="1">
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td><b>1</b></td>
+                                    <td><a href="/department/1/edit">BAMF</a></td>
+                                    <td>
+                                        <input type="checkbox" name="department-report[]" value="1">
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td><b>2</b></td>
-                                <td><a href="/department/2/edit">DPW</a></td>
-                                <td>
-                                    <input type="checkbox" name="department-report[]" value="2">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="report-options hidden" data-type="day">
-            @include('partials/form/select',
-            [
-                'name' => 'options',
-                'label' => 'Report options',
-                'class' => 'day-options',
-                'options' =>
-                [
-                    '0' => '----',
-                    'all' => "Use data from all days",
-                    'specific' => "Select specific days",
-                ]
-            ])
-
-            <div class="days-wrap">
-                <div class="loading hidden">
-                    Loading event data...
-
-                    <div class="spinner"></div>
-                </div>
-
-                <div class="days hidden">
-                    <h3>Event Days</h3>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Day</th>
-                                <th>Include in report?</th>
-                            </tr>
-
-                            <tr class="template hidden">
-                                <td><b>{date}</b></td>
-                                <td>{day}</td>
-                                <td>
-                                    <input type="checkbox" name="day-report[]" value="{date}">
-                                </td>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td><b>1/11/2017</b></td>
-                                <td>Wednesday</td>
-                                <td>
-                                    <input type="checkbox" name="day-report[]" value="2017-1-11">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>1/12/2017</b></td>
-                                <td>Thursday</td>
-                                <td>
-                                    <input type="checkbox" name="day-report[]" value="2017-1-12">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <td><b>2</b></td>
+                                    <td><a href="/department/2/edit">DPW</a></td>
+                                    <td>
+                                        <input type="checkbox" name="department-report[]" value="2">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="report-options hidden" data-type="misc">
-            @include('partials/form/select',
-            [
-                'name' => 'misc',
-                'label' => 'Miscellaneous reports',
-                'class' => 'misc-options',
-                'options' =>
+            <div class="report-options hidden" data-type="day">
+                @include('partials/form/select',
                 [
-                    '0' => '----',
-                    'hours-volunteered' => "Total hours volunteered by user",
-                    'shifts-filled' => "Total shifts filled by department",
-                ]
-            ])
-        </div>
+                    'name' => 'options',
+                    'label' => 'Report options',
+                    'class' => 'day-options',
+                    'options' =>
+                    [
+                        '0' => '----',
+                        'all' => "Use data from all days",
+                        'specific' => "Select specific days",
+                    ]
+                ])
 
-        <button class="btn btn-primary">Generate Report</button>
+                <div class="days-wrap">
+                    <div class="loading hidden">
+                        Loading event data...
+
+                        <div class="spinner"></div>
+                    </div>
+
+                    <div class="days hidden">
+                        <h3>Event Days</h3>
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>Include in report?</th>
+                                </tr>
+
+                                <tr class="template hidden">
+                                    <td><b>{date}</b></td>
+                                    <td>{day}</td>
+                                    <td>
+                                        <input type="checkbox" name="day-report[]" value="{date}">
+                                    </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><b>1/11/2017</b></td>
+                                    <td>Wednesday</td>
+                                    <td>
+                                        <input type="checkbox" name="day-report[]" value="2017-1-11">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>1/12/2017</b></td>
+                                    <td>Thursday</td>
+                                    <td>
+                                        <input type="checkbox" name="day-report[]" value="2017-1-12">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-options hidden" data-type="misc">
+                @include('partials/form/select',
+                [
+                    'name' => 'misc',
+                    'label' => 'Miscellaneous reports',
+                    'class' => 'misc-options',
+                    'options' =>
+                    [
+                        '0' => '----',
+                        'hours-volunteered' => "Total hours volunteered by user",
+                        'shifts-filled' => "Total shifts filled by department",
+                    ]
+                ])
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Generate Report">
+        {!! Form::close() !!}
     </div>
 @endsection

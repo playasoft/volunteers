@@ -51,7 +51,23 @@ $(document).ready(function()
         }
     });
 
-    $('.user-search form').on('submit', function(event)
+    $('.user-search input').on('keydown', function(event)
+    {
+        // If enter was pressed
+        if(event.which == 13)
+        {
+            event.preventDefault();
+            $('.user-search').trigger('submit');
+        }
+    });
+
+    $('.user-search button').on('click', function(event)
+    {
+        event.preventDefault();
+        $('.user-search').trigger('submit');
+    });
+
+    $('.user-search').on('submit', function(event)
     {
         event.preventDefault();
         $('.user-wrap .loading').removeClass('hidden');

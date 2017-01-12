@@ -88,4 +88,9 @@ class ReportController extends Controller
 
         return json_encode($days);
     }
+
+    function generateReport(Request $request)
+    {
+        return "hi there";
+    }
 }
