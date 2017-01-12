@@ -164,6 +164,14 @@ foreach($events as $event)
                                 <th>Department</th>
                                 <th>Include in report?</th>
                             </tr>
+
+                            <tr class="template hidden">
+                                <td><b>{department_id}</b></td>
+                                <td><a href="/department/{department_id}/edit">{department_name}</a></td>
+                                <td>
+                                    <input type="checkbox" name="department-report[]" value="{department_id}">
+                                </td>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -218,6 +226,14 @@ foreach($events as $event)
                                 <th>Date</th>
                                 <th>Day</th>
                                 <th>Include in report?</th>
+                            </tr>
+
+                            <tr class="template hidden">
+                                <td><b>{date}</b></td>
+                                <td>{day}</td>
+                                <td>
+                                    <input type="checkbox" name="day-report[]" value="{date}">
+                                </td>
                             </tr>
                         </thead>
 

@@ -64,7 +64,11 @@ class ReportController extends Controller
 
         foreach($event->departments()->orderBy('name', 'asc')->get() as $department)
         {
-            $departments[$department->id] = $department->name;
+            $departments[] =
+            [
+                'id' => $department->id,
+                'name' => $department->name
+            ];
         }
 
         return json_encode($departments);

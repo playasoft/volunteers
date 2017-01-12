@@ -72,8 +72,9 @@ $(document).ready(function()
                 $('.users').removeClass('hidden');
                 $('.users table tbody tr').remove();
 
-                response.forEach(function(user)
+                for(var key in response)
                 {
+                    var user = response[key];
                     var template = $('.users table .template').clone();
                     $(template).removeClass('template hidden');
 
@@ -83,7 +84,7 @@ $(document).ready(function()
                     template.innerHTML = template.innerHTML.replace(/{email}/g, user.email);
 
                     $('.users table tbody').append(template);
-                });
+                }
             });
         });
     });
@@ -104,9 +105,26 @@ $(document).ready(function()
             ajaxOptions.body = JSON.stringify(data);
 
             // Submit data
-            fetch('/report/departments', ajaxOptions).then(function(response)
+            fetch('/report/departments', ajaxOptions).then(function(request)
             {
-                console.log(response);
+                request.json().then(function(response)
+                {
+                    $('.departments-wrap .loading').addClass('hidden');
+                    $('.departments').removeClass('hidden');
+                    $('.departments table tbody tr').remove();
+
+                    for(var key in response)
+                    {
+                        var department = response[key];
+                        var template = $('.departments table .template').clone();
+                        $(template).removeClass('template hidden');
+
+                        template.innerHTML = template.innerHTML.replace(/{department_id}/g, department.id);
+                        template.innerHTML = template.innerHTML.replace(/{department_name}/g, department.name);
+
+                        $('.departments table tbody').append(template);
+                    }
+                });
             });
         }
         else
@@ -131,9 +149,26 @@ $(document).ready(function()
             ajaxOptions.body = JSON.stringify(data);
 
             // Submit data
-            fetch('/report/days', ajaxOptions).then(function(response)
+            fetch('/report/days', ajaxOptions).then(function(request)
             {
-                console.log(response);
+                request.json().then(function(response)
+                {
+                    $('.days-wrap .loading').addClass('hidden');
+                    $('.days').removeClass('hidden');
+                    $('.days table tbody tr').remove();
+
+                    for(var key in response)
+                    {
+                        var day = response[key];
+                        var template = $('.days table .template').clone();
+                        $(template).removeClass('template hidden');
+
+                        template.innerHTML = template.innerHTML.replace(/{date}/g, day.date);
+                        template.innerHTML = template.innerHTML.replace(/{day}/g, day.name);
+
+                        $('.days table tbody').append(template);
+                    }
+                });
             });
         }
         else
