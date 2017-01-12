@@ -27,6 +27,7 @@ class ReportController extends Controller
         return view('pages/admin/report-list', compact('events'));
     }
 
+    // TODO: Use a real search engine like ElasticSearch or SOLR
     function searchUsers(Request $request)
     {
         $search = $request->get('search');
@@ -47,7 +48,7 @@ class ReportController extends Controller
             [
                 'id' => $user->id,
                 'name' => $user->name,
-                'real_name' => !empty($user->data) ? $user->data->real_name : '',
+                'real_name' => count($user->data) ? $user->data->real_name : '',
                 'email' => $user->email
             ];
         }

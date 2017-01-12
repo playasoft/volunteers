@@ -75,48 +75,60 @@ foreach($events as $event)
                 </form>
             </div>
 
-            <div class="loading hidden">
-                Loading user data...
+            <div class="user-wrap">
+                <div class="loading hidden">
+                    Loading user data...
 
-                <div class="spinner"></div>
-            </div>
+                    <div class="spinner"></div>
+                </div>
 
-            <div class="user-results hidden">
-                <h3>Search results</h3>
+                <div class="users hidden">
+                    <h3>Search results</h3>
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Real Name</th>
-                            <th>Email</th>
-                            <th>Include in report?</th>
-                        </tr>
-                    </thead>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Real Name</th>
+                                <th>Email</th>
+                                <th>Include in report?</th>
+                            </tr>
 
-                    <tbody>
-                        <tr>
-                            <td><b>1</b></td>
-                            <td><a href="/user/1">username</a></td>
-                            <td>Example User</td>
-                            <td>example@user.com</td>
-                            <td>
-                                <input type="checkbox" name="user-report[]" value="1">
-                            </td>
-                        </tr>
+                            <tr class="template hidden">
+                                <td><b>{user_id}</b></td>
+                                <td><a href="/user/{user_id}">{username}</a></td>
+                                <td>{real_name}</td>
+                                <td>{email}</td>
+                                <td>
+                                    <input type="checkbox" name="user-report[]" value="{user_id}">
+                                </td>
+                            </tr>
+                        </thead>
 
-                        <tr>
-                            <td><b>2</b></td>
-                            <td><a href="/user/2">user2</a></td>
-                            <td>Another User</td>
-                            <td>another@user.com</td>
-                            <td>
-                                <input type="checkbox" name="user-report[]" value="2">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                            <tr>
+                                <td><b>1</b></td>
+                                <td><a href="/user/1">username</a></td>
+                                <td>Example User</td>
+                                <td>example@user.com</td>
+                                <td>
+                                    <input type="checkbox" name="user-report[]" value="1">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>2</b></td>
+                                <td><a href="/user/2">user2</a></td>
+                                <td>Another User</td>
+                                <td>another@user.com</td>
+                                <td>
+                                    <input type="checkbox" name="user-report[]" value="2">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

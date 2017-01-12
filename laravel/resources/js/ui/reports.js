@@ -53,6 +53,7 @@ $(document).ready(function()
     $('.user-search form').on('submit', function(event)
     {
         event.preventDefault();
+        $('.user-wrap .loading').removeClass('hidden');
 
         var data =
         {
@@ -63,9 +64,27 @@ $(document).ready(function()
         ajaxOptions.body = JSON.stringify(data);
 
         // Submit data
-        fetch('/report/users', ajaxOptions).then(function(response)
+        fetch('/report/users', ajaxOptions).then(function(request)
         {
-            console.log(response);
+            request.json().then(function(response)
+            {
+                $('.user-wrap .loading').addClass('hidden');
+                $('.users').removeClass('hidden');
+                $('.users table tbody tr').remove();
+
+                response.forEach(function(user)
+                {
+                    var template = $('.users table .template').clone();
+                    $(template).removeClass('template hidden');
+
+                    template.innerHTML = template.innerHTML.replace(/{user_id}/g, user.id);
+                    template.innerHTML = template.innerHTML.replace(/{username}/g, user.name);
+                    template.innerHTML = template.innerHTML.replace(/{real_name}/g, user.real_name);
+                    template.innerHTML = template.innerHTML.replace(/{email}/g, user.email);
+
+                    $('.users table tbody').append(template);
+                });
+            });
         });
     });
 
