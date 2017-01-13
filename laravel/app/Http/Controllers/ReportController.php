@@ -141,7 +141,82 @@ class ReportController extends Controller
 
     private function userReport($event, $request)
     {
-        dd($request->all());
+        if($request->get('user-options') == 'specific')
+        {
+            $ids = $request->get('user-report');
+
+            if(empty($ids))
+            {
+                $request->session()->flash('error', 'No user selected. Please use the checkboxes to generate reports for specific users.');
+                return redirect()->back();
+            }
+
+            // Select users based on specified user IDs
+            $users = User::whereIn('id', $ids)->get();
+        }
+        else
+        {
+            // Select all users
+            $users = User::get();
+        }
+
+        // Select all shifts in the selected event
+        $shifts = [];
+
+        foreach($event->departments as $department)
+        {
+            foreach($department->shifts as $shift)
+            {
+                $shifts[] = $shift->id;
+            }
+        }
+
+        $columns =
+        [
+            'user' => 'Username',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'day' => 'Day of the Week',
+            'date' => 'Date',
+            'department' => 'Department',
+            'shift' => 'Shift',
+            'start_time' => 'Start Time',
+            'end_time' => 'End Time'
+        ];
+
+        $data = [];
+
+        foreach($users as $user)
+        {
+            $name = ['first' => '', 'last' => ''];
+
+            if(count($user->data))
+            {
+                $name = $this->splitName($user->data->real_name);
+            }
+
+            $slots = $user->slots()->whereIn('shift_id', $shifts)->get();
+
+            foreach($slots as $slot)
+            {
+                $date = new Carbon($slot->start_date);
+
+                $data[] =
+                [
+                    'user' => $user->name,
+                    'first_name' => $name['first'],
+                    'last_name' => $name['last'],
+                    'day' => $date->formatLocalized('%A'),
+                    'date' => $date->format('m/d/Y'),
+                    'department' => $slot->department->name,
+                    'shift' => $slot->shift->name,
+                    'start_time' => $slot->start_tim,
+                    'end_time' => $slot->end_time
+                ];
+            }
+        }
+
+        $this->generateCSV('Volunteer DB User Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function departmentReport($event, $request)
@@ -166,5 +241,45 @@ class ReportController extends Controller
     {
         dd($request->all());
 
+    }
+
+    private function generateCSV($filename, $columns, $data)
+    {
+        $filename = $filename . '.csv';
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+
+        $columnNames = array_values($columns);
+
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columnNames);
+
+        foreach($data as $row)
+        {
+            $output = [];
+
+            foreach($columns as $column => $columnName)
+            {
+                $output[] = $row[$column];
+            }
+
+            fputcsv($file, $output);
+        }
+
+        fclose($file);
+    }
+
+    private function splitName($name)
+    {
+        $name = explode(' ', $name);
+
+        $split = array
+        (
+            'first' => implode(' ', array_slice($name, 0, -1)),
+            'last' => implode(' ', array_slice($name, -1))
+        );
+
+        return $split;
     }
 }

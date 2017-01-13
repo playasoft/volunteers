@@ -38,11 +38,11 @@ class ProfileController extends Controller
         $upcoming = $user->slots()->where('start_date', '>=', Carbon::now()->format('Y-m-d'))
                                     ->orderBy('start_date', 'asc')
                                     ->orderBy('start_time', 'asc')->get();
-                                    
+
         $past = $user->slots()->where('start_date', '<', Carbon::now()->format('Y-m-d'))
                                 ->orderBy('start_date', 'desc')
                                 ->orderBy('start_time', 'desc')->get();
-                                
+
         return view('pages/profile/shifts', compact('user', 'upcoming', 'past'));
     }
 
