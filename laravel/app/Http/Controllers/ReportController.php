@@ -48,7 +48,7 @@ class ReportController extends Controller
             [
                 'id' => $user->id,
                 'name' => $user->name,
-                'real_name' => count($user->data) ? $user->data->real_name : '',
+                'real_name' => count($user->data) && $user->data->real_name ? $user->data->real_name : '',
                 'email' => $user->email
             ];
         }
