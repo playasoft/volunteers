@@ -47,7 +47,7 @@ foreach($events as $event)
             <div class="report-options hidden" data-type="user">
                 @include('partials/form/select',
                 [
-                    'name' => 'options',
+                    'name' => 'user-options',
                     'label' => 'Report options',
                     'class' => 'user-options',
                     'options' =>
@@ -134,7 +134,7 @@ foreach($events as $event)
             <div class="report-options hidden" data-type="department">
                 @include('partials/form/select',
                 [
-                    'name' => 'options',
+                    'name' => 'department-options',
                     'label' => 'Report options',
                     'class' => 'department-options',
                     'options' =>
@@ -198,7 +198,7 @@ foreach($events as $event)
             <div class="report-options hidden" data-type="day">
                 @include('partials/form/select',
                 [
-                    'name' => 'options',
+                    'name' => 'day-options',
                     'label' => 'Report options',
                     'class' => 'day-options',
                     'options' =>
@@ -261,7 +261,7 @@ foreach($events as $event)
             <div class="report-options hidden" data-type="misc">
                 @include('partials/form/select',
                 [
-                    'name' => 'misc',
+                    'name' => 'misc-reports',
                     'label' => 'Miscellaneous reports',
                     'class' => 'misc-options',
                     'options' =>

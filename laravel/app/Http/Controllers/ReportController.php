@@ -21,14 +21,14 @@ class ReportController extends Controller
     }
 
     // Main page for reports
-    function reportList()
+    public function reportList()
     {
         $events = Event::orderBy('start_date', 'desc')->take(10)->get();
         return view('pages/admin/report-list', compact('events'));
     }
 
     // TODO: Use a real search engine like ElasticSearch or SOLR
-    function searchUsers(Request $request)
+    public function searchUsers(Request $request)
     {
         $search = $request->get('search');
         $users = [];
@@ -56,7 +56,7 @@ class ReportController extends Controller
         return json_encode($users);
     }
 
-    function getDepartments(Request $request)
+    public function getDepartments(Request $request)
     {
         $id = $request->get('event');
         $event = Event::findOrFail($id);
@@ -74,7 +74,7 @@ class ReportController extends Controller
         return json_encode($departments);
     }
 
-    function getDays(Request $request)
+    public function getDays(Request $request)
     {
         $id = $request->get('event');
         $event = Event::findOrFail($id);
@@ -89,8 +89,82 @@ class ReportController extends Controller
         return json_encode($days);
     }
 
-    function generateReport(Request $request)
+    public function generateReport(Request $request)
     {
-        return "hi there";
+        $event = Event::find($request->get('event'));
+        $type = $request->get('type');
+
+        if(empty($event))
+        {
+            $request->session()->flash('error', 'An event must be selected to generate reports.');
+            return redirect()->back();
+        }
+
+        if(empty($type))
+        {
+            $request->session()->flash('error', 'A report type must be must be selected.');
+            return redirect()->back();
+        }
+
+        if($type == 'user')
+        {
+            return $this->userReport($event, $request);
+        }
+        elseif($type == 'department')
+        {
+            return $this->departmentReport($event, $request);
+        }
+        elseif($type == 'day')
+        {
+            return $this->dayReport($event, $request);
+        }
+        elseif($type == 'misc')
+        {
+            $report = $request->get('misc-reports');
+
+            if(empty($report))
+            {
+                $request->session()->flash('error', 'You must select a report to generate.');
+                return redirect()->back();
+            }
+
+            if($report == 'hours-volunteered')
+            {
+                $this->hoursVolunteeredReport($event, $request);
+            }
+            elseif($report == 'shifts-filled')
+            {
+                $this->shiftsFilledReport($event, $request);
+            }
+        }
+    }
+
+    private function userReport($event, $request)
+    {
+        dd($request->all());
+    }
+
+    private function departmentReport($event, $request)
+    {
+        dd($request->all());
+
+    }
+
+    private function dayReport($event, $request)
+    {
+        dd($request->all());
+
+    }
+
+    private function hoursVolunteeredReport($event, $request)
+    {
+        dd($request->all());
+
+    }
+
+    private function shiftsFilledReport($event, $request)
+    {
+        dd($request->all());
+
     }
 }

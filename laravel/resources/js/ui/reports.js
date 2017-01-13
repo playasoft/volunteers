@@ -47,7 +47,7 @@ $(document).ready(function()
         }
         else
         {
-            $('.user-search').addClass('hidden');
+            $('.user-search, .users').addClass('hidden');
         }
     });
 
