@@ -146,7 +146,7 @@ $(document).ready(function()
         }
         else
         {
-            $('.departments-wrap .loading').addClass('hidden');
+            $('.departments-wrap .loading, .departments').addClass('hidden');
         }
     });
 
@@ -190,7 +190,7 @@ $(document).ready(function()
         }
         else
         {
-            $('.days-wrap .loading').addClass('hidden');
+            $('.days-wrap .loading, .days').addClass('hidden');
         }
     });
 

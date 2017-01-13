@@ -210,7 +210,7 @@ class ReportController extends Controller
                     'date' => $date->format('m/d/Y'),
                     'department' => $slot->department->name,
                     'shift' => $slot->shift->name,
-                    'start_time' => $slot->start_tim,
+                    'start_time' => $slot->start_time,
                     'end_time' => $slot->end_time
                 ];
             }
@@ -221,8 +221,77 @@ class ReportController extends Controller
 
     private function departmentReport($event, $request)
     {
-        dd($request->all());
+        if($request->get('department-options') == 'specific')
+        {
+            $ids = $request->get('department-report');
 
+            if(empty($ids))
+            {
+                $request->session()->flash('error', 'No departments selected. Please use the checkboxes to generate reports for specific departments.');
+                return redirect()->back();
+            }
+
+            // Select deparatments based on specified IDs
+            $departments = $event->departments()->whereIn('id', $ids)->get();
+        }
+        else
+        {
+            // Select all departments
+            $departments = $event->departments;
+        }
+
+        $columns =
+        [
+            'department' => 'Department',
+            'shift' => 'Shift',
+            'day' => 'Day of the Week',
+            'date' => 'Date',
+            'start_time' => 'Start Time',
+            'end_time' => 'End Time',
+            'user' => 'Username',
+            'email' => 'Email',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'phone' => 'Phone Number'
+        ];
+
+        $data = [];
+
+        foreach($departments as $department)
+        {
+            foreach($department->slots as $slot)
+            {
+                $date = new Carbon($slot->start_date);
+
+                $row =
+                [
+                    'department' => $department->name,
+                    'shift' => $slot->shift->name,
+                    'day' => $date->formatLocalized('%A'),
+                    'date' => $date->format('m/d/Y'),
+                    'start_time' => $slot->start_time,
+                    'end_time' => $slot->end_time
+                ];
+
+                if(count($slot->user))
+                {
+                    $row['user'] = $slot->user->name;
+                    $row['email'] = $slot->user->email;
+
+                    if(count($slot->user->data))
+                    {
+                        $name = $this->splitName($slot->user->data->real_name);
+                        $row['first_name'] = $name['first'];
+                        $row['last_name'] = $name['last'];
+                        $row['phone'] = $slot->user->data->phone;
+                    }
+                }
+
+                $data[] = $row;
+            }
+        }
+
+        $this->generateCSV('Volunteer DB Department Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function dayReport($event, $request)
@@ -261,7 +330,14 @@ class ReportController extends Controller
 
             foreach($columns as $column => $columnName)
             {
-                $output[] = $row[$column];
+                if(isset($row[$column]))
+                {
+                    $output[] = $row[$column];
+                }
+                else
+                {
+                    $output[] = '';
+                }
             }
 
             fputcsv($file, $output);

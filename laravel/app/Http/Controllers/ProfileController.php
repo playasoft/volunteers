@@ -74,7 +74,7 @@ class ProfileController extends Controller
         {
             // Remove empty inputs
             $input = array_filter($input);
-            
+
             // Create new row in user data if none exists
             if(is_null($user->data))
             {
