@@ -38,7 +38,7 @@ foreach($events as $event)
                         '0' => '----',
                         'user' => "User Reports",
                         'department' => "Department Reports",
-                        'day' => "Reports by Day",
+//                        'day' => "Reports by Day",
                         'misc' => "Miscellaneous Reports",
                     ]
                 ])
