@@ -341,12 +341,24 @@ class ReportController extends Controller
 
     private function hoursVolunteeredReport($event, $request)
     {
+        // Get all slots for an event
+        // Sum all slots together grouped by user?
+
+        // Last name, first name, nickname, number of shifts, total hours
+
         dd($request->all());
 
     }
 
     private function shiftsFilledReport($event, $request)
     {
+        // Get all slots for an event
+        // Find how many are filled vs empty
+        // Group by department
+        // Output each by department as well as a total
+
+        // Department, Shifts Filled, Shifts Empty, Percent Filled
+
         dd($request->all());
 
     }
