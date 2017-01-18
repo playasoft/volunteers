@@ -30,14 +30,11 @@ class SendAdminWelcome
     public function handle(UserRegistered $event)
     {
         $user = $event->user;
-        $admins = User::where('role', 'admin')->get();
+        $admin = User::where('role', 'admin')->first();
 
-        foreach($admins as $admin)
+        Mail::send('emails/admin-welcome', compact('user'), function ($message) use ($admin)
         {
-            Mail::send('emails/admin-welcome', compact('user'), function ($message) use ($admin)
-            {
-                $message->to($admin->email, $admin->name)->subject('New user registered!');
-            });
-        }
+            $message->to($admin->email, $admin->name)->subject('New user registered!');
+        });
     }
 }
