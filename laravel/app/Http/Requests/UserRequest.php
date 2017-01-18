@@ -24,24 +24,35 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        switch(Request::path())
+        switch(Request::route()->getUri())
         {
             case "login":
                 $rules =
                 [
                     'name' => 'required|min:3|exists:users,name',
-                    'password' => 'required|min:8|hashed'
+                    'password' => 'required|min:8|hashed',
                 ];
             break;
 
-            // Default to registration requirements
-            default:
+            case "register":
                 $rules =
                 [
                     'name' => 'required|min:3|unique:users',
                     'email' => 'required|email|unique:users',
-                    'password' => 'required|min:8|confirmed'
+                    'password' => 'required|min:8|confirmed',
                 ];
+            break;
+
+            case "forgot/{token}":
+                $rules =
+                [
+                    'password' => 'required|min:8|confirmed',
+                ];
+            break;
+
+            // for users/{user}/edit and users/profile
+            default:
+                $rules = [];
             break;
         }
 

@@ -24,6 +24,12 @@ Route::get('/logout', 'UserController@logout');
 Route::post('/register', 'UserController@create');
 Route::post('/login', 'UserController@login');
 
+Route::get('/forgot', 'PageController@view');
+Route::post('/forgot', 'UserController@forgotPassword');
+Route::get('/forgot/{token}', 'UserController@verifyToken');
+Route::post('/forgot/{token}', 'UserController@changePassword');
+
+
 
 // Event routes
 Route::get('/event', 'EventController@createForm');

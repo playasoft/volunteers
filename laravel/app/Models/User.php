@@ -20,6 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $table = 'users';
 
     protected $fillable = ['name', 'email', 'password'];
+    protected $dates = ['created_at', 'updated_at', 'reset_time'];
 
     // Users can have user data
     public function data()

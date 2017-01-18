@@ -12,7 +12,8 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
+    protected $listen =
+    [
         'App\Events\UserRegistered' =>
         [
             'App\Listeners\SendUserWelcome',
@@ -27,6 +28,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\FileChanged' =>
         [
             'App\Listeners\SendUserFileChanged',
+        ],
+
+        'App\Events\ForgotPassword' =>
+        [
+            'App\Listeners\SendUserMessage',
         ],
     ];
 
