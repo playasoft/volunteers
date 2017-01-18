@@ -30,14 +30,11 @@ class SendAdminFileUploaded
     public function handle(FileUploaded $event)
     {
         $file = $event->file;
-        $admins = User::where('role', 'admin')->get();
+        $admin = User::where('role', 'admin')->first();
 
-        foreach($admins as $admin)
+        Mail::send('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
         {
-            Mail::send('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
-            {
-                $message->to($admin->email, $admin->name)->subject('New file uploaded!');
-            });
-        }
+            $message->to($admin->email, $admin->name)->subject('New file uploaded!');
+        });
     }
 }
