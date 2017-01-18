@@ -34,7 +34,7 @@ class Slot extends Model
     }
     
     // Helper function to get the number of seconds in a timestamp
-    static private function timeToSeconds($time)
+    static public function timeToSeconds($time)
     {
         $parsed = date_parse_from_format('H:i', $time);
         $seconds = 0;
@@ -46,7 +46,7 @@ class Slot extends Model
     }
 
     // Helper function to convert seconds back into hours
-    static private function secondsToTime($seconds)
+    static public function secondsToTime($seconds)
     {
         return date('H:i', $seconds);
     }

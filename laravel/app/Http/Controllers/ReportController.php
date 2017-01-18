@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Slot;
 use Carbon\Carbon;
 
 class ReportController extends Controller
@@ -341,13 +342,82 @@ class ReportController extends Controller
 
     private function hoursVolunteeredReport($event, $request)
     {
-        // Get all slots for an event
-        // Sum all slots together grouped by user?
+        // Set up CSV output variables
+        $columns =
+        [
+            'last_name' => 'Last name',
+            'first_name' => 'First name',
+            'user' => 'Username',
+            'burner_name' => 'Playa name',
+            'shifts' => 'Total number of shifts',
+            'hours' => 'Total hours volunteered'
+        ];
 
-        // Last name, first name, nickname, number of shifts, total hours
+        $data = [];
 
-        dd($request->all());
+        // Select all shifts in the selected event
+        $shifts = [];
 
+        foreach($event->departments as $department)
+        {
+            foreach($department->shifts as $shift)
+            {
+                $shifts[] = $shift->id;
+            }
+        }
+
+        // Select all users
+        $users = User::get();
+
+        // Loop through users to check the slots they've signed up for
+        foreach($users as $user)
+        {
+            $name = ['first' => '', 'last' => ''];
+
+            if(count($user->data))
+            {
+                $name = $this->splitName($user->data->real_name);
+            }
+
+            $slots = $user->slots()->whereIn('shift_id', $shifts)->get();
+            $hoursVolunteered = 0;
+            $slotsVolunteered = 0;
+
+            // Calculate how long each shift was
+            foreach($slots as $slot)
+            {
+                $start = Slot::timeToSeconds($slot->start_time);
+                $end = Slot::timeToSeconds($slot->end_time);
+                $duration = ($end - $start) / 60 / 60;
+                $hoursVolunteered += $duration;
+                $slotsVolunteered++;
+            }
+
+            // Skip users that did not volunteer
+            if(!$slotsVolunteered)
+            {
+                continue;
+            }
+
+            // Add data to export
+            $data[] =
+            [
+                'last_name' => $name['last'],
+                'first_name' => $name['first'],
+                'user' => $user->name,
+                'burner_name' => count($user->data) ? $user->data->burner_name : '',
+                'shifts' => $slotsVolunteered,
+                'hours' => $hoursVolunteered
+            ];
+        }
+
+        // Create collection from saved data
+        $collection = collect($data);
+
+        // Sort the collection and save it back into the data array
+        $data = $collection->sortBy('last_name')->sortByDesc('hours');
+
+        $this->generateCSV('Volunteer DB Hours Volunteered Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function shiftsFilledReport($event, $request)
