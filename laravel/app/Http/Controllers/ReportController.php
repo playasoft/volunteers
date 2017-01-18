@@ -422,15 +422,60 @@ class ReportController extends Controller
 
     private function shiftsFilledReport($event, $request)
     {
-        // Get all slots for an event
-        // Find how many are filled vs empty
-        // Group by department
-        // Output each by department as well as a total
+        // Set up CSV output variables
+        $columns =
+        [
+            'department' => 'Department',
+            'filled' => 'Shifts Filled',
+            'empty' => 'Shifts Empty',
+            'percent' => 'Percent Filled',
+        ];
 
-        // Department, Shifts Filled, Shifts Empty, Percent Filled
+        $data = [];
+        $total = ['filled' => 0, 'empty' => 0];
 
-        dd($request->all());
+        // Loop through event departments
+        foreach($event->departments as $department)
+        {
+            $shifts = [];
 
+            foreach($department->shifts as $shift)
+            {
+                $shifts[] = $shift->id;
+            }
+
+            // Get all slots for this department
+            $filled = Slot::whereIn('shift_id', $shifts)->whereNotNull('user_id')->get();
+            $empty = Slot::whereIn('shift_id', $shifts)->whereNull('user_id')->get();
+
+            $total['filled'] += $filled->count();
+            $total['empty'] += $empty->count();
+
+            $data[] =
+            [
+                'department' => $department->name,
+                'filled' => $filled->count(),
+                'empty' => $empty->count(),
+                'percent' => number_format($filled->count() / ($filled->count() + $empty->count()) * 100, 2),
+            ];
+        }
+
+        // Create collection from saved data
+        $collection = collect($data);
+
+        // Sort the collection and save it back into the data array
+        $data = $collection->sortByDesc('percent');
+
+        // Add the total to the end of the dataset
+        $data[] =
+        [
+            'department' => 'Total',
+            'filled' => $total['filled'],
+            'empty' => $total['empty'],
+            'percent' => number_format($total['filled'] / ($total['filled'] + $total['empty']) * 100, 2)
+        ];
+
+        $this->generateCSV('Volunteer DB Shifts Filled Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function generateCSV($filename, $columns, $data)
