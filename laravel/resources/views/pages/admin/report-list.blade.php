@@ -16,7 +16,7 @@ foreach($events as $event)
         <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
 
         {!! Form::open(['url' => 'report/generate']) !!}
-            <h1>CSV Report Generator</h1>
+            <h1>Report Generator</h1>
             <hr>
 
             @include('partials/form/select',
@@ -142,6 +142,17 @@ foreach($events as $event)
                         '0' => '----',
                         'all' => "Use data from all departments",
                         'specific' => "Select specific departments",
+                    ]
+                ])
+
+                @include('partials/form/select',
+                [
+                    'name' => 'output-options',
+                    'label' => 'File output',
+                    'options' =>
+                    [
+                        'csv' => "Export raw data as CSV file",
+                        'printable' => "Export printable file",
                     ]
                 ])
 

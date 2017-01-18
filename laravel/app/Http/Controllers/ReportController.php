@@ -241,6 +241,13 @@ class ReportController extends Controller
             $departments = $event->departments;
         }
 
+        // Return a printable format?
+        if($request->get('output-options') == 'printable')
+        {
+            return view('pages/admin/report-departments-printable', compact('event', 'departments'));
+        }
+
+        // Otherwise, start preparing the CSV data
         $columns =
         [
             'department' => 'Department',
