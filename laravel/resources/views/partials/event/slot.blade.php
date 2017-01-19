@@ -1,13 +1,17 @@
 <?php
 
-$class = "slot";
+$class = "slot empty";
 $href = "";
 $name = "";
 
 // If there is no slot user, display a link to the take shift page
 if(is_null($slot->user))
 {
+    $start = strtotime($slot->start_time);
+    $end = strtotime($slot->end_time);
+
     $href = "/slot/{$slot->id}/take";
+    $name = date("h:i a", $start) . " - " . date("h:i a", $end);
 }
 
 // If there is a slot user, set the class to taken

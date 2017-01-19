@@ -105,6 +105,15 @@
     }
 }
 
+.slot.empty {
+    font-size: 10pt;
+    line-height: 12pt;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .slot.taken {
     background-color: #d83664;
     border: 1px solid #fff;
