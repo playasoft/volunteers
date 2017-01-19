@@ -147,7 +147,7 @@ foreach($events as $event)
 
                 @include('partials/form/select',
                 [
-                    'name' => 'output-options',
+                    'name' => 'department-output',
                     'label' => 'File output',
                     'options' =>
                     [

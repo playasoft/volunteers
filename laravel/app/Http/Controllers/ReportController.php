@@ -242,7 +242,7 @@ class ReportController extends Controller
         }
 
         // Return a printable format?
-        if($request->get('output-options') == 'printable')
+        if($request->get('department-output') == 'printable')
         {
             return view('pages/admin/report-departments-printable', compact('event', 'departments'));
         }
