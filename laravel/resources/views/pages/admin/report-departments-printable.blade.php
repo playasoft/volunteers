@@ -53,16 +53,24 @@ use Carbon\Carbon;
 
                     $date = new Carbon($slot->start_date);
                     $day = $date->formatLocalized('%A');
+                    $start = strtotime($slot->start_time);
+                    $end = strtotime($slot->end_time);
 
                     ?>
                     <tr>
                         <td>&nbsp;</td>
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $day }}</td>
-                        <td>{{ $slot->start_time }}</td>
-                        <td>{{ $slot->end_time }}</td>
-                        <td>{{ $slot->user->name or 'OPEN' }}</td>
-                        <td>{{ $slot->user->data->real_name or '' }}</td>
+                        <td>{{ $slot->start_time }} ({{ date("h:i a", $start) }})</td>
+                        <td>{{ $slot->end_time }} ({{ date("h:i a", $end) }})</td>
+                        <td>
+                            @if(count($slot->user))
+                                <b>{{ $slot->user->name }}</b>
+                            @else
+                                OPEN
+                            @endif
+                        </td>
+                        <td><b>{{ $slot->user->data->real_name or '' }}</b></td>
                     </tr>
                 @endforeach
             </tbody>
