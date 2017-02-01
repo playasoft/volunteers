@@ -93,9 +93,9 @@
                                                 <li class="shift row">
                                                     <div class="title col-sm-2">
                                                         @can('edit-shift')
-                                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->name }}</a>
+                                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->data->name }}</a>
                                                         @else
-                                                            <b>{{ $shift->name }}</b>
+                                                            <b>{{ $shift->data->name }}</b>
                                                         @endcan
                                                     </div>
 

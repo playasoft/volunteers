@@ -210,7 +210,7 @@ class ReportController extends Controller
                     'day' => $date->formatLocalized('%A'),
                     'date' => $date->format('m/d/Y'),
                     'department' => $slot->department->name,
-                    'shift' => $slot->shift->name,
+                    'shift' => $slot->shift->data->name,
                     'start_time' => $slot->start_time,
                     'end_time' => $slot->end_time
                 ];
@@ -274,7 +274,7 @@ class ReportController extends Controller
                 $row =
                 [
                     'department' => $department->name,
-                    'shift' => $slot->shift->name,
+                    'shift' => $slot->shift->data->name,
                     'day' => $date->formatLocalized('%A'),
                     'date' => $date->format('m/d/Y'),
                     'start_time' => $slot->start_time,

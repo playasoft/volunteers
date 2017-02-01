@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Volunteer for: {{ $slot->department->name }} - {{ $slot->shift->name }}</h1>
+    <h1>Volunteer for: {{ $slot->department->name }} - {{ $slot->shift->data->name }}</h1>
     <hr>
 
     <div>

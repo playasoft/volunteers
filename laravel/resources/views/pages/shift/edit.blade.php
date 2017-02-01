@@ -29,7 +29,7 @@
             @endif
         </div>
         
-        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->data->name])
         @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date', 'value' => $shift->start_date])
         @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date', 'value' => $shift->end_date])
         @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts", 'value' => $shift->start_time])

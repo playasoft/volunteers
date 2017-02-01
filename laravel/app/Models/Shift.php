@@ -13,7 +13,7 @@ class Shift extends Model
     // Shifts have shift data
     public function data()
     {
-        return $this->hasOne('App\Models\ShiftData');
+        return $this->hasOne('App\Models\ShiftData', 'id', 'shift_data_id');
     }
 
     // Shifts belong to a department
