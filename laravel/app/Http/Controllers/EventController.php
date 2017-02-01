@@ -126,6 +126,13 @@ class EventController extends Controller
         return redirect('/');
     }
 
+/*
+
+The clone feature has been disabled until the upcoming schema changes are finalized.
+
+TODO: Fix this.
+
+
     // View confirmation page before cloning an event
     public function cloneForm(Request $request, Event $event)
     {
@@ -198,7 +205,7 @@ class EventController extends Controller
 
                 $newShift = Shift::create([
                     'department_id' => $newDepartment->id,
-                    'name' => $shift->name,
+                    'shift_data_id' => $shift->data->id,
                     'start_date' => $shift->start_date,
                     'end_date' => $shift->end_date,
                     'start_time' => $shift->start_time,
@@ -214,4 +221,5 @@ class EventController extends Controller
         $request->session()->flash('success', 'Event has been cloned.');
         return redirect('/event/' . $newEvent->id);
     }
+*/
 }
