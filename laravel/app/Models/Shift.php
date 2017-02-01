@@ -10,6 +10,12 @@ class Shift extends Model
     use SoftDeletes;
     protected $fillable = ['department_id', 'name', 'start_date', 'end_date', 'start_time', 'end_time', 'duration', 'roles'];
 
+    // Shifts have shift data
+    public function data()
+    {
+        return $this->hasOne('App\Models\ShiftData');
+    }
+
     // Shifts belong to a department
     public function department()
     {
