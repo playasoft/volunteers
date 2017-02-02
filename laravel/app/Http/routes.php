@@ -48,7 +48,8 @@ Route::get('/event/{event}', 'EventController@view');
 
 
 // Department routes
-Route::get('/event/{event}/department', 'DepartmentController@createForm');
+Route::get('/event/{event}/departments', 'DepartmentController@listDepartments');
+Route::get('/event/{event}/department/create', 'DepartmentController@createForm');
 Route::post('/department', 'DepartmentController@create');
 
 Route::get('/department/{department}/edit', 'DepartmentController@editForm');

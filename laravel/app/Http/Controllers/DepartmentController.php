@@ -19,6 +19,13 @@ class DepartmentController extends Controller
         $this->middleware('auth');
     }
 
+    // Display list of departments in an event
+    public function listDepartments(Request $request, Event $event)
+    {
+        $this->authorize('create-department');
+        return view('pages/department/list', compact('event'));
+    }
+
     // Display department creation page
     public function createForm(Request $request, Event $event)
     {

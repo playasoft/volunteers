@@ -39,11 +39,15 @@
         @endif
 
         @can('create-department')
-            <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
+            <a href="/event/{{ $event->id }}/departments" class="btn btn-primary">View All Departments</a>
         @endcan
 
         @can('create-shift')
-            <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
+            <a href="/event/{{ $event->id }}/shifts" class="btn btn-primary">View All Shifts</a>
+        @endcan
+
+        @can('create-schedule')
+            <a href="/event/{{ $event->id }}/schedule" class="btn btn-primary">Add a Shift to the Schedule</a>
         @endcan
 
         <div class="clearfix"></div>
