@@ -20,6 +20,12 @@ class Department extends Model
     // Departments have shifts
     public function shifts()
     {
+        return $this->hasMany('App\Models\ShiftData');
+    }
+
+    // Departments have a schedule
+    public function schedule()
+    {
         return $this->hasMany('App\Models\Shift');
     }
 

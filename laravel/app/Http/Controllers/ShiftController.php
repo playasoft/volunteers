@@ -21,6 +21,13 @@ class ShiftController extends Controller
         $this->middleware('auth');
     }
 
+    // Display list of shifts in an event
+    public function listShifts(Request $request, Event $event)
+    {
+        $this->authorize('create-shift');
+        return view('pages/shift/list', compact('event'));
+    }
+
     // Display shift creation page
     public function createForm(Request $request, Event $event)
     {

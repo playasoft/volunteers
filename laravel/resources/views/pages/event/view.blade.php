@@ -86,25 +86,25 @@
                                         </div>
                                         
                                         <ul class="shifts">
-                                            @foreach($department->shifts as $shift)
+                                            @foreach($department->schedule as $schedule)
                                                 <?php
 
-                                                if($shift->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                                if($schedule->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
                                                     continue;
 
                                                 ?>
 
                                                 <li class="shift row">
                                                     <div class="title col-sm-2">
-                                                        @can('edit-shift')
-                                                            <a href="/shift/{{ $shift->id }}/edit">{{ $shift->data->name }}</a>
+                                                        @can('edit-schedule')
+                                                            <a href="/schedule/{{ $schedule->id }}/edit">{{ $schedule->data->name }}</a>
                                                         @else
-                                                            <b>{{ $shift->data->name }}</b>
+                                                            <b>{{ $schedule->data->name }}</b>
                                                         @endcan
                                                     </div>
 
                                                     <div class="slots col-sm-10">
-                                                        @foreach($shift->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
+                                                        @foreach($schedule->slots->where('start_date', $day->date->format('Y-m-d')) as $slot)
                                                             @include('partials/event/slot')
                                                         @endforeach
                                                     </div>

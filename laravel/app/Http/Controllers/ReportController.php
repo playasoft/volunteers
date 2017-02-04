@@ -161,14 +161,14 @@ class ReportController extends Controller
             $users = User::get();
         }
 
-        // Select all shifts in the selected event
-        $shifts = [];
+        // Select all scheduled shifts in the selected event
+        $schedule = [];
 
         foreach($event->departments as $department)
         {
-            foreach($department->shifts as $shift)
+            foreach($department->schedule as $schedule)
             {
-                $shifts[] = $shift->id;
+                $schedule[] = $schedule->id;
             }
         }
 
@@ -196,7 +196,7 @@ class ReportController extends Controller
                 $name = $this->splitName($user->data->real_name);
             }
 
-            $slots = $user->slots()->whereIn('shift_id', $shifts)->get();
+            $slots = $user->slots()->whereIn('shift_id', $schedule)->get();
 
             foreach($slots as $slot)
             {
@@ -363,13 +363,13 @@ class ReportController extends Controller
         $data = [];
 
         // Select all shifts in the selected event
-        $shifts = [];
+        $schedule = [];
 
         foreach($event->departments as $department)
         {
-            foreach($department->shifts as $shift)
+            foreach($department->schedule as $shift)
             {
-                $shifts[] = $shift->id;
+                $schedule[] = $schedule->id;
             }
         }
 
@@ -386,7 +386,7 @@ class ReportController extends Controller
                 $name = $this->splitName($user->data->real_name);
             }
 
-            $slots = $user->slots()->whereIn('shift_id', $shifts)->get();
+            $slots = $user->slots()->whereIn('shift_id', $schedule)->get();
             $hoursVolunteered = 0;
             $slotsVolunteered = 0;
 
@@ -444,16 +444,16 @@ class ReportController extends Controller
         // Loop through event departments
         foreach($event->departments as $department)
         {
-            $shifts = [];
+            $schedule = [];
 
-            foreach($department->shifts as $shift)
+            foreach($department->schedule as $schedule)
             {
-                $shifts[] = $shift->id;
+                $schedule[] = $schedule->id;
             }
 
             // Get all slots for this department
-            $filled = Slot::whereIn('shift_id', $shifts)->whereNotNull('user_id')->get();
-            $empty = Slot::whereIn('shift_id', $shifts)->whereNull('user_id')->get();
+            $filled = Slot::whereIn('shift_id', $schedule)->whereNotNull('user_id')->get();
+            $empty = Slot::whereIn('shift_id', $schedule)->whereNull('user_id')->get();
 
             $total['filled'] += $filled->count();
             $total['empty'] += $empty->count();

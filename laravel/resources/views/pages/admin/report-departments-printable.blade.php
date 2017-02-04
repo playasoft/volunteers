@@ -28,10 +28,10 @@ use Carbon\Carbon;
 @foreach($departments as $department)
     <h1>{{ $department->name }}</h1>
 
-    @foreach($department->shifts()->orderBy('duration', 'desc')->orderBy('start_date')->groupBy('shift_data_id')->get() as $shift)
+    @foreach($department->schedule()->orderBy('duration', 'desc')->orderBy('start_date')->groupBy('shift_data_id')->get() as $shift)
         <?php
 
-        $shift_ids = $department->shifts()->where('shift_data_id', $shift->data->id)->get()->pluck('id');
+        $schedule = $department->schedule()->where('shift_data_id', $shift->data->id)->get()->pluck('id');
 
         ?>
         <table>
@@ -48,7 +48,7 @@ use Carbon\Carbon;
             </thead>
 
             <tbody>
-                @foreach($department->slots()->whereIn('shift_id', $shift_ids)->orderBy('start_date')->orderBy('start_time')->get() as $slot)
+                @foreach($department->slots()->whereIn('shift_id', $schedule)->orderBy('start_date')->orderBy('start_time')->get() as $slot)
                     <?php
 
                     $date = new Carbon($slot->start_date);
