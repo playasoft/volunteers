@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ShiftRequest extends Request
+class ScheduleRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,12 @@ class ShiftRequest extends Request
         return
         [
             'department_id' => 'required|integer|exists:departments,id',
-            'name' => 'required',
+            'shift_data_id' => 'required|integer|exists:shift_data,id',
+            'start_date' => 'date_format:Y-m-d',
+            'end_date' => 'date_format:Y-m-d',
+            'start_time' => 'required|time',
+            'end_time' => 'required|time',
+            'duration' => 'required|date_format:h:i',
         ];
     }
 }

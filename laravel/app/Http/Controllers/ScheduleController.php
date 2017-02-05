@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\ShiftRequest;
+use App\Http\Requests\ScheduleRequest;
 use App\Models\Event;
 use App\Models\Department;
 use App\Models\Shift;
@@ -29,7 +29,7 @@ class ScheduleController extends Controller
     }
 
     // Create a new schedule
-    public function create(ShiftRequest $request)
+    public function create(ScheduleRequest $request)
     {
         $this->authorize('create-schedule');
         $input = $request->all();
@@ -73,7 +73,7 @@ class ScheduleController extends Controller
     }
 
     // Save changes to an existing schedule
-    public function edit(ShiftRequest $request, Shift $schedule)
+    public function edit(ScheduleRequest $request, Shift $schedule)
     {
         $this->authorize('edit-schedule');
         $input = $request->all();

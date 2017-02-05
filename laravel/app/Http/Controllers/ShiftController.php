@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShiftRequest;
 use App\Models\Event;
 use App\Models\Department;
-use App\Models\Shift;
+use App\Models\ShiftData;
 use App\Models\Slot;
 
 use App\Events\EventChanged;
@@ -54,33 +54,23 @@ class ShiftController extends Controller
                 unset($input['roles']);
             }
         }
-        
-        // Set start and end dates if not included 
-        $input = Shift::setDates($department, $input);
-        $input = Shift::setTimes($input);
-        $shift = Shift::create($input);
 
-        // Generate slots based on shift options
-        Slot::generate($shift);
-        event(new EventChanged($department->event, ['type' => 'shift', 'status' => 'created']));
+        $input['event_id'] = $department->event->id;
+        $shift = ShiftData::create($input);
 
         $request->session()->flash('success', 'Your shift has been created.');
         return redirect('/event/' . $department->event->id);
     }
 
     // View form to edit an existing shift
-    public function editForm(Request $request, Shift $shift)
+    public function editForm(Request $request, ShiftData $shift)
     {
         $this->authorize('edit-shift');
-
-        // Format the shift start, end, and duration times
-        $shift->formatTimes();
-
         return view('pages/shift/edit', compact('shift'));
     }
 
     // Save changes to an existing shift
-    public function edit(ShiftRequest $request, Shift $shift)
+    public function edit(ShiftRequest $request, ShiftData $shift)
     {
         $this->authorize('edit-shift');
         $input = $request->all();
@@ -96,52 +86,25 @@ class ShiftController extends Controller
             unset($input['roles']);
         }
 
-        // Make sure dates and times are set properly and formatted
-        $input = Shift::setDates($department, $input);
-        $input = Shift::setTimes($input);
-        $shift->formatTimes();
-
-        // Check if the start time, end time, or duration are changing
-        $regenerateSlots = false;
-        
-        if($shift->start_date != $input['start_date'] ||
-            $shift->end_date != $input['end_date'] ||
-            $shift->start_time != $input['start_time'] ||
-            $shift->end_time != $input['end_time'] ||
-            $shift->duration != $input['duration'])
-        {
-            $regenerateSlots = true;
-        }
-
         $shift->update($input);
-
-        // Regenerate slots after the updated shift information is saved
-        if($regenerateSlots)
-        {
-            Slot::generate($shift);
-        }
-
-        event(new EventChanged($shift->event, ['type' => 'shift', 'status' => 'edited']));
         
         $request->session()->flash('success', 'Shift has been updated.');
         return redirect('/event/' . $shift->event->id);
     }
 
     // View confirmation page before deleting a shift
-    public function deleteForm(Request $request, Shift $shift)
+    public function deleteForm(Request $request, ShiftData $shift)
     {
         $this->authorize('delete-shift');
         return view('pages/shift/delete', compact('shift'));
     }
 
     // Delete a shift
-    public function delete(Request $request, Shift $shift)
+    public function delete(Request $request, ShiftData $shift)
     {
         $this->authorize('delete-shift');
-        $event = $shift->department->event;
+        $event = $shift->event;
         $shift->delete();
-
-        event(new EventChanged($event, ['type' => 'shift', 'status' => 'deleted']));
 
         $request->session()->flash('success', 'Shift has been deleted.');
         return redirect('/event/' . $event->id);

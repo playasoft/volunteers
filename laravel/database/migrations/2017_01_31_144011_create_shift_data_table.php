@@ -20,7 +20,7 @@ class CreateShiftDataTable extends Migration
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description');
             $table->json('roles')->nullable();
             $table->timestamps();
         });

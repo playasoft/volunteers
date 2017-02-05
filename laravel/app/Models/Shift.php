@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Shift extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['department_id', 'name', 'start_date', 'end_date', 'start_time', 'end_time', 'duration', 'roles'];
+    protected $fillable = ['department_id', 'shift_data_id', 'start_date', 'end_date', 'start_time', 'end_time', 'duration', 'roles'];
 
     // Shifts have shift data
     public function data()
