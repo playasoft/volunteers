@@ -48,4 +48,7 @@ $(document).ready(function()
             parent.find('.custom').addClass('hidden');
         }
     });
+
+    // Trigger change on page load to show / hide custom fields
+    $('.custom-wrap select').trigger('change');
 });
