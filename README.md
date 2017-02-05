@@ -39,7 +39,10 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 
 ## Extra websockets steps
 
-1. Make sure ```redis``` is installed and configured as the broadcast driver in your **.env** file
+1. In your **.env** file, make sure ```redis``` is installed and configured as the broadcast driver, and that the variable WEBSOCKETS_ENABLED is set to true.
 2. Run ```npm install``` within the **node** folder
-3. Run ```node websocket-server.js``` within the **node** folder
-4. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
+3. Ensure that the websocket parameters in  ```laravel/resources/js/config.js``` are correct
+4. Run ```node websocket-server.js``` within the **node** folder
+5. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
+
+  
