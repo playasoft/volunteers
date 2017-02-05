@@ -1,6 +1,6 @@
 require('./ui/menu');
 require('./ui/roles');
-require('./ui/shifts');
+require('./ui/schedule');
 require('./ui/timegrid');
 require('./ui/reports');
 require('./websockets');

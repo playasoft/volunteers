@@ -38,6 +38,12 @@ class Event extends Model
         return $this->hasMany('App\Models\Department');
     }
 
+    // Events have shifts
+    public function shifts()
+    {
+        return $this->hasMany('App\Models\ShiftData');
+    }
+
     // Helper function to generate a list of days the event will take place
     public function days()
     {
