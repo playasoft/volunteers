@@ -4,11 +4,11 @@
 
     <div class="header-buttons pull-right">
         @can('delete-schedule')
-            <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete Shift</a>
+            <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Shedule</a>
         @endcan
     </div>
 
-    <h1>Editing Shift for: {{ $schedule->department->name }}</h1>
+    <h1>Editing schedule for: {{ $schedule->department->name }}</h1>
     <hr>
 
     {!! Form::open() !!}
