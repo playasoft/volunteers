@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>Create a Shift for: {{ $event->name }}</h1>
+    <h1>Add a shift to the schedule for: {{ $event->name }}</h1>
     <hr>
     
     {!! Form::open(['url' => '/shift']) !!}
@@ -32,9 +32,31 @@
         @endif
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift"])
-        @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => "The best shift you'll ever sign up for!"])
+
+        <div class="form-group">
+            <label class="control-label" for="date-field">Shift Type</label>
+    
+            <select class="form-control shift-type" id="date-field">
+                <option value="all">Recurring, every day</option>
+                <option value="some">Recurring, date range</option>
+                <option value="one">Single day</option>
+            </select>
+        </div>
+
+        <div class="shift start-date hidden">
+            @include('partials/form/date', ['name' => 'start_date', 'label' => 'Start Date'])
+        </div>
+
+        <div class="shift end-date hidden">
+            @include('partials/form/date', ['name' => 'end_date', 'label' => 'End Date'])
+        </div>
+        
+        @include('partials/form/time', ['name' => 'start_time', 'label' => 'Start Time', 'help' => "The time of day when the first shift starts"])
+        @include('partials/form/time', ['name' => 'end_time', 'label' => 'End Time', 'help' => "The time of day when the last shift ends"])
+        @include('partials/form/time', ['name' => 'duration', 'label' => 'Duration', 'help' => "The duration of each slot in this shift"])
         @include('partials/roles', ['help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
     {!! Form::close() !!}
 @endsection

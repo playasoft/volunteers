@@ -47,7 +47,7 @@
         @endcan
 
         @can('create-schedule')
-            <a href="/event/{{ $event->id }}/schedule" class="btn btn-primary">Add a Shift to the Schedule</a>
+            <a href="/event/{{ $event->id }}/schedule/create" class="btn btn-primary">Add a Shift to the Schedule</a>
         @endcan
 
         <div class="clearfix"></div>

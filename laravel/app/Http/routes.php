@@ -71,6 +71,17 @@ Route::get('/shift/{shift}/delete', 'ShiftController@deleteForm');
 Route::post('/shift/{shift}/delete', 'ShiftController@delete');
 
 
+// Schedule routes
+Route::get('/event/{event}/schedule/create', 'ScheduleController@createForm');
+Route::post('/schedule', 'ScheduleController@create');
+
+Route::get('/schedule/{schedule}/edit', 'ScheduleController@editForm');
+Route::post('/schedule/{schedule}/edit', 'ScheduleController@edit');
+
+Route::get('/schedule/{schedule}/delete', 'ScheduleController@deleteForm');
+Route::post('/schedule/{schedule}/delete', 'ScheduleController@delete');
+
+
 // Slot routes
 Route::get('/slot/{slot}/take', 'SlotController@takeForm');
 Route::post('/slot/{slot}/take', 'SlotController@take');
