@@ -86,62 +86,68 @@ foreach($event->days() as $day)
 
         @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Event Dates', 'options' => $days])
 
-        @include('partials/form/select',
-        [
-            'name' => 'start_time',
-            'label' => 'Start Time',
-            'help' => "The time of day when the first shift starts",
-            'options' =>
+        <div class="custom-wrap">
+            @include('partials/form/select',
             [
-                '' => 'Select a time',
-                '00:00' => 'Midnight (beginning of day)',
-                '06:00' => '6 AM',
-                '09:00' => '9 AM',
-                '12:00' => 'Noon',
-                'custom' => 'Other'
-            ]
-        ])
+                'name' => 'start_time',
+                'label' => 'Start Time',
+                'help' => "The time of day when the first shift starts",
+                'options' =>
+                [
+                    '' => 'Select a time',
+                    '00:00' => 'Midnight (beginning of day)',
+                    '06:00' => '6 AM',
+                    '09:00' => '9 AM',
+                    '12:00' => 'Noon',
+                    'custom' => 'Other'
+                ]
+            ])
 
-        <div class="custom-start-time hidden">
-            @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time'])
+            <div class="custom hidden">
+                @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time'])
+            </div>
         </div>
 
-        @include('partials/form/select',
-        [
-            'name' => 'end_time',
-            'label' => 'End Time',
-            'help' => "The time of day when the last shift ends",
-            'options' =>
+        <div class="custom-wrap">
+            @include('partials/form/select',
             [
-                '' => 'Select a time',
-                '12:00' => 'Noon',
-                '18:00' => '6 PM',
-                '21:00' => '9 PM',
-                '24:00' => 'Midnight (end of day)',
-                'custom' => 'Other'
-            ]
-        ])
+                'name' => 'end_time',
+                'label' => 'End Time',
+                'help' => "The time of day when the last shift ends",
+                'options' =>
+                [
+                    '' => 'Select a time',
+                    '12:00' => 'Noon',
+                    '18:00' => '6 PM',
+                    '21:00' => '9 PM',
+                    '24:00' => 'Midnight (end of day)',
+                    'custom' => 'Other'
+                ]
+            ])
 
-        <div class="custom-end-time hidden">
-            @include('partials/form/time', ['name' => 'custom_end_time', 'label' => 'Custom End Time'])
+            <div class="custom hidden">
+                @include('partials/form/time', ['name' => 'custom_end_time', 'label' => 'Custom End Time'])
+            </div>
         </div>
 
-        @include('partials/form/select',
-        [
-            'name' => 'duration',
-            'label' => 'Duration',
-            'help' => "The duration of each slot in this shift",
-            'options' =>
+        <div class="custom-wrap">
+            @include('partials/form/select',
             [
-                '' => 'Select a duration',
-                '03:00' => 'Regular Shift (3 hours)',
-                '06:00' => 'Shift Lead (6 hours)',
-                'custom' => 'Other'
-            ]
-        ])
+                'name' => 'duration',
+                'label' => 'Duration',
+                'help' => "The duration of each slot in this shift",
+                'options' =>
+                [
+                    '' => 'Select a duration',
+                    '03:00' => 'Regular Shift (3 hours)',
+                    '06:00' => 'Shift Lead (6 hours)',
+                    'custom' => 'Other'
+                ]
+            ])
 
-        <div class="custom-duration hidden">
-            @include('partials/form/time', ['name' => 'custom_duration', 'label' => 'Custom Duration'])
+            <div class="custom hidden">
+                @include('partials/form/time', ['name' => 'custom_duration', 'label' => 'Custom Duration'])
+            </div>
         </div>
 
         @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'placeholder' => '3', 'help' => "This determines how many slots are available for the shift."])

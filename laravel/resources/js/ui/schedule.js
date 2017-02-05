@@ -34,4 +34,18 @@ $(document).ready(function()
             }
         }
     });
+
+    $('.custom-wrap select').on('change', function()
+    {
+        var parent = $(this).parents('.custom-wrap');
+
+        if($(this).value() == 'custom')
+        {
+            parent.find('.custom').removeClass('hidden');
+        }
+        else
+        {
+            parent.find('.custom').addClass('hidden');
+        }
+    });
 });
