@@ -28,7 +28,7 @@ foreach($event->departments as $department)
     {{-- Output available shifts as JSON so the shift dropdown can be dynamically populated --}}
     <textarea class="hidden available-shifts">{{ json_encode($shifts) }}</textarea>
     
-    {!! Form::open(['url' => '/shift']) !!}
+    {!! Form::open(['url' => '/schedule']) !!}
         @if($event->departments->count())
             <div class="form-group {{ ($errors->has('department_id')) ? 'has-error' : '' }}">
                 <label class="control-label" for="department-field">Department</label>
