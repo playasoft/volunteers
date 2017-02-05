@@ -1,16 +1,15 @@
 @extends('partials/form/_bootstrap')
 
 @section('html')
-    @foreach($options as $option)
+    @foreach($options as $value => $option)
         <div class="checkbox">
             <label>
                 <input type="checkbox"
-                        name="{{ $name }}"
+                        name="{{ $name }}[]"
                         id="{{ $name }}-field"
                         placeholder="{{ $placeholder or '' }}"
-                        value="1"
-                        {{ (isset($value) && $value) ? 'checked' : '' }}>
-
+                        value="{{ $value }}"
+                        {{ (!empty($selected) && in_array($value, $selected)) ? 'checked' : '' }}>
                 {{ $option }}
             </label>
         </div>
