@@ -41,20 +41,26 @@ class ScheduleController extends Controller
         if($request->input('start_time') == 'custom')
         {
             $this->validate($request, ['custom_start_time' => 'required|time']);
-            $input['start_time'] = $inupt['custom_start_time'];
+            $input['start_time'] = $input['custom_start_time'];
         }
 
         if($request->input('end_time') == 'custom')
         {
             $this->validate($request, ['custom_end_time' => 'required|time']);
-            $input['end_time'] = $inupt['custom_end_time'];
+            $input['end_time'] = $input['custom_end_time'];
         }
 
         if($request->input('duration') == 'custom')
         {
             $this->validate($request, ['custom_duration' => 'required|date_format:h:i']);
-            $input['duration'] = $inupt['custom_duration'];
+            $input['duration'] = $input['custom_duration'];
         }
+
+        // Determine the schedule start and end dates
+        // TODO: Actually parse the dates and make sure they're sorted properly
+        $input['start_date'] = array_slice($input['dates'], 0, 1)[0];
+        $input['end_date'] = array_slice($input['dates'], -1, 1)[0];
+        $input['dates'] = json_encode($input['dates']);
 
         if(isset($input['roles']))
         {
