@@ -50,5 +50,6 @@ $(document).ready(function()
     });
 
     // Trigger change on page load to show / hide custom fields
+    $('.department-dropdown').trigger('change');
     $('.custom-wrap select').trigger('change');
 });

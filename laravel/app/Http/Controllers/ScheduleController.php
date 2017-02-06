@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ScheduleRequest;
 use App\Models\Event;
 use App\Models\Department;
+use App\Models\ShiftData;
 use App\Models\Shift;
 use App\Models\Slot;
 
@@ -34,6 +35,26 @@ class ScheduleController extends Controller
         $this->authorize('create-schedule');
         $input = $request->all();
         $department = Department::find($input['department_id']);
+        $shift = ShiftData::find($input['shift_data_id']);
+
+        // Conditional validation rules for custom inputs
+        if($request->input('start_time') == 'custom')
+        {
+            $this->validate($request, ['custom_start_time' => 'required|time']);
+            $input['start_time'] = $inupt['custom_start_time'];
+        }
+
+        if($request->input('end_time') == 'custom')
+        {
+            $this->validate($request, ['custom_end_time' => 'required|time']);
+            $input['end_time'] = $inupt['custom_end_time'];
+        }
+
+        if($request->input('duration') == 'custom')
+        {
+            $this->validate($request, ['custom_duration' => 'required|date_format:h:i']);
+            $input['duration'] = $inupt['custom_duration'];
+        }
 
         if(isset($input['roles']))
         {
@@ -47,7 +68,7 @@ class ScheduleController extends Controller
                 unset($input['roles']);
             }
         }
-        
+
         // Set start and end dates if not included 
         $input = Shift::setDates($department, $input);
         $input = Shift::setTimes($input);

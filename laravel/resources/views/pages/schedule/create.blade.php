@@ -150,7 +150,7 @@ foreach($event->days() as $day)
             </div>
         </div>
 
-        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'placeholder' => '3', 'help' => "This determines how many slots are available for the shift."])
+        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift."])
 
         @include('partials/roles', ['help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
