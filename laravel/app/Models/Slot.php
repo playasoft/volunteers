@@ -52,37 +52,52 @@ class Slot extends Model
     }
     
     // Helper function to generate slots based on shift information
-    static public function generate($shift)
+    static public function generate($schedule)
     {
         // Delete all existing slots for this shift
-        Slot::where('shift_id', $shift->id)->delete();
+        Slot::where('shift_id', $schedule->id)->delete();
 
-        // Loop over shift days
-        $date = new Carbon($shift->start_date);
-        $end_date = new Carbon($shift->end_date);
+        // Set up required variables
+        $end_date = new Carbon($schedule->end_date);
+        $dates = json_decode($schedule->getAttribute('dates'));
+        $volunteers = (int)$schedule->volunteers;
 
-        while($date->lte($end_date))
+        // Generate slots for each requested volunteer
+        while($volunteers > 0)
         {
-            // Convert shift times to seconds
-            $start = Slot::timeToSeconds($shift->start_time);
-            $end = Slot::timeToSeconds($shift->end_time);
-            $duration = Slot::timeToSeconds($shift->duration);
+            $date = new Carbon($schedule->start_date);
 
-            // Now loop over the times based on the slot duration
-            for($time = $start; $time + $duration <= $end; $time += $duration)
+            // Loop over all days between the start and end date
+            while($date->lte($end_date))
             {
-                $slot =
-                [
-                    'shift_id' => $shift->id,
-                    'start_date' => $date->format('Y-m-d'),
-                    'start_time' => Slot::secondsToTime($time),
-                    'end_time' => Slot::secondsToTime($time + $duration),
-                ];
-                
-                Slot::create($slot);
+                // Only create slots if the current date exists in the list of selected dates
+                if(in_array($date->format('Y-m-d'), $dates))
+                {
+                    // Convert shift times to seconds
+                    $start = Slot::timeToSeconds($schedule->start_time);
+                    $end = Slot::timeToSeconds($schedule->end_time);
+                    $duration = Slot::timeToSeconds($schedule->duration);
+
+                    // Now loop over the times based on the slot duration
+                    for($time = $start; $time + $duration <= $end; $time += $duration)
+                    {
+                        $slot =
+                        [
+                            'shift_id' => $schedule->id,
+                            'start_date' => $date->format('Y-m-d'),
+                            'start_time' => Slot::secondsToTime($time),
+                            'end_time' => Slot::secondsToTime($time + $duration),
+                        ];
+
+                        Slot::create($slot);
+                    }
+                }
+
+                // All done? Move onto the next day
+                $date->addDay();
             }
-            
-            $date->addDay();
+
+            $volunteers--;
         }
     }
 }

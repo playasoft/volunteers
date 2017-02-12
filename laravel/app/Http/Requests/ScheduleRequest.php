@@ -27,11 +27,11 @@ class ScheduleRequest extends Request
         [
             'department_id' => 'required|integer|exists:departments,id',
             'shift_data_id' => 'required|integer|exists:shift_data,id',
-            'start_date' => 'date_format:Y-m-d',
-            'end_date' => 'date_format:Y-m-d',
-            'start_time' => 'required|time',
-            'end_time' => 'required|time',
-            'duration' => 'required|date_format:h:i',
+            'dates' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'duration' => 'required',
+            'volunteers' => 'required|integer|min:1',
         ];
     }
 }

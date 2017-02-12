@@ -1,3 +1,12 @@
+<?php
+
+if(old($name))
+{
+    $selected = old($name);
+}
+
+?>
+
 @extends('partials/form/_bootstrap')
 
 @section('html')

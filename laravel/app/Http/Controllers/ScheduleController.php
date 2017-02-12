@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ScheduleRequest;
 use App\Models\Event;
 use App\Models\Department;
+use App\Models\ShiftData;
 use App\Models\Shift;
 use App\Models\Slot;
 
@@ -34,6 +35,32 @@ class ScheduleController extends Controller
         $this->authorize('create-schedule');
         $input = $request->all();
         $department = Department::find($input['department_id']);
+        $shift = ShiftData::find($input['shift_data_id']);
+
+        // Conditional validation rules for custom inputs
+        if($request->input('start_time') == 'custom')
+        {
+            $this->validate($request, ['custom_start_time' => 'required|time']);
+            $input['start_time'] = $input['custom_start_time'];
+        }
+
+        if($request->input('end_time') == 'custom')
+        {
+            $this->validate($request, ['custom_end_time' => 'required|time']);
+            $input['end_time'] = $input['custom_end_time'];
+        }
+
+        if($request->input('duration') == 'custom')
+        {
+            $this->validate($request, ['custom_duration' => 'required|date_format:h:i']);
+            $input['duration'] = $input['custom_duration'];
+        }
+
+        // Determine the schedule start and end dates
+        // TODO: Actually parse the dates and make sure they're sorted properly
+        $input['start_date'] = array_slice($input['dates'], 0, 1)[0];
+        $input['end_date'] = array_slice($input['dates'], -1, 1)[0];
+        $input['dates'] = json_encode($input['dates']);
 
         if(isset($input['roles']))
         {
@@ -47,7 +74,7 @@ class ScheduleController extends Controller
                 unset($input['roles']);
             }
         }
-        
+
         // Set start and end dates if not included 
         $input = Shift::setDates($department, $input);
         $input = Shift::setTimes($input);
