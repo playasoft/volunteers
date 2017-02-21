@@ -94,7 +94,7 @@
 
                                                 ?>
 
-                                                <li class="shift row">
+                                                <li class="shift row" data-rows="{{ $schedule->volunteers }}">
                                                     <div class="title col-sm-2">
                                                         @can('edit-schedule')
                                                             <a href="/schedule/{{ $schedule->id }}/edit">{{ $schedule->data->name }}</a>

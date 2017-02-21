@@ -17,6 +17,15 @@ $(window).on('resize', function()
     // If we're using a desktop resolution
     if($('.desktop').style('display') != "none")
     {
+        // Set the height of the shift based on the number of rows
+        $('.shift.row').each(function()
+        {
+            var rows = parseInt($(this).data('rows'));
+            var height = (2 * rows) + 'em';
+
+            $(this).find('.title').style({'height': height});
+        });
+
         // Set the position and size of the slots
         $('.slot-wrap').each(function()
         {
@@ -35,7 +44,6 @@ $(window).on('resize', function()
         {
             var height = $(this).find('.department-wrap').height();
             $(this).find('.timegrid .background').style({'height': height + 'px'});
-
         });
     }
     else

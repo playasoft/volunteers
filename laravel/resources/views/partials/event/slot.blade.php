@@ -48,6 +48,6 @@ if($start_date->lt(\Carbon\Carbon::now()))
 
 ?>
 
-<span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $schedule->duration }}">
+<span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $schedule->duration }}" data-row="{{ $slot->row }}">
     <a {!! $href !!} class="{{ $class }}" data-id="{{ $slot->id }}" title="{{ $name }}">{{ $name }}</a>
 </span>
