@@ -32,11 +32,13 @@ $(window).on('resize', function()
             var day = timeToSeconds('24:00:00');
             var start = timeToSeconds($(this).data('start')) * 1.009; // Magic number to make the slots align better with the bootstrap grid >_>
             var duration = timeToSeconds($(this).data('duration'));
+            var row = parseInt($(this).data('row'));
 
             var startPercent = start / day * 100;
             var widthPercent = duration / day * 100;
+            var offsetTop = 2 * (row - 1);
 
-            $(this).style({position: 'absolute', left: startPercent + '%', width: widthPercent + '%'});
+            $(this).style({position: 'absolute', left: startPercent + '%', top: offsetTop + 'em', width: widthPercent + '%'});
         });
 
         // Set the height of the grid backgrounds
