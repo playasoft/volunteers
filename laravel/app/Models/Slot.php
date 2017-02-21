@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Slot extends Model
 {
-    protected $fillable = ['shift_id', 'start_date', 'start_time', 'end_time'];
+    protected $fillable = ['shift_id', 'start_date', 'start_time', 'end_time', 'row'];
 
     // Slots belong to a shift
     public function shift()
@@ -61,9 +61,10 @@ class Slot extends Model
         $end_date = new Carbon($schedule->end_date);
         $dates = json_decode($schedule->getAttribute('dates'));
         $volunteers = (int)$schedule->volunteers;
+        $row = 1;
 
         // Generate slots for each requested volunteer
-        while($volunteers > 0)
+        while($row <= $volunteers)
         {
             $date = new Carbon($schedule->start_date);
 
@@ -87,6 +88,7 @@ class Slot extends Model
                             'start_date' => $date->format('Y-m-d'),
                             'start_time' => Slot::secondsToTime($time),
                             'end_time' => Slot::secondsToTime($time + $duration),
+                            'row' => $row
                         ];
 
                         Slot::create($slot);
@@ -97,7 +99,7 @@ class Slot extends Model
                 $date->addDay();
             }
 
-            $volunteers--;
+            $row++;
         }
     }
 }
