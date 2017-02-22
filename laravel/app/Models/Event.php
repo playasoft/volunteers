@@ -32,7 +32,7 @@ class Event extends Model
                     ->orderBy('start_date', 'desc')->get();
     }
 
-    // Events have departments, which in turn have shifts
+    // Events have departments
     public function departments()
     {
         return $this->hasMany('App\Models\Department');
@@ -41,7 +41,7 @@ class Event extends Model
     // Events have shifts
     public function shifts()
     {
-        return $this->hasMany('App\Models\ShiftData');
+        return $this->hasMany('App\Models\Shift');
     }
 
     // Helper function to generate a list of days the event will take place

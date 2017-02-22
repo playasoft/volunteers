@@ -7,12 +7,12 @@ use Carbon\Carbon;
 
 class Slot extends Model
 {
-    protected $fillable = ['shift_id', 'start_date', 'start_time', 'end_time', 'row'];
+    protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'row'];
 
-    // Slots belong to a shift
-    public function shift()
+    // Slots belong to the schedule
+    public function schedule()
     {
-        return $this->belongsTo('App\Models\Shift');
+        return $this->belongsTo('App\Models\Schedule');
     }
 
     // Slots can also belong to a user
@@ -24,13 +24,13 @@ class Slot extends Model
     // Convenience for getting the department of a slot
     public function getDepartmentAttribute()
     {
-        return $this->shift->department;
+        return $this->schedule->department;
     }
 
     // Convenience for getting the event of a slot
     public function getEventAttribute()
     {
-        return $this->shift->event;
+        return $this->schedule->event;
     }
     
     // Helper function to get the number of seconds in a timestamp
@@ -55,7 +55,7 @@ class Slot extends Model
     static public function generate($schedule)
     {
         // Delete all existing slots for this shift
-        Slot::where('shift_id', $schedule->id)->delete();
+        Slot::where('schedule_id', $schedule->id)->delete();
 
         // Set up required variables
         $end_date = new Carbon($schedule->end_date);
@@ -84,7 +84,7 @@ class Slot extends Model
                     {
                         $slot =
                         [
-                            'shift_id' => $schedule->id,
+                            'schedule_id' => $schedule->id,
                             'start_date' => $date->format('Y-m-d'),
                             'start_time' => Slot::secondsToTime($time),
                             'end_time' => Slot::secondsToTime($time + $duration),
