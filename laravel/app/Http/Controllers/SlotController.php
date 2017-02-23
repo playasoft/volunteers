@@ -39,7 +39,7 @@ class SlotController extends Controller
     private function userAllowed(Slot $slot, $type)
     {
         $user = Auth::user();
-        $roles = ($slot->shift->roles) ? $slot->shift->roles : $slot->department->roles;
+        $roles = ($slot->schedule->roles) ? $slot->schedule->roles : $slot->department->roles;
         $roles = json_decode($roles);
         $allowed = false;
 

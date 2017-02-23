@@ -63,16 +63,16 @@ foreach($event->days() as $day)
             </div>
         @endif
 
-        <div class="form-group {{ ($errors->has('shift_data_id')) ? 'has-error' : '' }}">
+        <div class="form-group {{ ($errors->has('shift_id')) ? 'has-error' : '' }}">
             <label class="control-label" for="shift-field">Shift</label>
 
-            <select name="shift_data_id" class="form-control shift-dropdown" id="shift-field">
+            <select name="shift_id" class="form-control shift-dropdown" id="shift-field">
                 <option value="">Select a shift</option>
                 <option value="" class="dynamic">This list will be automatically updated after selecting a department</option>
             </select>
 
-            @if($errors->has('shift_data_id'))
-                <span class="help-block">{{ $errors->first('shift_data_id') }}</span>
+            @if($errors->has('shift_id'))
+                <span class="help-block">{{ $errors->first('shift_id') }}</span>
             @endif
         </div>
 

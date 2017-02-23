@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>Delete shift from the schedule: {{ $schedule->data->name }}</h1>
+    <h1>Delete shift from the schedule: {{ $schedule->shift->name }}</h1>
     <hr>
     
     {!! Form::open() !!}

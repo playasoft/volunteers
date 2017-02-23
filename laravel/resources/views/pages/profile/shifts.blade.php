@@ -25,7 +25,7 @@
                     <tr>
                         <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
                         <td>{{ $slot->department->name }}</td>
-                        <td>{{ $slot->shift->data->name }}</td>
+                        <td>{{ $slot->schedule->shift->name }}</td>
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>
@@ -60,7 +60,7 @@
                     <tr>
                         <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
                         <td>{{ $slot->department->name }}</td>
-                        <td>{{ $slot->shift->data->name }}</td>
+                        <td>{{ $slot->schedule->shift->name }}</td>
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $slot->start_time }}</td>
                         <td>{{ $slot->end_time }}</td>

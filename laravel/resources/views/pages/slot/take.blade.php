@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Volunteer for: {{ $slot->department->name }} - {{ $slot->shift->data->name }}</h1>
+    <h1>Volunteer for: {{ $slot->department->name }} - {{ $slot->schedule->shift->name }}</h1>
     <hr>
 
     <div>
@@ -30,13 +30,13 @@
         <ul>
             <?php
 
-            if(empty($slot->shift->roles))
+            if(empty($slot->schedule->roles))
             {
                 $roles = json_decode($slot->department->roles);
             }
             else
             {
-                $roles = json_decode($slot->shift->roles);
+                $roles = json_decode($slot->schedule->roles);
             }
 
             ?>

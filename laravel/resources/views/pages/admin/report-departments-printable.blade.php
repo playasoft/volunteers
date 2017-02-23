@@ -28,16 +28,16 @@ use Carbon\Carbon;
 @foreach($departments as $department)
     <h1>{{ $department->name }}</h1>
 
-    @foreach($department->schedule()->orderBy('duration', 'desc')->orderBy('start_date')->groupBy('shift_data_id')->get() as $shift)
+    @foreach($department->schedule()->orderBy('duration', 'desc')->orderBy('start_date')->groupBy('shift_id')->get() as $shift)
         <?php
 
-        $schedule = $department->schedule()->where('shift_data_id', $shift->data->id)->get()->pluck('id');
+        $schedule = $department->schedule()->where('shift_id', $schedule->shift->id)->get()->pluck('id');
 
         ?>
         <table>
             <thead>
                 <tr>
-                    <th>{{ $shift->data->name }}</th>
+                    <th>{{ $schedule->shift->name }}</th>
                     <th>Date</th>
                     <th>Day</th>
                     <th>Start Time</th>
