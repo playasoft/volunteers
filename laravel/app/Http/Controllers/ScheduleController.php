@@ -22,17 +22,9 @@ class ScheduleController extends Controller
         $this->middleware('auth');
     }
 
-    // Display schedule creation page
-    public function createForm(Request $request, Event $event)
+    // Helper function to convert form input into database-friendly information
+    private function parseInput($request)
     {
-        $this->authorize('create-schedule');
-        return view('pages/schedule/create', compact('event'));
-    }
-
-    // Create a new schedule
-    public function create(ScheduleRequest $request)
-    {
-        $this->authorize('create-schedule');
         $input = $request->all();
         $department = Department::find($input['department_id']);
         $shift = ShiftData::find($input['shift_data_id']);
@@ -75,9 +67,27 @@ class ScheduleController extends Controller
             }
         }
 
-        // Set start and end dates if not included 
+        // Make sure dates and times are properly formatted
         $input = Shift::setDates($department, $input);
         $input = Shift::setTimes($input);
+
+        return $input;
+    }
+
+    // Display schedule creation page
+    public function createForm(Request $request, Event $event)
+    {
+        $this->authorize('create-schedule');
+        return view('pages/schedule/create', compact('event'));
+    }
+
+    // Create a new schedule
+    public function create(ScheduleRequest $request)
+    {
+        $this->authorize('create-schedule');
+        $input = $this->parseInput($request);
+        $department = Department::find($input['department_id']);
+        $shift = ShiftData::find($input['shift_data_id']);
         $schedule = Shift::create($input);
 
         // Generate slots based on schedule options
@@ -103,22 +113,9 @@ class ScheduleController extends Controller
     public function edit(ScheduleRequest $request, Shift $schedule)
     {
         $this->authorize('edit-schedule');
-        $input = $request->all();
-        $department = Department::find($input['department_id']);
-
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
-
-        // Check if the current roles match the department roles
-        if($input['roles'] == $department->roles)
-        {
-            // Unset the roles, use department as default instead
-            unset($input['roles']);
-        }
+        $input = $this->parseInput($request);
 
         // Make sure dates and times are set properly and formatted
-        $input = Shift::setDates($department, $input);
-        $input = Shift::setTimes($input);
         $schedule->formatTimes();
 
         // Check if the start time, end time, or duration are changing
@@ -128,7 +125,9 @@ class ScheduleController extends Controller
             $schedule->end_date != $input['end_date'] ||
             $schedule->start_time != $input['start_time'] ||
             $schedule->end_time != $input['end_time'] ||
-            $schedule->duration != $input['duration'])
+            $schedule->duration != $input['duration'] ||
+            $schedule->dates != $input['dates'] ||
+            $schedule->volunteers != $input['volunteers'])
         {
             $regenerateSlots = true;
         }

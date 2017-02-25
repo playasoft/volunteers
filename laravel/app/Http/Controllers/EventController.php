@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Department;
-use App\Models\Shift;
+use App\Models\Schedule;
 use App\Models\Slot;
 
 use App\Events\EventChanged;

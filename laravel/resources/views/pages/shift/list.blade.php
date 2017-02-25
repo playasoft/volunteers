@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h1>All Shift for: {{ $event->name }}</h1>
+    <h1>All Shifts for: {{ $event->name }}</h1>
     <hr>
 
     <a href="/event/{{ $event->id }}" class="btn btn-primary">Back to Event</a>

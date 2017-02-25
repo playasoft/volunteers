@@ -20,18 +20,18 @@ class Department extends Model
     // Departments have shifts
     public function shifts()
     {
-        return $this->hasMany('App\Models\ShiftData');
+        return $this->hasMany('App\Models\Shift');
     }
 
     // Departments have a schedule
     public function schedule()
     {
-        return $this->hasMany('App\Models\Shift');
+        return $this->hasMany('App\Models\Schedule');
     }
 
-    // Departments have slots through shifts
+    // Departments have slots through the schedule
     public function slots()
     {
-        return $this->hasManyThrough('App\Models\Slot', 'App\Models\Shift');
+        return $this->hasManyThrough('App\Models\Slot', 'App\Models\Schedule');
     }
 }

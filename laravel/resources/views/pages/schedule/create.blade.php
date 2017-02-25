@@ -63,16 +63,16 @@ foreach($event->days() as $day)
             </div>
         @endif
 
-        <div class="form-group {{ ($errors->has('shift_data_id')) ? 'has-error' : '' }}">
+        <div class="form-group {{ ($errors->has('shift_id')) ? 'has-error' : '' }}">
             <label class="control-label" for="shift-field">Shift</label>
 
-            <select name="shift_data_id" class="form-control shift-dropdown" id="shift-field">
+            <select name="shift_id" class="form-control shift-dropdown" id="shift-field">
                 <option value="">Select a shift</option>
                 <option value="" class="dynamic">This list will be automatically updated after selecting a department</option>
             </select>
 
-            @if($errors->has('shift_data_id'))
-                <span class="help-block">{{ $errors->first('shift_data_id') }}</span>
+            @if($errors->has('shift_id'))
+                <span class="help-block">{{ $errors->first('shift_id') }}</span>
             @endif
         </div>
 
@@ -95,9 +95,9 @@ foreach($event->days() as $day)
                 'options' =>
                 [
                     '' => 'Select a time',
-                    '00:00' => 'Midnight (beginning of day)',
-                    '06:00' => '6 AM',
-                    '09:00' => '9 AM',
+                    '0:00' => 'Midnight (beginning of day)',
+                    '6:00' => '6 AM',
+                    '9:00' => '9 AM',
                     '12:00' => 'Noon',
                     'custom' => 'Other'
                 ]
@@ -139,8 +139,8 @@ foreach($event->days() as $day)
                 'options' =>
                 [
                     '' => 'Select a duration',
-                    '03:00' => 'Regular Shift (3 hours)',
-                    '06:00' => 'Shift Lead (6 hours)',
+                    '3:00' => 'Regular Shift (3 hours)',
+                    '6:00' => 'Shift Lead (6 hours)',
                     'custom' => 'Other'
                 ]
             ])

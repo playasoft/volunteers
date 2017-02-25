@@ -13,6 +13,7 @@ $(document).ready(function()
         if(department)
         {
             var shifts = JSON.parse($('.available-shifts').value());
+            var saved = $('.shift-dropdown').data('saved');
 
             if(shifts[department] && shifts[department].length)
             {
@@ -24,6 +25,12 @@ $(document).ready(function()
                     $(option).text(shift.name);
                     $(option).value(shift.id);
                     $(option).addClass('dynamic');
+
+                    // If the current shift ID matches the saved shift ID
+                    if(shift.id == saved)
+                    {
+                        $(option).attr('selected', true);
+                    }
 
                     $('.shift-dropdown').append(option);
                 });
@@ -37,15 +44,26 @@ $(document).ready(function()
 
     $('.custom-wrap select').on('change', function()
     {
-        var parent = $(this).parents('.custom-wrap');
-
+        // If custom was selected
         if($(this).value() == 'custom')
         {
-            parent.find('.custom').removeClass('hidden');
+            $(this).parents('.custom-wrap').find('.custom').removeClass('hidden');
+        }
+        // If no default value was selected
+        else if($(this).value() == '')
+        {
+            // Check if there's a saved custom value
+            var custom = $(this).parents('.custom-wrap').find('.custom input').value();
+
+            // If this custom value is not found in the list of options, it must actually be a custom value
+            if(!$(this).parents('.custom-wrap').find('select option[value="'+ custom +'"]').el.length)
+            {
+                $(this).value('custom').trigger('change');
+            }
         }
         else
         {
-            parent.find('.custom').addClass('hidden');
+            $(this).parents('.custom-wrap').find('.custom').addClass('hidden');
         }
     });
 
