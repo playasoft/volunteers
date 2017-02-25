@@ -27,7 +27,7 @@ class ScheduleController extends Controller
     {
         $input = $request->all();
         $department = Department::find($input['department_id']);
-        $shift = Shift::find($input['shift_data_id']);
+        $shift = Shift::find($input['shift_id']);
 
         // Conditional validation rules for custom inputs
         if($request->input('start_time') == 'custom')
@@ -87,7 +87,7 @@ class ScheduleController extends Controller
         $this->authorize('create-schedule');
         $input = $this->parseInput($request);
         $department = Department::find($input['department_id']);
-        $shift = Shift::find($input['shift_data_id']);
+        $shift = Shift::find($input['shift_id']);
         $schedule = Schedule::create($input);
 
         // Generate slots based on schedule options

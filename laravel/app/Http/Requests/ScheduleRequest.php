@@ -26,7 +26,7 @@ class ScheduleRequest extends Request
         return
         [
             'department_id' => 'required|integer|exists:departments,id',
-            'shift_data_id' => 'required|integer|exists:shift_data,id',
+            'shift_id' => 'required|integer|exists:shifts,id',
             'dates' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
