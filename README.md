@@ -29,7 +29,7 @@ A volunteer database for events written using the Laravel 5.1 framework
 4. Optionally, configure your queue and broadcast drivers. If you want to use websockets, you'll need to use redis for broadcasting
 5. In the **laravel/resources/js/** folder, copy **config.example.js** and rename it to **config.js**
 6. Optionally, you may configure your websocket server to use a specific hostname, however by default it will use the current domain of the site
-7. Run ```./node_modules/.bin/webpack``` within the **laravel** folder. 
+7. Run ```npm build``` within the **laravel** folder. 
 
 
 Alright! Now everything is compiled and the site is functional. You can register accounts, create events, and sign up for shifts.

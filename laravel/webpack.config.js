@@ -6,8 +6,8 @@ const socketsEnabled = process.env.WEBSOCKETS_ENABLED &&
         process.env.WEBSOCKETS_ENABLED != ('false' || '0');
 
 const appEntry = socketsEnabled ?
-        './resources/js/app.js' :
-        './resources/js/app_nosockets.js';
+        './resources/app.js' :
+        './resources/app_nosockets.js';
 
 module.exports =
 {
