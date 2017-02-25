@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ScheduleRequest;
 use App\Models\Event;
 use App\Models\Department;
-use App\Models\ShiftData;
 use App\Models\Shift;
+use App\Models\Schedule;
 use App\Models\Slot;
 
 use App\Events\EventChanged;
@@ -27,7 +27,7 @@ class ScheduleController extends Controller
     {
         $input = $request->all();
         $department = Department::find($input['department_id']);
-        $shift = ShiftData::find($input['shift_data_id']);
+        $shift = Shift::find($input['shift_data_id']);
 
         // Conditional validation rules for custom inputs
         if($request->input('start_time') == 'custom')
@@ -68,8 +68,8 @@ class ScheduleController extends Controller
         }
 
         // Make sure dates and times are properly formatted
-        $input = Shift::setDates($department, $input);
-        $input = Shift::setTimes($input);
+        $input = Schedule::setDates($department, $input);
+        $input = Schedule::setTimes($input);
 
         return $input;
     }
@@ -87,8 +87,8 @@ class ScheduleController extends Controller
         $this->authorize('create-schedule');
         $input = $this->parseInput($request);
         $department = Department::find($input['department_id']);
-        $shift = ShiftData::find($input['shift_data_id']);
-        $schedule = Shift::create($input);
+        $shift = Shift::find($input['shift_data_id']);
+        $schedule = Schedule::create($input);
 
         // Generate slots based on schedule options
         Slot::generate($schedule);
@@ -99,7 +99,7 @@ class ScheduleController extends Controller
     }
 
     // View form to edit an existing schedule
-    public function editForm(Request $request, Shift $schedule)
+    public function editForm(Request $request, Schedule $schedule)
     {
         $this->authorize('edit-schedule');
 
@@ -110,7 +110,7 @@ class ScheduleController extends Controller
     }
 
     // Save changes to an existing schedule
-    public function edit(ScheduleRequest $request, Shift $schedule)
+    public function edit(ScheduleRequest $request, Schedule $schedule)
     {
         $this->authorize('edit-schedule');
         $input = $this->parseInput($request);
@@ -142,19 +142,19 @@ class ScheduleController extends Controller
 
         event(new EventChanged($schedule->event, ['type' => 'schedule', 'status' => 'edited']));
         
-        $request->session()->flash('success', 'Shift schedule has been updated.');
+        $request->session()->flash('success', 'Schedule schedule has been updated.');
         return redirect('/event/' . $schedule->event->id);
     }
 
     // View confirmation page before deleting a schedule
-    public function deleteForm(Request $request, Shift $schedule)
+    public function deleteForm(Request $request, Schedule $schedule)
     {
         $this->authorize('delete-schedule');
         return view('pages/schedule/delete', compact('schedule'));
     }
 
     // Delete a schedule
-    public function delete(Request $request, Shift $schedule)
+    public function delete(Request $request, Schedule $schedule)
     {
         $this->authorize('delete-schedule');
         $event = $schedule->department->event;
@@ -162,7 +162,7 @@ class ScheduleController extends Controller
 
         event(new EventChanged($event, ['type' => 'schedule', 'status' => 'deleted']));
 
-        $request->session()->flash('success', 'Shift has been deleted from the schedule.');
+        $request->session()->flash('success', 'Schedule has been deleted from the schedule.');
         return redirect('/event/' . $event->id);
     }
 }

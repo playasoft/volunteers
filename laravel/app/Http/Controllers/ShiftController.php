@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShiftRequest;
 use App\Models\Event;
 use App\Models\Department;
-use App\Models\ShiftData;
+use App\Models\Shift;
 use App\Models\Slot;
 
 use App\Events\EventChanged;
@@ -56,21 +56,21 @@ class ShiftController extends Controller
         }
 
         $input['event_id'] = $department->event->id;
-        $shift = ShiftData::create($input);
+        $shift = Shift::create($input);
 
         $request->session()->flash('success', 'Your shift has been created.');
         return redirect('/event/' . $department->event->id);
     }
 
     // View form to edit an existing shift
-    public function editForm(Request $request, ShiftData $shift)
+    public function editForm(Request $request, Shift $shift)
     {
         $this->authorize('edit-shift');
         return view('pages/shift/edit', compact('shift'));
     }
 
     // Save changes to an existing shift
-    public function edit(ShiftRequest $request, ShiftData $shift)
+    public function edit(ShiftRequest $request, Shift $shift)
     {
         $this->authorize('edit-shift');
         $input = $request->all();
@@ -93,14 +93,14 @@ class ShiftController extends Controller
     }
 
     // View confirmation page before deleting a shift
-    public function deleteForm(Request $request, ShiftData $shift)
+    public function deleteForm(Request $request, Shift $shift)
     {
         $this->authorize('delete-shift');
         return view('pages/shift/delete', compact('shift'));
     }
 
     // Delete a shift
-    public function delete(Request $request, ShiftData $shift)
+    public function delete(Request $request, Shift $shift)
     {
         $this->authorize('delete-shift');
         $event = $shift->event;
