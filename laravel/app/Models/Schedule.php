@@ -35,7 +35,7 @@ class Schedule extends Model
         return $this->department->event;
     }
 
-    // Convenience function for getting the current roles or the parent department's roles
+    // Convenience function for getting the current roles or the parent shift's roles
     public function getRoles()
     {
         if($this->roles)
@@ -43,7 +43,7 @@ class Schedule extends Model
             return $this->roles;
         }
 
-        return $this->department->roles;
+        return $this->shift->roles;
     }
 
     // Helper function to check if a start / end date needs to be set
