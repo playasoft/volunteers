@@ -7,9 +7,8 @@ A volunteer database for events written using the Laravel 5.1 framework
 1. A webserver that supports PHP (```nginx``` and ```php-fpm``` recommended)
 2. ```mysql```
 3. ```node.js``` and ```npm``` installed on your system
-4. ```gulp``` installed globally (```npm install -g gulp```) or locally if you know what you're doing
-5. ```composer```, the PHP package manager
-6. ```redis```, if you want to use websockets
+4. ```composer```, the PHP package manager
+5. ```redis```, if you want to use websockets
 
 
 ## Installing
@@ -30,7 +29,7 @@ A volunteer database for events written using the Laravel 5.1 framework
 4. Optionally, configure your queue and broadcast drivers. If you want to use websockets, you'll need to use redis for broadcasting
 5. In the **laravel/resources/js/** folder, copy **config.example.js** and rename it to **config.js**
 6. Optionally, you may configure your websocket server to use a specific hostname, however by default it will use the current domain of the site
-7. Run ```gulp``` within the **laravel** folder
+7. Run ```npm build``` within the **laravel** folder. 
 
 
 Alright! Now everything is compiled and the site is functional. You can register accounts, create events, and sign up for shifts.
@@ -39,7 +38,10 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 
 ## Extra websockets steps
 
-1. Make sure ```redis``` is installed and configured as the broadcast driver in your **.env** file
+1. In your **.env** file, make sure ```redis``` is installed and configured as the broadcast driver, and that the variable WEBSOCKETS_ENABLED is set to true.
 2. Run ```npm install``` within the **node** folder
-3. Run ```node websocket-server.js``` within the **node** folder
-4. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
+3. Ensure that the websocket parameters in  ```laravel/resources/js/config.js``` are correct
+4. Run ```node websocket-server.js``` within the **node** folder
+5. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
+
+  

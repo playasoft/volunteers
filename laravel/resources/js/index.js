@@ -3,5 +3,4 @@ require('./ui/roles');
 require('./ui/schedule');
 require('./ui/timegrid');
 require('./ui/reports');
-require('./websockets');
 require('./admin');
