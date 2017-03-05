@@ -114,3 +114,6 @@ Route::post('/report/users', 'ReportController@searchUsers');
 Route::post('/report/departments', 'ReportController@getDepartments');
 Route::post('/report/days', 'ReportController@getDays');
 Route::post('/report/generate', 'ReportController@generateReport');
+
+// Test routes
+Route::get('/test/{event}', 'TimegridController@view');

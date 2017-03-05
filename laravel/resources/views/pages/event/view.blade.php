@@ -66,7 +66,7 @@
 
                         <div class="shift-wrap">
                             @include('partials/event/timegrid')
-
+                               
                             <div class="department-wrap">
                                 @foreach($event->departments as $department)
                                     <?php

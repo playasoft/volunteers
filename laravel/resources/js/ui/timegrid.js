@@ -1,5 +1,5 @@
 var $ = require('wetfish-basic');
-
+debugger;
 function timeToSeconds(time)
 {
     var seconds = 0;
@@ -76,7 +76,7 @@ Highlight.prototype.bind = function()
 {
     // Save the current scope
     var current = this;
-    
+
     $(this.wrap).on('mouseenter', function(event)
     {
         // Save the position of the time grid
