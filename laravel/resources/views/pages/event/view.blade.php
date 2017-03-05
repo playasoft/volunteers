@@ -15,14 +15,14 @@
                 <a href="/event/{{ $event->id }}/delete" class="btn btn-danger">Delete Event</a>
             @endcan
         </div>
-        
+
         <h1>Viewing Event: {{ $event->name }}</h1>
         <hr>
 
         @if($event->image)
             <img class="pull-right" src="/files/event/{{ $event->image }}">
         @endif
-        
+
         <div>
             <label>Start Date</label>
             {{ $event->start_date }}
@@ -32,7 +32,7 @@
             <label>End Date</label>
             {{ $event->end_date }}
         </div>
-        
+
         @if($event->description)
             <label>Description</label>
             <p>{!! nl2br(e($event->description)) !!}</p>
@@ -66,7 +66,7 @@
 
                         <div class="shift-wrap">
                             @include('partials/event/timegrid')
-                               
+
                             <div class="department-wrap">
                                 @foreach($event->departments as $department)
                                     <?php
@@ -84,7 +84,7 @@
                                                 <b>{{ $department->name }}</b><br>
                                             @endcan
                                         </div>
-                                        
+
                                         <ul class="shifts">
                                             @foreach($department->schedule as $schedule)
                                                 <?php
