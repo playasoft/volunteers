@@ -40,7 +40,6 @@ class ConvertUserRoleColumn extends Migration
         {
             $table->dropColumn('role');
         });
-
     }
 
     /**
