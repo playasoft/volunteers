@@ -22,6 +22,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $fillable = ['name', 'email', 'password'];
     protected $dates = ['created_at', 'updated_at', 'reset_time'];
 
+    // Users have roles
+    public function roles()
+    {
+        return $this->hasMany('App\Models\UserRole');
+    }
+
     // Users can have user data
     public function data()
     {

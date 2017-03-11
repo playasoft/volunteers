@@ -133,9 +133,12 @@ class AuthServiceProvider extends ServiceProvider
                     return true;
                 }
 
-                if(in_array($user->role, $roles))
+                foreach($user->roles as $userRole)
                 {
-                    return true;
+                    if(in_array($userRole->role->name, $roles))
+                    {
+                        return true;
+                    }
                 }
             });
         }
