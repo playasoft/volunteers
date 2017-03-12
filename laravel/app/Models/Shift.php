@@ -19,15 +19,4 @@ class Shift extends Model
     {
         return $this->belongsTo('App\Models\Department');
     }
-
-    // Convenience function for getting the current roles or the parent department's roles
-    public function getRoles()
-    {
-        if($this->roles)
-        {
-            return $this->roles;
-        }
-
-        return $this->department->roles;
-    }
 }

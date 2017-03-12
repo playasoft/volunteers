@@ -39,9 +39,6 @@ class DepartmentController extends Controller
         $this->authorize('create-department');
         $input = $request->all();
 
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
-
         $department = new Department;
         $department->event_id = $input['event_id'];
         $department->save();
@@ -65,9 +62,6 @@ class DepartmentController extends Controller
     {
         $this->authorize('edit-department');
         $input = $request->all();
-
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
 
         $department->update($input);
 

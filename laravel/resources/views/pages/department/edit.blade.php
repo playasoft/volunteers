@@ -17,7 +17,6 @@
     {!! Form::open() !!}
         @include('partials/form/text', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name", 'value' => $department->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department', 'value' => $department->description])
-        @include('partials/roles', ['roles' => json_decode($department->roles)])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $department->event->id }}" class="btn btn-primary">Cancel</a>

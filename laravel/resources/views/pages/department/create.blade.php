@@ -9,7 +9,6 @@
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name"])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department'])
-        @include('partials/roles')
 
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}

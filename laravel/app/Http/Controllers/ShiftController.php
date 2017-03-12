@@ -42,18 +42,8 @@ class ShiftController extends Controller
         $input = $request->all();
         $department = Department::find($input['department_id']);
 
-        if(isset($input['roles']))
-        {
-            // Convert roles into JSON
-            $input['roles'] = json_encode($input['roles']);
-
-            // Check if the current roles match the department roles
-            if($input['roles'] == $department->roles)
-            {
-                // Unset the roles, use department as default instead
-                unset($input['roles']);
-            }
-        }
+        // Convert roles into JSON
+        $input['roles'] = json_encode($input['roles']);
 
         $input['event_id'] = $department->event->id;
         $shift = Shift::create($input);
@@ -78,13 +68,6 @@ class ShiftController extends Controller
 
         // Convert roles into JSON
         $input['roles'] = json_encode($input['roles']);
-
-        // Check if the current roles match the department roles
-        if($input['roles'] == $department->roles)
-        {
-            // Unset the roles, use department as default instead
-            unset($input['roles']);
-        }
 
         $shift->update($input);
         

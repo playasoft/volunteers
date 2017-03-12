@@ -32,7 +32,7 @@
 
             if(empty($slot->schedule->roles))
             {
-                $roles = json_decode($slot->department->roles);
+                $roles = json_decode($slot->shift->roles);
             }
             else
             {

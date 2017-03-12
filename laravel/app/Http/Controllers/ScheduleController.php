@@ -59,10 +59,10 @@ class ScheduleController extends Controller
             // Convert roles into JSON
             $input['roles'] = json_encode($input['roles']);
 
-            // Check if the current roles match the department roles
-            if($input['roles'] == $department->roles)
+            // Check if the current roles match the shift roles
+            if($input['roles'] == $shift->roles)
             {
-                // Unset the roles, use department as default instead
+                // Unset the roles, use shift as default instead
                 unset($input['roles']);
             }
         }
