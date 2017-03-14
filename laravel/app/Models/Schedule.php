@@ -9,7 +9,7 @@ class Schedule extends Model
 {
     use SoftDeletes;
     protected $table = 'schedule';
-    protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'roles'];
+    protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers'];
 
     // Schedules belong to a shift
     public function shift()
@@ -35,10 +35,16 @@ class Schedule extends Model
         return $this->department->event;
     }
 
+    // Shedules have roles
+    public function roles()
+    {
+        return $this->morphMany('App\Models\EventRole', 'foreign');
+    }
+
     // Convenience function for getting the current roles or the parent shift's roles
     public function getRoles()
     {
-        if($this->roles)
+        if(count($this->roles))
         {
             return $this->roles;
         }

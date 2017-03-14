@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shift extends Model
 {
-    protected $fillable = ['event_id', 'department_id', 'name', 'description', 'roles'];
+    protected $fillable = ['event_id', 'department_id', 'name', 'description'];
 
     // Shifts belong to an event
     public function event()
@@ -18,5 +18,11 @@ class Shift extends Model
     public function department()
     {
         return $this->belongsTo('App\Models\Department');
+    }
+
+    // Shifts have roles
+    public function roles()
+    {
+        return $this->morphMany('App\Models\EventRole', 'foreign');
     }
 }
