@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\Department;
 use App\Models\Shift;
 use App\Models\Slot;
+use App\Models\EventRole;
 
 use App\Events\EventChanged;
 
@@ -42,11 +43,9 @@ class ShiftController extends Controller
         $input = $request->all();
         $department = Department::find($input['department_id']);
 
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
-
         $input['event_id'] = $department->event->id;
         $shift = Shift::create($input);
+        EventRole::syncForeign($department->event, 'App\Models\Shift', $shift->id, $input['roles']);
 
         $request->session()->flash('success', 'Your shift has been created.');
         return redirect('/event/' . $department->event->id);
@@ -66,11 +65,9 @@ class ShiftController extends Controller
         $input = $request->all();
         $department = Department::find($input['department_id']);
 
-        // Convert roles into JSON
-        $input['roles'] = json_encode($input['roles']);
-
         $shift->update($input);
-        
+        EventRole::syncForeign($department->event, 'App\Models\Shift', $shift->id, $input['roles']);
+
         $request->session()->flash('success', 'Shift has been updated.');
         return redirect('/event/' . $shift->event->id);
     }

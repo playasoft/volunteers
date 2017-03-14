@@ -27,6 +27,7 @@ class ShiftRequest extends Request
         [
             'department_id' => 'required|integer|exists:departments,id',
             'name' => 'required',
+            'roles' => 'required',
         ];
     }
 }

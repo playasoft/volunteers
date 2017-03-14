@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\Shift;
 use App\Models\Schedule;
 use App\Models\Slot;
+use App\Models\EventRole;
 
 use App\Events\EventChanged;
 
@@ -56,11 +57,8 @@ class ScheduleController extends Controller
 
         if(isset($input['roles']))
         {
-            // Convert roles into JSON
-            $input['roles'] = json_encode($input['roles']);
-
             // Check if the current roles match the shift roles
-            if($input['roles'] == $shift->roles)
+            if($input['roles'] == $shift->getRoleNames())
             {
                 // Unset the roles, use shift as default instead
                 unset($input['roles']);
@@ -89,6 +87,12 @@ class ScheduleController extends Controller
         $department = Department::find($input['department_id']);
         $shift = Shift::find($input['shift_id']);
         $schedule = Schedule::create($input);
+
+        // Sync roles if provided
+        if(isset($input['roles']))
+        {
+            EventRole::syncForeign($department->event, 'App\Models\Schedule', $schedule->id, $input['roles']);
+        }
 
         // Generate slots based on schedule options
         Slot::generate($schedule);
@@ -133,6 +137,12 @@ class ScheduleController extends Controller
         }
 
         $schedule->update($input);
+
+        // Sync roles if provided
+        if(isset($input['roles']))
+        {
+            EventRole::syncForeign($schedule->department->event, 'App\Models\Schedule', $schedule->id, $input['roles']);
+        }
 
         // Regenerate slots after the updated schedule information is saved
         if($regenerateSlots)
