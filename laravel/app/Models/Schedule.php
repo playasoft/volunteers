@@ -52,6 +52,19 @@ class Schedule extends Model
         return $this->shift->roles;
     }
 
+    // Convenience function to get the current role names
+    public function getRoleNames()
+    {
+        $roleNames = [];
+
+        foreach($this->roles as $role)
+        {
+            $roleNames = $role->role->name;
+        }
+
+        return $roleNames;
+    }
+
     // Helper function to check if a start / end date needs to be set
     static public function setDates($department, $input)
     {

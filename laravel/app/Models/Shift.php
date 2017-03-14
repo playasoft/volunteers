@@ -25,4 +25,17 @@ class Shift extends Model
     {
         return $this->morphMany('App\Models\EventRole', 'foreign');
     }
+
+    // Convenience function to get the current role names
+    public function getRoleNames()
+    {
+        $roleNames = [];
+
+        foreach($this->roles as $role)
+        {
+            $roleNames = $role->role->name;
+        }
+
+        return $roleNames;
+    }
 }
