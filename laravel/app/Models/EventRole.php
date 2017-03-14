@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Role;
 
 class EventRole extends Model
 {
@@ -24,5 +25,33 @@ class EventRole extends Model
     public function foreign()
     {
         return $this->morphTo();
+    }
+
+    // Helper function to sync the roles that belong to a foreign relationship
+    static function syncForeign($event, $foreign_type, $foreign_id, $roles)
+    {
+        // Start by removing all roles for this relationship
+        EventRole::where('event_id', $event->id)->where('foreign_type', $foreign_type)->where('foreign_id', $foreign_id)->delete();
+
+        // Loop through array of role names
+        foreach($roles as $roleName)
+        {
+            // Figure out what role this name belongs to
+            $role = Role::where('name', $roleName)->first();
+
+            if(!empty($role))
+            {
+                // Create a new event role
+                $roleData =
+                [
+                    'role_id' => $role->id,
+                    'event_id' => $event->id,
+                    'foreign_id' => $foreign_id,
+                    'foreign_type' => $foreign_type
+                ];
+
+                EventRole::create($roleData);
+            }
+        }
     }
 }
