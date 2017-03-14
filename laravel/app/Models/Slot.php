@@ -52,16 +52,24 @@ class Slot extends Model
     }
     
     // Helper function to generate slots based on shift information
-    static public function generate($schedule)
+    static public function generate($schedule, $existingRows)
     {
-        // Delete all existing slots for this shift
-        Slot::where('schedule_id', $schedule->id)->delete();
+        // Do we want to keep any existing rows?
+        if($existingRows)
+        {
+            $row = $existingRows + 1;
+        }
+        else
+        {
+            // Delete all existing slots for this shift
+            Slot::where('schedule_id', $schedule->id)->delete();
+            $row = 1;
+        }
 
         // Set up required variables
         $end_date = new Carbon($schedule->end_date);
         $dates = json_decode($schedule->getAttribute('dates'));
         $volunteers = (int)$schedule->volunteers;
-        $row = 1;
 
         // Generate slots for each requested volunteer
         while($row <= $volunteers)
@@ -100,6 +108,25 @@ class Slot extends Model
             }
 
             $row++;
+        }
+    }
+
+    static public function volunteersChanged($schedule, $oldAmount)
+    {
+        $newAmount = $schedule->volunteers;
+        $difference = $newAmount - $oldAmount;
+
+        // If new rows are being added
+        if($difference > 0)
+        {
+            // Generate new slots passing in the old number of volunteers as a starting point
+            Slot::generate($schedule, $oldAmount);
+        }
+        // If old rows are being removed
+        else
+        {
+            // Delete all slots where the row is greater than the number of volunteers requested
+            Slot::where('schedule_id', $schedule->id)->where('row', '>', $schedule->volunteers)->delete();
         }
     }
 }

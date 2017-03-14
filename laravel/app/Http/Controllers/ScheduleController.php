@@ -124,16 +124,23 @@ class ScheduleController extends Controller
 
         // Check if the start time, end time, or duration are changing
         $regenerateSlots = false;
+        $volunteersChanged = false;
         
         if($schedule->start_date != $input['start_date'] ||
             $schedule->end_date != $input['end_date'] ||
             $schedule->start_time != $input['start_time'] ||
             $schedule->end_time != $input['end_time'] ||
             $schedule->duration != $input['duration'] ||
-            $schedule->dates != $input['dates'] ||
-            $schedule->volunteers != $input['volunteers'])
+            $schedule->dates != $input['dates'])
         {
             $regenerateSlots = true;
+        }
+
+        // If we're not already regenerating slots, but the number of volunteers is different
+        if(!$regenerateSlots && $schedule->volunteers != $input['volunteers'])
+        {
+            $volunteersChanged = true;
+            $originalVolunteers = $schedule->volunteers;
         }
 
         $schedule->update($input);
@@ -148,6 +155,11 @@ class ScheduleController extends Controller
         if($regenerateSlots)
         {
             Slot::generate($schedule);
+        }
+
+        if($volunteersChanged)
+        {
+            Slot::volunteersChanged($schedule, $originalVolunteers);
         }
 
         event(new EventChanged($schedule->event, ['type' => 'schedule', 'status' => 'edited']));
