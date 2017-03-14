@@ -28,21 +28,8 @@
     <div>
         <label>Allowed User Groups</label>
         <ul>
-            <?php
-
-            if(empty($slot->schedule->roles))
-            {
-                $roles = json_decode($slot->shift->roles);
-            }
-            else
-            {
-                $roles = json_decode($slot->schedule->roles);
-            }
-
-            ?>
-            
-            @foreach($roles as $role)
-                <li>{{ ucwords($role) }}</li>
+            @foreach($slot->schedule->getRoles() as $scheduleRole)
+                <li>{{ ucwords($scheduleRole->role->name) }}</li>
             @endforeach
         </ul>
     </div>

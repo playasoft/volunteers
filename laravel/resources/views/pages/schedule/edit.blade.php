@@ -154,7 +154,7 @@ foreach($schedule->event->days() as $day)
         </div>
 
         @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift.", 'value' => $schedule->volunteers])
-        @include('partials/roles', ['roles' => json_decode($schedule->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/roles', ['roles' => $schedule->getRoles(), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
