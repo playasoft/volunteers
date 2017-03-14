@@ -27,6 +27,15 @@ class ScheduleController extends Controller
     private function parseInput($request)
     {
         $input = $request->all();
+
+        // If there was preserved data on the page, unserialize it
+        if(isset($input['preserved-data']))
+        {
+            $input = unserialize(base64_decode($input['preserved-data']));
+            $input['dates'] = json_decode($input['dates']);
+            $input['warned'] = true;
+        }
+
         $department = Department::find($input['department_id']);
         $shift = Shift::find($input['shift_id']);
 
@@ -125,6 +134,7 @@ class ScheduleController extends Controller
         // Check if the start time, end time, or duration are changing
         $regenerateSlots = false;
         $volunteersChanged = false;
+        $warnUser = false;
         
         if($schedule->start_date != $input['start_date'] ||
             $schedule->end_date != $input['end_date'] ||
@@ -134,6 +144,7 @@ class ScheduleController extends Controller
             $schedule->dates != $input['dates'])
         {
             $regenerateSlots = true;
+            $warnUser = true;
         }
 
         // If we're not already regenerating slots, but the number of volunteers is different
@@ -141,6 +152,18 @@ class ScheduleController extends Controller
         {
             $volunteersChanged = true;
             $originalVolunteers = $schedule->volunteers;
+
+            // If volunteer slots are going to be removed
+            if($schedule->volunteers > $input['volunteers'])
+            {
+                $warnUser = true;
+            }
+        }
+
+        // Does the user need to be warned?
+        if($warnUser && !isset($input['warned']))
+        {
+            return view('pages/schedule/warning', compact('schedule', 'input'));
         }
 
         $schedule->update($input);

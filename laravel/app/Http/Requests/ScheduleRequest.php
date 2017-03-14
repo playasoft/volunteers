@@ -23,6 +23,12 @@ class ScheduleRequest extends Request
      */
     public function rules()
     {
+        // Ignore validation when preserved input is passed
+        if($this->request->get('preserved-data'))
+        {
+            return [];
+        }
+
         return
         [
             'department_id' => 'required|integer|exists:departments,id',
