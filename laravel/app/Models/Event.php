@@ -32,6 +32,26 @@ class Event extends Model
                         ->orderBy('start_date', 'desc')->get();
     }
 
+    // Helper function to return the most recent ongoing or upcoming event
+    public static function ongoingOrUpcoming()
+    {
+        $ongoing = Event::present()->first();
+
+        if(!empty($ongoing))
+        {
+            return $ongoing;
+        }
+
+        $upcoming = Event::future()->first();
+
+        if(!empty($upcoming))
+        {
+            return $upcoming;
+        }
+
+        return false;
+    }
+
     // Events have departments
     public function departments()
     {
