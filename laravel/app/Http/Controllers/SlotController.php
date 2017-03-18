@@ -12,7 +12,6 @@ use App\Models\Slot;
 use Illuminate\Support\Facades\Auth;
 
 use App\Events\SlotChanged;
-use Event;
 use Carbon\Carbon;
 
 class SlotController extends Controller
@@ -83,7 +82,7 @@ class SlotController extends Controller
                     $slot->user_id = Auth::user()->id;
                     $slot->save();
                     
-                    Event::fire(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
+                    event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
                     $request->session()->flash('success', 'You signed up for a volunteer shift.');
                 }
                 else
@@ -122,7 +121,7 @@ class SlotController extends Controller
                     $slot->user_id = null;
                     $slot->save();
 
-                    Event::fire(new SlotChanged($slot, ['status' => 'released']));
+                    event(new SlotChanged($slot, ['status' => 'released']));
                     $request->session()->flash('success', 'You are no longer volunteering for your shift.');
                 }
                 else
