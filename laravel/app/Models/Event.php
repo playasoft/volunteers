@@ -13,23 +13,23 @@ class Event extends Model
     protected $fillable = ['name', 'description', 'start_date', 'end_date'];
 
     // Helper functions to select events by date
-    public function future()
+    public static function future()
     {
-        return $this->where('start_date', '>', Carbon::now())
-                    ->orderBy('start_date', 'desc')->get();
+        return Event::where('start_date', '>', Carbon::now())
+                        ->orderBy('start_date', 'desc')->get();
     }
 
-    public function present()
+    public static function present()
     {
-        return $this->where('start_date', '<', Carbon::now())
-                    ->where('end_date', '>', Carbon::now())
-                    ->orderBy('start_date', 'desc')->get();
+        return Event::where('start_date', '<', Carbon::now())
+                        ->where('end_date', '>', Carbon::now())
+                        ->orderBy('start_date', 'desc')->get();
     }
 
-    public function past()
+    public static function past()
     {
-        return $this->where('end_date', '<', Carbon::now())
-                    ->orderBy('start_date', 'desc')->get();
+        return Event::where('end_date', '<', Carbon::now())
+                        ->orderBy('start_date', 'desc')->get();
     }
 
     // Events have departments

@@ -15,10 +15,9 @@ class PageController extends Controller
     {
         if($this->auth->check())
         {
-            $events = new Event();
-            $future = $events->future();
-            $present = $events->present();
-            $past = $events->past();
+            $future = Event::future();
+            $present = Event::present();
+            $past = Event::past();
 
             return view('pages/dashboard', compact('future', 'present', 'past'));
         }
