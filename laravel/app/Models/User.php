@@ -28,6 +28,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\Models\UserRole');
     }
 
+    // Helper function to check if a user has a role
+    public function hasRole($role)
+    {
+        $userRoles = $this->roles();
+
+        foreach($userRoles as $userRole)
+        {
+            if($userRole->role->name == $role)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Users can have user data
     public function data()
     {
