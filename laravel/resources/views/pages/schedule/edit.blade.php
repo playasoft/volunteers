@@ -31,11 +31,7 @@ foreach($schedule->event->days() as $day)
 
 @section('content')
 
-    <div class="header-buttons pull-right">
-        @can('delete-schedule')
-            <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Shedule</a>
-        @endcan
-    </div>
+
 
     <h1>Editing schedule for: {{ $schedule->department->name }}</h1>
     <hr>
@@ -43,8 +39,8 @@ foreach($schedule->event->days() as $day)
     {{-- Output available shifts as JSON so the shift dropdown can be dynamically populated --}}
     <textarea class="hidden available-shifts">{{ json_encode($shifts) }}</textarea>
 
-    {!! Form::open() !!}
-
+    {!! Form::open(array('class' => 'edit-schedule')) !!}
+    <div class="col-md-6">
         @if($schedule->event->departments->count())
             <div class="form-group {{ ($errors->has('department_id')) ? 'has-error' : '' }}">
                 <label class="control-label" for="department-field">Department</label>
@@ -69,8 +65,7 @@ foreach($schedule->event->days() as $day)
                     <a href="/event/{{ $schedule->event->id }}/department/create">Click here</a> to create your first department.
                 @endcan
             </div>
-        @endif
-
+            @endif
         <div class="form-group {{ ($errors->has('shift_id')) ? 'has-error' : '' }}">
             <label class="control-label" for="shift-field">Shift</label>
 
@@ -84,7 +79,13 @@ foreach($schedule->event->days() as $day)
             @endif
         </div>
 
-        @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Event Dates', 'options' => $days, 'selected' => json_decode($schedule->dates)])
+        @include('partials/roles', ['roles' => json_decode($schedule->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for each shift.", 'value' => $schedule->volunteers])
+
+        </div>
+    <div class="col-md-6">
+
+        @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Days', 'help' => 'The event days which have this shift.', 'options' => $days, 'selected' => json_decode($schedule->dates)])
 
         <div class="custom-wrap">
             @include('partials/form/select',
@@ -108,35 +109,11 @@ foreach($schedule->event->days() as $day)
                 @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time', 'value' => $schedule->start_time])
             </div>
         </div>
-
-        <div class="custom-wrap">
-            @include('partials/form/select',
-            [
-                'name' => 'end_time',
-                'label' => 'End Time',
-                'help' => "The time of day when the last shift ends",
-                'options' =>
-                [
-                    '' => 'Select a time',
-                    '12:00' => 'Noon',
-                    '18:00' => '6 PM',
-                    '21:00' => '9 PM',
-                    '24:00' => 'Midnight (end of day)',
-                    'custom' => 'Other'
-                ],
-                'value' => $schedule->end_time
-            ])
-
-            <div class="custom hidden">
-                @include('partials/form/time', ['name' => 'custom_end_time', 'label' => 'Custom End Time', 'value' => $schedule->end_time])
-            </div>
-        </div>
-
         <div class="custom-wrap">
             @include('partials/form/select',
             [
                 'name' => 'duration',
-                'label' => 'Duration',
+                'label' => 'Shift Length',
                 'help' => "The duration of each slot in this shift",
                 'options' =>
                 [
@@ -153,11 +130,29 @@ foreach($schedule->event->days() as $day)
             </div>
         </div>
 
-        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift.", 'value' => $schedule->volunteers])
-        @include('partials/roles', ['roles' => $schedule->getRoles(), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
 
-        <button type="submit" class="btn btn-success">Save Changes</button>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="does-slot-repeat" value="true">
+            Does this shift repeat?
+          </label>
+        </div>
+
+        <div class="slot-repeat custom-wrap hidden">
+          @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
+          <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
+        </div>
+        <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
+        <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
+    </div>
+
+
+
+        <button type="submit" class="btn btn-success">Save Changes?!</button>
         <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
-        
+        @can('delete-schedule')
+            <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>
+        @endcan
+        <div class='preview'></div>
     {!! Form::close() !!}
 @endsection

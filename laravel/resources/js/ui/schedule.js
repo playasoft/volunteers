@@ -67,6 +67,21 @@ $(document).ready(function()
         }
     });
 
+    $('.edit-schedule input[name="does-slot-repeat"]').on('change', function()
+                                                          {
+        let slotRepeat = document.querySelector('.slot-repeat');
+        if(this.checked){
+            slotRepeat.classList.remove('hidden');
+            //show repeat field and calculate end time
+        }
+        else{
+            slotRepeat.classList.add('hidden');
+            //hide repeat field and calculate end time
+            document.querySelector('form.edit-schedule [name="end_time"]');
+        }
+    });
+
+
     // Trigger change on page load to show / hide custom fields
     $('.department-dropdown').trigger('change');
     $('.custom-wrap select').trigger('change');

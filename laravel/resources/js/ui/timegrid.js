@@ -12,7 +12,19 @@ function timeToSeconds(time)
     return seconds;
 }
 
-$(window).on('resize', function()
+$(window).on('resize', calculateSlotSizes);
+
+$(document).ready(function()
+{
+    calculateSlotSizes();
+
+    $('.shift-wrap').each(function()
+    {
+        new Highlight(this);
+    });
+});
+
+function calculateSlotSizes()
 {
     // If we're using a desktop resolution
     if($('.desktop').style('display') != "none")
@@ -52,18 +64,7 @@ $(window).on('resize', function()
     {
         $('.slot-wrap').attr('style', false);
     }
-});
-
-$(document).ready(function()
-{
-    $(window).trigger('resize');
-
-    $('.shift-wrap').each(function()
-    {
-        new Highlight(this);
-    });
-});
-
+}
 // Class to highlight the current time based on your mouse position
 var Highlight = function(wrap)
 {
@@ -76,7 +77,7 @@ Highlight.prototype.bind = function()
 {
     // Save the current scope
     var current = this;
-    
+
     $(this.wrap).on('mouseenter', function(event)
     {
         // Save the position of the time grid
@@ -123,3 +124,5 @@ Highlight.prototype.check = function()
     $(this.wrap).find('.times .time').eq(index).addClass('active');
     $(this.wrap).find('.background .time').eq(index).addClass('active');
 }
+
+module.exports = Highlight;
