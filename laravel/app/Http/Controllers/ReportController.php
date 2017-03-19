@@ -162,13 +162,13 @@ class ReportController extends Controller
         }
 
         // Select all scheduled shifts in the selected event
-        $schedule = [];
+        $schedule_ids = [];
 
         foreach($event->departments as $department)
         {
             foreach($department->schedule as $schedule)
             {
-                $schedule[] = $schedule->id;
+                $schedule_ids[] = $schedule->id;
             }
         }
 
@@ -196,7 +196,7 @@ class ReportController extends Controller
                 $name = $this->splitName($user->data->real_name);
             }
 
-            $slots = $user->slots()->whereIn('schedule_id', $schedule)->get();
+            $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();
 
             foreach($slots as $slot)
             {
@@ -363,13 +363,13 @@ class ReportController extends Controller
         $data = [];
 
         // Select all shifts in the selected event
-        $schedule = [];
+        $schedule_ids = [];
 
         foreach($event->departments as $department)
         {
             foreach($department->schedule as $schedule)
             {
-                $schedule[] = $schedule->id;
+                $schedule_ids[] = $schedule->id;
             }
         }
 
@@ -386,7 +386,7 @@ class ReportController extends Controller
                 $name = $this->splitName($user->data->real_name);
             }
 
-            $slots = $user->slots()->whereIn('schedule_id', $schedule)->get();
+            $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();
             $hoursVolunteered = 0;
             $slotsVolunteered = 0;
 
@@ -444,16 +444,16 @@ class ReportController extends Controller
         // Loop through event departments
         foreach($event->departments as $department)
         {
-            $schedule = [];
+            $schedule_ids = [];
 
             foreach($department->schedule as $schedule)
             {
-                $schedule[] = $schedule->id;
+                $schedule_ids[] = $schedule->id;
             }
 
             // Get all slots for this department
-            $filled = Slot::whereIn('schedule_id', $schedule)->whereNotNull('user_id')->get();
-            $empty = Slot::whereIn('schedule_id', $schedule)->whereNull('user_id')->get();
+            $filled = Slot::whereIn('schedule_id', $schedule_ids)->whereNotNull('user_id')->get();
+            $empty = Slot::whereIn('schedule_id', $schedule_ids)->whereNull('user_id')->get();
 
             $total['filled'] += $filled->count();
             $total['empty'] += $empty->count();
