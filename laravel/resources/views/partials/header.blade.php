@@ -15,7 +15,7 @@
                 @if(Auth::check())
                         <li><a href="/profile/shifts">Your Shifts</a></li>
 
-                        @if(Auth::user()->role == 'admin')
+                        @if(Auth::user()->hasRole('admin'))
                             <li><a href="/event">New Event</a></li>
                             <li><a href="/users">Users</a></li>
                             <li><a href="/uploads">Uploads</a></li>

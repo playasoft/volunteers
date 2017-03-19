@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     // Helper function to check if a user has a role
     public function hasRole($role)
     {
-        $userRoles = $this->roles();
+        $userRoles = $this->roles;
 
         foreach($userRoles as $userRole)
         {
