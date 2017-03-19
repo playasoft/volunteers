@@ -131,6 +131,7 @@ foreach($schedule->event->days() as $day)
         </div>
 
 
+
         <div class="checkbox">
           <label>
             <input type="checkbox" name="does_slot_repeat" value="true">
@@ -145,10 +146,24 @@ foreach($schedule->event->days() as $day)
         <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
         <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
     </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="does-slot-repeat" value="true">
+            Does this shift repeat?
+          </label>
+        </div>
+
+        <div class="slot-repeat custom-wrap hidden">
+          @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
+          <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
+        </div>
+        <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
+        <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
+    </div>
 
 
 
-        <button type="submit" class="btn btn-success">Save Changes</button>
+        <button type="submit" class="btn btn-success">Save Changes?!</button>
         <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
         @can('delete-schedule')
             <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>
