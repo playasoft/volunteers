@@ -107,7 +107,7 @@ Route::get('/user/{user}', 'AdminController@userProfile');
 Route::post('/user/{user}/edit', 'AdminController@userEdit');
 
 Route::get('/uploads', 'AdminController@uploadList');
-Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 
+Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit');
 
 Route::get('/reports', 'ReportController@reportList');
 Route::post('/report/users', 'ReportController@searchUsers');
