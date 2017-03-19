@@ -30,7 +30,7 @@ class SendAdminWelcome
     public function handle(UserRegistered $event)
     {
         $user = $event->user;
-        $admin = User::where('role', 'admin')->first();
+        $admin = User::where('id', 1)->first();
 
         Mail::send('emails/admin-welcome', compact('user'), function ($message) use ($admin)
         {

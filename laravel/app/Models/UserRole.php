@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Role;
 
 class UserRole extends Model
 {
@@ -24,5 +25,39 @@ class UserRole extends Model
     public function foreign()
     {
         return $this->morphTo();
+    }
+
+    // Helper function to add roles to a user
+    public static function assign($user, $roleNames = [], $options = [])
+    {
+        // Convert string argument to array
+        if(is_string($roleNames))
+        {
+            $roleNames = [$roleNames];
+        }
+
+        // Loop through all roles passed
+        foreach($roleNames as $roleName)
+        {
+            $role = Role::where('name', $roleName)->first();
+
+            if(!empty($role))
+            {
+                // Create a new event role
+                $roleData =
+                [
+                    'role_id' => $role->id,
+                    'user_id' => $user->id,
+                ];
+
+                if(isset($options['foreign_id']) && isset($options['foreign_type']))
+                {
+                    $roleData['foreign_id'] = $options['foreign_id'];
+                    $roleData['foreign_type'] = $options['foreign_type'];
+                }
+
+                UserRole::create($roleData);
+            }
+        }
     }
 }

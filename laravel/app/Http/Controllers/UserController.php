@@ -14,6 +14,7 @@ use App\Events\UserRegistered;
 use App\Events\ForgotPassword;
 use Carbon\Carbon;
 use App\Models\Event;
+use App\Models\UserRole;
 
 class UserController extends Controller
 {
@@ -28,15 +29,14 @@ class UserController extends Controller
         // Is this the first user?
         if($user->id == 1)
         {
-            $user->role = 'admin';
+            UserRole::assign($user, 'admin');
         }
         else
         {
             // Otherwise assign to volunteer role by default
-            $user->role = 'volunteer';
+            UserRole::assign($user, 'volunteer');
         }
 
-        $user->save();
         $this->auth->loginUsingID($user->id);
 
         // Send notification emails
