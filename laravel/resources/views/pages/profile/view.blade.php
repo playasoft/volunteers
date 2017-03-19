@@ -3,7 +3,12 @@
 @section('content')
     <h1>
         Your Profile
-        <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;">User Level: <b>{{ ucfirst($user->role) }}</b></div>
+
+        <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;">
+            User Permissions:
+
+            <b>{{ implode(", ", Auth::user()->getRoleNames(['format' => 'ucwords'])) }}</b>
+        </div>
     </h1>
     <hr>
 

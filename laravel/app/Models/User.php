@@ -44,6 +44,27 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return false;
     }
 
+    // Helper function to get the names of all roles this user has
+    public function getRoleNames($options)
+    {
+        $roleNames = [];
+
+        foreach($this->roles as $role)
+        {
+            // Check if a formatting option was passed
+            if(isset($options['format']) && function_exists($options['format']))
+            {
+                $roleNames[] = call_user_func($options['format'], $role->role->name);
+            }
+            else
+            {
+                $roleNames[] = $role->role->name;
+            }
+        }
+
+        return $roleNames;
+    }
+
     // Users can have user data
     public function data()
     {

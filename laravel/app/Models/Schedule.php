@@ -53,13 +53,21 @@ class Schedule extends Model
     }
 
     // Convenience function to get the current role names
-    public function getRoleNames()
+    public function getRoleNames($options = [])
     {
         $roleNames = [];
 
         foreach($this->roles as $role)
         {
-            $roleNames = $role->role->name;
+            // Check if a formatting option was passed
+            if(isset($options['format']) && function_exists($options['format']))
+            {
+                $roleNames[] = call_user_func($options['format'], $role->role->name);
+            }
+            else
+            {
+                $roleNames[] = $role->role->name;
+            }
         }
 
         return $roleNames;

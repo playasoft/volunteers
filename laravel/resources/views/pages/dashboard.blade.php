@@ -1,14 +1,3 @@
-<?php
-
-$userRoles = [];
-
-foreach(Auth::user()->roles as $userRole)
-{
-    $userRoles[] = ucwords($userRole->role->name);
-}
-
-?>
-
 @extends('app')
 
 @section('content')
@@ -18,7 +7,7 @@ foreach(Auth::user()->roles as $userRole)
         <div class="pull-right" style="font-size:0.4em; margin-top: 1.4em;">
             User Permissions:
 
-            <b>{{ implode(", ", $userRoles) }}</b>
+            <b>{{ implode(", ", Auth::user()->getRoleNames(['format' => 'ucwords'])) }}</b>
         </div>
     </h1>
     <hr>
