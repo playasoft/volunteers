@@ -24,15 +24,16 @@ class ConvertUserRoleColumn extends Migration
             if(!empty($userRole))
             {
                 DB::table('user_roles')->insert(['role_id' => $userRole->id, 'user_id' => $user->id]);
-            }
 
-            // Make sure everyone has the volunteer role by default
-            if($userRole->name != "volunteer")
-            {
-                $volunteerRole = DB::table('roles')->where('name', 'volunteer')->first();
 
-                DB::table('user_roles')->insert(['role_id' => $volunteerRole->id, 'user_id' => $user->id]);
-            }
+	            // Make sure everyone has the volunteer role by default
+	            if($userRole->name != "volunteer")
+	            {
+	                $volunteerRole = DB::table('roles')->where('name', 'volunteer')->first();
+
+	                DB::table('user_roles')->insert(['role_id' => $volunteerRole->id, 'user_id' => $user->id]);
+	            }
+	    }
         }
 
         // Remove role column from users table
