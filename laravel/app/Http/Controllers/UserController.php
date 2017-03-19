@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Events\UserRegistered;
 use App\Events\ForgotPassword;
 use Carbon\Carbon;
+use App\Models\Event;
 
 class UserController extends Controller
 {
@@ -59,7 +60,16 @@ class UserController extends Controller
             $request->session()->flash('success', 'You are now logged in!');
         }
 
-       return redirect('/');
+        // Check if there's an ongoing or upcoming event to redirect the user to
+        $event = Event::ongoingOrUpcoming();
+
+        if(!empty($event))
+        {
+            return redirect('/event/' . $event->id);
+        }
+
+        // Fall back to the main page
+        return redirect('/');
     }
 
     // Log a user out
