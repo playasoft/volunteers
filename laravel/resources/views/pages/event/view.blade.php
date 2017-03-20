@@ -51,9 +51,35 @@
         @endcan
 
         <div class="clearfix"></div>
+        <hr>
 
         @if($event->departments->count())
-            <h2>Available Shifts by Department</h2>
+            <h2>Available Shifts</h2>
+
+            <form class="form-inline event-filter">
+                Filter:
+
+                <div class="form-group">
+                    <select class="form-control filter-days">
+                        <option value="all">Show All Days</option>
+
+                        @foreach($event->days() as $day)
+                            <option value="{{ $day->date->format('Y-m-d') }}">{{ $day->name }} - {{ $day->date->format('Y-m-d') }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control filter-departments">
+                        <option value="all">Show All Departments</option>
+
+                        @foreach($event->departments as $department)
+                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+
             <hr>
 
             <div class="days">
