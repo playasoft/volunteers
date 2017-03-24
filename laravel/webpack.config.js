@@ -1,16 +1,16 @@
 require('dotenv').config();
-
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // I don't really like doing it this way but it works for a limited number
 // of configuration options.
 const socketsEnabled = process.env.WEBSOCKETS_ENABLED &&
-        process.env.WEBSOCKETS_ENABLED != ('false' || '0');
+          process.env.WEBSOCKETS_ENABLED != ('false' || '0');
 
 const appEntry = socketsEnabled ?
-        './resources/app.js' :
-        './resources/app_nosockets.js';
+          './resources/app.js' :
+          './resources/app_nosockets.js';
 
-module.exports =
-{
+module.exports = {
     entry:
     {
         main: appEntry
@@ -20,10 +20,14 @@ module.exports =
         filename: './public/js/bundle.js'
     },
     module: {
-        loaders: [
-            {
+        rules: [
+            { // sass / scss loader for webpack
                 test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
+                loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+            },
+            {
+                test: /\.html\.tpl$/,
+                loader: 'ejs-loader'
             },
             {
                 test: /\.js$/,
@@ -34,5 +38,14 @@ module.exports =
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin({ // define where to save the file
+            filename: 'public/css/[name].css',
+            allChunks: true
+        }),
+        new webpack.ProvidePlugin({
+            _: 'lodash'
+        })
+    ]
 };
