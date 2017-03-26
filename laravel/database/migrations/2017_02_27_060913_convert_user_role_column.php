@@ -63,8 +63,11 @@ class ConvertUserRoleColumn extends Migration
             // Get their current user_role
             $userRole = DB::table('user_roles')->join('roles', 'user_roles.role_id', '=', 'roles.id')->where('user_id', $user->id)->first();
 
-            // Add it back to the users table
-            DB::table('users')->where('id', $user->id)->update(['role' => $userRole->name]);
+            if(!empty($userRole))
+            {
+                // Add it back to the users table
+                DB::table('users')->where('id', $user->id)->update(['role' => $userRole->name]);
+            }
         }
 
         // Clear out the user_roles table
