@@ -79,7 +79,7 @@ foreach($schedule->event->days() as $day)
             @endif
         </div>
 
-        @include('partials/roles', ['roles' => json_decode($schedule->getRoles()), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/roles', ['roles' => $schedule->getRoles(), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
         @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for each shift.", 'value' => $schedule->volunteers])
 
         </div>
@@ -133,7 +133,7 @@ foreach($schedule->event->days() as $day)
 
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="does-slot-repeat" value="true">
+            <input type="checkbox" name="does_slot_repeat" value="true">
             Does this shift repeat?
           </label>
         </div>
@@ -148,7 +148,7 @@ foreach($schedule->event->days() as $day)
 
 
 
-        <button type="submit" class="btn btn-success">Save Changes?!</button>
+        <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
         @can('delete-schedule')
             <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>

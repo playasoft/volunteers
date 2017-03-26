@@ -35,8 +35,9 @@ foreach($event->days() as $day)
 
     {{-- Output available shifts as JSON so the shift dropdown can be dynamically populated --}}
     <textarea class="hidden available-shifts">{{ json_encode($shifts) }}</textarea>
-    
-    {!! Form::open(['url' => '/schedule']) !!}
+
+    {!! Form::open(['url' => '/schedule', 'class' => 'edit-schedule']) !!}
+    <div class="col-md-6">
         @if($event->departments->count())
             <div class="form-group {{ ($errors->has('department_id')) ? 'has-error' : '' }}">
                 <label class="control-label" for="department-field">Department</label>
@@ -62,7 +63,6 @@ foreach($event->days() as $day)
                 @endcan
             </div>
         @endif
-
         <div class="form-group {{ ($errors->has('shift_id')) ? 'has-error' : '' }}">
             <label class="control-label" for="shift-field">Shift</label>
 
@@ -76,13 +76,17 @@ foreach($event->days() as $day)
             @endif
         </div>
 
-        <div class="alert alert-danger shift-warning hidden">
-            <b>Oops!</b> No shifts have been created for this department yet.
+        @include('partials/roles', ['help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift."])
 
-            @can('create-shift')
-                <a href="/event/{{ $event->id }}/shift/create">Click here</a> to create a shift.
-            @endcan
         </div>
+        <div class="col-md-6">
+            <div class="alert alert-danger shift-warning hidden">
+                <b>Oops!</b> No shifts have been created for this department yet.
+                @can('create-shift')
+                    <a href="/event/{{ $event->id }}/shift/create">Click here</a> to create a shift.
+                @endcan
+            </div>
 
         @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Event Dates', 'options' => $days])
 
@@ -103,38 +107,16 @@ foreach($event->days() as $day)
                 ]
             ])
 
+
             <div class="custom hidden">
                 @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time'])
             </div>
         </div>
-
-        <div class="custom-wrap">
-            @include('partials/form/select',
-            [
-                'name' => 'end_time',
-                'label' => 'End Time',
-                'help' => "The time of day when the last shift ends",
-                'options' =>
-                [
-                    '' => 'Select a time',
-                    '12:00' => 'Noon',
-                    '18:00' => '6 PM',
-                    '21:00' => '9 PM',
-                    '24:00' => 'Midnight (end of day)',
-                    'custom' => 'Other'
-                ]
-            ])
-
-            <div class="custom hidden">
-                @include('partials/form/time', ['name' => 'custom_end_time', 'label' => 'Custom End Time'])
-            </div>
-        </div>
-
         <div class="custom-wrap">
             @include('partials/form/select',
             [
                 'name' => 'duration',
-                'label' => 'Duration',
+                'label' => 'Shift Length',
                 'help' => "The duration of each slot in this shift",
                 'options' =>
                 [
@@ -145,16 +127,29 @@ foreach($event->days() as $day)
                 ]
             ])
 
+
+
             <div class="custom hidden">
                 @include('partials/form/time', ['name' => 'custom_duration', 'label' => 'Custom Duration'])
             </div>
         </div>
 
-        @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift."])
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="does_slot_repeat" value="true">
+            Does this shift repeat?
+          </label>
+        </div>
 
-        @include('partials/roles', ['help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="slot-repeat custom-wrap hidden">
+          @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
+          <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
+        </div>
+        <input type="hidden", name="end_time"/>
+        <input type="hidden", name="custom_end_time"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
         <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
+    <div class='preview'></div>
     {!! Form::close() !!}
 @endsection

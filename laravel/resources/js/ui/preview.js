@@ -1,5 +1,7 @@
 const _ = require('lodash');
 const $ = require('wetfish-basic');
+const Highlight = require('./highlight');
+const timegrid = require('./timegrid');
 
 //let test = require('./test.html.tpl');
 let grid = require('../../templates/grid.html.tpl');
@@ -15,25 +17,31 @@ $(document).ready(function()
 
         //this creates a preview whenever the schedule edit form changes
         $('form.edit-schedule').on('change', function(e){
-            updatePreview();
-            if(e.target.name === "does-slot-repeat"){
-                return toggleRepeatInput(e.target);
+            if(e.target.name === "does_slot_repeat"){
+                toggleRepeatInput(e.target);
             }
-            return updateEndTime();
-            debugger;
+
+            updateEndTime();
+
+            updatePreview();
         });
 
-        let slotRepeat  = editForm.querySelector('[name="slot_repeat"]');
+        let repeatToggle = editForm.querySelector('[name="does_slot_repeat"]');
+        let slotRepeat   = editForm.querySelector('[name="slot_repeat"]');
         let slotDuration = parseTime(formData.duration);
-        let totalLength = parseTime(formData.end_time)-parseTime(formData.start_time);
+        let totalLength  = parseTime(formData.end_time)-parseTime(formData.start_time);
+
         document.querySelector('form.edit-schedule .slot-repeat .slot-end').innerText = formData.end_time;
-        console.log(slotRepeat, formData, Math.floor(totalLength/slotDuration));
-        slotRepeat.value = Math.floor(totalLength/slotDuration);
-        updatePreview();
-
-
-
-
+        //console.log(slotRepeat, formData, Math.floor(totalLength/slotDuration));
+        if(typeof totalLength === 'number' && typeof slotDuration ==='number'){
+            slotRepeat.value = Math.floor(totalLength/slotDuration);
+            console.log(`slot repeats ${slotRepeat.value} times`);
+            if(slotRepeat.value !== 0){
+                repeatToggle.checked = true;
+                editForm.querySelector('.slot-repeat').classList.remove('hidden');
+            }
+            updatePreview();
+        }
     }
 
 });
@@ -49,21 +57,23 @@ function toggleRepeatInput(e)
     }
     else{
         slotRepeatContainer.classList.add('hidden');
-        slotRepeatField.value=null;
+        slotRepeatField.value = 1;
+        updateEndTime();
     }
 }
 
 function updateEndTime()
 {
     let editForm    = document.querySelector('form.edit-schedule');
-    let slotRepeats = parseInt(editForm.querySelector('[name="slot_repeat"]').value || 0);
+    let slotRepeats = parseInt(editForm.querySelector('[name="slot_repeat"]').value || 1);
     let formData    = parseForm(formValues(editForm));
     let duration    = parseTime(formData.duration);
     let shiftLength = duration * slotRepeats;
     let endTime     = parseTime(formData.start_time) + shiftLength;
 
-    console.log('start, duration, end', parseTime(formData.start_time), parseTime(formData.duration), endTime);
+    // console.log('start, duration, end', parseTime(formData.start_time), parseTime(formData.duration), endTime);
 
+    console.log('end time is now: ',formatTime(endTime), endTime);
     document.querySelector('form.edit-schedule [name="end_time"]').value = formatTime(endTime);
     document.querySelector('form.edit-schedule .slot-repeat .slot-end').innerText = decorateTime(endTime);
 }
@@ -74,6 +84,11 @@ function updatePreview()
     let formData = parseForm(formValues(editForm));
     let previewContainer = editForm.querySelector('.preview');
     previewContainer.innerHTML = makePreview(formData);
+    timegrid.calculateSlotSizes();
+    (previewContainer.querySelectorAll('.shift-wrap')||[]).forEach(function(elem)
+    {
+        new Highlight(elem);
+    });
 }
 
 function formValues(form)
@@ -121,7 +136,6 @@ function formValues(form)
         }
     }, {});
     let selectTags = [...form.querySelectorAll('select')].reduce(function getSelectValues(field, e){
-        // debugger
         if(e.name){
             //const selection = e.querySelector('option[selected]');
             const {name, value} = e;
@@ -146,12 +160,11 @@ function formValues(form)
 
 function parseForm(formValues)
 {
-
-    if(!formValues.department_id.value ||
-       !formValues.shift_id.value ||
-       !formValues.start_time.value ||
-       !formValues.end_time.value ||
-       !formValues.duration.value ||
+    if(!formValues.department_id ||
+       !formValues.shift_id ||
+       !formValues.start_time ||
+       !formValues.end_time ||
+       !formValues.duration ||
        !formValues.volunteers ||
        !formValues['dates[]']
       )
@@ -262,7 +275,6 @@ function formatTime(seconds)
 
 function decorateTime(time)
 {
-
     let hours   = Math.floor(time / (60 * 60));
     let seconds = time - (hours * 60 * 60);
     const minutes = Math.floor(seconds / 60);
@@ -277,7 +289,6 @@ function makePreview(data)
 {
     // @todo allow for shifts to wrap into the next day
     if(!data){
-        debugger;
         return null;
     }
 
