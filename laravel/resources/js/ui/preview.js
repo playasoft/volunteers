@@ -160,7 +160,6 @@ function formValues(form)
 
 function parseForm(formValues)
 {
-
     if(!formValues.department_id ||
        !formValues.shift_id ||
        !formValues.start_time ||

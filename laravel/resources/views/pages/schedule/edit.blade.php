@@ -148,7 +148,7 @@ foreach($schedule->event->days() as $day)
     </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="does-slot-repeat" value="true">
+            <input type="checkbox" name="does_slot_repeat" value="true">
             Does this shift repeat?
           </label>
         </div>
@@ -163,7 +163,7 @@ foreach($schedule->event->days() as $day)
 
 
 
-        <button type="submit" class="btn btn-success">Save Changes?!</button>
+        <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
         @can('delete-schedule')
             <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>
