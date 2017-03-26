@@ -38,7 +38,7 @@ class SlotController extends Controller
     private function userAllowed(Slot $slot, $type)
     {
         $user = Auth::user();
-        $roles = $slow->schedule->getRoles();
+        $roles = $slot->schedule->getRoles();
         $allowed = false;
 
         // Check each allowed role to see if the user has permission
