@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserUpload;
 use App\Events\FileChanged;
+use App\Models\Role;
+use App\Models\UserRole;
 
 class AdminController extends Controller
 {
@@ -30,15 +32,28 @@ class AdminController extends Controller
     // View an indivual user profile
     function userProfile(User $user)
     {
-        return view('pages/admin/user-profile', compact('user'));
+        $roles = Role::get();
+        $roleNames = [];
+
+        foreach($roles as $role)
+        {
+            $roleNames[$role->name] = $role->name;
+        }
+
+        return view('pages/admin/user-profile', compact('user', 'roleNames'));
     }
 
     // Update information about a user
     function userEdit(User $user, Request $request)
     {
-        $user->role = $request->get('role');
-        $user->save();
-        
+        $roles = $request->get('roles');
+
+        if($roles)
+        {
+            UserRole::clear($user);
+            UserRole::assign($user, $roles);
+        }
+
         return;
     }
 

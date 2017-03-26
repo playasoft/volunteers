@@ -60,4 +60,10 @@ class UserRole extends Model
             }
         }
     }
+
+    // Helper function to clear roles assigned to a user
+    public static function clear($user)
+    {
+        UserRole::where('user_id', $user->id)->delete();
+    }
 }

@@ -1,9 +1,3 @@
-<?php
-
-$roles = ['admin', 'volunteer', 'veteran', 'medical', 'fire'];
-
-?>
-
 @extends('app')
 
 @section('content')
@@ -38,24 +32,18 @@ $roles = ['admin', 'volunteer', 'veteran', 'medical', 'fire'];
             <div class="col-sm-10 value">{{ $user->data->birthday or 'Not Provided' }}</div>
         </div>
 
-        <h3>User Role</h3>
+        <h3>User Roles</h3>
 
-        <input type="hidden" class="user-id" value="{{ $user->id }}">
-        <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+        <div class="user-roles">
+            <input type="hidden" class="user-id" value="{{ $user->id }}">
+            <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
 
-        <select class="user-role form-control" data-role="{{ $user->role }}">
-            @foreach($roles as $role)
-                @if($role == $user->role)
-                    <option value="{{ $role }}" selected>{{ ucwords($role) }}</option>
-                @else
-                    <option value="{{ $role }}">{{ ucwords($role) }}</option>
-                @endif
-            @endforeach
-        </select>
+            @include('partials/form/checkbox', ['name' => 'roles', 'options' => $roleNames, 'selected' => $user->getRoleNames()])
+        </div>
 
         <div class="buttons">
-            <a class="save-role btn btn-success">Save</a>
-            <a class="cancel-role btn btn-danger">Cancel</a>
+            <a class="save-roles btn btn-success">Save</a>
+            <a class="cancel-roles btn btn-danger">Cancel</a>
         </div>
     </div>
 

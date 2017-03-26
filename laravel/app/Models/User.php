@@ -45,7 +45,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     // Helper function to get the names of all roles this user has
-    public function getRoleNames($options)
+    public function getRoleNames($options = [])
     {
         $roleNames = [];
 

@@ -11,15 +11,13 @@ var ajaxOptions =
 
 $(document).ready(function()
 {
-    // Force data values on load (fixes firefox form behavior)
-    $('.user-role').value($('.user-role').data('role'));
     $('.upload-status').each(function()
     {
         $(this).value($(this).data('status'));
     });
 
     // Display save / cancel buttons when changing user roles
-    $('.user-role').on('change', function()
+    $('.user-roles input').on('change', function()
     {
         $('.buttons').style({visibility: 'visible', opacity: 1});
     });
@@ -30,16 +28,24 @@ $(document).ready(function()
         $(this).parents('.upload').find('.buttons').style({visibility: 'visible', opacity: 1});
     });
 
-    $('.save-role').on('click', function()
+    $('.save-roles').on('click', function()
     {
         var user = $('.user-id').value();
         var role = $('.user-role').value();
         var csrf = $('.csrf-token').value();
         var data =
         {
-            role: role,
+            roles: [],
             _token: csrf
         };
+
+        $('.user-roles input').each(function()
+        {
+            if($(this).prop('checked'))
+            {
+                data.roles.push($(this).value());
+            }
+        });
 
         ajaxOptions.body = JSON.stringify(data);
         fetch('/user/' + user + '/edit', ajaxOptions);
@@ -48,7 +54,7 @@ $(document).ready(function()
         $('.buttons').attr('style', false);
     });
 
-    $('.cancel-role').on('click', function()
+    $('.cancel-roles').on('click', function()
     {
         $('.user-role').value($('.user-role').data('role'));
         $('.buttons').attr('style', false);
