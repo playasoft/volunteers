@@ -52,7 +52,7 @@ class Slot extends Model
     }
     
     // Helper function to generate slots based on shift information
-    static public function generate($schedule, $existingRows)
+    static public function generate($schedule, $existingRows = null)
     {
         // Do we want to keep any existing rows?
         if($existingRows)
