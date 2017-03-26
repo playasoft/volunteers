@@ -26,7 +26,7 @@
                 <b>Oops!</b> A department has to be created before you can make a shift.
 
                 @can('create-department')
-                    <a href="/event/{{ $event->id }}/department">Click here</a> to create your first department.
+                    <a href="/event/{{ $event->id }}/department/create">Click here</a> to create your first department.
                 @endcan
             </div>
         @endif

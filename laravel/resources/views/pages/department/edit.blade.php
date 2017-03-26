@@ -3,7 +3,7 @@
 @section('content')
     <div class="header-buttons pull-right">
         @can('create-shift')
-            <a href="/event/{{ $department->event->id }}/shift" class="btn btn-primary">Create Shift</a>
+            <a href="/event/{{ $department->event->id }}/shift/create" class="btn btn-primary">Create Shift</a>
         @endcan
 
         @can('delete-department')

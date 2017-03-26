@@ -148,11 +148,11 @@
             <hr>
 
             @can('create-department')
-                <a href="/event/{{ $event->id }}/department" class="btn btn-primary">Create Department</a>
+                <a href="/event/{{ $event->id }}/department/create" class="btn btn-primary">Create Department</a>
             @endcan
 
             @can('create-shift')
-                <a href="/event/{{ $event->id }}/shift" class="btn btn-primary">Create Shift</a>
+                <a href="/event/{{ $event->id }}/shift/create" class="btn btn-primary">Create Shift</a>
             @endcan
         @endif
     </section>
