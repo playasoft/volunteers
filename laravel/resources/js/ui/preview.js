@@ -53,6 +53,9 @@ function toggleRepeatInput(e)
     let slotRepeatField = editForm.querySelector('[name="slot_repeat"]');
 
     if(e.checked){
+        if(typeof slotRepeatField.value !== 'number'){
+            slotRepeatField.value = 1;
+        }
         slotRepeatContainer.classList.remove('hidden');
     }
     else{
