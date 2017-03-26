@@ -84,7 +84,7 @@
 
             <div class="days">
                 @foreach($event->days() as $day)
-                    <div class="day">
+                    <div class="day" data-date="{{ $day->date->format('Y-m-d') }}">
                         <div class="heading">
                             <h3>{{ $day->name }}</h3>
                             &mdash; <i>{{ $day->date->format('Y-m-d') }}</i>
@@ -102,7 +102,7 @@
 
                                     ?>
 
-                                    <div class="department">
+                                    <div class="department" data-id="{{ $department->id }}">
                                         <div class="title">
                                             @can('edit-department')
                                                 <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
