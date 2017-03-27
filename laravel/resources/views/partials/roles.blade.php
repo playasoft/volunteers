@@ -1,11 +1,16 @@
 <?php
 
+// Get all roles
+use App\Models\Role;
+$allRoles = Role::get();
+
 if(old('roles'))
 {
     $rolesArray = old('roles');
 }
 elseif(isset($roles))
 {
+    // If roles were passed to this partial, create a roles array
     $rolesArray = [];
 
     foreach($roles as $role)
@@ -32,25 +37,11 @@ else
           <input type="checkbox" class="roles-none" value="none"> None
         </label>
 
-        <label>
-          <input type="checkbox" class="role" name="roles[]" value="admin" {{ in_array('admin', $rolesArray) ? 'checked' : ''}}> Admin
-        </label>
-
-        <label>
-          <input type="checkbox" class="role" name="roles[]" value="volunteer" {{ in_array('volunteer', $rolesArray) ? 'checked' : ''}}> Volunteer
-        </label>
-
-        <label>
-          <input type="checkbox" class="role" name="roles[]" value="ranger" {{ in_array('ranger', $rolesArray) ? 'checked' : ''}}> Ranger
-        </label>
-
-        <label>
-          <input type="checkbox" class="role" name="roles[]" value="fire" {{ in_array('fire', $rolesArray) ? 'checked' : ''}}> Fire
-        </label>
-
-        <label>
-          <input type="checkbox" class="role" name="roles[]" value="medical" {{ in_array('medical', $rolesArray) ? 'checked' : ''}}> Medical
-        </label>
+        @foreach($allRoles as $role)
+            <label>
+              <input type="checkbox" class="role" name="roles[]" value="{{ $role->name }}" {{ in_array($role->name, $rolesArray) ? 'checked' : ''}}> {{ ucwords(str_replace('-', ' ', $role->name)) }}
+            </label>
+        @endforeach
       </div>
       
     @if($errors->has('roles'))

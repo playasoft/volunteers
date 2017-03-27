@@ -31,7 +31,7 @@
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Shift Name', 'placeholder' => "The best shift you'll ever sign up for!", 'value' => $shift->description])
-        @include('partials/roles', ['roles' => $shift->roles, 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/roles', ['roles' => $shift->roles, 'help' => "These are the default roles for this shift. You can still customize these options later when adding a shift to the schedule."])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
         <a href="/event/{{ $shift->event->id }}" class="btn btn-primary">Cancel</a>

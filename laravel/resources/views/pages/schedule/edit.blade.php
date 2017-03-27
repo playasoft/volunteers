@@ -79,7 +79,7 @@ foreach($schedule->event->days() as $day)
             @endif
         </div>
 
-        @include('partials/roles', ['roles' => $schedule->getRoles(), 'help' => "By default, roles will be inherited from the department. You can use these options to override the default."])
+        @include('partials/roles', ['roles' => $schedule->getRoles(), 'help' => "By default, roles will be inherited from the shift options. You can use these options to override the default."])
         @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for each shift.", 'value' => $schedule->volunteers])
 
         </div>
