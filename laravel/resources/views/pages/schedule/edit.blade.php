@@ -126,7 +126,7 @@ foreach($schedule->event->days() as $day)
             ])
 
             <div class="custom hidden">
-                @include('partials/form/time', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'value' => $schedule->duration])
+                @include('partials/form/text', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'placeholder' => 'hh:mm', 'value' => $schedule->duration])
             </div>
         </div>
 
