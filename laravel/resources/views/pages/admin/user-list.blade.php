@@ -9,7 +9,7 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Role</th>
+                <th>Roles</th>
                 <th>Date Registered</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                 <tr>
                     <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ ucwords($user->role) }}</a></td>
+                    <td>{{ implode(", ", $user->getRoleNames()) }}</a></td>
                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
                 </tr>
             @endforeach
