@@ -2,44 +2,45 @@
 
 // Get all roles
 use App\Models\Role;
-$allRoles = Role::get();
+$roles = Role::get();
+
+// Ignore certain roles from being displayed
+$ignored = ['admin', 'banned', 'volunteer', 'event-admin'];
 
 if(old('roles'))
 {
-    $rolesArray = old('roles');
+    $selectedArray = old('roles');
 }
-elseif(isset($roles))
+elseif(isset($selected))
 {
     // If roles were passed to this partial, create a roles array
-    $rolesArray = [];
+    $selectedArray = [];
 
-    foreach($roles as $role)
+    foreach($selected as $select)
     {
-        $rolesArray[] = $role->role->name;
+        $selectedArray[] = $select->role->name;
     }
 }
 else
 {
-    $rolesArray = [];
+    $selectedArray = [];
 }
 
 ?>
 
-<div class="form-group {{ ($errors->has('roles')) ? 'has-error' : '' }}">
-    <label class="control-label" for="roles-field">Allowed User Groups</label>
+<div class="roles form-group {{ ($errors->has('roles')) ? 'has-error' : '' }}">
+    <label class="control-label" for="roles-field">Does this shift require training?</label>
 
       <div class="checkbox">
         <label>
-          <input type="checkbox" class="roles-all" value="all"> All
+            <input type="checkbox" class="roles-none" name="roles[]" value="volunteer" {{ empty($selectedArray) || in_array('volunteer', $selectedArray) ? 'checked' : '' }}> None
         </label>
 
-        <label>
-          <input type="checkbox" class="roles-none" value="none"> None
-        </label>
+        @foreach($roles as $role)
+            <?php if(in_array($role->name, $ignored)) continue; ?>
 
-        @foreach($allRoles as $role)
             <label>
-              <input type="checkbox" class="role" name="roles[]" value="{{ $role->name }}" {{ in_array($role->name, $rolesArray) ? 'checked' : ''}}> {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                <input type="checkbox" class="role" name="roles[]" value="{{ $role->name }}" {{ in_array($role->name, $selectedArray) ? 'checked' : ''}}> {{ ucwords(str_replace('-', ' ', $role->name)) }}
             </label>
         @endforeach
       </div>

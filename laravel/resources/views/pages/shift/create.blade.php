@@ -33,7 +33,7 @@
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift"])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => "The best shift you'll ever sign up for!"])
-        @include('partials/roles', ['help' => "These are the default roles for this shift. You can still customize these options later when adding a shift to the schedule."])
+        @include('partials/roles', ['help' => "These are the defaults for this shift. You can still customize training options later when adding a shift to the schedule."])
 
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}
