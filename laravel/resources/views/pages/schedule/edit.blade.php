@@ -146,12 +146,6 @@ foreach($schedule->event->days() as $day)
         <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
         <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
     </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" name="does_slot_repeat" value="true">
-            Does this shift repeat?
-          </label>
-        </div>
 
         <div class="slot-repeat custom-wrap hidden">
           @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])

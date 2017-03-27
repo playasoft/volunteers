@@ -68,7 +68,7 @@ $(document).ready(function()
     });
 
     $('.edit-schedule input[name="does-slot-repeat"]').on('change', function()
-                                                          {
+    {
         let slotRepeat = document.querySelector('.slot-repeat');
         if(this.checked){
             slotRepeat.classList.remove('hidden');
