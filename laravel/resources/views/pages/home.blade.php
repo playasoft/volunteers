@@ -2,19 +2,17 @@
 
 @section('content')
     <div class="jumbotron">
-        <h1>Welcome!</h1>
+        <h1>Apogaea Volunteer Database</h1>
         <p>
-            This is <b>Laravel-Voldb</b> a volunteer database built using the Laravel framework.
-            This project is based on the online volunteer systems used by festivals like Apogaea and Elsewhence.
+            This is the official volunteer database for <b>Apogaea</b>, Colorado's regional Burning Man event.
         </p>
 
         <p>
-            We are currently in <b>open beta</b>!
+            Registration is currently open for <b>department leads</b> and members of <b>ignition</b>.
         </p>
 
         <p>
-            Feel free to register and sign up for some shifts.
-            All of the jobs here are only being used for testing&mdash;you won't be held responsible for your imaginary duties.
+            If you are an Apogaea participant and want to start signing up for shifts, please check back in a couple weeks once everything is setup.
         </p>
 
         <hr>
