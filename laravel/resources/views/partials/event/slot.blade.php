@@ -34,7 +34,6 @@ else
     }
 }
 
-
 if($href)
 {
     $href = "href='{$href}'";
