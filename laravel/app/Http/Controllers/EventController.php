@@ -117,10 +117,12 @@ class EventController extends Controller
     // Delete an event
     public function delete(Request $request, Event $event)
     {
+      
         $this->authorize('delete-event');
-        $event->delete();
 
         event(new EventChanged($event, ['type' => 'event', 'status' => 'deleted']));
+        
+        $event->delete();
 
         $request->session()->flash('success', 'Event has been deleted.');
         return redirect('/');
