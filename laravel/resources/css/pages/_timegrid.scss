@@ -115,27 +115,27 @@
 }
 
 .slot.taken {
-    background-color: #d83664;
+    background-color: #337ab7;
     border: 1px solid #fff;
     line-height: 1em;
     color: #fff;
 }
 
 .slot.taken:hover, .slot.taken.active {
-    background-color: #dd2559;
+    background-color: #337ab7;
     border: 1px solid #000;
     text-decoration: none;
 }
 
 .slot.taken-by-current-user {
-    background-color: #36d859;
+    background-color: #d83664;
     border: 1px solid #fff;
     line-height: 1em;
     color: #fff;
 }
 
 .slot.taken-by-current-user:hover, .slot.taken-by-current-user.active {
-    background-color: #28cd4b;
+    background-color: #dd2559;
     border: 1px solid #000;
     text-decoration: none;
 }
