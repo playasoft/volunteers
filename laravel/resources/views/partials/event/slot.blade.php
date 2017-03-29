@@ -24,6 +24,7 @@ else
     if($slot->user->id === Auth::user()->id)
     {
         $href = "/slot/{$slot->id}/release";
+        $class = "slot taken-by-current-user";
     }
 
     // If the user has profile data saved, and has a burner name

@@ -92,9 +92,9 @@
     border-radius: 1em;
     display: inline-block;
     box-sizing: border-box;
-    padding: 0.25em;
+    padding: 3pt;
     text-align: center;
-    height: 1.75em;
+    height: 100%;
     font-size: 12pt;
     cursor: pointer;
     min-width: 100px;
@@ -115,13 +115,26 @@
 }
 
 .slot.taken {
-    background-color: #d83664;
+    background-color: #337ab7;
     border: 1px solid #fff;
     line-height: 1em;
     color: #fff;
 }
 
 .slot.taken:hover, .slot.taken.active {
+    background-color: #337ab7;
+    border: 1px solid #000;
+    text-decoration: none;
+}
+
+.slot.taken-by-current-user {
+    background-color: #d83664;
+    border: 1px solid #fff;
+    line-height: 1em;
+    color: #fff;
+}
+
+.slot.taken-by-current-user:hover, .slot.taken-by-current-user.active {
     background-color: #dd2559;
     border: 1px solid #000;
     text-decoration: none;
