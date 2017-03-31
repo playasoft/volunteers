@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
             'create-department',
             'edit-department',
             'delete-department',
-            'read-shifts',
+            'read-shift',
             'create-shift',
             'edit-shift',
             'delete-shift',
