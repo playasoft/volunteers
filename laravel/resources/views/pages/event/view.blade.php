@@ -38,11 +38,11 @@
             <p>{!! nl2br(e($event->description)) !!}</p>
         @endif
 
-        @can('create-department')
+        @can('read-department')
             <a href="/event/{{ $event->id }}/departments" class="btn btn-primary">View All Departments</a>
         @endcan
 
-        @can('create-shift')
+        @can('read-shift')
             <a href="/event/{{ $event->id }}/shifts" class="btn btn-primary">View All Shifts</a>
         @endcan
 

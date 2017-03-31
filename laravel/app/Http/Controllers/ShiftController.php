@@ -25,7 +25,7 @@ class ShiftController extends Controller
     // Display list of shifts in an event
     public function listShifts(Request $request, Event $event)
     {
-        $this->authorize('create-shift');
+        $this->authorize('read-shift');
         return view('pages/shift/list', compact('event'));
     }
 

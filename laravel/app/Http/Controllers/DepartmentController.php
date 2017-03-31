@@ -22,7 +22,7 @@ class DepartmentController extends Controller
     // Display list of departments in an event
     public function listDepartments(Request $request, Event $event)
     {
-        $this->authorize('create-department');
+        $this->authorize('read-department');
         return view('pages/department/list', compact('event'));
     }
 
