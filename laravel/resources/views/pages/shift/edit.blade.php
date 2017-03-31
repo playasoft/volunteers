@@ -30,7 +30,7 @@
         </div>
         
         @include('partials/form/text', ['name' => 'name', 'label' => 'Shift Name', 'placeholder' => "Name for this shift", 'value' => $shift->name])
-        @include('partials/form/textarea', ['name' => 'description', 'label' => 'Shift Name', 'placeholder' => "The best shift you'll ever sign up for!", 'value' => $shift->description])
+        @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => "The best shift you'll ever sign up for!", 'value' => $shift->description])
         @include('partials/roles', ['selected' => $shift->roles, 'help' => "These are the defaults for this shift. You can still customize training options later when adding a shift to the schedule."])
 
         <button type="submit" class="btn btn-success">Save Changes</button>
