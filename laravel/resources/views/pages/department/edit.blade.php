@@ -15,6 +15,8 @@
     <hr>
 
     {!! Form::open() !!}
+        <input type="hidden" name="event_id" value="{{ $department->event->id }}">
+
         @include('partials/form/text', ['name' => 'name', 'label' => 'Department Name', 'placeholder' => "General department name", 'value' => $department->name])
         @include('partials/form/textarea', ['name' => 'description', 'label' => 'Description', 'placeholder' => 'A brief description of this department', 'value' => $department->description])
 

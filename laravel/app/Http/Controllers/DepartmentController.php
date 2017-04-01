@@ -47,7 +47,7 @@ class DepartmentController extends Controller
         event(new EventChanged($department->event, ['type' => 'department', 'status' => 'created']));
 
         $request->session()->flash('success', 'Your department has been created.');
-        return redirect('/event/' . $department->event->id);
+        return redirect('/event/' . $department->event->id . '/departments');
     }
 
     // View form to edit an existing department
@@ -68,7 +68,7 @@ class DepartmentController extends Controller
         event(new EventChanged($department->event, ['type' => 'department', 'status' => 'edited']));
 
         $request->session()->flash('success', 'Department has been updated.');
-        return redirect('/event/' . $department->event->id);
+        return redirect('/event/' . $department->event->id . '/departments');
     }
 
     // View confirmation page before deleting an department
@@ -88,6 +88,6 @@ class DepartmentController extends Controller
         event(new EventChanged($event, ['type' => 'department', 'status' => 'deleted']));
 
         $request->session()->flash('success', 'Department has been deleted.');
-        return redirect('/event/' . $event->id);
+        return redirect('/event/' . $department->event->id . '/departments');
     }
 }
