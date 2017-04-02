@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Volunteer Database</title>
+        <link rel="shortcut icon" href="/img/favicon.ico"/>
 
         <!-- Bootstrap styles -->
         <link rel="stylesheet" href="/css/bootstrap.min.css">
