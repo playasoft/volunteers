@@ -16,6 +16,7 @@ class CreateRoles extends Seeder
         'ranger-khaki',
         'event-admin',
         'department-lead',
+        'photography'
     ];
 
     /**
