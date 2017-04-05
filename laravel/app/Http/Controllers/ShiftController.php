@@ -48,7 +48,7 @@ class ShiftController extends Controller
         EventRole::syncForeign($department->event, 'App\Models\Shift', $shift->id, $input['roles']);
 
         $request->session()->flash('success', 'Your shift has been created.');
-        return redirect('/event/' . $department->event->id);
+        return redirect('/event/' . $department->event->id . '/shifts');
     }
 
     // View form to edit an existing shift
@@ -69,7 +69,7 @@ class ShiftController extends Controller
         EventRole::syncForeign($department->event, 'App\Models\Shift', $shift->id, $input['roles']);
 
         $request->session()->flash('success', 'Shift has been updated.');
-        return redirect('/event/' . $shift->event->id);
+        return redirect('/event/' . $shift->event->id . '/shifts');
     }
 
     // View confirmation page before deleting a shift
@@ -87,6 +87,6 @@ class ShiftController extends Controller
         $shift->delete();
 
         $request->session()->flash('success', 'Shift has been deleted.');
-        return redirect('/event/' . $event->id);
+        return redirect('/event/' . $event->id . '/shifts');
     }
 }
