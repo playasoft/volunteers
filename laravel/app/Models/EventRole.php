@@ -33,24 +33,27 @@ class EventRole extends Model
         // Start by removing all roles for this relationship
         EventRole::where('event_id', $event->id)->where('foreign_type', $foreign_type)->where('foreign_id', $foreign_id)->delete();
 
-        // Loop through array of role names
-        foreach($roles as $roleName)
+        if(isset($roles))
         {
-            // Figure out what role this name belongs to
-            $role = Role::where('name', $roleName)->first();
-
-            if(!empty($role))
+            // Loop through array of role names
+            foreach($roles as $roleName)
             {
-                // Create a new event role
-                $roleData =
-                [
-                    'role_id' => $role->id,
-                    'event_id' => $event->id,
-                    'foreign_id' => $foreign_id,
-                    'foreign_type' => $foreign_type
-                ];
+                // Figure out what role this name belongs to
+                $role = Role::where('name', $roleName)->first();
 
-                EventRole::create($roleData);
+                if(!empty($role))
+                {
+                    // Create a new event role
+                    $roleData =
+                    [
+                        'role_id' => $role->id,
+                        'event_id' => $event->id,
+                        'foreign_id' => $foreign_id,
+                        'foreign_type' => $foreign_type
+                    ];
+
+                    EventRole::create($roleData);
+                }
             }
         }
     }

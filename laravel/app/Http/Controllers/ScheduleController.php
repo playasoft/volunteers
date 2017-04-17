@@ -70,7 +70,7 @@ class ScheduleController extends Controller
             if($input['roles'] == $shift->getRoleNames())
             {
                 // Unset the roles, use shift as default instead
-                unset($input['roles']);
+                $input['roles'] = null;
             }
         }
 
@@ -98,7 +98,7 @@ class ScheduleController extends Controller
         $schedule = Schedule::create($input);
 
         // Sync roles if provided
-        if(isset($input['roles']))
+        if(array_key_exists('roles', $input))
         {
             EventRole::syncForeign($department->event, 'App\Models\Schedule', $schedule->id, $input['roles']);
         }
@@ -169,7 +169,7 @@ class ScheduleController extends Controller
         $schedule->update($input);
 
         // Sync roles if provided
-        if(isset($input['roles']))
+        if(array_key_exists('roles', $input))
         {
             EventRole::syncForeign($schedule->department->event, 'App\Models\Schedule', $schedule->id, $input['roles']);
         }
