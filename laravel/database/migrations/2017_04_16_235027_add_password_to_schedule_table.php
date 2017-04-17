@@ -14,7 +14,7 @@ class AddPasswordToScheduleTable extends Migration
     {
         Schema::table('schedule', function(Blueprint $table)
         {
-            $table->string('password');
+            $table->string('password')->nullable();
         });
     }
 
