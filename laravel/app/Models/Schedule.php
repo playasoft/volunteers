@@ -9,7 +9,7 @@ class Schedule extends Model
 {
     use SoftDeletes;
     protected $table = 'schedule';
-    protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers'];
+    protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'password'];
 
     // Schedules belong to a shift
     public function shift()

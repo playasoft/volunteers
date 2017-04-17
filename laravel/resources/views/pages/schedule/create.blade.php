@@ -77,7 +77,8 @@ foreach($event->days() as $day)
                 @endif
             </div>
 
-            @include('partials/roles', ['help' => "Prevents volunteers from signing up for this shift unless they have a password for the training they received."])
+            @include('partials/roles', ['help' => "Prevents volunteers from signing up for this shift unless they have recieved specific training."])
+            @include('partials/form/text', ['name' => 'password', 'label' => 'Password', 'help' => "Volunteers won't be able to sign up without this password. Leave blank for none."])
             @include('partials/form/text', ['name' => 'volunteers', 'label' => 'Number of volunteers needed', 'help' => "This determines how many slots are available for the shift."])
         </div>
 
@@ -150,7 +151,9 @@ foreach($event->days() as $day)
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
+        <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
+
+        <br><br>
         <div class='preview'></div>
     {!! Form::close() !!}
 @endsection
