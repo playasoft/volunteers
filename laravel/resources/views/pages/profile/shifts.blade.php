@@ -57,15 +57,17 @@
 
             <tbody>
                 @foreach($past as $slot)
-                    <tr>
-                        <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
-                        <td>{{ $slot->department->name }}</td>
-                        <td>{{ $slot->schedule->shift->name }}</td>
-                        <td>{{ $slot->start_date }}</td>
-                        <td>{{ $slot->start_time }}</td>
-                        <td>{{ $slot->end_time }}</td>
-                        <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a></td>
-                    </tr>                
+                    @if($slot->event)
+                        <tr>
+                            <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
+                            <td>{{ $slot->department->name }}</td>
+                            <td>{{ $slot->schedule->shift->name }}</td>
+                            <td>{{ $slot->start_date }}</td>
+                            <td>{{ $slot->start_time }}</td>
+                            <td>{{ $slot->end_time }}</td>
+                            <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a></td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
