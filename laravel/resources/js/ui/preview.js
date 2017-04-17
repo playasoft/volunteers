@@ -22,7 +22,6 @@ $(document).ready(function()
             }
 
             updateEndTime();
-
             updatePreview();
         });
 
