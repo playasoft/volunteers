@@ -108,7 +108,7 @@ class SlotController extends Controller
 
                 foreach($slot->schedule->getRoles() as $role)
                 {
-                    $roles[] = $role->name;
+                    $roles[] = $role->role->name;
                 }
 
                 UserRole::assign(Auth::user(), $roles);
