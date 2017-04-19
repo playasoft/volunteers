@@ -19,7 +19,7 @@
             <select name="department_id" class="form-control" id="department-field">
                 <option value="">Select a department</option>
                 
-                @foreach($shift->event->departments as $department)
+                @foreach($shift->event->departments->sortBy('name') as $department)
                     <option value="{{ $department->id }}" {{ $shift->department->id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                 @endforeach
             </select>

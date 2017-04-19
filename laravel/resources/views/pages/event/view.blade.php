@@ -73,7 +73,7 @@
                     <select class="form-control filter-departments">
                         <option value="all">Show All Departments</option>
 
-                        @foreach($event->departments as $department)
+                        @foreach($event->departments->sortBy('name') as $department)
                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                         @endforeach
                     </select>
@@ -94,7 +94,7 @@
                             @include('partials/event/timegrid')
 
                             <div class="department-wrap">
-                                @foreach($event->departments as $department)
+                                @foreach($event->departments->sortBy('name') as $department)
                                     <?php
 
                                     if($department->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())

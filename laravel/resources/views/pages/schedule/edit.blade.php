@@ -45,7 +45,7 @@ foreach($schedule->event->days() as $day)
                     <select name="department_id" class="form-control department-dropdown" id="department-field">
                         <option value="">Select a department</option>
 
-                        @foreach($schedule->event->departments as $department)
+                        @foreach($schedule->event->departments->sortBy('name') as $department)
                             <option value="{{ $department->id }}" {{ $schedule->department->id == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                         @endforeach
                     </select>

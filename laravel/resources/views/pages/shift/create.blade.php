@@ -12,7 +12,7 @@
                 <select name="department_id" class="form-control" id="department-field">
                     <option value="">Select a department</option>
                     
-                    @foreach($event->departments as $department)
+                    @foreach($event->departments->sortBy('name') as $department)
                         <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                     @endforeach
                 </select>

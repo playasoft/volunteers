@@ -12,7 +12,7 @@
 
     <hr>
 
-    @foreach($event->departments as $department)
+    @foreach($event->departments->sortBy('name') as $department)
         <div>
             <h2>{{ $department->name}}</h2>
 
