@@ -25,6 +25,7 @@ class ProfileRequest extends Request
 
         'data' =>
         [
+            'full_name' => 'required',
             'birthday' => 'date_format:Y-m-d',
         ]
     ];
