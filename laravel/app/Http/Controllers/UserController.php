@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // Laravel
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 
 // Custom
@@ -55,9 +56,15 @@ class UserController extends Controller
             'password' => $request->get('password')
         );
 
+        // Check if the username / password are valid
         if($this->auth->attempt($credentials))
         {
             $request->session()->flash('success', 'You are now logged in!');
+
+            // Update last login date
+            $user = Auth::user();
+            $user->login_at = Carbon::now();
+            $user->save();
         }
 
         // Check if there's an ongoing or upcoming event to redirect the user to
