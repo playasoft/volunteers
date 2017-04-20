@@ -95,6 +95,8 @@ Route::get('/profile', 'ProfileController@view');
 Route::get('/profile/shifts', 'ProfileController@shifts');
 
 Route::get('/profile/edit', 'ProfileController@editForm');
+Route::get('/profile/data/edit', 'ProfileController@dataForm');
+Route::get('/profile/password/edit', 'ProfileController@passwordForm');
 Route::post('/profile/edit', 'ProfileController@edit');
 
 Route::get('/profile/upload', 'ProfileController@uploadForm');

@@ -23,6 +23,11 @@
             <div class="col-sm-10 value">{{ $user->email }}</div>
         </div>
 
+        <br>
+        <a href="/profile/edit" class="btn btn-primary">Edit Profile</a>
+        <a href="/profile/password/edit" class="btn btn-primary">Change Password</a>
+        <hr>
+
         <h3>Additional information</h3>
 
         <div class="row">
@@ -39,10 +44,10 @@
             <div class="col-sm-2 title">Birthday</div>
             <div class="col-sm-10 value">{{ $user->data->birthday or 'Not Provided' }}</div>
         </div>
-    </div>
 
-    <a href="/profile/edit" class="btn btn-primary">Edit Profile</a>
-    <a href="/profile/upload" class="btn btn-primary">Upload a File</a>
+        <br>
+        <a href="/profile/data/edit" class="btn btn-primary">Edit Additional Information</a>
+    </div>
 
     @if($user->uploads->count())
         <hr>
@@ -70,4 +75,6 @@
             </tbody>
         </table>
     @endif
+
+    <a href="/profile/upload" class="btn btn-primary">Upload a File</a>
 @endsection

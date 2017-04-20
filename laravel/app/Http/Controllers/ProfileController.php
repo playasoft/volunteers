@@ -53,6 +53,19 @@ class ProfileController extends Controller
         return view('pages/profile/edit', compact('user'));
     }
 
+    function dataForm()
+    {
+        $user = Auth::user();
+        return view('pages/profile/edit-data', compact('user'));
+    }
+
+    function passwordForm()
+    {
+        $user = Auth::user();
+        return view('pages/profile/edit-password', compact('user'));
+    }
+
+
     // Handle editing profiles
     function edit(ProfileRequest $request)
     {
