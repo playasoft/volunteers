@@ -36,8 +36,8 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-2 title">Real Name</div>
-            <div class="col-sm-10 value">{{ $user->data->real_name or 'Not Provided' }}</div>
+            <div class="col-sm-2 title">Full Name</div>
+            <div class="col-sm-10 value">{{ $user->data->full_name or 'Not Provided' }}</div>
         </div>
 
         <div class="row">

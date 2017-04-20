@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserData extends Model
 {
     protected $table = 'user_data';
-    protected $fillable = ['burner_name', 'real_name', 'birthday'];
+    protected $fillable = ['burner_name', 'full_name', 'birthday', 'phone', 'emergency_name', 'emergency_phone', 'camp'];
     
     // User data belongs to a user
     public function user()
