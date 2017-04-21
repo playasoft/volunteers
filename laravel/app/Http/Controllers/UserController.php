@@ -43,8 +43,8 @@ class UserController extends Controller
         // Send notification emails
         event(new UserRegistered($user));
 
-        $request->session()->flash('success', 'Your account has been registered, you are now logged in.');
-        return redirect('/');
+        $request->session()->flash('success', ['title' => 'Thanks for registering!', 'message' => "Your account has been created, you are now logged in. Before you can sign up for volunteer shifts you'll need to enter your full name. All other fields are optional."]);
+        return redirect('/profile/data/edit');
     }
 
     // Handle a user logging in

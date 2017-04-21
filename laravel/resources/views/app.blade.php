@@ -22,8 +22,14 @@
 
         <section class="content container-fluid">
             @if(Session::has('success'))
+                <?php $success = Session::get('success'); ?>
+
                 <div class="general-alert alert alert-success" role="alert">
-                    <b>Success!</b> {{ Session::get('success') }}
+                    @if(is_array($success))
+                        <b>{{ $success['title'] or 'Success!'}}</b> {{ $success['message'] or '' }}
+                    @else
+                        <b>Success!</b> {{ $success }}
+                    @endif
                 </div>
             @endif
 
