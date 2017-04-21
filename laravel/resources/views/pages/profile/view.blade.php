@@ -31,13 +31,33 @@
         <h3>Additional information</h3>
 
         <div class="row">
+            <div class="col-sm-2 title">Full Name</div>
+            <div class="col-sm-10 value">{{ $user->data->full_name or 'Not Provided' }}</div>
+        </div>
+
+        <div class="row">
             <div class="col-sm-2 title">Burner Name</div>
             <div class="col-sm-10 value">{{ $user->data->burner_name or 'Not Provided' }}</div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2 title">Full Name</div>
-            <div class="col-sm-10 value">{{ $user->data->full_name or 'Not Provided' }}</div>
+            <div class="col-sm-2 title">Camp</div>
+            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 title">Phone</div>
+            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 title">Emergency Contact</div>
+            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 title">Emergency Phone</div>
+            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
         </div>
 
         <div class="row">
