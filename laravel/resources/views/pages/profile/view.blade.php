@@ -49,8 +49,13 @@
         <a href="/profile/data/edit" class="btn btn-primary">Edit Additional Information</a>
     </div>
 
+    <hr>
+    <p>
+        Are you are a certified EMT or have CPR training? You can upload documents to your profile for administrators to verify.
+        When approved, you will automatically be able to sign up for shifts that require training.
+    </p>
+
     @if($user->uploads->count())
-        <hr>
         <h2>Uploaded Files</h2>
 
         <table class="table table-hover">

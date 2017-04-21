@@ -5,7 +5,7 @@
     <hr>
 
     <p>
-        Some shifts may only allow certain user groups to sign up, for example EMT or fire fighting.
+        Some shifts like EMT or fire fighting may only allow certain user groups to sign up.
         In order to sign up for these shifts, you are required to upload documentation certifying that you are qualified.
     </p>
 
