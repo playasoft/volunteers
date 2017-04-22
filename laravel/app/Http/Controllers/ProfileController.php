@@ -119,10 +119,10 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // If this user already has at least 3 pending uploads, tell them to wait
-        if($user->uploads->where('status', 'pending')->count() >= 3)
+        // If this user already has at least 5 pending uploads, tell them to wait
+        if($user->uploads->where('status', 'pending')->count() >= 5)
         {
-            $request->session()->flash('error', "You've already uploaded 3 files. Please wait for an admin to review them before uploading more.");
+            $request->session()->flash('error', "You've already uploaded 5 files. Please wait for an admin to review them before uploading more.");
             return redirect('/profile');
         }
         
