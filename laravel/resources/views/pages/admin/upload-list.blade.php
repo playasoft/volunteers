@@ -1,6 +1,13 @@
 <?php
 
-$statuses = ['pending', 'approved', 'denied'];
+$statuses =
+[
+    'pending' => "Pending",
+    'approved-medical' => "Approved - Medical",
+    'approved-fire' => "Approved - Fire",
+    'approved-ranger' => "Approved - Ranger",
+    'denied' => "Denied"
+];
 
 ?>
 
@@ -32,11 +39,11 @@ $statuses = ['pending', 'approved', 'denied'];
                     <td><a href='/files/user/{{ $upload->file }}'>{{ $upload->file }}</a></td>
                     <td>
                         <select class="upload-status" data-status="{{ $upload->status }}">
-                            @foreach($statuses as $status)
+                            @foreach($statuses as $status => $title)
                                 @if($status == $upload->status)
-                                    <option value="{{ $status }}" selected>{{ ucwords($status) }}</option>
+                                    <option value="{{ $status }}" selected>{{ $title }}</option>
                                 @else
-                                    <option value="{{ $status }}">{{ ucwords($status) }}</option>
+                                    <option value="{{ $status }}">{{ $title }}</option>
                                 @endif
                             @endforeach
                         </select>
