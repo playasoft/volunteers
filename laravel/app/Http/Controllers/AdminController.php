@@ -70,6 +70,21 @@ class AdminController extends Controller
         $upload->status = $request->get('status');
         $upload->save();
 
+        // A map of statuses to user roles
+        $statusMap =
+        [
+            'approved-medical' => 'medical',
+            'approved-fire' => 'fire',
+            'approved-ranger' => 'ranger'
+        ];
+
+        // If an admin sets an uploaded document to be approved
+        if(isset($statusMap[$upload->status]))
+        {
+            // Assign them to their approved role
+            UserRole::assign($upload->user, $statusMap[$upload->status]);
+        }
+
         event(new FileChanged($upload));
 
         return;
