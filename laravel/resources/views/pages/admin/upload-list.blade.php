@@ -49,9 +49,13 @@ $statuses =
                         </select>
 
                         <span class="buttons">
+                            &ensp;
+
                             <a class="save-upload">
                                 Save
                             </a>
+
+                            &ensp;
 
                             <a class="cancel-upload">
                                 Cancel

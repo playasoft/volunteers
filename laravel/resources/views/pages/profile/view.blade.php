@@ -47,17 +47,17 @@
 
         <div class="row">
             <div class="col-sm-2 title">Phone</div>
-            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->phone or 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Emergency Contact</div>
-            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->emergency_name or 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Emergency Phone</div>
-            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->emergency_phone or 'Not Provided' }}</div>
         </div>
 
         <div class="row">
