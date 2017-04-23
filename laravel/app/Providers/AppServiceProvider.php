@@ -18,6 +18,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('account', function($attribute, $value, $parameters)
+        {
+            $user = User::where('name', Input::get('name'))->orWhere('email', Input::get('name'))->first();
+
+            if(!is_null($user))
+            {
+                return true;
+            }
+
+            return false;
+        });
+
         Validator::extend('hashed', function($attribute, $value, $parameters)
         {
             // If we're already logged in
@@ -28,9 +40,9 @@ class AppServiceProvider extends ServiceProvider
             else
             {
                 // Otherwise, try to get the username from form input
-                $user = User::where('name', Input::get('name'))->get();
+                $user = User::where('name', Input::get('name'))->orWhere('email', Input::get('name'))->first();
 
-                if(!$user->count())
+                if(is_null($user))
                 {
                     return false;
                 }

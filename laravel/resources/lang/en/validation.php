@@ -77,6 +77,7 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'time' => 'You must enter a timestamp in 12 hour (2:00 PM) or 24 hour format (14:00)',
     'hashed' => "Invalid password entered",
+    'account' => "Invalid account entered",
 
     /*
     |--------------------------------------------------------------------------

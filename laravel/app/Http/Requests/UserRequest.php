@@ -29,7 +29,7 @@ class UserRequest extends Request
             case "login":
                 $rules =
                 [
-                    'name' => 'required|min:3|exists:users,name',
+                    'name' => 'required|min:3|account',
                     'password' => 'required|min:8|hashed',
                 ];
             break;
