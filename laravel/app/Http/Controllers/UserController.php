@@ -50,9 +50,12 @@ class UserController extends Controller
     // Handle a user logging in
     public function login(UserRequest $request)
     {
+        // Check if the user entered a username or email address
+        $user = User::where('name', $request->get('name'))->orWhere('email', $request->get('name'))->first();
+
         $credentials = array
         (
-            'name' => $request->get('name'),
+            'name' => $user->name,
             'password' => $request->get('password')
         );
 

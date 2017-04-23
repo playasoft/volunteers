@@ -5,7 +5,7 @@
     <hr>
 
     {!! Form::open() !!}
-        @include('partials/form/text', ['name' => 'name', 'label' => 'Username', 'placeholder' => 'Your login name'])
+        @include('partials/form/text', ['name' => 'name', 'label' => 'Username or Email', 'placeholder' => 'You can use your username or your email address'])
         @include('partials/form/password', ['name' => 'password', 'label' => 'Password', 'placeholder' => 'Your password'])
 
         <p>

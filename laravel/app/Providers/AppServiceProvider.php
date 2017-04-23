@@ -46,11 +46,8 @@ class AppServiceProvider extends ServiceProvider
                 {
                     return false;
                 }
-
-                $user = $user[0];
             }
-            
-                
+
             if(Hash::check($value, $user->password))
             {
                 return true;
