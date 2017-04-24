@@ -9,8 +9,8 @@ use Carbon\Carbon;
 class Event extends Model
 {
     use SoftDeletes;
-    
-    protected $fillable = ['name', 'description', 'start_date', 'end_date'];
+
+    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
     // Helper functions to select events by date
     public static function future()
