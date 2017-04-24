@@ -40,15 +40,22 @@ section.content {
 }
 
 .star {
-//    color: #efdb3e;
     color: #FFCC33;
+}
 
+.burn {
+    color: #ef733e;
+}
+
+.star, .burn {
     h1 & {
         position: absolute;
         top: 0.08em;
         margin-left: 0.5em;
     }
 }
+
+
 
 .relative {
     position: relative;

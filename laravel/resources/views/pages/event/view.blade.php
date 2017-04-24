@@ -20,7 +20,7 @@
             Viewing Event: {{ $event->name }}
 
             @if($event->featured)
-                <span class="star glyphicon glyphicon-star"></span>
+                <span class="burn glyphicon glyphicon-fire"></span>
             @endif
         </h1>
         <hr>

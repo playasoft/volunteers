@@ -25,7 +25,7 @@
         @foreach($present as $event)
             <p>
                 @if($event->featured)
-                    <span class="star glyphicon glyphicon-star"></span>
+                    <span class="burn glyphicon glyphicon-fire"></span>
                 @endif
                 
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
@@ -43,7 +43,7 @@
         @foreach($future as $event)
             <p>
                 @if($event->featured)
-                    <span class="star glyphicon glyphicon-star"></span>
+                    <span class="burn glyphicon glyphicon-fire"></span>
                 @endif
 
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
