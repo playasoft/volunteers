@@ -25,8 +25,8 @@ class AdminController extends Controller
     // List of users
     function userList()
     {
-        $users = User::latest()->get();
-        return view('pages/admin/user-list', compact('users'));
+        $users = User::latest()->paginate(25); 
+        return view('pages/admin/user-list', ['users' => $users]);
     }
 
     // View an indivual user profile

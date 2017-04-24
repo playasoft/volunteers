@@ -4,6 +4,8 @@
     <h1>Registered Users</h1>
     <hr>
 
+    <!-- shows pagination -->
+    {!! $users->render() !!}
     <table class="table table-hover">
         <thead>
             <tr>
