@@ -13,9 +13,9 @@ class Event extends Model
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
     // Helper functions to select events by date
-    public static function future($featured)
+    public static function future($preferFeatured = false)
     {
-        if($featured)
+        if($preferFeatured)
         {
             return Event::where('start_date', '>', Carbon::now())
                             ->where('featured', true)
@@ -26,9 +26,9 @@ class Event extends Model
                         ->orderBy('start_date', 'asc')->get();
     }
 
-    public static function present($featured)
+    public static function present($preferFeatured = false)
     {
-        if($featured)
+        if($preferFeatured)
         {
             return Event::where('start_date', '<', Carbon::now())
                             ->where('end_date', '>', Carbon::now())
@@ -41,9 +41,9 @@ class Event extends Model
                         ->orderBy('start_date', 'desc')->get();
     }
 
-    public static function past($featured)
+    public static function past($preferFeatured = false)
     {
-        if($featured)
+        if($preferFeatured)
         {
             return Event::where('end_date', '<', Carbon::now())
                             ->where('featured', true)

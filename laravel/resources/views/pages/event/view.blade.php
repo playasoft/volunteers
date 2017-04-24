@@ -16,7 +16,13 @@
             @endcan
         </div>
         
-        <h1>Viewing Event: {{ $event->name }}</h1>
+        <h1 class="relative">
+            Viewing Event: {{ $event->name }}
+
+            @if($event->featured)
+                <span class="star glyphicon glyphicon-star"></span>
+            @endif
+        </h1>
         <hr>
 
         @if($event->image)

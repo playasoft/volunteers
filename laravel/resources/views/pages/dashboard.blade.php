@@ -24,6 +24,10 @@
 
         @foreach($present as $event)
             <p>
+                @if($event->featured)
+                    <span class="star glyphicon glyphicon-star"></span>
+                @endif
+                
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
                 <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
             </p>
@@ -38,6 +42,10 @@
 
         @foreach($future as $event)
             <p>
+                @if($event->featured)
+                    <span class="star glyphicon glyphicon-star"></span>
+                @endif
+
                 <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
                 <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
             </p>

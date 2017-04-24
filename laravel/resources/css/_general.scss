@@ -39,6 +39,21 @@ section.content {
     color: #ef3e99;
 }
 
+.star {
+//    color: #efdb3e;
+    color: #FFCC33;
+
+    h1 & {
+        position: absolute;
+        top: 0.08em;
+        margin-left: 0.5em;
+    }
+}
+
+.relative {
+    position: relative;
+}
+
 .image-caption {
     width: 50%;
 
