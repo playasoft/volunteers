@@ -12,4 +12,10 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}
+
+    <hr>
+    <p>
+        Already registered? <a href="/login/">Login Here!</a><br>
+        Forgot your password? <a href="/forgot/">Reset it!</a>
+    <p>
 @endsection
