@@ -32,8 +32,6 @@ class AuthServiceProvider extends ServiceProvider
         
         'admin' =>
         [
-            'take-admin-slot',
-            'release-admin-slot',
             'create-event',
             'edit-event',
             'delete-event',
@@ -65,26 +63,7 @@ class AuthServiceProvider extends ServiceProvider
 
         'volunteer' =>
         [
-            'take-volunteer-slot',
-            'release-volunteer-slot',
-        ],
-
-        'ranger' =>
-        [
-            'take-ranger-slot',
-            'release-ranger-slot',
-        ],
-
-        'medical' =>
-        [
-            'take-medical-slot',
-            'release-medical-slot',
-        ],
-
-        'fire' =>
-        [
-            'take-fire-slot',
-            'release-fire-slot',
+            // No special permissions
         ]
     ];
 
