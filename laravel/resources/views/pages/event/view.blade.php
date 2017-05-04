@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="event" data-id="{{ $event->id }}">
-        <div class="pull-right">
+        <div class="pull-right relative" style="z-index: 1">
             @can('create-event')
                 {{-- <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a> --}}
             @endcan
