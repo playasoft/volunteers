@@ -97,7 +97,7 @@ foreach($events as $event)
                                 <tr class="template hidden">
                                     <td><b>{user_id}</b></td>
                                     <td><a href="/user/{user_id}">{username}</a></td>
-                                    <td>{real_name}</td>
+                                    <td>{full_name}</td>
                                     <td>{email}</td>
                                     <td>
                                         <input type="checkbox" name="user-report[]" value="{user_id}">

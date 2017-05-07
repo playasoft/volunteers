@@ -49,7 +49,7 @@ class ReportController extends Controller
             [
                 'id' => $user->id,
                 'name' => $user->name,
-                'real_name' => count($user->data) && $user->data->real_name ? $user->data->real_name : '',
+                'full_name' => count($user->data) && $user->data->full_name ? $user->data->full_name : '',
                 'email' => $user->email
             ];
         }
@@ -193,7 +193,7 @@ class ReportController extends Controller
 
             if(count($user->data))
             {
-                $name = $this->splitName($user->data->real_name);
+                $name = $this->splitName($user->data->full_name);
             }
 
             $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();
@@ -288,7 +288,7 @@ class ReportController extends Controller
 
                     if(count($slot->user->data))
                     {
-                        $name = $this->splitName($slot->user->data->real_name);
+                        $name = $this->splitName($slot->user->data->full_name);
                         $row['first_name'] = $name['first'];
                         $row['last_name'] = $name['last'];
                         $row['phone'] = $slot->user->data->phone;
@@ -330,7 +330,7 @@ class ReportController extends Controller
 
                     if(count($slot->user->data))
                     {
-                        $name = $this->splitName($slot->user->data->real_name);
+                        $name = $this->splitName($slot->user->data->full_name);
                         $row['first_name'] = $name['first'];
                         $row['last_name'] = $name['last'];
                         $row['phone'] = $slot->user->data->phone;
@@ -383,7 +383,7 @@ class ReportController extends Controller
 
             if(count($user->data))
             {
-                $name = $this->splitName($user->data->real_name);
+                $name = $this->splitName($user->data->full_name);
             }
 
             $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();

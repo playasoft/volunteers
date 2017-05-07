@@ -70,7 +70,7 @@ use Carbon\Carbon;
                                 OPEN
                             @endif
                         </td>
-                        <td><b>{{ $slot->user->data->real_name or '' }}</b></td>
+                        <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
                     </tr>
                 @endforeach
             </tbody>

@@ -97,7 +97,7 @@ $(document).ready(function()
 
                     template.innerHTML = template.innerHTML.replace(/{user_id}/g, user.id);
                     template.innerHTML = template.innerHTML.replace(/{username}/g, user.name);
-                    template.innerHTML = template.innerHTML.replace(/{real_name}/g, user.real_name);
+                    template.innerHTML = template.innerHTML.replace(/{full_name}/g, user.full_name);
                     template.innerHTML = template.innerHTML.replace(/{email}/g, user.email);
 
                     $('.users table tbody').append(template);
