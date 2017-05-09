@@ -393,9 +393,8 @@ class ReportController extends Controller
             // Calculate how long each shift was
             foreach($slots as $slot)
             {
-                $start = Slot::timeToSeconds($slot->start_time);
-                $end = Slot::timeToSeconds($slot->end_time);
-                $duration = ($end - $start) / 60 / 60;
+                $duration = Slot::timeToSeconds($slot->schedule->duration) / 60 / 60;
+
                 $hoursVolunteered += $duration;
                 $slotsVolunteered++;
             }
