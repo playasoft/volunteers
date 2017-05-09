@@ -115,10 +115,6 @@ class ReportController extends Controller
         {
             return $this->departmentReport($event, $request);
         }
-        elseif($type == 'day')
-        {
-            return $this->dayReport($event, $request);
-        }
         elseif($type == 'misc')
         {
             $report = $request->get('misc-reports');
@@ -300,51 +296,6 @@ class ReportController extends Controller
         }
 
         $this->generateCSV('Volunteer DB Department Report - ' . date('Y-m-d H:i:s'), $columns, $data);
-    }
-
-    private function dayReport($event, $request)
-    {
-        $columns =
-        [
-            'umm' => 'idk?',
-        ];
-
-        $data = [];
-
-/*
-        foreach($departments as $department)
-        {
-            foreach($department->slots as $slot)
-            {
-                $date = new Carbon($slot->start_date);
-
-                $row =
-                [
-                    'umm' => 'still dk',
-                ];
-
-                if(count($slot->user))
-                {
-                    $row['user'] = $slot->user->name;
-                    $row['email'] = $slot->user->email;
-
-                    if(count($slot->user->data))
-                    {
-                        $name = $this->splitName($slot->user->data->full_name);
-                        $row['first_name'] = $name['first'];
-                        $row['last_name'] = $name['last'];
-                        $row['phone'] = $slot->user->data->phone;
-                    }
-                }
-
-                $data[] = $row;
-            }
-        }
-*/
-
-        dd($request->all());
-
-        $this->generateCSV('Volunteer DB Daily Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function hoursVolunteeredReport($event, $request)

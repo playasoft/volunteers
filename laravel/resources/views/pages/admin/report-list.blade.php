@@ -38,7 +38,6 @@ foreach($events as $event)
                         '0' => '----',
                         'user' => "User Reports",
                         'department' => "Department Reports",
-//                        'day' => "Reports by Day",
                         'misc' => "Miscellaneous Reports",
                     ]
                 ])
@@ -198,69 +197,6 @@ foreach($events as $event)
                                     <td><a href="/department/2/edit">DPW</a></td>
                                     <td>
                                         <input type="checkbox" name="department-report[]" value="2">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="report-options hidden" data-type="day">
-                @include('partials/form/select',
-                [
-                    'name' => 'day-options',
-                    'label' => 'Report options',
-                    'class' => 'day-options',
-                    'options' =>
-                    [
-                        '0' => '----',
-                        'all' => "Use data from all days",
-                        'specific' => "Select specific days",
-                    ]
-                ])
-
-                <div class="days-wrap">
-                    <div class="loading hidden">
-                        Loading event data...
-
-                        <div class="spinner"></div>
-                    </div>
-
-                    <div class="days hidden">
-                        <h3>Event Days</h3>
-
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Day</th>
-                                    <th>Include in report?</th>
-                                </tr>
-
-                                <tr class="template hidden">
-                                    <td><b>{date}</b></td>
-                                    <td>{day}</td>
-                                    <td>
-                                        <input type="checkbox" name="day-report[]" value="{date}">
-                                    </td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td><b>1/11/2017</b></td>
-                                    <td>Wednesday</td>
-                                    <td>
-                                        <input type="checkbox" name="day-report[]" value="2017-1-11">
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><b>1/12/2017</b></td>
-                                    <td>Thursday</td>
-                                    <td>
-                                        <input type="checkbox" name="day-report[]" value="2017-1-12">
                                     </td>
                                 </tr>
                             </tbody>
