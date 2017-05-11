@@ -52,7 +52,14 @@ class EventRole extends Model
                         'foreign_type' => $foreign_type
                     ];
 
-                    EventRole::create($roleData);
+                    try
+                    {
+                        EventRole::create($roleData);
+                    }
+                    catch(\Exception $exception)
+                    {
+                        // Todo: Throw an error if the exception is anything but a duplicate key error?
+                    }
                 }
             }
         }

@@ -56,7 +56,14 @@ class UserRole extends Model
                     $roleData['foreign_type'] = $options['foreign_type'];
                 }
 
-                UserRole::create($roleData);
+                try
+                {
+                    UserRole::create($roleData);
+                }
+                catch(\Exception $exception)
+                {
+                    // Todo: Throw an error if the exception is anything but a duplicate key error?
+                }
             }
         }
     }
