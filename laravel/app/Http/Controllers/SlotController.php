@@ -36,18 +36,16 @@ class SlotController extends Controller
     }
 
     // Helper function to determine allowed roles
-    private function userAllowed(Slot $slot, $type)
+    private function userAllowed(Slot $slot)
     {
         $user = Auth::user();
-        $roles = $slot->schedule->getRoles();
+        $slotRoles = $slot->schedule->getRoles();
         $allowed = false;
 
         // Check each allowed role to see if the user has permission
-        foreach($roles as $role)
+        foreach($slotRoles as $slotRole)
         {
-            $action = implode('-', [$type, $role->role->name, 'slot']);
-            
-            if($user->can($action))
+            if($user->hasRole($slotRole->role->name))
             {
                 $allowed = true;
             }
@@ -56,7 +54,6 @@ class SlotController extends Controller
         return $allowed;
     }
 
-    
     // View form to take an existing slot
     public function takeForm(Request $request, Slot $slot)
     {
@@ -84,7 +81,7 @@ class SlotController extends Controller
         }
         else
         {
-            if(!$this->userAllowed($slot, 'take'))
+            if(!$this->userAllowed($slot))
             {
                 $request->session()->flash('error', 'This shift is only available to certain user groups, your account must be approved by an administrator before signing up.');
                 return redirect()->back();
@@ -137,7 +134,7 @@ class SlotController extends Controller
     // Remove yourself from a slot
     public function release(Request $request, Slot $slot)
     {
-        if(!$this->userAllowed($slot, 'release'))
+        if(!$this->userAllowed($slot))
         {
             $request->session()->flash('error', 'This shift is only available to certain user groups, your account must be approved by an administrator before signing up.');
         }

@@ -38,7 +38,7 @@ class EventController extends Controller
 
             // Make sure the original filename is sanitized
             $file = pathinfo($request->file('image')->getClientOriginalName());
-            $fileName = preg_replace('/[^a-z0-9-_]/', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/', '', $file['extension']);
+            $fileName = preg_replace('/[^a-z0-9-_]/i', '', $file['filename']) . "." . preg_replace('/[^a-z0-9-_]/i', '', $file['extension']);
 
             // Move file to uploads directory
             $fileName = time() . '-' . $fileName;
@@ -61,6 +61,17 @@ class EventController extends Controller
         $this->authorize('create-event');
 
         $input = $request->all();
+
+        // Featured is a checkbox, so it gets sent as an array, but it needs to be saved as a boolean value
+        if(isset($input['featured']) && is_array($input['featured']) && $input['featured'][0] == 'yes')
+        {
+            $input['featured'] = true;
+        }
+        else
+        {
+            $input['featured'] = false;
+        }
+
         $event = Event::create($input);
 
         // Save event image if a file was uploaded
@@ -93,6 +104,17 @@ class EventController extends Controller
     {
         $this->authorize('edit-event');
         $input = $request->all();
+
+        // Featured is a checkbox, so it gets sent as an array, but it needs to be saved as a boolean value
+        if(isset($input['featured']) && is_array($input['featured']) && $input['featured'][0] == 'yes')
+        {
+            $input['featured'] = true;
+        }
+        else
+        {
+            $input['featured'] = false;
+        }
+
         $event->update($input);
 
         if($request->hasFile('image'))

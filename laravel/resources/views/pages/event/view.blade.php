@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="event" data-id="{{ $event->id }}">
-        <div class="pull-right">
+        <div class="pull-right relative" style="z-index: 1">
             @can('create-event')
                 {{-- <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a> --}}
             @endcan
@@ -16,7 +16,13 @@
             @endcan
         </div>
         
-        <h1>Viewing Event: {{ $event->name }}</h1>
+        <h1 class="relative">
+            Viewing Event: {{ $event->name }}
+
+            @if($event->featured)
+                <span class="burn glyphicon glyphicon-fire"></span>
+            @endif
+        </h1>
         <hr>
 
         @if($event->image)

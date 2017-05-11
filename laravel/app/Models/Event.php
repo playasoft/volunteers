@@ -9,44 +9,72 @@ use Carbon\Carbon;
 class Event extends Model
 {
     use SoftDeletes;
-    
-    protected $fillable = ['name', 'description', 'start_date', 'end_date'];
+
+    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
     // Helper functions to select events by date
-    public static function future()
+    public static function future($preferFeatured = false)
     {
+        if($preferFeatured)
+        {
+            return Event::where('start_date', '>', Carbon::now())
+                            ->where('featured', true)
+                            ->orderBy('start_date', 'asc')->get();
+        }
+
         return Event::where('start_date', '>', Carbon::now())
-                        ->orderBy('start_date', 'desc')->get();
+                        ->orderBy('start_date', 'asc')->get();
     }
 
-    public static function present()
+    public static function present($preferFeatured = false)
     {
+        if($preferFeatured)
+        {
+            return Event::where('start_date', '<', Carbon::now())
+                            ->where('end_date', '>', Carbon::now())
+                            ->where('featured', true)
+                            ->orderBy('start_date', 'desc')->get();
+        }
+
         return Event::where('start_date', '<', Carbon::now())
                         ->where('end_date', '>', Carbon::now())
                         ->orderBy('start_date', 'desc')->get();
     }
 
-    public static function past()
+    public static function past($preferFeatured = false)
     {
+        if($preferFeatured)
+        {
+            return Event::where('end_date', '<', Carbon::now())
+                            ->where('featured', true)
+                            ->orderBy('start_date', 'desc')->get();
+        }
+
         return Event::where('end_date', '<', Carbon::now())
                         ->orderBy('start_date', 'desc')->get();
     }
 
     // Helper function to return the most recent ongoing or upcoming event
-    public static function ongoingOrUpcoming()
+    public static function ongoingOrUpcoming($preferFeatured = true)
     {
-        $ongoing = Event::present()->first();
+        $ongoing = Event::present($preferFeatured)->first();
 
         if(!empty($ongoing))
         {
             return $ongoing;
         }
 
-        $upcoming = Event::future()->first();
+        $upcoming = Event::future($preferFeatured)->first();
 
         if(!empty($upcoming))
         {
             return $upcoming;
+        }
+
+        // Are there no featured events? Fall back to regular events
+        if($preferFeatured)
+        {
+            return self::ongoingOrUpcoming(false);
         }
 
         return false;
