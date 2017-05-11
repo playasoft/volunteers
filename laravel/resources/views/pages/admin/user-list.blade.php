@@ -3,9 +3,10 @@
 @section('content')
     <h1>Registered Users</h1>
     <hr>
-
+@include('partials/pagination-with-amount-dropdown', ['paginator' => $users])
     <!-- shows pagination -->
-    {!! $users->render() !!}
+ <!--    <a href="?userPageLimit=2">test</a> -->
+    <!-- {!! $users->render() !!} -->
     <table class="table table-hover">
         <thead>
             <tr>

@@ -23,10 +23,16 @@ class AdminController extends Controller
     }
     
     // List of users
-    function userList()
+    function userList(Request $request)
     {
-        $users = User::latest()->paginate(25); 
-        return view('pages/admin/user-list', ['users' => $users]);
+        if(!empty($request->query()['userPageLimit'])){
+            session(['userPageLimit' => $request->query()['userPageLimit']]);
+        }
+
+        $userPageLimit = $request->session()->get('userPageLimit',25);
+        $users = User::latest()->paginate($userPageLimit); 
+
+        return view('pages/admin/user-list', ['users' => $users, 'pageLimit' => $userPageLimit]);
     }
 
     // View an indivual user profile
