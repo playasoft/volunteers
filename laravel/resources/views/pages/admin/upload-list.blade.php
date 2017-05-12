@@ -13,6 +13,8 @@ $statuses =
 
 @extends('app')
 
+
+
 @section('content')
     <h1>Uploaded Files</h1>
     <hr>
@@ -29,7 +31,7 @@ $statuses =
                 <th>Status</th>
             </tr>
         </thead>
-
+@include('partials/pagination-with-amount-dropdown', ['paginator' => $uploads ])
         <tbody>
             @foreach($uploads as $upload)
                 <tr class="upload" data-id="{{ $upload->id }}">

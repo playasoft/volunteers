@@ -64,10 +64,16 @@ class AdminController extends Controller
     }
 
     // List of uploaded files
-    function uploadList()
+    function uploadList(Request $request)
     {
-        $uploads = UserUpload::latest()->get();
-        return view('pages/admin/upload-list', compact('uploads'));
+        if(!empty($request->query()['userPageLimit'])){
+            session(['userPageLimit' => $request->query()['userPageLimit']]);
+        }
+
+        $userPageLimit = $request->session()->get('userPageLimit',25);
+        $uploads =  UserUpload::latest()->paginate($userPageLimit); 
+
+        return view('pages/admin/upload-list', ['uploads' => $uploads, 'pageLimit' => $userPageLimit]);
     }
 
     // Update information about an uploaded file
