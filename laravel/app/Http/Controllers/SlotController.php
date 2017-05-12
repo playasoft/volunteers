@@ -66,18 +66,6 @@ class SlotController extends Controller
         return view('pages/slot/view', compact('slot'));
     }
 
-    // View form to take an existing slot
-    public function takeForm(Request $request, Slot $slot)
-    {
-        if(is_null(Auth::user()->data) or empty(Auth::user()->data->full_name))
-        {
-            $request->session()->flash('error', "You must enter your name before you can sign up for shifts.");
-            return redirect('/profile/data/edit');
-        }
-
-        return view('pages/slot/take', compact('slot'));
-    }
-
     // Add yourself to an existing slot
     public function take(SlotRequest $request, Slot $slot)
     {
@@ -135,12 +123,6 @@ class SlotController extends Controller
         }
         
         return redirect('/event/' . $slot->event->id);
-    }
-
-    // View confirmation page before releasing a slot
-    public function releaseForm(Request $request, Slot $slot)
-    {
-        return view('pages/slot/release', compact('slot'));
     }
 
     // Remove yourself from a slot
