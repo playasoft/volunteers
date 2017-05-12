@@ -83,10 +83,8 @@ Route::post('/schedule/{schedule}/delete', 'ScheduleController@delete');
 
 
 // Slot routes
-Route::get('/slot/{slot}/take', 'SlotController@takeForm');
+Route::get('/slot/{slot}/view', 'SlotController@view');
 Route::post('/slot/{slot}/take', 'SlotController@take');
-
-Route::get('/slot/{slot}/release', 'SlotController@releaseForm');
 Route::post('/slot/{slot}/release', 'SlotController@release');
 
 

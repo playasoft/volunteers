@@ -1,7 +1,7 @@
 <?php
 
 $class = "slot empty";
-$href = "";
+$href = "/slot/{$slot->id}/view";
 $name = "";
 
 // If there is no slot user, display a link to the take shift page
@@ -10,7 +10,6 @@ if(is_null($slot->user))
     $start = strtotime($slot->start_time);
     $end = strtotime($slot->end_time);
 
-    $href = "/slot/{$slot->id}/take";
     $name = date("h:i a", $start) . " - " . date("h:i a", $end);
 }
 
@@ -23,7 +22,6 @@ else
     // If the slot is taken by the current user, display a link to the release page
     if($slot->user->id === Auth::user()->id)
     {
-        $href = "/slot/{$slot->id}/release";
         $class = "slot taken-by-current-user";
     }
 

@@ -54,6 +54,18 @@ class SlotController extends Controller
         return $allowed;
     }
 
+    // Page to view slots
+    public function view(Request $request, Slot $slot)
+    {
+        if(is_null(Auth::user()->data) or empty(Auth::user()->data->full_name))
+        {
+            $request->session()->flash('error', "You must enter your name before you can sign up for shifts.");
+            return redirect('/profile/data/edit');
+        }
+
+        return view('pages/slot/view', compact('slot'));
+    }
+
     // View form to take an existing slot
     public function takeForm(Request $request, Slot $slot)
     {
