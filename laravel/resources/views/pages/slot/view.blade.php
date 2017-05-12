@@ -65,6 +65,11 @@ else
             <p>{!! nl2br(e($slot->department->description)) !!}</p>
         @endif
 
+        @if($slot->schedule->shift->description)
+            <label>About {{ $slot->schedule->shift->name }}</label>
+            <p>{!! nl2br(e($slot->schedule->shift->description)) !!}</p>
+        @endif
+
         @if($taken)
             <hr>
 
