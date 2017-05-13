@@ -52,7 +52,24 @@ class FixDuplicateRoles extends Command
                 continue;
             }
 
-            UserRole::where('user_id', $userRole->user_id)->where('role_id', $userRole->role_id)->where('id', '!=', $userRole->id)->delete();
+            if($userRole->foreign_id)
+            {
+                UserRole::where('user_id', $userRole->user_id)->
+                            where('role_id', $userRole->role_id)->
+                            where('foreign_id', $userRole->foreign_id)->
+                            where('foreign_type', $userRole->foreign_type)->
+                            where('id', '!=', $userRole->id)->
+                            delete();
+            }
+            else
+            {
+                UserRole::where('user_id', $userRole->user_id)->
+                            where('role_id', $userRole->role_id)->
+                            whereNull('foreign_id')->
+                            whereNull('foreign_type')->
+                            where('id', '!=', $userRole->id)->
+                            delete();
+            }
         }
 
         foreach($eventRoles as $eventRole)
@@ -62,7 +79,24 @@ class FixDuplicateRoles extends Command
                 continue;
             }
 
-            EventRole::where('event_id', $eventRole->event_id)->where('role_id', $eventRole->role_id)->where('id', '!=', $eventRole->id)->delete();
+            if($eventRole->foreign_id)
+            {
+                EventRole::where('event_id', $eventRole->event_id)->
+                            where('role_id', $eventRole->role_id)->
+                            where('foreign_id', $eventRole->foreign_id)->
+                            where('foreign_type', $eventRole->foreign_type)->
+                            where('id', '!=', $eventRole->id)->
+                            delete();
+            }
+            else
+            {
+                EventRole::where('event_id', $eventRole->event_id)->
+                            where('role_id', $eventRole->role_id)->
+                            whereNull('foreign_id')->
+                            whereNull('foreign_type')->
+                            where('id', '!=', $eventRole->id)->
+                            delete();
+            }
         }
 
         dump("Duplicate roles removed.");
