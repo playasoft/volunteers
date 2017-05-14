@@ -115,6 +115,12 @@
                                             @else
                                                 <b>{{ $department->name }}</b><br>
                                             @endcan
+
+                                            @if($department->description)
+                                                <p>
+                                                    {!! nl2br(e($department->description)) !!}y
+                                                </p>
+                                            @endif
                                         </div>
                                         
                                         <ul class="shifts">
@@ -133,6 +139,12 @@
                                                         @else
                                                             <b>{{ $schedule->shift->name }}</b>
                                                         @endcan
+
+                                                        @if($schedule->shift->description)
+                                                            <p>
+                                                                {!! nl2br(e($schedule->shift->description)) !!}
+                                                            </p>
+                                                        @endif
                                                     </div>
 
                                                     <div class="slots col-sm-10">
