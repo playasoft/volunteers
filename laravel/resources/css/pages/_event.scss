@@ -19,3 +19,30 @@
         display: inline-block;
     }
 }
+
+.department .title, .shift .title {
+    & b {
+        padding-right: 1em;
+    }
+}
+
+.department .description, .shift .description {
+    & span {
+        font-size: 1.5em;
+        vertical-align: middle;
+        color: #337ab7;
+        cursor: pointer;
+        padding-right: 0.25em;
+    }
+
+    & p {
+        display: none;
+    }
+}
+
+.department .edit, .shift .edit {
+    & span {
+        font-size: 1.5em;
+        vertical-align: middle;
+    }
+}

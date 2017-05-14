@@ -110,17 +110,25 @@
 
                                     <div class="department" data-id="{{ $department->id }}">
                                         <div class="title">
-                                            @can('edit-department')
-                                                <a href="/department/{{ $department->id }}/edit">{{ $department->name }}</a><br>
-                                            @else
-                                                <b>{{ $department->name }}</b><br>
-                                            @endcan
+                                            <b>{{ $department->name }}</b>
 
                                             @if($department->description)
-                                                <p>
-                                                    {!! nl2br(e($department->description)) !!}y
-                                                </p>
+                                                <span class="description">
+                                                    <span class="glyphicon glyphicon-question-sign"></span>
+
+                                                    <p>
+                                                        {!! nl2br(e($department->description)) !!}
+                                                    </p>
+                                                </span>
                                             @endif
+
+                                            @can('edit-department')
+                                                <span class="edit">
+                                                    <a href="/department/{{ $department->id }}/edit">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                    </a>
+                                                </span>
+                                            @endcan
                                         </div>
                                         
                                         <ul class="shifts">
@@ -134,17 +142,25 @@
 
                                                 <li class="shift row" data-rows="{{ $schedule->volunteers }}">
                                                     <div class="title col-sm-2">
-                                                        @can('edit-schedule')
-                                                            <a href="/schedule/{{ $schedule->id }}/edit">{{ $schedule->shift->name }}</a>
-                                                        @else
-                                                            <b>{{ $schedule->shift->name }}</b>
-                                                        @endcan
+                                                        <b>{{ $schedule->shift->name }}</b>
 
                                                         @if($schedule->shift->description)
-                                                            <p>
-                                                                {!! nl2br(e($schedule->shift->description)) !!}
-                                                            </p>
+                                                            <span class="description">
+                                                                <span class="glyphicon glyphicon-question-sign"></span>
+
+                                                                <p>
+                                                                    {!! nl2br(e($schedule->shift->description)) !!}
+                                                                </p>
+                                                            </span>
                                                         @endif
+
+                                                        @can('edit-schedule')
+                                                            <span class="edit">
+                                                                <a href="/schedule/{{ $schedule->id }}/edit">
+                                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                                </a>
+                                                            </span>
+                                                        @endcan
                                                     </div>
 
                                                     <div class="slots col-sm-10">
