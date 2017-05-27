@@ -116,7 +116,7 @@
                                                 <span class="description">
                                                     <span class="glyphicon glyphicon-question-sign"></span>
 
-                                                    <p>
+                                                    <p class="hidden">
                                                         {!! nl2br(e($department->description)) !!}
                                                     </p>
                                                 </span>
@@ -148,7 +148,7 @@
                                                             <span class="description">
                                                                 <span class="glyphicon glyphicon-question-sign"></span>
 
-                                                                <p>
+                                                                <p class="hidden">
                                                                     {!! nl2br(e($schedule->shift->description)) !!}
                                                                 </p>
                                                             </span>
