@@ -58,6 +58,10 @@
     }
 }
 
+.shift .description p {
+    width: 80vw;
+}
+
 .department .edit, .shift .edit {
     & span {
         font-size: 1.5em;
