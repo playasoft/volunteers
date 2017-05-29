@@ -14,14 +14,18 @@ class AddDuplicateConstraintToRoles extends Migration
     {
         Schema::table('event_roles', function (Blueprint $table)
         {
-            $table->unique(['role_id', 'event_id'], 'basic_event_role_unique');
-            $table->unique(['role_id', 'event_id', 'foreign_id', 'foreign_type'], 'foreign_event_role_unique');
+            $table->integer('foreign_id')->unsigned()->nullable(false)->change();
+            $table->string('foreign_type')->nullable(false)->change();
+
+            $table->unique(['role_id', 'event_id', 'foreign_id', 'foreign_type'], 'event_role_unique');
         });
 
         Schema::table('user_roles', function (Blueprint $table)
         {
-            $table->unique(['role_id', 'user_id'], 'basic_user_role_unique');
-            $table->unique(['role_id', 'user_id', 'foreign_id', 'foreign_type'], 'foreign_user_role_unique');
+            $table->integer('foreign_id')->unsigned()->nullable(false)->change();
+            $table->string('foreign_type')->nullable(false)->change();
+
+            $table->unique(['role_id', 'user_id', 'foreign_id', 'foreign_type'], 'user_role_unique');
         });
     }
 
@@ -34,14 +38,18 @@ class AddDuplicateConstraintToRoles extends Migration
     {
         Schema::table('event_roles', function (Blueprint $table)
         {
-            $table->dropUnique('basic_event_role_unique');
-            $table->dropUnique('foreign_event_role_unique');
+            $table->dropUnique('event_role_unique');
+
+            $table->integer('foreign_id')->unsigned()->nullable()->change();
+            $table->string('foreign_type')->nullable()->change();
         });
 
         Schema::table('user_roles', function (Blueprint $table)
         {
-            $table->dropUnique('basic_user_role_unique');
-            $table->dropUnique('foreign_user_role_unique');
+            $table->dropUnique('user_role_unique');
+
+            $table->integer('foreign_id')->unsigned()->nullable()->change();
+            $table->string('foreign_type')->nullable()->change();
         });
     }
 }
