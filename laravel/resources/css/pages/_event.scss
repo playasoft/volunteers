@@ -60,6 +60,14 @@
 
 .shift .description p {
     width: 80vw;
+
+    @media (min-width: 768px) {
+        width: 50vw;
+    }
+
+    @media (min-width: 1024px) {
+        width: 33vw;
+    }
 }
 
 .department .edit, .shift .edit {

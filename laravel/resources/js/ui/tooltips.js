@@ -4,6 +4,14 @@ $(document).ready(function()
 {
     $('.description').on('click', function()
     {
-        $(this).find('p').toggle('hidden');
+        if($(this).find('p').hasClass('hidden'))
+        {
+            $('.description p').addClass('hidden');
+            $(this).find('p').removeClass('hidden');
+        }
+        else
+        {
+            $(this).find('p').addClass('hidden');
+        }
     });
 });
