@@ -116,9 +116,12 @@
                                                 <span class="description">
                                                     <span class="glyphicon glyphicon-question-sign"></span>
 
-                                                    <p class="hidden">
+                                                    <div class="tip hidden">
                                                         {!! nl2br(e($department->description)) !!}
-                                                    </p>
+
+                                                        <hr>
+                                                        <a class="btn btn-primary">Close</a>
+                                                    </div>
                                                 </span>
                                             @endif
 
@@ -148,9 +151,12 @@
                                                             <span class="description">
                                                                 <span class="glyphicon glyphicon-question-sign"></span>
 
-                                                                <p class="hidden">
+                                                                <div class="tip hidden">
                                                                     {!! nl2br(e($schedule->shift->description)) !!}
-                                                                </p>
+
+                                                                    <hr>
+                                                                    <a class="btn btn-primary">Close</a>
+                                                                </div>
                                                             </span>
                                                         @endif
 

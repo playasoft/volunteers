@@ -4,14 +4,14 @@ $(document).ready(function()
 {
     $('.description').on('click', function()
     {
-        if($(this).find('p').hasClass('hidden'))
+        if($(this).find('.tip').hasClass('hidden'))
         {
-            $('.description p').addClass('hidden');
-            $(this).find('p').removeClass('hidden');
+            $('.tip').addClass('hidden');
+            $(this).find('.tip').removeClass('hidden');
         }
         else
         {
-            $(this).find('p').addClass('hidden');
+            $(this).find('.tip').addClass('hidden');
         }
     });
 });
