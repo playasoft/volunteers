@@ -2,11 +2,15 @@
 
 $url = "/slot/{$slot->id}/take";
 
+$taken = false;
+$self = false;
+$other = false;
+
 if(!empty($slot->user))
 {
     $taken = true;
 
-    if(Auth::check() && Auth::user()->id = $slot->user->id)
+    if(Auth::check() && Auth::user()->id == $slot->user->id)
     {
         $self = true;
         $url = "/slot/{$slot->id}/release";
@@ -15,11 +19,6 @@ if(!empty($slot->user))
     {
         $other = true;
     }
-}
-else
-{
-    $taken = false;
-    $open = true;
 }
 
 ?>
