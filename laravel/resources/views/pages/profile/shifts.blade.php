@@ -1,3 +1,5 @@
+<?php use Carbon\Carbon; ?>
+
 @extends('app')
 
 @section('content')
@@ -26,12 +28,11 @@
                         <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
                         <td>{{ $slot->department->name }}</td>
                         <td>{{ $slot->schedule->shift->name }}</td>
-                        <td>{{ $slot->start_date }}</td>
-                        <td>{{ $slot->start_time }}</td>
-                        <td>{{ $slot->end_time }}</td>
+                        <td>{{ Carbon::parse($slot->start_date)->formatLocalized('%A') }} ({{ $slot->start_date }})</td>
+                        <td>{{ Carbon::parse($slot->start_time)->format('h:i a') }} ({{ $slot->start_time }})</td>
+                        <td>{{ Carbon::parse($slot->end_time)->format('h:i a') }} ({{ $slot->end_time }})</td>
                         <td>
-                            <a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a>
-                            <a href="/slot/{{ $slot->id }}/release" class="btn btn-danger">Cancel</a>
+                            <a href="/slot/{{ $slot->id }}/view" class="btn btn-primary">View Details</a>
                         </td>
                     </tr>
                 @endforeach
@@ -62,10 +63,10 @@
                             <td><a href="/event/{{ $slot->event->id }}">{{ $slot->event->name }}</a></td>
                             <td>{{ $slot->department->name }}</td>
                             <td>{{ $slot->schedule->shift->name }}</td>
-                            <td>{{ $slot->start_date }}</td>
-                            <td>{{ $slot->start_time }}</td>
-                            <td>{{ $slot->end_time }}</td>
-                            <td><a href="/slot/{{ $slot->id }}/take" class="btn btn-primary">View</a></td>
+                            <td>{{ Carbon::parse($slot->start_date)->formatLocalized('%A') }} ({{ $slot->start_date }})</td>
+                            <td>{{ Carbon::parse($slot->start_time)->format('h:i a') }} ({{ $slot->start_time }})</td>
+                            <td>{{ Carbon::parse($slot->end_time)->format('h:i a') }} ({{ $slot->end_time }})</td>
+                            <td><a href="/slot/{{ $slot->id }}/view" class="btn btn-primary">View Details</a></td>
                         </tr>
                     @endif
                 @endforeach
