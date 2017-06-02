@@ -216,6 +216,7 @@ foreach($events as $event)
                         '0' => '----',
                         'hours-volunteered' => "Total hours volunteered by user",
                         'shifts-filled' => "Total shifts filled by department",
+                        'popular-camps' => "Most popular camps",
                     ]
                 ])
             </div>

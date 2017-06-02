@@ -133,6 +133,10 @@ class ReportController extends Controller
             {
                 $this->shiftsFilledReport($event, $request);
             }
+            elseif($report == 'popular-camps')
+            {
+                $this->popularCampsReport($event, $request);
+            }
         }
     }
 
@@ -433,6 +437,86 @@ class ReportController extends Controller
         ];
 
         $this->generateCSV('Volunteer DB Shifts Filled Report - ' . date('Y-m-d H:i:s'), $columns, $data);
+    }
+
+    private function popularCampsReport($event, $request)
+    {
+        // Select all users
+        $users = User::get();
+
+        // Select all scheduled shifts in the selected event
+        $schedule_ids = [];
+
+        foreach($event->departments as $department)
+        {
+            foreach($department->schedule as $schedule)
+            {
+                $schedule_ids[] = $schedule->id;
+            }
+        }
+
+        $columns =
+        [
+            'camp' => 'Camp Name',
+            'users' => 'Number of Volunteers',
+            'slots' => 'Number of Shifts Taken',
+        ];
+
+        $data = [];
+        $camps = [];
+
+        // Loop through all users to see what camps they belong to
+        foreach($users as $user)
+        {
+            $name = ['first' => '', 'last' => ''];
+
+            if(count($user->data))
+            {
+                $name = $this->splitName($user->data->full_name);
+            }
+
+            // Make sure this user has actually volunteered for the selected event
+            $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();
+
+            if($slots->count())
+            {
+                if(!empty($user->data) && !empty($user->data->camp))
+                {
+                    $camp = preg_replace("/[^a-z0-9]/", "", strtolower($user->data->camp));
+                }
+                else
+                {
+                    $camp = "none";
+                }
+
+                if(!isset($camps[$camp]))
+                {
+                    $camps[$camp] = ['name' => $user->data->camp, 'users' => 0, 'slots' => 0];
+                }
+
+                $camps[$camp]['users']++;
+                $camps[$camp]['slots'] += $slots->count();
+            }
+        }
+
+        // Loop through camp statistics to generate a CSV
+        foreach($camps as $camp)
+        {
+            $data[] =
+            [
+                'camp' => $camp['name'],
+                'users' => $camp['users'],
+                'slots' => $camp['slots'],
+            ];
+        }
+
+        // Create collection from saved data
+        $collection = collect($data);
+
+        // Sort the collection and save it back into the data array
+        $data = $collection->sortByDesc('slots');
+
+        $this->generateCSV('Volunteer DB Camps Report - ' . date('Y-m-d H:i:s'), $columns, $data);
     }
 
     private function generateCSV($filename, $columns, $data)
