@@ -27,7 +27,7 @@ class SlotController extends Controller
     {
         $start_date = new Carbon($slot->start_date);
 
-        if($start_date->lt(Carbon::now()))
+        if($start_date->lte(Carbon::tomorrow()))
         {
             return true;
         }
@@ -90,7 +90,7 @@ class SlotController extends Controller
 
         if($this->eventHasPassed($slot))
         {
-            $request->session()->flash('error', 'This event has already passed, you are no longer able to sign up for shifts.');
+            $request->session()->flash('error', 'This event is starting soon or has already started, you are no longer able to sign up for shifts online. See you at the burn!');
             return redirect()->back();
         }
 
