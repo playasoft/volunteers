@@ -23,6 +23,12 @@ use Carbon\Carbon;
     th, td {
         padding: 0.5em 1em;
     }
+
+    .icon {
+        text-align: center;
+        font-size: 2em;
+        padding: 0;
+    }
 </style>
 
 @foreach($departments as $department)
@@ -44,6 +50,8 @@ use Carbon\Carbon;
                     <th>End Time</th>
                     <th>Username</th>
                     <th>Real Name</th>
+                    <th>Flake?</th>
+                    <th>Awesome?</th>
                 </tr>
             </thead>
 
@@ -71,9 +79,17 @@ use Carbon\Carbon;
                             @endif
                         </td>
                         <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
+                        <td class="icon">😕</td>
+                        <td class="icon">😊</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <p>
+            <i>Instructions: Fill in the smiley faces to mark who flaked and who did an awesome job. Be sure to fill the circle in completely, so it looks like this: ⬤</i>
+        </p>
+        <hr>
+        <br><br>
     @endforeach
 @endforeach
