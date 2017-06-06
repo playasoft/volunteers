@@ -29,6 +29,10 @@ use Carbon\Carbon;
         font-size: 2em;
         padding: 0;
     }
+
+    .grey {
+        background-color: #ccc;
+    }
 </style>
 
 @foreach($departments as $department)
@@ -38,6 +42,8 @@ use Carbon\Carbon;
         <?php
 
         $schedule_ids = $department->schedule()->where('shift_id', $schedule->shift->id)->get()->pluck('id');
+        $previousDay = false;
+        $background = 1;
 
         ?>
         <table>
@@ -64,8 +70,15 @@ use Carbon\Carbon;
                     $start = strtotime($slot->start_time);
                     $end = strtotime($slot->end_time);
 
+                    if($day != $previousDay)
+                    {
+                        $background++;
+                    }
+
+                    $previousDay = $day;
+
                     ?>
-                    <tr>
+                    <tr class="{{ $background % 2 ? 'grey' : ''}}">
                         <td>&nbsp;</td>
                         <td>{{ $slot->start_date }}</td>
                         <td>{{ $day }}</td>
