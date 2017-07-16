@@ -56,6 +56,7 @@ use Carbon\Carbon;
                     <th>End Time</th>
                     <th>Username</th>
                     <th>Real Name</th>
+                    <th>Playa Name</th>
                     <th>Flake?</th>
                     <th>Awesome?</th>
                 </tr>
@@ -92,15 +93,16 @@ use Carbon\Carbon;
                             @endif
                         </td>
                         <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
-                        <td class="icon">😕</td>
-                        <td class="icon">😊</td>
+                        <td><b>{{ $slot->user->data->burner_name or '' }}</b></td>
+                        <td class="icon">◯</td>
+                        <td class="icon">◯</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
         <p>
-            <i>Instructions: Fill in the smiley faces to mark who flaked and who did an awesome job. Be sure to fill the circle in completely, so it looks like this: ⬤</i>
+            <i>Instructions: Fill in the circles to mark who flaked and who did an awesome job. Be sure to fill the circle in completely, so it looks like this: ⬤</i>
         </p>
         <hr>
         <br><br>

@@ -177,6 +177,8 @@ class ReportController extends Controller
             'user' => 'Username',
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
+            'burner_name' => 'Playa Name',
+            'email' => 'Email',
             'day' => 'Day of the Week',
             'date' => 'Date',
             'department' => 'Department',
@@ -207,6 +209,8 @@ class ReportController extends Controller
                     'user' => $user->name,
                     'first_name' => $name['first'],
                     'last_name' => $name['last'],
+                    'burner_name' => count($user->data) ? $user->data->burner_name : null,
+                    'email' => $user->email,
                     'day' => $date->formatLocalized('%A'),
                     'date' => $date->format('m/d/Y'),
                     'department' => $slot->department->name,
@@ -260,6 +264,7 @@ class ReportController extends Controller
             'email' => 'Email',
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
+            'burner_name' => 'Playa Name',
             'phone' => 'Phone Number'
         ];
 
@@ -291,6 +296,7 @@ class ReportController extends Controller
                         $name = $this->splitName($slot->user->data->full_name);
                         $row['first_name'] = $name['first'];
                         $row['last_name'] = $name['last'];
+                        $row['burner_name'] = $slot->user->data->burner_name;
                         $row['phone'] = $slot->user->data->phone;
                     }
                 }
