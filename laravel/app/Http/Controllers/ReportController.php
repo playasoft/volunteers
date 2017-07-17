@@ -563,11 +563,23 @@ class ReportController extends Controller
     {
         $name = explode(' ', $name);
 
-        $split = array
-        (
-            'first' => implode(' ', array_slice($name, 0, -1)),
-            'last' => implode(' ', array_slice($name, -1))
-        );
+        // If the user only entered one name
+        if(count($name) == 1)
+        {
+            $split =
+            [
+                'first' => $name[0],
+                'last' => "",
+            ];
+        }
+        else
+        {
+            $split =
+            [
+                'first' => implode(' ', array_slice($name, 0, -1)),
+                'last' => implode(' ', array_slice($name, -1))
+            ];
+        }
 
         return $split;
     }
