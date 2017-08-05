@@ -48,6 +48,8 @@ class Slot extends Model
     // Helper function to convert seconds back into hours
     static public function secondsToTime($seconds)
     {
+        // Set timezone to UTC, otherwise PHP will convert the timestamp to the current timezone
+        date_default_timezone_set('UTC');
         return date('H:i', $seconds);
     }
     
@@ -67,14 +69,15 @@ class Slot extends Model
         }
 
         // Set up required variables
-        $end_date = new Carbon($schedule->end_date);
+        $timezone = config('app.timezone');
+        $end_date = new Carbon($schedule->end_date, $timezone);
         $dates = json_decode($schedule->getAttribute('dates'));
         $volunteers = (int)$schedule->volunteers;
 
         // Generate slots for each requested volunteer
         while($row <= $volunteers)
         {
-            $date = new Carbon($schedule->start_date);
+            $date = new Carbon($schedule->start_date, $timezone);
 
             // Loop over all days between the start and end date
             while($date->lte($end_date))
