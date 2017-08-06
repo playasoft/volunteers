@@ -60,7 +60,7 @@
             'name' => 'birthday',
             'label' => 'Birthday',
             'placeholder' => 'YYYY-MM-DD',
-            'help' => 'This will be used as a part of the Apogaea census',
+            'help' => 'This will only be used as a part of the event census',
             'value' => (is_null($user->data)) ? '' : $user->data->birthday
         ])
 
