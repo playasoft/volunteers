@@ -8,8 +8,8 @@ $factory->define(Schedule::class, function (Faker\Generator $faker, $data) {
     static $shift_id;
     $dates = json_decode($data['dates'], true);
     return [
-        'department_id' => $department_id ?: $department_id = 1,
-        'shift_id' => $shift_id ?: $shift_id = 1,
+        'department_id' => 1,
+        'shift_id' => 1,
         'start_date' => $dates[0],
         'end_date' => end($dates),
         'start_time' => $start = Carbon::createFromFormat('H', $faker->numberBetween(0,12)),
