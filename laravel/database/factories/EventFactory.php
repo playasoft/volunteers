@@ -10,6 +10,6 @@ $factory->define(Event::class, function (Faker\Generator $faker) {
         'description' => $faker->paragraph(),
         'image' => '',
         'start_date' => $start ?: $start = Carbon::now(),
-        'end_date' => $start->addWeeks(1)
+        'end_date' => $start->copy()->addWeek()
     ];
 });
