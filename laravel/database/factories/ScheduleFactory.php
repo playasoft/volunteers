@@ -4,8 +4,6 @@ use Carbon\Carbon;
 use \App\Models\Schedule;
 
 $factory->define(Schedule::class, function (Faker\Generator $faker, $data) {
-    static $department_id;
-    static $shift_id;
     $dates = json_decode($data['dates'], true);
     return [
         'department_id' => 1,
