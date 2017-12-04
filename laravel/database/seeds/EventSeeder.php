@@ -22,16 +22,14 @@ class EventSeeder extends Seeder
      */
     private function seedEvent($startDate)
     {
-        // Create an Event
         $event = factory(Event::class)->create(['start_date' => $startDate]);
-        dump("Created Event: ". $event->name);
-        // Create a Department and assign it the Event
-        $department = factory(Department::class)->create(['event_id' => $event->id]);
-        dump("Created Department: " . $department->name);
+        echo "Created Event: {$event->name}" . PHP_EOL;
 
-        // Create a Shift and assign it to the Event and Department
+        $department = factory(Department::class)->create(['event_id' => $event->id]);
+        echo "Created Department: {$department->name}" . PHP_EOL;
+
         $shift = factory(Shift::class)->create(['event_id' => $event->id, 'department_id' => $department->id]);
-        dump("Created Shift: " . $shift->name);
+        echo "Created Shift: {$shift->name}" . PHP_EOL;
 
         // Create a list of dates between the start and end date of the event
         $dates = [];
@@ -40,16 +38,16 @@ class EventSeeder extends Seeder
             $dates[] = $day->date->toDateString();
         }
 
-        // Create a Schedule and assign it to the Department
         $schedule = factory(Schedule::class)->create(['department_id' => $department->id, 'shift_id' => $shift->id, 'dates' => json_encode($dates)]);
-        dump("Created Schedule: " . $schedule->id . " in department: " . $schedule->department->name . " for shift: " . $schedule->shift->name);
+        echo "Created Schedule: {$schedule->id}". PHP_EOL;
+        echo "\tin department: {$schedule->department->name}". PHP_EOL;
+        echo "\tfor shift: {$schedule->shift->name}" . PHP_EOL;
 
-        // Generate slots for the schedule
-        dump("Generating slots for schedule: " . $schedule->id);
+        echo "Generating slots for schedule: {$schedule->id}" . PHP_EOL;
         Slot::generate($schedule);
 
         // Generate some test users for the slots
-        dump("Creating users and assigning to slots");
+        echo "Creating users and assigning to slots" . PHP_EOL;
         $users = factory(User::class, 10)->create()
             ->each( function ($u) {
                 UserRole::assign($u, ['fire', 'volunteer']);
@@ -57,10 +55,8 @@ class EventSeeder extends Seeder
             });
 
         // Assign users to slots
-        $slots = Slot::where('schedule_id', $schedule->id)
-            ->orderBy(DB::raw('RAND()'))
-            ->get();
-        
+        $slots = Slot::where('schedule_id', $schedule->id)->get();
+
         foreach($slots as $slot)
         {
             // Skip 1/3 slots to avoid filling all slots
@@ -70,7 +66,7 @@ class EventSeeder extends Seeder
             $slot->user_id = $users->random()->id;
             $slot->save();
         }
-        dump("Done!");
+        echo "Done!";
     }
     
     public function run()
