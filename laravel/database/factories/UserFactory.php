@@ -5,8 +5,8 @@ use \App\Models\User;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->userName,
-        'email' => $faker->safeEmail,
+        'name' => $faker->unique()->userName,
+        'email' => $faker->unique()->safeEmail,
         'password' => bcrypt($faker->password),
     ];
 });

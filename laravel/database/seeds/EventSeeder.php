@@ -11,6 +11,7 @@ use App\Models\Schedule;
 use App\Models\Slot;
 use App\Models\User;
 use App\Models\UserData;
+use App\Models\UserRole;
 
 class EventSeeder extends Seeder
 {
@@ -19,12 +20,11 @@ class EventSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    private function seedEvent($startDate)
     {
         // Create an Event
-        $event = factory(Event::class)->create();
-        dump("Created Event: " . $event->name);
-
+        $event = factory(Event::class)->create(['start_date' => $startDate]);
+        dump("Created Event: ". $event->name);
         // Create a Department and assign it the Event
         $department = factory(Department::class)->create(['event_id' => $event->id]);
         dump("Created Department: " . $department->name);
@@ -45,20 +45,37 @@ class EventSeeder extends Seeder
         dump("Created Schedule: " . $schedule->id . " in department: " . $schedule->department->name . " for shift: " . $schedule->shift->name);
 
         // Generate slots for the schedule
-        Slot::generate($schedule);
         dump("Generating slots for schedule: " . $schedule->id);
-        
-        // Create and assign Users to random slots.
+        Slot::generate($schedule);
+
+        // Generate some test users for the slots
         dump("Creating users and assigning to slots");
+        $users = factory(User::class, 10)->create()
+            ->each( function ($u) {
+                UserRole::assign($u, ['fire', 'volunteer']);
+                factory(UserData::class)->create(['user_id' => $u->id]);
+            });
+
+        // Assign users to slots
         $slots = Slot::where('schedule_id', $schedule->id)->get();
+        $i = 0;
         foreach($slots as $slot)
         {
-            $user = factory(User::class)->create();
-            factory(UserData::class)->create(['user_id' => $user->id]);
-            $slot->user_id = $user->id;
-            $slot->save(); 
+            // Only assign to every second slot
+            if ($i++ % 2 == 0)
+                continue;
+
+            $slot->user_id = $users->random()->id;
+            $slot->save();
         }
         dump("Done!");
+    }
+    
+    public function run()
+    {
+        $this->seedEvent(Carbon::now());
+        $this->seedEvent(Carbon::now()->subWeeks(2));
+        $this->seedEvent(Carbon::now()->addWeeks(2));
     }
 
 }
