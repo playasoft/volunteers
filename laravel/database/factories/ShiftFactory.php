@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\Shift;
+use App\Models\Shift;
 
 $factory->define(Shift::class, function (Faker\Generator $faker) {
     return [

@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\Schedule;
+use App\Models\Schedule;
 
 $factory->define(Schedule::class, function (Faker\Generator $faker, $data) {
     $dates = json_decode($data['dates'], true);

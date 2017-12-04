@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\Event;
+use App\Models\Event;
 
 $factory->define(Event::class, function (Faker\Generator $faker, $data) {
     $start_date = (isset($data['start_date']) ? $data['start_date'] : Carbon::now());

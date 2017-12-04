@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\User;
+use App\Models\User;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     return [

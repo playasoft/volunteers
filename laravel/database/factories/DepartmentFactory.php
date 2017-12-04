@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\Department;
+use App\Models\Department;
 
 $factory->define(Department::class, function (Faker\Generator $faker) {
     return [

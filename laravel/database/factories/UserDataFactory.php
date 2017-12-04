@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use \App\Models\UserData;
+use App\Models\UserData;
 
 $factory->define(UserData::class, function (Faker\Generator $faker) {
     return [

@@ -15,11 +15,6 @@ use App\Models\UserRole;
 
 class EventSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     private function seedEvent($startDate = null)
     {
         $event = factory(Event::class)->create(['start_date' => $startDate ?: Carbon::now()]);
@@ -69,6 +64,11 @@ class EventSeeder extends Seeder
         echo "Done!";
     }
     
+    /**
+     * Run the database seeds.
+     * Usage: php artisan db:seed --class=EventSeeder
+     * @return void
+     */
     public function run()
     {
         $this->seedEvent(Carbon::now());
