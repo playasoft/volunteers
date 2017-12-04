@@ -20,9 +20,9 @@ class EventSeeder extends Seeder
      *
      * @return void
      */
-    private function seedEvent($startDate)
+    private function seedEvent($startDate = null)
     {
-        $event = factory(Event::class)->create(['start_date' => $startDate]);
+        $event = factory(Event::class)->create(['start_date' => $startDate ?: Carbon::now()]);
         echo "Created Event: {$event->name}" . PHP_EOL;
 
         $department = factory(Department::class)->create(['event_id' => $event->id]);
