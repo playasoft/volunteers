@@ -57,12 +57,14 @@ class EventSeeder extends Seeder
             });
 
         // Assign users to slots
-        $slots = Slot::where('schedule_id', $schedule->id)->get();
-        $i = 0;
+        $slots = Slot::where('schedule_id', $schedule->id)
+            ->orderBy(DB::raw('RAND()'))
+            ->get();
+        
         foreach($slots as $slot)
         {
-            // Only assign to every second slot
-            if ($i++ % 2 == 0)
+            // Skip 1/3 slots to avoid filling all slots
+            if (rand(0, 2) == 0)
                 continue;
 
             $slot->user_id = $users->random()->id;
