@@ -38,6 +38,8 @@ class AddDuplicateConstraintToRoles extends Migration
     {
         Schema::table('event_roles', function (Blueprint $table)
         {
+            $table->dropForeign('event_roles_event_id_foreign');
+            $table->dropForeign('event_roles_role_id_foreign');
             $table->dropUnique('event_role_unique');
 
             $table->integer('foreign_id')->unsigned()->nullable()->change();
@@ -46,6 +48,8 @@ class AddDuplicateConstraintToRoles extends Migration
 
         Schema::table('user_roles', function (Blueprint $table)
         {
+            $table->dropForeign('user_roles_user_id_foreign');
+            $table->dropForeign('user_roles_role_id_foreign');
             $table->dropUnique('user_role_unique');
 
             $table->integer('foreign_id')->unsigned()->nullable()->change();
