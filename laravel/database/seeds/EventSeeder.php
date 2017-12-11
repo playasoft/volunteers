@@ -56,7 +56,9 @@ class EventSeeder extends Seeder
         {
             // Skip 1/3 slots to avoid filling all slots
             if (rand(0, 2) == 0)
+            {
                 continue;
+            }
 
             $slot->user_id = $users->random()->id;
             $slot->save();
