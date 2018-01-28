@@ -3,8 +3,10 @@
 use Carbon\Carbon;
 use App\Models\UserData;
 
-$factory->define(UserData::class, function (Faker\Generator $faker) {
-    return [
+$factory->define(UserData::class, function (Faker\Generator $faker)
+{
+    return
+    [
         'burner_name' => $faker->firstName,
         'full_name' => $faker->name,
         'birthday' => $faker->dateTimeThisCentury->format('Y-m-d'),
@@ -14,4 +16,3 @@ $factory->define(UserData::class, function (Faker\Generator $faker) {
         'camp' => "open camping",
     ];
 });
-    

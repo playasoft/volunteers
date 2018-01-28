@@ -43,11 +43,11 @@ class EventSeeder extends Seeder
 
         // Generate some test users for the slots
         echo "Creating users and assigning to slots" . PHP_EOL;
-        $users = factory(User::class, 10)->create()
-            ->each( function ($u) {
-                UserRole::assign($u, ['fire', 'volunteer']);
-                factory(UserData::class)->create(['user_id' => $u->id]);
-            });
+        $users = factory(User::class, 10)->create()->each(function ($u)
+        {
+            UserRole::assign($u, ['fire', 'volunteer']);
+            factory(UserData::class)->create(['user_id' => $u->id]);
+        });
 
         // Assign users to slots
         $slots = Slot::where('schedule_id', $schedule->id)->get();

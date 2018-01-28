@@ -3,9 +3,11 @@
 use Carbon\Carbon;
 use App\Models\Schedule;
 
-$factory->define(Schedule::class, function (Faker\Generator $faker, $data) {
+$factory->define(Schedule::class, function (Faker\Generator $faker, $data)
+{
     $dates = json_decode($data['dates'], true);
-    return [
+    return
+    [
         'department_id' => 1,
         'shift_id' => 1,
         'start_date' => $dates[0],
