@@ -22,6 +22,25 @@ class Kernel extends HttpKernel
     ];
 
     /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups =
+    [
+        'web' =>
+        [
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
+        'api' =>
+        [
+            'throttle:60,1',
+            'bindings',
+        ]
+    ];
+
+    /**
      * The application's route middleware.
      *
      * @var array
@@ -30,5 +49,7 @@ class Kernel extends HttpKernel
     [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
     ];
 }

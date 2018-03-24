@@ -21,6 +21,7 @@ class ScheduleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('bindings');
     }
 
     // Helper function to convert form input into database-friendly information

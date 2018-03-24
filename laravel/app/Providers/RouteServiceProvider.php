@@ -26,13 +26,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::model('event', App\Models\Event::class);
-        Route::model('department', App\Models\Department::class);
-        Route::model('shift', App\Models\Shift::class);
-        Route::model('schedule', App\Models\Schedule::class);
-        Route::model('slot', App\Models\Slot::class);
-        Route::model('user', App\Models\User::class);
-        Route::model('upload', App\Models\UserUpload::class);
+        Route::model('event', \App\Models\Event::class);
+        Route::model('department', \App\Models\Department::class);
+        Route::model('shift', \App\Models\Shift::class);
+        Route::model('schedule', \App\Models\Schedule::class);
+        Route::model('slot', \App\Models\Slot::class);
+        Route::model('user', \App\Models\User::class);
+        Route::model('upload', \App\Models\UserUpload::class);
     }
 
     /**

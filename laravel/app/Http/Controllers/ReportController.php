@@ -19,6 +19,7 @@ class ReportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin');
+        $this->middleware('bindings');
     }
 
     // Main page for reports
