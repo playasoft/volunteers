@@ -20,6 +20,7 @@ class ShiftController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('bindings');
     }
 
     // Display list of shifts in an event

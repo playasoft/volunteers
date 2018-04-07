@@ -20,6 +20,7 @@ class EventController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('bindings');
     }
     
     // Private function to manage file uploads
