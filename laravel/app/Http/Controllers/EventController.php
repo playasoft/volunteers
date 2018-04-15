@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\Shift;
 use App\Models\Schedule;
 use App\Models\Slot;
+use App\Models\EventRole;
 
 use App\Events\EventChanged;
 use Carbon\Carbon;
@@ -217,6 +218,19 @@ class EventController extends Controller
                     'description' => $shift->description,
                 ]);
 
+                // Loop through roles for this shift
+                $shiftRoles = $shift->roles;
+
+                foreach($shiftRoles as $role)
+                {
+                    EventRole::create([
+                        'role_id' => $role->role_id,
+                        'event_id' => $newEvent->id,
+                        'foreign_id' => $newShift->id,
+                        'foreign_type' => $role->foreign_type
+                    ]);
+                }
+
                 // Loop through the schedule for this shift
                 $scheduled = $shift->schedule;
 
@@ -244,6 +258,19 @@ class EventController extends Controller
                         'dates' => json_encode($newDates),
                         'password' => $schedule->password,
                     ]);
+
+                    // Loop through roles for this schedule
+                    $scheduleRoles = $schedule->roles;
+
+                    foreach($scheduleRoles as $role)
+                    {
+                        EventRole::create([
+                            'role_id' => $role->role_id,
+                            'event_id' => $newEvent->id,
+                            'foreign_id' => $newSchedule->id,
+                            'foreign_type' => $role->foreign_type
+                        ]);
+                    }
 
                     Slot::generate($newSchedule);
                 }
