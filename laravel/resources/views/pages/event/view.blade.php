@@ -4,7 +4,7 @@
     <section class="event" data-id="{{ $event->id }}">
         <div class="pull-right relative" style="z-index: 1">
             @can('create-event')
-                {{-- <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a> --}}
+                <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a>
             @endcan
 
             @can('edit-event')
@@ -15,7 +15,7 @@
                 <a href="/event/{{ $event->id }}/delete" class="btn btn-danger">Delete Event</a>
             @endcan
         </div>
-        
+
         <h1 class="relative">
             Viewing Event: {{ $event->name }}
 
@@ -28,7 +28,7 @@
         @if($event->image)
             <img class="pull-right" src="/files/event/{{ $event->image }}">
         @endif
-        
+
         <div>
             <label>Start Date</label>
             {{ $event->start_date }}
@@ -38,7 +38,7 @@
             <label>End Date</label>
             {{ $event->end_date }}
         </div>
-        
+
         @if($event->description)
             <label>Description</label>
             <p>{!! nl2br(e($event->description)) !!}</p>
@@ -133,7 +133,7 @@
                                                 </span>
                                             @endcan
                                         </div>
-                                        
+
                                         <ul class="shifts">
                                             @foreach($department->schedule as $schedule)
                                                 <?php

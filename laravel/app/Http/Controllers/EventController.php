@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\Department;
+use App\Models\Shift;
 use App\Models\Schedule;
 use App\Models\Slot;
+use App\Models\EventRole;
 
 use App\Events\EventChanged;
 use Carbon\Carbon;
@@ -22,12 +24,12 @@ class EventController extends Controller
         $this->middleware('auth');
         $this->middleware('bindings');
     }
-    
+
     // Private function to manage file uploads
     private function handleUpload($request)
     {
         $fileName = false;
-        
+
         // Save event image with a unique name
         if($request->hasFile('image'))
         {
@@ -80,7 +82,7 @@ class EventController extends Controller
         {
             $event->image = $this->handleUpload($request);
         }
-        
+
         $event->save();
 
         $request->session()->flash('success', 'Your event has been created.');
@@ -140,23 +142,16 @@ class EventController extends Controller
     // Delete an event
     public function delete(Request $request, Event $event)
     {
-      
+
         $this->authorize('delete-event');
 
         event(new EventChanged($event, ['type' => 'event', 'status' => 'deleted']));
-        
+
         $event->delete();
 
         $request->session()->flash('success', 'Event has been deleted.');
         return redirect('/');
     }
-
-/*
-
-The clone feature has been disabled until the upcoming schema changes are finalized.
-
-TODO: Fix this.
-
 
     // View confirmation page before cloning an event
     public function cloneForm(Request $request, Event $event)
@@ -209,8 +204,7 @@ TODO: Fix this.
             // Because the event_id isn't fillable, we have to define it first and then update
             $newDepartment->update([
                 'name' => $department->name,
-                'description' => $department->description,
-                'roles' => $department->roles,
+                'description' => $department->description
             ]);
 
             // Loop through shifts
@@ -218,33 +212,73 @@ TODO: Fix this.
 
             foreach($shifts as $shift)
             {
-                // Adjust shift dates
-                $shift->start_date = new Carbon($shift->start_date);
-                $shift->end_date = new Carbon($shift->end_date);
-
-                $shift->start_date = $shift->start_date->addSeconds($difference)->format('Y-m-d');
-                $shift->end_date = $shift->end_date->addSeconds($difference)->format('Y-m-d');
-
-                // Update the department ID
-                $shift->department_id = $newDepartment->id;
-
                 $newShift = Shift::create([
+                    'event_id' => $newEvent->id,
                     'department_id' => $newDepartment->id,
-                    'shift_data_id' => $shift->data->id,
-                    'start_date' => $shift->start_date,
-                    'end_date' => $shift->end_date,
-                    'start_time' => $shift->start_time,
-                    'end_time' => $shift->end_time,
-                    'duration' => $shift->duration,
-                    'roles' => $shift->roles,
+                    'name' => $shift->name,
+                    'description' => $shift->description,
                 ]);
 
-                Slot::generate($newShift);
+                // Loop through roles for this shift
+                $shiftRoles = $shift->roles;
+
+                foreach($shiftRoles as $role)
+                {
+                    EventRole::create([
+                        'role_id' => $role->role_id,
+                        'event_id' => $newEvent->id,
+                        'foreign_id' => $newShift->id,
+                        'foreign_type' => $role->foreign_type
+                    ]);
+                }
+
+                // Loop through the schedule for this shift
+                $scheduled = $shift->schedule;
+
+                foreach($scheduled as $schedule)
+                {
+                    $newStartDate = new Carbon($schedule->start_date);
+                    $newEndDate = new Carbon($schedule->end_date);
+                    $newDates = json_decode($schedule->dates);
+
+                    foreach($newDates as $index => $date)
+                    {
+                        $newDate = new Carbon($date);
+                        $newDates[$index] = $newDate->addSeconds($difference)->format('Y-m-d');
+                    }
+
+                    $newSchedule = Schedule::create([
+                        'department_id' => $newDepartment->id,
+                        'shift_id' => $newShift->id,
+                        'start_date' => $newStartDate->addSeconds($difference)->format('Y-m-d'),
+                        'end_date' => $newEndDate->addSeconds($difference)->format('Y-m-d'),
+                        'start_time' => $schedule->start_time,
+                        'end_time' => $schedule->end_time,
+                        'duration' => $schedule->duration,
+                        'volunteers' => $schedule->volunteers,
+                        'dates' => json_encode($newDates),
+                        'password' => $schedule->password,
+                    ]);
+
+                    // Loop through roles for this schedule
+                    $scheduleRoles = $schedule->roles;
+
+                    foreach($scheduleRoles as $role)
+                    {
+                        EventRole::create([
+                            'role_id' => $role->role_id,
+                            'event_id' => $newEvent->id,
+                            'foreign_id' => $newSchedule->id,
+                            'foreign_type' => $role->foreign_type
+                        ]);
+                    }
+
+                    Slot::generate($newSchedule);
+                }
             }
         }
 
         $request->session()->flash('success', 'Event has been cloned.');
         return redirect('/event/' . $newEvent->id);
     }
-*/
 }
