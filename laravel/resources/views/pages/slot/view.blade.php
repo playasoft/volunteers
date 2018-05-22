@@ -30,9 +30,9 @@ if(!empty($slot->user))
     <h1>
         @if($taken)
             @if($self)
-                Your Volunteer Shift for: 
+                Your Volunteer Shift for:
             @else
-                Occupied Volunteer Shift for: 
+                Occupied Volunteer Shift for:
             @endif
         @else
             Available for Volunteering:
@@ -81,8 +81,27 @@ if(!empty($slot->user))
                 <button type="submit" class="btn btn-danger">Release Shift</button>
             @else
                 <p>
-                    This slot has been taken by somebody. Go back to find a new one!
+                    This slot has been taken by <b>{{ $slot->user->data->burner_name or $slot->user->name }}</b>.
                 </p>
+
+                @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
+                    <div class="profile">
+                        <div class="row">
+                            <div class="col-sm-2 title">Email</div>
+                            <div class="col-sm-10 value">{{ $slot->user->email }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2 title">Full Name</div>
+                            <div class="col-sm-10 value">{{ $slot->user->data->full_name or 'Not Provided' }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2 title">Burner Name</div>
+                            <div class="col-sm-10 value">{{ $slot->user->data->burner_name or 'Not Provided' }}</div>
+                        </div>
+                    </div>
+                @endif
             @endif
         @else
             {{-- If nobody has taken this slot, display more information and the take button --}}
@@ -91,7 +110,7 @@ if(!empty($slot->user))
                 <div>
                     @include('partials/form/text', ['name' => 'password', 'label' => 'This shift requires a password', 'help' => "This shift has been reserved. You must recieve a password from the department lead in order to take this shift."])
                 </div>
-            @else            
+            @else
                 <div>
                     <label>Allowed User Groups</label>
                     <ul>
@@ -113,6 +132,6 @@ if(!empty($slot->user))
             <button type="submit" class="btn btn-success">Take Shift</button>
         @endif
 
-        <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Cancel</a>
+        <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>
     {!! Form::close() !!}
 @endsection
