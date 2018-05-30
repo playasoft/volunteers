@@ -1,5 +1,5 @@
 # Laravel VolDB
-A volunteer database for events written using the Laravel 5.1 framework
+A volunteer database for events written using the Laravel 5.6 framework
 
 
 ## Dependencies
