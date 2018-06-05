@@ -18,7 +18,7 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('lead');
     }
 
     // Main page for reports

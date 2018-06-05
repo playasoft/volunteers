@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
     [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
+        'lead' => \App\Http\Middleware\IsLead::class,
     ];
 }
