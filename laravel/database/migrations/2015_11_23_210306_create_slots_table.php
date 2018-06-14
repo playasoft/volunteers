@@ -23,6 +23,7 @@ class CreateSlotsTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();
+            $table->string('isNotified')->default('No');
         });
     }
 
