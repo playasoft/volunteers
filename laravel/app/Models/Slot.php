@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Slot extends Model
 {
-    protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'row'];
+    protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'isNotified', 'row'];
 
     // Slots belong to the schedule
     public function schedule()
@@ -32,7 +32,7 @@ class Slot extends Model
     {
         return $this->schedule->event;
     }
-    
+
     // Helper function to get the number of seconds in a timestamp
     static public function timeToSeconds($time)
     {
@@ -52,7 +52,7 @@ class Slot extends Model
         date_default_timezone_set('UTC');
         return date('H:i', $seconds);
     }
-    
+
     // Helper function to generate slots based on shift information
     static public function generate($schedule, $existingRows = null)
     {
@@ -133,4 +133,3 @@ class Slot extends Model
         }
     }
 }
-

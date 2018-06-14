@@ -28,7 +28,7 @@ class SlotController extends Controller
     {
         $start_date = new Carbon($slot->start_date);
 
-        if($start_date->lte(Carbon::tomorrow()))
+        if($start_date->lte(Carbon::today()))
         {
             return true;
         }
@@ -122,7 +122,7 @@ class SlotController extends Controller
         {
             $request->session()->flash('error', 'This slot has already been taken by someone else.');
         }
-        
+
         return redirect('/event/' . $slot->event->id);
     }
 

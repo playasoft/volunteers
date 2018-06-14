@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Denver',
+    'timezone' => 'America/Toronto',
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        
+
         /*
          * Application Service Providers...
          */
@@ -199,6 +199,8 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
+        'Notification' => Illuminate\Support\Facades\Notification::class,
+
     ],
 
 ];
