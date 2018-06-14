@@ -16,6 +16,9 @@ class Kernel extends ConsoleKernel
     [
         \App\Console\Commands\PopulateScheduleDates::class,
         \App\Console\Commands\FixDuplicateRoles::class,
+        \App\Console\Commands\Inspire::class,
+        \App\Console\Commands\remindUsers::class,
+
     ];
 
     /**
@@ -27,5 +30,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 //        $schedule->command('inspire')->hourly();
+
+        // php artisan user:remind
+        $schedule->command('user:remind')->everyFiveMinutes();
+
     }
 }
