@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@volunteer.wetfish.net', 'name' => 'Volunteer Database'],
+    'from' => ['address' => 'noreply@volunteer.wetfish.net', 'name' => 'Loving Spoonful'],
 
     /*
     |--------------------------------------------------------------------------

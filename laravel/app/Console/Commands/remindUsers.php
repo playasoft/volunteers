@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Notification\Notifications;
 
 
 class remindUsers extends Command
@@ -47,6 +48,7 @@ class remindUsers extends Command
      */
      public function handle()
      {
+
          $currDate = date("Y-m-d H:i:s");
 
          $currTimePlusOneHour = date('H:i:s', time() + 3600);
@@ -135,4 +137,5 @@ class remindUsers extends Command
          }
 
      }
+
  }

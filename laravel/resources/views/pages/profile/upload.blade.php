@@ -10,7 +10,7 @@
     </p>
 
     <p>
-        After uploading a file, it will be reviwed by administrator and you will be notified when it is approved.
+        After uploading a file, it will be reviewed by the administrator and you will be notified when it is approved.
     </p>
 
     {!! Form::open(['files' => true]) !!}
