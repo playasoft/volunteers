@@ -50,13 +50,7 @@ class remindUsers extends Command
      {
 
          $currDate = date("Y-m-d H:i:s");
-
-         $currTimePlusOneHour = date('H:i:s', time() + 3600);
-
-         $currTimePlusTwoHours = date('H:i:s', time() + 7200);
-
-         $currTimePlusThreeHours = date('H:i:s', time() + 10800);
-
+         
          $shifts = Slot::get();
 
          // Cycle through all the slots
@@ -68,8 +62,11 @@ class remindUsers extends Command
              {
 
                  // Find all the shifts that start within the next hour
-                 if($shift->start_time >= $currTimePlusOneHour and $shift->start_time > date('H:i:s'))
+                 if(date('H:i:s', strtotime($shift->start_time) - 3600) <= date('H:i:s') and $shift->start_time > date('H:i:s'))
                  {
+                     echo date('H:i:s', strtotime($shift->start_time) - 3600).' is less than or equal to '.date('H:i:s').PHP_EOL;
+
+                     echo $shift->start_time.' is greater than '.date('H:i:s').PHP_EOL;
 
                      // Find all the shifts that are empty
                      if(empty($shift->user_id))
