@@ -61,7 +61,7 @@ class ShiftStarting extends Notification
                        ->greeting('Shift Starting Soon')
                        ->line('Uh Oh')
                        ->line('Description: '.$this->shift->getDepartmentAttribute()->description)
-                       ->action('View Shift','http://127.0.0.1:8000/slot/'.$this->shift->id.'/view')
+                       ->action('View Shift',env('SITE_URL').'/slot/'.$this->shift->id.'/view')
                        //->action('View Shift', $urlShift)
                        ->line('This shift begins: '.$this->shift->start_time);
        }
@@ -71,7 +71,7 @@ class ShiftStarting extends Notification
                        ->subject('Hola '.$this->user->name.', You Have a Shift Starting Soon!')
                        ->greeting('You Have A Shift Starting Soon')
                        ->line('Description: '.$this->shift->getDepartmentAttribute()->description)
-                       ->action('View Shift','http://127.0.0.1:8000/slot/'.$this->shift->id.'/view')
+                       ->action('View Shift',env('SITE_URL').'/slot/'.$this->shift->id.'/view')
                        //->action('View Shift',$urlShift)
                        ->line('This shift begins: '.$this->shift->start_time);
        }
