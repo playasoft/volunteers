@@ -42,7 +42,12 @@ $start_date = new \Carbon\Carbon($slot->start_date);
 
 if($start_date->lt(\Carbon\Carbon::now()))
 {
-    $href = "";
+    $start_time = new \Carbon\Carbon($slot->start_time);
+
+    if($start_time->lt(\Carbon\Carbon::now()))
+    {
+        $href = "";
+    }
 }
 
 ?>

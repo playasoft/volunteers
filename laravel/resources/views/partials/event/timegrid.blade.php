@@ -3,10 +3,11 @@
         <div class="col-sm-2"></div>
         <div class="times col-sm-10">
             <div class="group col-md-12">
+
                 <div class="time col-md-1">
                     12 am
                 </div>
-                
+
                 <div class="time col-md-1">
                     1 am
                 </div>
@@ -26,6 +27,7 @@
                 <div class="time col-md-1">
                     5 am
                 </div>
+
 
                 <div class="time col-md-1">
                     6 am
@@ -56,7 +58,7 @@
                 <div class="time col-md-1">
                     12 pm
                 </div>
-                
+
                 <div class="time col-md-1">
                     1 pm
                 </div>

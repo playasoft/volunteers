@@ -50,7 +50,7 @@ class remindUsers extends Command
      {
 
          $currDate = date("Y-m-d H:i:s");
-         
+
          $shifts = Slot::get();
 
          // Cycle through all the slots
@@ -85,6 +85,9 @@ class remindUsers extends Command
                          if($shift->isNotified == 'No')
                          {
                              $admin->notify(new shiftStarting($shift, $admin));
+                         } else
+                         {
+                             echo "You already did lol".PHP_EOL;
                          }
 
                      }
@@ -114,6 +117,9 @@ class remindUsers extends Command
                                  if($shift->isNotified == 'No')
                                  {
                                      $user->notify(new shiftStarting($shift, $user));
+                                 } else
+                                 {
+                                     echo "You already did lol".PHP_EOL;
                                  }
 
                              }
