@@ -9,6 +9,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Shift;
 use App\Models\Slot;
 use App\Models\User;
+use App\Models\UserRole;
+use Illuminate\Support\Facades\DB;
 
 
 class ShiftStarting extends Notification
@@ -54,26 +56,26 @@ class ShiftStarting extends Notification
 
        $urlEvent = url('/event/'.$this->shift->getEventAttribute()->id);
 
-       // Check if the user is admin
-       if ($this->user->id == 1) {
+      // Check if user is signed up for shift
+      if ($this->shift->user_id == $this->user->id){
+
            return (new MailMessage)
-                       ->subject('Hello, '.$this->user->name.' There is a Shift Starting Soon!')
-                       ->greeting('Shift Starting Soon')
-                       ->line('Uh Oh')
+                       ->subject('You Have a Shift Starting Soon!')
+                       ->greeting('Hello '.$this->user->name.', you have a shift starting soon!')
                        ->line('Description: '.$this->shift->getDepartmentAttribute()->description)
                        ->action('View Shift',env('SITE_URL').'/slot/'.$this->shift->id.'/view')
-                       //->action('View Shift', $urlShift)
-                       ->line('This shift begins: '.$this->shift->start_time);
+                       ->line('This shift begins at '.$this->shift->start_time);
        }
+
+       // If not, the notification is for the admin
        else {
 
            return (new MailMessage)
-                       ->subject('Hola '.$this->user->name.', You Have a Shift Starting Soon!')
-                       ->greeting('You Have A Shift Starting Soon')
+                       ->subject('There Is a Shift Starting Soon')
+                       ->greeting('Hello '.$this->user->name.', no one has signed up for a shift that is starting soon!')
                        ->line('Description: '.$this->shift->getDepartmentAttribute()->description)
                        ->action('View Shift',env('SITE_URL').'/slot/'.$this->shift->id.'/view')
-                       //->action('View Shift',$urlShift)
-                       ->line('This shift begins: '.$this->shift->start_time);
+                       ->line('This shift begins at '.$this->shift->start_time);
        }
    }
 

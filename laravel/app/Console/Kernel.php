@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\FixDuplicateRoles::class,
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\remindUsers::class,
+        \App\Console\Commands\sendEmail::class,
+
 
     ];
 

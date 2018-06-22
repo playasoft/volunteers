@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Slot;
 use App\Models\User;
+use App\Models\UserRole;
 use App\Models\Event;
 use App\Notifications\EventCreated;
 use App\Notifications\shiftStarting;
@@ -71,16 +72,33 @@ class remindUsers extends Command
                      // Find all the shifts that are empty
                      if(empty($shift->user_id))
                      {
-                         echo 'No one has signed up for it, so you should send a reminder to the admin'.PHP_EOL;
+                         echo 'No one has signed up for it, so you should send reminders to the admins'.PHP_EOL;
 
-                         $admin = User::get()->first();
+                         // Find all admin users
+                         $admins = UserRole::get()->where('role_id', 1);
+
+                         if($shift->isNotified == 'No')
+                         {
+
+                             // Find all admin users
+                             foreach ($admins as $admin)
+                             {
+                                 $user = User::get()->where('id', $admin->user_id)->first();
+
+                                 $user->notify(new shiftStarting($shift, $user));
+                             }
+
+                         } else
+                         {
+                             echo "You already did lol".PHP_EOL;
+                         }
 
                          // Updating Database isNotified value
-                         DB::table('users')
+                         DB::table('slots')
                                      ->where('id', $shift->id)
                                      ->update(['isNotified' => 'Yes']);
 
-
+                        /*
                          // Notify admin of unregistered shift
                          if($shift->isNotified == 'No')
                          {
@@ -89,6 +107,7 @@ class remindUsers extends Command
                          {
                              echo "You already did lol".PHP_EOL;
                          }
+                         */
 
                      }
 

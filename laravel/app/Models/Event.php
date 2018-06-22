@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use App\Models\Slot;
 
 class Event extends Model
 {
@@ -98,10 +99,10 @@ class Event extends Model
         // Use carbon!
         $start_date = new Carbon($this->start_date);
         $end_date = new Carbon($this->end_date);
-        
+
         // Array for output
         $days = [];
-        
+
         // This only works when the start date is before the end date
         if($start_date->lte($end_date))
         {
@@ -110,13 +111,20 @@ class Event extends Model
 
             while($date->lte($end_date))
             {
-                $days[] = (object)
-                [
-                    'name' => $date->formatLocalized('%A'),
-                    'date' => clone $date
-                ];
+                if ((Slot::get()->where('start_date', $date))->isEmpty())
+                {
+                    $days[] = (object)
+                    [
+                        'name' => $date->formatLocalized('%A'),
+                        'date' => clone $date
+                    ];
 
-                $date->addDay();
+                    $date->addDay();
+                    
+                } else
+                {
+
+                }
             }
         }
 
