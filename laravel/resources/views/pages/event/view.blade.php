@@ -69,7 +69,7 @@
                     <select class="form-control filter-days">
                         <option value="all">Show All Days</option>
 
-                        @foreach($event->days() as $day)
+                        @foreach($event->days(true) as $day)
                             <option value="{{ $day->date->format('Y-m-d') }}">{{ $day->name }} - {{ $day->date->format('Y-m-d') }}</option>
                         @endforeach
                     </select>
@@ -89,7 +89,7 @@
             <hr>
 
             <div class="days">
-                @foreach($event->days() as $day)
+                @foreach($event->days(true) as $day)
                     <div class="day" data-date="{{ $day->date->format('Y-m-d') }}">
                         <div class="heading">
                             <h3>{{ $day->name }}</h3>
