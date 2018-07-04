@@ -29,24 +29,20 @@
             <img class="pull-right" src="/files/event/{{ $event->image }}">
         @endif
 
+        <div>
+            <label>Start Date</label>
+            {{ $event->start_date }}
+        </div>
+
+        <div>
+            <label>End Date</label>
+            {{ $event->end_date }}
+        </div>
+
         @if($event->description)
-            <label><h3>Description:</h3></label>
+            <label>Description</label>
             <p>{!! nl2br(e($event->description)) !!}</p>
         @endif
-
-        <div>
-            <h3>
-                <br><label>Start Date:</label>
-                {{ date("M jS, Y", strtotime($event->start_date)) }}
-            </h3>
-        </div>
-
-        <div>
-            <h3>
-                <label>End Date:</label>
-                {{ date("M jS, Y", strtotime($event->end_date)) }}
-            </h3>
-        </div>
 
         @can('read-department')
             <a href="/event/{{ $event->id }}/departments" class="btn btn-primary">View All Departments</a>
