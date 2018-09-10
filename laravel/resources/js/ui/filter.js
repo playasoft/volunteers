@@ -50,12 +50,12 @@ $(document).ready(function()
     var filterDate = localStorage.getItem('filter-date');
     var filterDepartment = localStorage.getItem('filter-department');
 
-    if(filterDate)
+    if(filterDate && $('.days .day[data-date="' + filterDate + '"]').length)
     {
         $('.filter-days').value(filterDate).trigger('change');
     }
 
-    if(filterDepartment)
+    if(filterDepartment && $('.department-wrap .department[data-id="' + filterDepartment + '"]').length)
     {
         $('.filter-departments').value(filterDepartment).trigger('change');
     }
