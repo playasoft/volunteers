@@ -50,7 +50,7 @@ class ReportController extends Controller
             [
                 'id' => $user->id,
                 'name' => $user->name,
-                'full_name' => $user->data->exists() && $user->data->full_name ? $user->data->full_name : '',
+                'full_name' => $user->data()->exists() && $user->data->full_name ? $user->data->full_name : '',
                 'email' => $user->email
             ];
         }
