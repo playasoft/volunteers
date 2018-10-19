@@ -86,7 +86,7 @@ use Carbon\Carbon;
                         <td>{{ $slot->start_time }} ({{ date("h:i a", $start) }})</td>
                         <td>{{ $slot->end_time }} ({{ date("h:i a", $end) }})</td>
                         <td>
-                            @if(count($slot->user))
+                            @if($slot->user()->exists())
                                 <b>{{ $slot->user->name }}</b>
                             @else
                                 OPEN
