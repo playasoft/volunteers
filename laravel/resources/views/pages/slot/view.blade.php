@@ -100,6 +100,26 @@ if(!empty($slot->user))
                             <div class="col-sm-2 title">Burner Name</div>
                             <div class="col-sm-10 value">{{ $slot->user->data->burner_name or 'Not Provided' }}</div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-2 title">Status</div>
+                            <div class="col-sm-10  value">
+                                <form method="POST" action="/slot/{slot}/edit">
+                                    <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+                                        <select class="upload" data-status="">
+                                            <option value="flaked">flaked</option>
+                                            <option value="late">late</option>
+                                            <option value="ontime">ontime</option>
+                                            <option value="excellent">excellent</option>
+                                        </select>
+
+                                        <span class="buttons">&ensp;
+                                            <a class="save-upload">Save</a>&ensp;
+                                            <a class="cancel-upload">Cancel</a>
+                                        </span>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 @endif
             @endif

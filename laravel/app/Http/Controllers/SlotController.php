@@ -158,4 +158,8 @@ class SlotController extends Controller
 
         return redirect('/event/' . $slot->event->id);
     }
+
+    public function edit(){
+        return redirect('/'); // for testing purposes
+    }
 }
