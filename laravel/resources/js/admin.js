@@ -14,6 +14,7 @@ $(document).ready(function()
     $('.upload-status').each(function()
     {
         $(this).value($(this).data('status'));
+        console.log($(this).value());
     });
 
     // Display save / cancel buttons when changing user roles
@@ -65,6 +66,7 @@ $(document).ready(function()
         var upload = $(this).parents('.upload').data('id');
         var status = $(this).parents('.upload').find('.upload-status').value();
         var csrf = $('.csrf-token').value();
+        var slot = $('.slot-number').value(); //store var here
         var data =
         {
             status: status,
@@ -72,8 +74,25 @@ $(document).ready(function()
         };
 
         ajaxOptions.body = JSON.stringify(data);
-        fetch('/upload/' + upload + '/edit', ajaxOptions);
+        
+        console.log(upload,status);
 
+        // if there is nothing to upload, then check for volunteers who flaked
+        if (!upload) {
+            console.log('slot number: '+ slot);
+            console.log(fetch('/slot/'+ slot +'/edit',ajaxOptions)); 
+
+            fetch('/slot/'+ slot +'/edit',ajaxOptions);
+
+            console.log(fetch('/slot/'+ slot +'/edit',ajaxOptions)); 
+            $(this).parents('.upload').find('.upload-status').data('status', status);
+            $(this).parents('.upload').find('.buttons').attr('style', false);
+            return;
+        }
+
+        console.log(fetch('/upload/' + upload + '/edit', ajaxOptions));
+        fetch('/upload/' + upload + '/edit', ajaxOptions);
+        console.log(fetch('/upload/' + upload + '/edit', ajaxOptions));
         $(this).parents('.upload').find('.upload-status').data('status', status);
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\SlotRequest;
+use App\Http\Requests\SlotRequest; //make authentifications here
 use App\Models\Slot;
 use App\Models\UserRole;
 
@@ -159,7 +159,10 @@ class SlotController extends Controller
         return redirect('/event/' . $slot->event->id);
     }
 
-    public function edit(){
-        return redirect('/'); // for testing purposes
+    // change the flake column status
+    public function edit(Request $request, Slot $slot){
+        $slot->status = $request->get('status');
+        $slot->save();
+        return;
     }
 }

@@ -82,7 +82,7 @@ Route::get('/schedule/{schedule}/delete', 'ScheduleController@deleteForm');
 Route::post('/schedule/{schedule}/delete', 'ScheduleController@delete');
 
 //Routes for Admin
-Route::group(['middleware' => ['auth', 'role:admin']], function()
+Route::group(['middleware' => ['auth','admin']], function()
 {
     // Slot routes
     Route::get('/slot/{slot}/view', 'SlotController@view');

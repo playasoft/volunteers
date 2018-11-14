@@ -13,7 +13,7 @@ class SlotEditRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class SlotEditRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            
+            'flaked' => 'required',
+            'late' => 'required',
+            'ontime' => 'required',
+            'excellent' => 'required'
         ];
     }
 }
