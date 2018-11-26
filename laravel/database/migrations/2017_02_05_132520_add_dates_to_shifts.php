@@ -14,7 +14,7 @@ class AddDatesToShifts extends Migration
     {
         Schema::table('shifts', function ($table)
         {
-            $table->json('dates');
+            $table->text('dates');
         });
     }
 

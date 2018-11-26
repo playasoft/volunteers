@@ -23,7 +23,7 @@ class CreateShiftsTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->time('duration');
-            $table->json('roles')->nullable();
+            $table->text('roles')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

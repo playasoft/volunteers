@@ -63,7 +63,7 @@ class ConvertScheduleRolesColumn extends Migration
         // Add the column back
         Schema::table('schedule', function ($table)
         {
-            $table->json('roles')->nullable();
+            $table->text('roles')->nullable();
         });
 
         // Loop through all schedule data
