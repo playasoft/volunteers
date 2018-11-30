@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\SlotRequest; //make authentifications here
+use App\Http\Requests\SlotEditRequest; 
 use App\Models\Slot;
 use App\Models\UserRole;
 
@@ -160,7 +160,8 @@ class SlotController extends Controller
     }
 
     // change the flake column status
-    public function edit(Request $request, Slot $slot){
+    public function edit(SlotEditRequest $request, Slot $slot)
+    {
         $slot->status = $request->get('status');
         $slot->save();
         return;

@@ -23,12 +23,9 @@ class SlotEditRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            
-            'flaked' => 'required',
-            'late' => 'required',
-            'ontime' => 'required',
-            'excellent' => 'required'
+        return 
+        [
+            'status' => 'in:flaked,late,ontime,excellent'
         ];
     }
 }

@@ -28,6 +28,11 @@ $(document).ready(function()
     {
         $(this).parents('.upload').find('.buttons').style({visibility: 'visible', opacity: 1});
     });
+    // Display save / cancel buttons when changing volunteer status
+    $('.volunteer-status').on('change', function()
+    {
+        $(this).parents('.volunteer').find('.buttons').style({visibility: 'visible', opacity: 1});
+    });
 
     $('.save-roles').on('click', function()
     {
@@ -60,13 +65,13 @@ $(document).ready(function()
         $('.user-role').value($('.user-role').data('role'));
         $('.buttons').attr('style', false);
     });
-
+    
     $('.save-upload').on('click', function()
     {
         var upload = $(this).parents('.upload').data('id');
         var status = $(this).parents('.upload').find('.upload-status').value();
         var csrf = $('.csrf-token').value();
-        var slot = $('.slot-number').value(); //store var here
+        
         var data =
         {
             status: status,
@@ -74,25 +79,8 @@ $(document).ready(function()
         };
 
         ajaxOptions.body = JSON.stringify(data);
-        
-        console.log(upload,status);
 
-        // if there is nothing to upload, then check for volunteers who flaked
-        if (!upload) {
-            console.log('slot number: '+ slot);
-            console.log(fetch('/slot/'+ slot +'/edit',ajaxOptions)); 
-
-            fetch('/slot/'+ slot +'/edit',ajaxOptions);
-
-            console.log(fetch('/slot/'+ slot +'/edit',ajaxOptions)); 
-            $(this).parents('.upload').find('.upload-status').data('status', status);
-            $(this).parents('.upload').find('.buttons').attr('style', false);
-            return;
-        }
-
-        console.log(fetch('/upload/' + upload + '/edit', ajaxOptions));
         fetch('/upload/' + upload + '/edit', ajaxOptions);
-        console.log(fetch('/upload/' + upload + '/edit', ajaxOptions));
         $(this).parents('.upload').find('.upload-status').data('status', status);
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });
@@ -103,4 +91,31 @@ $(document).ready(function()
         $(this).parents('.upload').find('.upload-status').value(status);
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });
+
+    // volunteer status 
+    $('.save-status').on('click', function()
+    {
+        var status = $(this).parents('.volunteer').find('.volunteer-status').value();
+        var csrf = $('.csrf-token').value();
+        var slot = $('.slot-number').value();
+        var data =
+        {
+            status: status,
+            _token: csrf
+        };
+
+        ajaxOptions.body = JSON.stringify(data);
+
+        fetch('/slot/'+ slot +'/edit',ajaxOptions);
+        $(this).parents('.volunteer').find('.volunteer-status').data('status', status);
+        $(this).parents('.volunteer').find('.buttons').attr('style', false);
+    });
+
+    $('.cancel-status').on('click', function()
+    {
+        var status = $(this).parents('.volunteer').find('.volunteer-status').data('status');
+        $(this).parents('.volunteer').find('.volunteer-status').value(status);
+        $(this).parents('.volunteer').find('.buttons').attr('style', false);
+    });
+
 });

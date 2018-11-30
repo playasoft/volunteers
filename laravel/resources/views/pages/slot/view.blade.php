@@ -103,11 +103,11 @@ if(!empty($slot->user))
 
                         <div class="row">
                             <div class="col-sm-2 title">Status</div>
-                            <div class="col-sm-10 value upload">
+                            <div class="col-sm-10 value volunteer">
                                 
                                     <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
                                     <input type="hidden" class="slot-number" value="{{$slot->id}}">
-                                        <select class="upload-status" data-status="{{$slot->status}}">
+                                        <select class="volunteer-status" data-status="{{$slot->status}}">
                                             <option value="flaked">flaked</option>
                                             <option value="late">late</option>
                                             <option value="ontime">ontime</option>
@@ -115,8 +115,8 @@ if(!empty($slot->user))
                                         </select>
 
                                         <span class="buttons">&ensp;
-                                            <a class="save-upload">Save</a>&ensp;
-                                            <a class="cancel-upload">Cancel</a>
+                                            <a class="save-status">Save</a>&ensp;
+                                            <a class="cancel-status">Cancel</a>
                                         </span>
                             </div>
                         </div>
