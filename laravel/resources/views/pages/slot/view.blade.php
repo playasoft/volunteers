@@ -104,20 +104,20 @@ if(!empty($slot->user))
                         <div class="row">
                             <div class="col-sm-2 title">Status</div>
                             <div class="col-sm-10 value volunteer">
-                                
-                                    <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
-                                    <input type="hidden" class="slot-number" value="{{$slot->id}}">
-                                        <select class="volunteer-status" data-status="{{$slot->status}}">
-                                            <option value="flaked">flaked</option>
-                                            <option value="late">late</option>
-                                            <option value="ontime">ontime</option>
-                                            <option value="excellent">excellent</option>
-                                        </select>
+                                <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+                                <input type="hidden" class="slot-number" value="{{$slot->id}}">
 
-                                        <span class="buttons">&ensp;
-                                            <a class="save-status">Save</a>&ensp;
-                                            <a class="cancel-status">Cancel</a>
-                                        </span>
+                                <select class="volunteer-status" data-status="{{$slot->status}}">
+                                    <option value="flaked">flaked</option>
+                                    <option value="late">late</option>
+                                    <option value="ontime">ontime</option>
+                                    <option value="excellent">excellent</option>
+                                </select>
+
+                                <span class="buttons">&ensp;
+                                    <a class="save-status">Save</a>&ensp;
+                                    <a class="cancel-status">Cancel</a>
+                                </span>
                             </div>
                         </div>
                     </div>

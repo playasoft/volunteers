@@ -14,7 +14,6 @@ $(document).ready(function()
     $('.upload-status').each(function()
     {
         $(this).value($(this).data('status'));
-        console.log($(this).value());
     });
 
     // Display save / cancel buttons when changing user roles
@@ -65,13 +64,13 @@ $(document).ready(function()
         $('.user-role').value($('.user-role').data('role'));
         $('.buttons').attr('style', false);
     });
-    
+
     $('.save-upload').on('click', function()
     {
         var upload = $(this).parents('.upload').data('id');
         var status = $(this).parents('.upload').find('.upload-status').value();
         var csrf = $('.csrf-token').value();
-        
+
         var data =
         {
             status: status,
@@ -92,7 +91,7 @@ $(document).ready(function()
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });
 
-    // volunteer status 
+    // volunteer status
     $('.save-status').on('click', function()
     {
         var status = $(this).parents('.volunteer').find('.volunteer-status').value();
