@@ -81,12 +81,15 @@ Route::post('/schedule/{schedule}/edit', 'ScheduleController@edit');
 Route::get('/schedule/{schedule}/delete', 'ScheduleController@deleteForm');
 Route::post('/schedule/{schedule}/delete', 'ScheduleController@delete');
 
-
-// Slot routes
 Route::get('/slot/{slot}/view', 'SlotController@view');
 Route::post('/slot/{slot}/take', 'SlotController@take');
 Route::post('/slot/{slot}/release', 'SlotController@release');
 
+//Routes for Admin
+Route::group(['middleware' => ['auth','admin']], function()
+{
+    Route::post('/slot/{slot}/edit','SlotController@edit');
+});
 
 // User profile routes
 Route::get('/profile', 'ProfileController@view');
