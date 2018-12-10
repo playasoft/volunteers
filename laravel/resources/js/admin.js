@@ -27,6 +27,7 @@ $(document).ready(function()
     {
         $(this).parents('.upload').find('.buttons').style({visibility: 'visible', opacity: 1});
     });
+
     // Display save / cancel buttons when changing volunteer status
     $('.volunteer-status').on('change', function()
     {
@@ -104,8 +105,8 @@ $(document).ready(function()
         };
 
         ajaxOptions.body = JSON.stringify(data);
+        fetch('/slot/'+ slot +'/edit', ajaxOptions);
 
-        fetch('/slot/'+ slot +'/edit',ajaxOptions);
         $(this).parents('.volunteer').find('.volunteer-status').data('status', status);
         $(this).parents('.volunteer').find('.buttons').attr('style', false);
     });
@@ -117,4 +118,11 @@ $(document).ready(function()
         $(this).parents('.volunteer').find('.buttons').attr('style', false);
     });
 
+    // Is there a volunteer status field on this page?
+    if($('.volunteer-status').el.length)
+    {
+        // Populate status on page load
+        var status = $('.volunteer-status').data('status');
+        $('.volunteer-status').value(status);
+    }
 });

@@ -102,16 +102,17 @@ if(!empty($slot->user))
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-2 title">Status</div>
+                            <div class="col-sm-2 title">Performance</div>
                             <div class="col-sm-10 value volunteer">
                                 <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
-                                <input type="hidden" class="slot-number" value="{{$slot->id}}">
+                                <input type="hidden" class="slot-number" value="{{ $slot->id }}">
 
-                                <select class="volunteer-status" data-status="{{$slot->status}}">
-                                    <option value="flaked">flaked</option>
-                                    <option value="late">late</option>
-                                    <option value="ontime">ontime</option>
-                                    <option value="excellent">excellent</option>
+                                <select class="volunteer-status" data-status="{{ $slot->status }}">
+                                    <option value="">Select One</option>
+                                    <option value="flaked">Flaked</option>
+                                    <option value="late">Late</option>
+                                    <option value="ontime">On Time</option>
+                                    <option value="excellent">Excellent</option>
                                 </select>
 
                                 <span class="buttons">&ensp;
