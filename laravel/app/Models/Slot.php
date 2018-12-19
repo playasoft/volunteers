@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Slot extends Model
 {
-    protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'row'];
+    protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'row', 'status'];
 
     // Slots belong to the schedule
     public function schedule()

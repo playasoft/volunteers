@@ -20,6 +20,8 @@ $(document).ready(function()
             $('.days .day[data-date="' + date + '"]').removeClass('hidden');
             $(window).trigger('resize');
         }
+
+        localStorage.setItem('filter-date', date);
     });
 
     $('.filter-departments').on('change', function()
@@ -40,5 +42,21 @@ $(document).ready(function()
             $('.department-wrap .department[data-id="' + department + '"]').removeClass('hidden');
             $(window).trigger('resize');
         }
+
+        localStorage.setItem('filter-department', department);
     });
+
+    // Fetch values from localstorage
+    var filterDate = localStorage.getItem('filter-date');
+    var filterDepartment = localStorage.getItem('filter-department');
+
+    if(filterDate && $('.days .day[data-date="' + filterDate + '"]').length)
+    {
+        $('.filter-days').value(filterDate).trigger('change');
+    }
+
+    if(filterDepartment && $('.department-wrap .department[data-id="' + filterDepartment + '"]').length)
+    {
+        $('.filter-departments').value(filterDepartment).trigger('change');
+    }
 });

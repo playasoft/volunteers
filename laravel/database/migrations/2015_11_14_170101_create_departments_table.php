@@ -19,7 +19,7 @@ class CreateDepartmentsTable extends Migration
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->string('name');
             $table->text('description');
-            $table->json('roles');
+            $table->text('roles');
             $table->softDeletes();
             $table->timestamps();
         });

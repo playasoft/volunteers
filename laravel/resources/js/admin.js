@@ -28,6 +28,12 @@ $(document).ready(function()
         $(this).parents('.upload').find('.buttons').style({visibility: 'visible', opacity: 1});
     });
 
+    // Display save / cancel buttons when changing volunteer status
+    $('.volunteer-status').on('change', function()
+    {
+        $(this).parents('.volunteer').find('.buttons').style({visibility: 'visible', opacity: 1});
+    });
+
     $('.save-roles').on('click', function()
     {
         var user = $('.user-id').value();
@@ -65,6 +71,7 @@ $(document).ready(function()
         var upload = $(this).parents('.upload').data('id');
         var status = $(this).parents('.upload').find('.upload-status').value();
         var csrf = $('.csrf-token').value();
+
         var data =
         {
             status: status,
@@ -72,8 +79,8 @@ $(document).ready(function()
         };
 
         ajaxOptions.body = JSON.stringify(data);
-        fetch('/upload/' + upload + '/edit', ajaxOptions);
 
+        fetch('/upload/' + upload + '/edit', ajaxOptions);
         $(this).parents('.upload').find('.upload-status').data('status', status);
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });
@@ -84,4 +91,38 @@ $(document).ready(function()
         $(this).parents('.upload').find('.upload-status').value(status);
         $(this).parents('.upload').find('.buttons').attr('style', false);
     });
+
+    // volunteer status
+    $('.save-status').on('click', function()
+    {
+        var status = $(this).parents('.volunteer').find('.volunteer-status').value();
+        var csrf = $('.csrf-token').value();
+        var slot = $('.slot-number').value();
+        var data =
+        {
+            status: status,
+            _token: csrf
+        };
+
+        ajaxOptions.body = JSON.stringify(data);
+        fetch('/slot/'+ slot +'/edit', ajaxOptions);
+
+        $(this).parents('.volunteer').find('.volunteer-status').data('status', status);
+        $(this).parents('.volunteer').find('.buttons').attr('style', false);
+    });
+
+    $('.cancel-status').on('click', function()
+    {
+        var status = $(this).parents('.volunteer').find('.volunteer-status').data('status');
+        $(this).parents('.volunteer').find('.volunteer-status').value(status);
+        $(this).parents('.volunteer').find('.buttons').attr('style', false);
+    });
+
+    // Is there a volunteer status field on this page?
+    if($('.volunteer-status').el.length)
+    {
+        // Populate status on page load
+        var status = $('.volunteer-status').data('status');
+        $('.volunteer-status').value(status);
+    }
 });

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Routing\Router;
+use \Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -22,17 +22,17 @@ class RouteServiceProvider extends ServiceProvider
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
-        parent::boot($router);
+        parent::boot();
 
-        $router->model('event', 'App\Models\Event');
-        $router->model('department', 'App\Models\Department');
-        $router->model('shift', 'App\Models\Shift');
-        $router->model('schedule', 'App\Models\Schedule');
-        $router->model('slot', 'App\Models\Slot');
-        $router->model('user', 'App\Models\User');
-        $router->model('upload', 'App\Models\UserUpload');
+        Route::model('event', \App\Models\Event::class);
+        Route::model('department', \App\Models\Department::class);
+        Route::model('shift', \App\Models\Shift::class);
+        Route::model('schedule', \App\Models\Schedule::class);
+        Route::model('slot', \App\Models\Slot::class);
+        Route::model('user', \App\Models\User::class);
+        Route::model('upload', \App\Models\UserUpload::class);
     }
 
     /**
@@ -41,9 +41,9 @@ class RouteServiceProvider extends ServiceProvider
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function map(Router $router)
+    public function map()
     {
-        $router->group(['namespace' => $this->namespace], function ($router)
+        Route::namespace($this->namespace)->group(function ()
         {
             require app_path('Http/routes.php');
         });

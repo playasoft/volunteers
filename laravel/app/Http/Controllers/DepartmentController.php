@@ -17,6 +17,7 @@ class DepartmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('bindings');
     }
 
     // Display list of departments in an event

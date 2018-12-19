@@ -26,6 +26,12 @@ class Shift extends Model
         return $this->morphMany('App\Models\EventRole', 'foreign');
     }
 
+    // Shifts have a schedule
+    public function schedule()
+    {
+        return $this->hasMany('App\Models\Schedule');
+    }
+
     // Convenience function to get the current role names
     public function getRoleNames($options = [])
     {

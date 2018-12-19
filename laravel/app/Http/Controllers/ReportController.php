@@ -19,6 +19,7 @@ class ReportController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('lead');
+        $this->middleware('bindings');
     }
 
     // Main page for reports
@@ -49,7 +50,7 @@ class ReportController extends Controller
             [
                 'id' => $user->id,
                 'name' => $user->name,
-                'full_name' => count($user->data) && $user->data->full_name ? $user->data->full_name : '',
+                'full_name' => $user->data()->exists() && $user->data->full_name ? $user->data->full_name : '',
                 'email' => $user->email
             ];
         }
@@ -193,7 +194,7 @@ class ReportController extends Controller
         {
             $name = ['first' => '', 'last' => ''];
 
-            if(count($user->data))
+            if($user->data()->exists())
             {
                 $name = $this->splitName($user->data->full_name);
             }
@@ -209,7 +210,7 @@ class ReportController extends Controller
                     'user' => $user->name,
                     'first_name' => $name['first'],
                     'last_name' => $name['last'],
-                    'burner_name' => count($user->data) ? $user->data->burner_name : null,
+                    'burner_name' => $user->data()->exists() ? $user->data->burner_name : null,
                     'email' => $user->email,
                     'day' => $date->formatLocalized('%A'),
                     'date' => $date->format('m/d/Y'),
@@ -285,12 +286,12 @@ class ReportController extends Controller
                     'end_time' => $slot->end_time
                 ];
 
-                if(count($slot->user))
+                if($slot->user()->exists())
                 {
                     $row['user'] = $slot->user->name;
                     $row['email'] = $slot->user->email;
 
-                    if(count($slot->user->data))
+                    if($slot->user->data()->exists())
                     {
                         $name = $this->splitName($slot->user->data->full_name);
                         $row['first_name'] = $name['first'];
@@ -340,7 +341,7 @@ class ReportController extends Controller
         {
             $name = ['first' => '', 'last' => ''];
 
-            if(count($user->data))
+            if($user->data()->exists())
             {
                 $name = $this->splitName($user->data->full_name);
             }
@@ -370,7 +371,7 @@ class ReportController extends Controller
                 'last_name' => $name['last'],
                 'first_name' => $name['first'],
                 'user' => $user->name,
-                'burner_name' => count($user->data) ? $user->data->burner_name : '',
+                'burner_name' => $user->data()->exists() ? $user->data->burner_name : '',
                 'shifts' => $slotsVolunteered,
                 'hours' => $hoursVolunteered
             ];
@@ -474,7 +475,7 @@ class ReportController extends Controller
         {
             $name = ['first' => '', 'last' => ''];
 
-            if(count($user->data))
+            if($user->data()->exists())
             {
                 $name = $this->splitName($user->data->full_name);
             }

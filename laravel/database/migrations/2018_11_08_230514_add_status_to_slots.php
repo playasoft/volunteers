@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDatesToShifts extends Migration
+class AddStatusToSlots extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +13,9 @@ class AddDatesToShifts extends Migration
      */
     public function up()
     {
-        Schema::table('shifts', function ($table)
+        Schema::table('slots', function (Blueprint $table)
         {
-            $table->text('dates');
+            $table->string('status')->nullable();
         });
     }
 
@@ -25,9 +26,9 @@ class AddDatesToShifts extends Migration
      */
     public function down()
     {
-        Schema::table('shifts', function ($table)
+        Schema::table('slots', function (Blueprint $table)
         {
-            $table->dropColumn('dates');
+            $table->dropColumn('status');
         });
     }
 }

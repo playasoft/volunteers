@@ -1,5 +1,5 @@
 # Laravel VolDB
-A volunteer database for events written using the Laravel 5.1 framework
+A volunteer database for events written using the Laravel 5.6 framework
 
 
 ## Dependencies
@@ -25,11 +25,12 @@ A volunteer database for events written using the Laravel 5.1 framework
 
 1. In the **laravel** folder, copy **.env.example** and rename it to **.env**
 2. Configure your database and email settings in the **.env** file
-3. run `php artisan key:generate` to generate an application key for Laravel.
+3. run `php artisan key:generate` to generate an application key for Laravel
 4. Optionally, configure your queue and broadcast drivers. If you want to use websockets, you'll need to use redis for broadcasting
 5. In the **laravel/resources/js/** folder, copy **config.example.js** and rename it to **config.js**
 6. Optionally, you may configure your websocket server to use a specific hostname, however by default it will use the current domain of the site
-7. Run ```npm run build``` within the **laravel** folder. 
+7. Run ```npm run build``` within the **laravel** folder.
+8. Run ```php artisan db:seed``` within the **laravel** folder to populate the database with user roles
 
 
 Alright! Now everything is compiled and the site is functional. You can register accounts, create events, and sign up for shifts.
@@ -38,7 +39,7 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 
 ## Extra websockets steps
 
-1. In your **.env** file, make sure ```redis``` is installed and configured as the broadcast driver, and that the variable WEBSOCKETS_ENABLED is set to true.
+1. In your **.env** file, make sure ```redis``` is installed and configured as the broadcast driver, and that the variable WEBSOCKETS_ENABLED is set to true
 2. Run ```npm install``` within the **node** folder
 3. Ensure that the websocket parameters in  ```laravel/resources/js/config.js``` are correct
 4. Run ```node websocket-server.js``` within the **node** folder

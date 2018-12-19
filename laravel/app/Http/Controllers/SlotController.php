@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\SlotRequest;
+use App\Http\Requests\SlotEditRequest; 
 use App\Models\Slot;
 use App\Models\UserRole;
 
@@ -20,6 +20,7 @@ class SlotController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('bindings');
     }
 
     // Helper function to determine if an event has passed
@@ -156,5 +157,13 @@ class SlotController extends Controller
         }
 
         return redirect('/event/' . $slot->event->id);
+    }
+
+    // change the flake column status
+    public function edit(SlotEditRequest $request, Slot $slot)
+    {
+        $slot->status = $request->get('status');
+        $slot->save();
+        return;
     }
 }

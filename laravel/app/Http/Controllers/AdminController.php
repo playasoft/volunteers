@@ -20,12 +20,13 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin');
+        $this->middleware('bindings');
     }
     
     // List of users
     function userList()
     {
-        $users = User::latest()->get();
+        $users = User::paginate(100);
         return view('pages/admin/user-list', compact('users'));
     }
 
@@ -60,7 +61,7 @@ class AdminController extends Controller
     // List of uploaded files
     function uploadList()
     {
-        $uploads = UserUpload::latest()->get();
+        $uploads = UserUpload::paginate(100);
         return view('pages/admin/upload-list', compact('uploads'));
     }
 

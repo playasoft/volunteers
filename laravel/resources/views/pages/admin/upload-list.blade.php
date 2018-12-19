@@ -66,5 +66,5 @@ $statuses =
             @endforeach
         </tbody>
     </table>
-
+{{ $uploads->links() }}
 @endsection

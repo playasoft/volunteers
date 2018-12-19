@@ -38,7 +38,7 @@ class DeleteRolesColumnFromDepartments extends Migration
         // Add roles column back
         Schema::table('departments', function($table)
         {
-            $table->json('roles');
+            $table->text('roles');
         });
 
         // Get all departments

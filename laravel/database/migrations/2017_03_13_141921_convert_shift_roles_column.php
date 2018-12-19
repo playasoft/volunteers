@@ -57,7 +57,7 @@ class ConvertShiftRolesColumn extends Migration
         // Add the column back
         Schema::table('shifts', function ($table)
         {
-            $table->json('roles')->nullable();
+            $table->text('roles')->nullable();
         });
 
         // Loop through all shifts
