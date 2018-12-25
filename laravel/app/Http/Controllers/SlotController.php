@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\SlotRequest;
 use App\Http\Requests\SlotEditRequest; 
 use App\Models\Slot;
 use App\Models\UserRole;
@@ -129,6 +129,7 @@ class SlotController extends Controller
     // Remove yourself from a slot
     public function release(Request $request, Slot $slot)
     {
+
         if(!$this->userAllowed($slot))
         {
             $request->session()->flash('error', 'This shift is only available to certain user groups, your account must be approved by an administrator before signing up.');
@@ -165,5 +166,26 @@ class SlotController extends Controller
         $slot->status = $request->get('status');
         $slot->save();
         return;
+    }
+    public function adminRelease(Request $request, Slot $slot)
+    {
+        
+        if(Auth::user()->hasRole('admin'))
+        {
+            $username = $slot->user->data->burner_name;
+            if(!is_null($slot->user))
+            {
+                $slot->user_id = null;
+                $slot->save();
+
+                event(new SlotChanged($slot, ['status' => 'released']));
+                $request->session()->flash('success', ''.$username.' is removed!!');
+            }
+            else
+            {
+                $request->session()->flash('error', 'there is nobody currently scheduled to volunteer for this shift.');
+            }
+            return redirect('/event/' . $slot->event->id);
+        }
     }
 }
