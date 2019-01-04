@@ -64,7 +64,7 @@ class Slot extends Model
         else
         {
             // Delete all existing slots for this shift
-            Slot::where('schedule_id', $schedule->id)->delete();
+            Slot::whereNull('user_id')->delete();
             $row = 1;
         }
 
