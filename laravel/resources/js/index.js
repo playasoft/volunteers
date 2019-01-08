@@ -6,4 +6,5 @@ require('./ui/reports');
 require('./ui/filter');
 require('./ui/preview');
 require('./ui/tooltips');
+require('./ui/userSearch');
 require('./admin');

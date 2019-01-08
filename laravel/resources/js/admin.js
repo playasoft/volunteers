@@ -15,6 +15,32 @@ $(document).ready(function()
     {
         $(this).value($(this).data('status'));
     });
+    //add a volunteer to a slot
+    $('.add-volunteer').on('click', function()
+    {   
+        if($('.user-search').hasClass('hidden'))
+        {
+            $(this).removeClass('btn-warning');
+            $(this).addClass('btn-danger');
+            $(this).text('Cancel');
+            $('.user-search').removeClass('hidden');
+        }
+        else
+        {   
+            $(this).addClass('btn-warning');
+            $(this).removeClass('btn-danger');
+            $(this).text('Add Volunteer');
+            $('.user-search').addClass('hidden');
+
+            $('.user-wrap .loading').addClass('hidden');
+            $('.users').addClass('hidden');
+                $('.users table tbody tr').remove();
+            
+        }
+       
+    });
+
+
 
     // Display save / cancel buttons when changing user roles
     $('.user-roles input').on('change', function()
@@ -125,4 +151,6 @@ $(document).ready(function()
         var status = $('.volunteer-status').data('status');
         $('.volunteer-status').value(status);
     }
+
+
 });

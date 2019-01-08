@@ -188,4 +188,27 @@ class SlotController extends Controller
             return redirect('/event/' . $slot->event->id);
         }
     }
+    public function adminAssign(Request $request, Slot $slot)
+    {
+        $inputstring = str_replace('s:9:"','',serialize($request['user-report'][0]));
+        $inputstring= str_replace('";', '', $inputstring);
+
+        $input = explode(',', $inputstring);
+        
+        if(Auth::user()->hasRole('admin'))
+        {
+            if(is_null($slot->user))
+            {
+                
+                $slot->user_id = $request['user-report'][0];
+                $slot->save();
+                
+                $username = $input[1];
+                event(new SlotChanged($slot, ['status' => 'taken']));
+                $request->session()->flash('success', 'You added '.$username.' to this shift');
+            }
+        }
+        //dd($request, $username, $input ,$inputstring);
+        return redirect('/event/'.$slot->event->id);
+    }
 }

@@ -23,6 +23,13 @@ if(!empty($slot->user))
         $url = "/slot/{$slot->id}/adminRelease";
     }
 }
+else
+{
+    if (Auth::check() && Auth::user()->hasRole('admin'))
+    {
+        $url = "/slot/{$slot->id}/adminAssign";
+    }
+}
 
 ?>
 
@@ -165,5 +172,85 @@ if(!empty($slot->user))
         </p>
         <button type="submit" class="btn btn-danger">Release Shift</button>
         @endif
+        @if(Auth::user()->hasRole('admin') && $taken==false)
+            <a class="btn btn-warning add-volunteer">Add Volunteer</a>
+            <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
+            <div class="row user-search hidden">
+                    <div class="col-md-11">
+                        @include('partials/form/text',
+                        [
+                            'name' => 'user-search',
+                            'label' => 'Search for a user',
+                            'placeholder' => 'rachel@apogaea.com',
+                            'help' => 'You can search by user ID, username, or email'
+                        ])
+                    </div>
+
+                    <div class="col-md-1 search">
+                        <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+            </div>
+            <div class="user-wrap">
+                <div class="loading hidden">
+                    Loading user data...
+
+                    <div class="spinner"></div>
+                </div>
+
+                <div class="users hidden">
+                    <h3>Search results</h3>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Real Name</th>
+                                <th>Burner Name</th>
+                                <th>Email</th>
+                                <th>Assign to Shift?</th>
+                            </tr>
+
+                            <tr class="template hidden">
+                                <td><b>{user_id}</b></td>
+                                <td><a href="/user/{user_id}">{username}</a></td>
+                                <td>{full_name}</td>
+                                <td>{burner_name}</td>
+                                <td>{email}</td>
+                                <td>
+                                    <input type="radio" name="user-report[]" value="{user_id},{burner_name}">
+                                    
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><b>1</b></td>
+                                <td><a href="/user/1">username</a></td>
+                                <td>Example User</td>
+                                <td>example@user.com</td>
+                                <td>softburnedbeanie<input type="hidden" name="user-name" value="softburnedbeanie"></td>
+                                <td>
+                                    <input type="radio" name="user-report[]" value="1">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>2</b></td>
+                                <td><a href="/user/2">user2</a></td>
+                                <td>Another User</td>
+                                    <td>another@user.com</td>
+                                <td>
+                                    <input type="radio" name="user-report[]" value="2">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button style="text-align: right;" class="btn btn-primary" type="submit">Assign User</button>
+                </div>
+            </div>
+        @endif
+
     {!! Form::close() !!}
 @endsection
