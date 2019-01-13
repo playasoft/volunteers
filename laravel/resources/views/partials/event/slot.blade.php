@@ -42,11 +42,7 @@ $start_date = new \Carbon\Carbon($slot->start_date);
 
 if($start_date->lt(\Carbon\Carbon::now()))
 {
-    if (Auth::user()->hasRole('department-lead')||Auth::user()->hasRole('admin')) 
-    {
-
-    }
-    else
+    if (!Auth::user()->hasRole('department-lead') && !Auth::user()->hasRole('admin')) 
     {
         $href = "";
     }
