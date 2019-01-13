@@ -2,13 +2,14 @@
 
 @section('content')
     <h1>Registered Users </h1>
-    <hr>
+
     <form class="input-group user-search" method="GET" action="/users">
-        <input type="text" name="search" class=" form-control" placeholder="search by email or username">
+        <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
         <div class="input-group-btn">
             <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </div>
     </form>
+    <hr>
 
     <table class="table table-hover">
         <thead>
