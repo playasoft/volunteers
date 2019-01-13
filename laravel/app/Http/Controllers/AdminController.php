@@ -24,9 +24,24 @@ class AdminController extends Controller
     }
     
     // List of users
-    function userList()
+    function userList(Request $request)
     {
         $users = User::paginate(100);
+
+        if($request->query('search'))
+        {
+            $search = $request->query('search');
+
+            if(is_numeric($search))
+            {
+                $users = [User::find($search)];
+            }
+            else
+            {
+                $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
+            }
+        }
+
         return view('pages/admin/user-list', compact('users'));
     }
 
