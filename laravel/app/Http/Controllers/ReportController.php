@@ -18,7 +18,7 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin');
+        $this->middleware('lead');
         $this->middleware('bindings');
     }
 
@@ -265,8 +265,7 @@ class ReportController extends Controller
             'email' => 'Email',
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
-            'burner_name' => 'Playa Name',
-            'phone' => 'Phone Number'
+            'burner_name' => 'Playa Name'
         ];
 
         $data = [];
@@ -298,7 +297,6 @@ class ReportController extends Controller
                         $row['first_name'] = $name['first'];
                         $row['last_name'] = $name['last'];
                         $row['burner_name'] = $slot->user->data->burner_name;
-                        $row['phone'] = $slot->user->data->phone;
                     }
                 }
 
