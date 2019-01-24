@@ -9,7 +9,6 @@ $other = false;
 if(!empty($slot->user))
 {
     $taken = true;
-
     if(Auth::check() && Auth::user()->id == $slot->user->id)
     {
         $self = true;
@@ -18,6 +17,10 @@ if(!empty($slot->user))
     else
     {
         $other = true;
+    }
+    if (Auth::check() && Auth::user()->hasRole('admin'))
+    {
+        $url = "/slot/{$slot->id}/adminRelease";
     }
 }
 
@@ -154,5 +157,13 @@ if(!empty($slot->user))
         @endif
 
         <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>
+
+        @if(Auth::user()->hasRole('admin')&& $taken==true)
+        <p>
+            Are you sure you want to remove this user for this shift?
+            By releasing {{$slot->user->data->burner_name}}, their slot will be available for other people to take.
+        </p>
+        <button type="submit" class="btn btn-danger">Release Shift</button>
+        @endif
     {!! Form::close() !!}
 @endsection
