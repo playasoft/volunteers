@@ -120,7 +120,7 @@ class Event extends Model
                 $shift_dates = array_unique( $merged_dates );
             }
             
-			// $date keeps track of the current date as we loop towards the end
+            // $date keeps track of the current date as we loop towards the end
             $date = $start_date;
 
             while($date->lte($end_date))
