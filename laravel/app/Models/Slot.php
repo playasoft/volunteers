@@ -32,7 +32,7 @@ class Slot extends Model
     {
         return $this->schedule->event;
     }
-    
+
     // Helper function to get the number of seconds in a timestamp
     static public function timeToSeconds($time)
     {
@@ -52,7 +52,7 @@ class Slot extends Model
         date_default_timezone_set('UTC');
         return date('H:i', $seconds);
     }
-    
+
     // Helper function to generate slots based on shift information
     static public function generate($schedule, $existingRows = null)
     {
@@ -64,7 +64,7 @@ class Slot extends Model
         else
         {
             // Delete all existing slots for this shift
-            Slot::whereNull('user_id')->delete();
+            Slot::where('schedule_id', $schedule->id)->whereNull('user_id')->delete();
             $row = 1;
         }
 
@@ -133,4 +133,3 @@ class Slot extends Model
         }
     }
 }
-
