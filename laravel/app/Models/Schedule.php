@@ -146,16 +146,48 @@ class Schedule extends Model
 
         return $input;
     }
-
     // Helper function to format timestamps before displaying them in forms
-    public function formatTimes()
-    {
-        $start = date_parse_from_format('H:i', $this->start_time);
-        $end = date_parse_from_format('H:i', $this->end_time);
-        $duration = date_parse_from_format('H:i', $this->duration);
-
-        $this->start_time = str_pad($start['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
-        $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
-        $this->duration = str_pad($duration['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
+        public function formatTimes()
+        {
+            $start = date_parse_from_format('H:i', $this->start_time);
+            $end = date_parse_from_format('H:i', $this->end_time);
+            $duration = date_parse_from_format('H:i', $this->duration);
+            if ($start['hour'] < 10 )
+            $this->start_time = $this->formatStartHour($start['hour']) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+            $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
+            $this->duration = $this->formatDurationHour($duration['hour']) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
+        }
+    
+        // this handles a corner case where validation requires times formatted HH:MM but 
+        // javascript is detecting custom values based on Carbon formatted times
+        // This causes custom values for start_time to be clobbered by the form population
+        // when the Schedule edit view is loaded or validation to reject custom values for 
+        // Duration because they're formatted as H:MM for single digit values.
+        // If we zero pad the hour, custom values are fine, but pre-populated values (6 AM)
+        // are detected as a custom value. So, we have to zero pad hour values under 10, 
+        // exempting 6 and 9. Except that duration's custom values that would be affected
+        // are 3, and 6. So we split them into two functions. Good grief.
+        private function formatStartHour($h) 
+        {
+            if ( (!in_array($h, [6,9]) ) and ($h < 10) ) 
+            {
+                return str_pad($h, 2, 0, STR_PAD_LEFT);
+            }
+            else 
+            {
+                return $h;
+            }
+        }
+    
+        private function formatDurationHour($h) 
+        {
+            if ( (!in_array($h, [3,6]) ) and ($h < 10) ) 
+            {
+                return str_pad($h, 2, 0, STR_PAD_LEFT);
+            }
+            else 
+            {
+                return $h;
+            }
+        }
     }
-}
