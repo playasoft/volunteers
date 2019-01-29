@@ -152,7 +152,7 @@ class Schedule extends Model
             $start = date_parse_from_format('H:i', $this->start_time);
             $end = date_parse_from_format('H:i', $this->end_time);
             $duration = date_parse_from_format('H:i', $this->duration);
-            if ($start['hour'] < 10 )
+            
             $this->start_time = $this->formatStartHour($start['hour']) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
             $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
             $this->duration = $this->formatDurationHour($duration['hour']) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
