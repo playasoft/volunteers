@@ -106,6 +106,20 @@ class Event extends Model
         // This only works when the start date is before the end date
         if($start_date->lte($end_date))
         {
+            // do this once
+            if($hideEmpty)
+            {
+                // get an array of all the dates fields for this event
+                $shift_dates = Schedule::whereIn('shift_id', $this->shifts->pluck('id'))->pluck('dates');
+                $merged_dates = [];
+                //iterate through scheduled dates and merge them into one list
+                foreach ($shift_dates as $i) {
+                    $merged_dates = array_merge($merged_dates, json_decode($i));
+                }
+                // remove duplicate dates
+                $shift_dates = array_unique( $merged_dates );
+            }
+            
             // $date keeps track of the current date as we loop towards the end
             $date = $start_date;
 
@@ -113,8 +127,8 @@ class Event extends Model
             {
                 if($hideEmpty)
                 {
-                    // Pluck all of the shift IDs for this event and check the if any in the schedule start today
-                    if(Schedule::whereIn('shift_id', $this->shifts->pluck('id'))->where('start_date', $date->format('Y-m-d'))->get()->isEmpty())
+                    // check to see if the current day is in the list of shift_dates we prepared earlier
+                    if(!in_array( $date->format('Y-m-d'), $shift_dates ))
                     {
                         // Continue onto the next day
                         $date->addDay();
