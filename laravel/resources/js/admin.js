@@ -31,11 +31,9 @@ $(document).ready(function()
             $(this).removeClass('btn-danger');
             $(this).text('Add Volunteer');
             $('.user-search').addClass('hidden');
-
             $('.user-wrap .loading').addClass('hidden');
             $('.users').addClass('hidden');
-                $('.users table tbody tr').remove();
-            
+            $('.users table tbody tr').remove();
         }
        
     });
@@ -151,6 +149,4 @@ $(document).ready(function()
         var status = $('.volunteer-status').data('status');
         $('.volunteer-status').value(status);
     }
-
-
 });

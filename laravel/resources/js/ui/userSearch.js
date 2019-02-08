@@ -13,13 +13,10 @@ $(document).ready(function()
 {
     $('.user-search input').on('keydown', function(event)
     {
-        console.log('enter key pressed');
-
         // If enter was pressed
         if(event.which == 13)
         {
             event.preventDefault();
-            
             $('.user-search').trigger('submit');
         }
     });
@@ -27,7 +24,6 @@ $(document).ready(function()
     $('.user-search button').on('click', function(event)
     {
         event.preventDefault();
-        console.log('search button clicked');
         $('.user-search').trigger('submit');
     });
 
@@ -45,7 +41,6 @@ $(document).ready(function()
         ajaxOptions.body = JSON.stringify(data);
 
         // Submit data
-        console.log(fetch('/report/users', ajaxOptions));
         fetch('/report/users', ajaxOptions).then(function(request)
         {
             request.json().then(function(response)
