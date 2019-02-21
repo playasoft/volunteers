@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth','admin']], function()
 {
     Route::post('/slot/{slot}/edit','SlotController@edit');
     Route::post('/slot/{slot}/adminRelease', 'SlotController@adminRelease');
+    Route::post('/slot/{slot}/adminAssign', 'SlotController@adminAssign');
 });
 
 // User profile routes

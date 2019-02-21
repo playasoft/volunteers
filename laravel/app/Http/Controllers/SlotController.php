@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SlotRequest;
 use App\Http\Requests\SlotEditRequest; 
 use App\Models\Slot;
+use App\Models\User;
 use App\Models\UserRole;
 
 use Illuminate\Support\Facades\Auth;
@@ -167,17 +168,16 @@ class SlotController extends Controller
         $slot->save();
         return;
     }
+
     public function adminRelease(Request $request, Slot $slot)
     {
-        
         if(Auth::user()->hasRole('admin'))
         {
-            $username = $slot->user->data->burner_name;
+            $username = (!is_null($slot->user->data->burner_name) ? $slot->user->data->burner_name : $slot->user->data->full_name);
             if(!is_null($slot->user))
             {
                 $slot->user_id = null;
                 $slot->save();
-
                 event(new SlotChanged($slot, ['status' => 'released']));
                 $request->session()->flash('success', ''.$username.' is removed!!');
             }
@@ -187,5 +187,28 @@ class SlotController extends Controller
             }
             return redirect('/event/' . $slot->event->id);
         }
+    }
+
+    public function adminAssign(Request $request, Slot $slot)
+    {
+        $input = (int)$request['user-report'][0];
+        $users = User::get()->all();
+
+        if(is_null($slot->user) && Auth::user()->hasRole('admin'))
+        {
+            foreach ($users as $user) 
+            {
+                if($user->data->user_id==$input)
+                {
+                    $slot->user_id=$user->data->user_id;
+                    $username = (!is_null($user->data->burner_name) ? $user->data->burner_name : $user->data->full_name);
+                    event(new SlotChanged($slot, ['status' => 'taken']));
+                    $request->session()->flash('success', 'You added '.$username.' to this shift');
+                }
+            }
+            $slot->save();
+        }
+        dd($input,$users,$slot->user_id);
+        //return redirect('/event/'.$slot->event->id);
     }
 }
