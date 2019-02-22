@@ -218,7 +218,7 @@ else
                                 <td>{burner_name}</td>
                                 <td>{email}</td>
                                 <td>
-                                    <input type="radio" name="user-report[]" value="{user_id}">
+                                    <input type="radio" name="user" value="{user_id}">
                                     
                                 </td>
                             </tr>
