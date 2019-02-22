@@ -174,7 +174,7 @@ class SlotController extends Controller
         if(!is_null($slot->user) && Auth::user()->hasRole('admin'))
         {
             $username = ($slot->user->data()->exists() && $slot->user->data->burner_name ? 
-                $slot->user->data->burner_name : $slot->user->data->full_name);
+                $slot->user->data->burner_name : $slot->user->name);
 
             $slot->user_id = null;
             $slot->save();
@@ -195,8 +195,8 @@ class SlotController extends Controller
         if(is_null($slot->user) && Auth::user()->hasRole('admin'))
         {
             $username = ($user->data()->exists() && $user->data->burner_name ?
-                $user->data->burner_name : $user->data->full_name);
-            
+                $user->data->burner_name : $user->name);
+
             $slot->user_id=$user->data->user_id;
             $slot->save();
             event(new SlotChanged($slot, ['status' => 'taken']));
