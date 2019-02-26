@@ -51,6 +51,7 @@ class ReportController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'full_name' => $user->data()->exists() && $user->data->full_name ? $user->data->full_name : '',
+                'burner_name' => $user->data()->exists() && $user->data->burner_name ? $user->data->burner_name : '',
                 'email' => $user->email
             ];
         }
@@ -465,6 +466,7 @@ class ReportController extends Controller
             'camp' => 'Camp Name',
             'users' => 'Number of Volunteers',
             'slots' => 'Number of Shifts Taken',
+            'hours' => 'Total hours volunteered'
         ];
 
         $data = [];
@@ -482,9 +484,16 @@ class ReportController extends Controller
 
             // Make sure this user has actually volunteered for the selected event
             $slots = $user->slots()->whereIn('schedule_id', $schedule_ids)->get();
+            $hoursVolunteered = 0;
 
             if($slots->count())
             {
+                foreach ($slots as $slot)
+                {
+                    $duration = Slot::timeToSeconds($slot->schedule->duration) / 60 / 60;
+                    $hoursVolunteered += $duration;
+                }
+
                 if(!empty($user->data) && !empty($user->data->camp))
                 {
                     $camp = preg_replace("/[^a-z0-9]/", "", strtolower($user->data->camp));
@@ -496,11 +505,12 @@ class ReportController extends Controller
 
                 if(!isset($camps[$camp]))
                 {
-                    $camps[$camp] = ['name' => $user->data->camp, 'users' => 0, 'slots' => 0];
+                    $camps[$camp] = ['name' => $user->data->camp, 'users' => 0, 'slots' => 0, 'hours' => 0];
                 }
 
                 $camps[$camp]['users']++;
                 $camps[$camp]['slots'] += $slots->count();
+                $camps[$camp]['hours'] += $hoursVolunteered;
             }
         }
 
@@ -512,6 +522,7 @@ class ReportController extends Controller
                 'camp' => $camp['name'],
                 'users' => $camp['users'],
                 'slots' => $camp['slots'],
+                'hours' => $camp['hours']
             ];
         }
 
