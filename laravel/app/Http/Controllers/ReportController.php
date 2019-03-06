@@ -316,6 +316,7 @@ class ReportController extends Controller
             'last_name' => 'Last name',
             'first_name' => 'First name',
             'user' => 'Username',
+            'email'=> 'Email',
             'burner_name' => 'Playa name',
             'shifts' => 'Total number of shifts',
             'hours' => 'Total hours volunteered'
@@ -372,6 +373,7 @@ class ReportController extends Controller
                 'last_name' => $name['last'],
                 'first_name' => $name['first'],
                 'user' => $user->name,
+                'email'=> $user->email,
                 'burner_name' => $user->data()->exists() ? $user->data->burner_name : '',
                 'shifts' => $slotsVolunteered,
                 'hours' => $hoursVolunteered
