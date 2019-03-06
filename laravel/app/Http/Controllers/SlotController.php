@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SlotRequest;
-use App\Http\Requests\SlotEditRequest; 
+use App\Http\Requests\SlotEditRequest;
 use App\Models\Slot;
+use App\Models\User;
 use App\Models\UserRole;
 
 use Illuminate\Support\Facades\Auth;
@@ -122,7 +123,7 @@ class SlotController extends Controller
         {
             $request->session()->flash('error', 'This slot has already been taken by someone else.');
         }
-        
+
         return redirect('/event/' . $slot->event->id);
     }
 
@@ -167,25 +168,42 @@ class SlotController extends Controller
         $slot->save();
         return;
     }
+
     public function adminRelease(Request $request, Slot $slot)
     {
-        
-        if(Auth::user()->hasRole('admin'))
+        if(!is_null($slot->user))
         {
-            $username = $slot->user->data->burner_name;
-            if(!is_null($slot->user))
-            {
-                $slot->user_id = null;
-                $slot->save();
+            // TODO: Refactor this into a helper function
+            $username = $slot->user->data()->exists() && $slot->user->data->burner_name ?
+                $slot->user->data->burner_name : $slot->user->name;
 
-                event(new SlotChanged($slot, ['status' => 'released']));
-                $request->session()->flash('success', ''.$username.' is removed!!');
-            }
-            else
-            {
-                $request->session()->flash('error', 'there is nobody currently scheduled to volunteer for this shift.');
-            }
-            return redirect('/event/' . $slot->event->id);
+            $slot->user_id = null;
+            $slot->save();
+            event(new SlotChanged($slot, ['status' => 'released']));
+            $request->session()->flash('success', $username.' is removed!!');
         }
+        else
+        {
+            $request->session()->flash('error', 'there is nobody currently scheduled to volunteer for this shift.');
+        }
+        return redirect('/event/' . $slot->event->id);
+    }
+
+    public function adminAssign(Request $request, Slot $slot)
+    {
+        $user = User::findorFail($request->get('user'));
+
+        if(is_null($slot->user))
+        {
+            // TODO: Refactor this into a helper function
+            $username = $user->data()->exists() && $user->data->burner_name ?
+                $user->data->burner_name : $user->name;
+
+            $slot->user_id=$user->data->user_id;
+            $slot->save();
+            event(new SlotChanged($slot, ['status' => 'taken']));
+            $request->session()->flash('success', 'You added '.$username.' to this shift');
+        }
+        return redirect('/event/'.$slot->event->id);
     }
 }

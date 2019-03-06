@@ -85,11 +85,12 @@ Route::get('/slot/{slot}/view', 'SlotController@view');
 Route::post('/slot/{slot}/take', 'SlotController@take');
 Route::post('/slot/{slot}/release', 'SlotController@release');
 
-//Routes for Admin
-Route::group(['middleware' => ['auth','admin']], function()
+// Routes for Admins / Deparment Leads
+Route::group(['middleware' => ['auth', 'lead']], function()
 {
     Route::post('/slot/{slot}/edit','SlotController@edit');
     Route::post('/slot/{slot}/adminRelease', 'SlotController@adminRelease');
+    Route::post('/slot/{slot}/adminAssign', 'SlotController@adminAssign');
 });
 
 // User profile routes
@@ -111,7 +112,7 @@ Route::get('/user/{user}', 'AdminController@userProfile');
 Route::post('/user/{user}/edit', 'AdminController@userEdit');
 
 Route::get('/uploads', 'AdminController@uploadList');
-Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 
+Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit');
 
 Route::get('/reports', 'ReportController@reportList');
 Route::post('/report/users', 'ReportController@searchUsers');
