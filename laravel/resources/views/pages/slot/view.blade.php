@@ -18,14 +18,15 @@ if(!empty($slot->user))
     {
         $other = true;
     }
-    if (Auth::check() && Auth::user()->hasRole('admin'))
+
+    if(Auth::check() && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')))
     {
         $url = "/slot/{$slot->id}/adminRelease";
     }
 }
 else
 {
-    if (Auth::check() && Auth::user()->hasRole('admin'))
+    if(Auth::check() && Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
     {
         $url = "/slot/{$slot->id}/adminAssign";
     }
@@ -165,14 +166,14 @@ else
 
         <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>
 
-        @if(Auth::user()->hasRole('admin')&& $taken==true)
+        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && $taken)
         <p>
             Are you sure you want to remove this user for this shift?
             By releasing {{$slot->user->data->burner_name}}, their slot will be available for other people to take.
         </p>
         <button type="submit" class="btn btn-danger">Release Shift</button>
         @endif
-        @if(Auth::user()->hasRole('admin') && $taken==false)
+        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && !$taken)
             <a class="btn btn-warning add-volunteer">Add Volunteer</a>
             <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
             <div class="row user-search hidden">
@@ -219,7 +220,7 @@ else
                                 <td>{email}</td>
                                 <td>
                                     <input type="radio" name="user" value="{user_id}">
-                                    
+
                                 </td>
                             </tr>
                         </thead>

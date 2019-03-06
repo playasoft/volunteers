@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SlotRequest;
-use App\Http\Requests\SlotEditRequest; 
+use App\Http\Requests\SlotEditRequest;
 use App\Models\Slot;
 use App\Models\User;
 use App\Models\UserRole;
@@ -123,7 +123,7 @@ class SlotController extends Controller
         {
             $request->session()->flash('error', 'This slot has already been taken by someone else.');
         }
-        
+
         return redirect('/event/' . $slot->event->id);
     }
 
@@ -171,10 +171,11 @@ class SlotController extends Controller
 
     public function adminRelease(Request $request, Slot $slot)
     {
-        if(!is_null($slot->user) && Auth::user()->hasRole('admin'))
+        if(!is_null($slot->user))
         {
-            $username = ($slot->user->data()->exists() && $slot->user->data->burner_name ? 
-                $slot->user->data->burner_name : $slot->user->name);
+            // TODO: Refactor this into a helper function
+            $username = $slot->user->data()->exists() && $slot->user->data->burner_name ?
+                $slot->user->data->burner_name : $slot->user->name;
 
             $slot->user_id = null;
             $slot->save();
@@ -192,10 +193,11 @@ class SlotController extends Controller
     {
         $user = User::findorFail($request->get('user'));
 
-        if(is_null($slot->user) && Auth::user()->hasRole('admin'))
+        if(is_null($slot->user))
         {
-            $username = ($user->data()->exists() && $user->data->burner_name ?
-                $user->data->burner_name : $user->name);
+            // TODO: Refactor this into a helper function
+            $username = $user->data()->exists() && $user->data->burner_name ?
+                $user->data->burner_name : $user->name;
 
             $slot->user_id=$user->data->user_id;
             $slot->save();
