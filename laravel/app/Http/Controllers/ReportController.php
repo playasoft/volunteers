@@ -425,7 +425,7 @@ class ReportController extends Controller
                 'department' => $department->name,
                 'filled' => $filled->count(),
                 'empty' => $empty->count(),
-                'percent' => ($filled->count() && $empty->count()) ? number_format($filled->count() / ($filled->count() + $empty->count()) * 100, 2) : 0,
+                'percent' => ($filled->count() || $empty->count()) ? number_format($filled->count() / ($filled->count() + $empty->count()) * 100, 2) : 0,
             ];
         }
 
