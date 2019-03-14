@@ -161,7 +161,11 @@ else
                 Please arrive at least 15 minutes ahead of time to be briefed by the previous shift team and answer any questions you have.
             </p>
 
+            @if(!(Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')))
             <button type="submit" class="btn btn-success">Take Shift</button>
+            @else
+            <button formaction="/slot/{{$slot->id}}/take" type="submit" class="btn btn-success">Take Shift</button>
+            @endif
         @endif
 
         <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>

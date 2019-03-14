@@ -51,6 +51,10 @@ class SlotController extends Controller
             {
                 $allowed = true;
             }
+            if ($user->hasRole('admin')) 
+            {
+                $allowed = true;
+            }
         }
 
         return $allowed;
