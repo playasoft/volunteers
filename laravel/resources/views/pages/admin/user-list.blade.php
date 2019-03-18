@@ -1,12 +1,26 @@
+<?php 
+    $userRoles = \App\Models\Role::get();
+?>
 @extends('app')
 
 @section('content')
     <h1>Registered Users </h1>
 
-    <form class="input-group user-search" method="GET" action="/users">
-        <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
+    <form style="display: flex; flex-wrap: wrap; flex-basis: 0; align-items: flex-start; justify-content: space-between;" method="GET" action="/users">
+        <div class="col-sm-8 input-group">
+            <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
         <div class="input-group-btn">
             <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+        </div>
+        
+        <div class="form-group col-sm-3" style="padding-left:0; ">
+            <select name="role" class="form-control filter-user" >
+                <option value="">--Filter Permissions--</option>
+                @foreach($userRoles as $role)
+                <option value="{{ $role->name}}">{{$role->name}}</option>
+                @endforeach
+            </select>
         </div>
     </form>
     <hr>

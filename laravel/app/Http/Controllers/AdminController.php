@@ -27,6 +27,7 @@ class AdminController extends Controller
     function userList(Request $request)
     {
         $users = User::paginate(100);
+        $filtered=[];
 
         if($request->query('search'))
         {
@@ -42,6 +43,20 @@ class AdminController extends Controller
             }
         }
 
+        //if role query isn't empty then check users for role.
+        if (!empty($request->query('role'))) 
+            {
+                $role = $request->query('role');
+
+                foreach ($users as $user) 
+                {
+                    if ($user->hasRole($role)) 
+                    {
+                        array_push($filtered, $user);
+                    }
+                }
+                $users = collect($filtered);
+            }
         return view('pages/admin/user-list', compact('users'));
     }
 
