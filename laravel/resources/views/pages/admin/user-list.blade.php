@@ -17,8 +17,11 @@
         <div class="form-group col-sm-3" style="padding-left:0; ">
             <select name="role" class="form-control filter-user" >
                 <option value="">--Filter Permissions--</option>
+                @if(!empty($_GET['role']))
+                    <option selected="true" value="{{$_GET['role'] or ''}}">{{$_GET['role']}}</option>
+                @endif
                 @foreach($userRoles as $role)
-                <option value="{{ $role->name}}">{{$role->name}}</option>
+                    <option value="{{ $role->name}}">{{$role->name}}</option>
                 @endforeach
             </select>
         </div>
