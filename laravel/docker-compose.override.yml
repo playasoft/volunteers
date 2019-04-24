@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+
+  #  The Application
+  app:
+    env_file: '.env.testing'
+    build: 
+      context: .
+      dockerfile: app.dockerfile
+      target: phpfpm
+    volumes:
+      - ./:/var/www
+
+  # The Web Server
+  web:
+    build: 
+      context: .
+      dockerfile: web.dockerfile
+      target: nginxbase
+    volumes_from:
+      - app

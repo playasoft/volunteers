@@ -1,0 +1,33 @@
+version: '2.3'
+services:
+
+  #  The Application
+  app:
+    environment:
+      - "DB_HOST=database"
+      - "REDIS_HOST=cache"
+
+  # The Web Server
+  web:
+    ports:
+      - 8080:80
+
+  # redis
+  cache:
+    image: redis:3.0-alpine
+
+  # The Database
+  database:
+    image: mysql:5.6
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=homestead"
+      - "MYSQL_USER=homestead"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - "33061:3306"
+
+volumes:
+  dbdata:

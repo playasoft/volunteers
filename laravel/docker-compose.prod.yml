@@ -1,0 +1,17 @@
+version: '2.3'
+services:
+
+  #  The Application
+  app:
+    env_file: '.env'
+    build: 
+      context: .
+      dockerfile: app.dockerfile
+    volumes:
+      - /var/www/storage
+
+  # The Web Server
+  web:
+    build: 
+      context: .
+      dockerfile: web.dockerfile

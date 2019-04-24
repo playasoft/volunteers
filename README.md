@@ -288,3 +288,25 @@ $factory->define(Department::class, function (Faker $faker, array $data)
 });
 
 ```
+
+
+## Docker instructions
+
+Dependencies:
+1. ```docker```
+2. ```docker-compose```
+
+For development:
+1. Copy **.env.example** to **.env.testing**
+2. Run `sh scripts/testrig.sh`
+
+The database should be accessible on localhost port 33061
+The site should be accessible at http://localhost:8080
+
+For production builds:
+1. Copy **.env.example** to **.env.prod**
+2. Run `docker-compose up -f docker-compose.yml -f docker-compose.prod.yml -d`
+ - if this fails, overwrite **docker-compose.override.yml** with **docker-compose.prod.yml**, and run `docker-compose up -d`
+3. Run `docker-compose exec app php artisan migrate`
+4. Run `docker-compose exec app php artisan db:seed`
+5. Run `docker-compose exec app php artisan key:generate` and copy the key into your .env.prod as APP_KEY

@@ -1,0 +1,17 @@
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
+/public/files
+/public/js/bundle.js
+/public/css/main.css
+/bootstrap/cache/*
+/storage/framework/cache/*
+/storage/framework/*.php
+/storage/app/*
+/storage/framework/views/*
+/storage/framework/sessions/*
+/storage/framework/services.json
+/storage/framework/down
+/storage/logs/*
