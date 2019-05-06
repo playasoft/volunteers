@@ -166,7 +166,7 @@ else
 
         <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>
 
-        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && $taken)
+        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && $taken && $other)
         <p>
             Are you sure you want to remove this user for this shift?
             By releasing {{$slot->user->data->burner_name}}, their slot will be available for other people to take.
@@ -177,20 +177,21 @@ else
             <a class="btn btn-warning add-volunteer">Add Volunteer</a>
             <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
             <div class="row user-search hidden">
-                    <div class="col-md-11">
-                        @include('partials/form/text',
-                        [
-                            'name' => 'user-search',
-                            'label' => 'Search for a user',
-                            'placeholder' => 'rachel@apogaea.com',
-                            'help' => 'You can search by user ID, username, or email'
-                        ])
-                    </div>
+                <div class="col-md-11">
+                    @include('partials/form/text',
+                    [
+                        'name' => 'user-search',
+                        'label' => 'Search for a user',
+                        'placeholder' => 'rachel@apogaea.com',
+                        'help' => 'You can search by user ID, username, or email'
+                    ])
+                </div>
 
-                    <div class="col-md-1 search">
-                        <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
+                <div class="col-md-1 search">
+                    <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
             </div>
+
             <div class="user-wrap">
                 <div class="loading hidden">
                     Loading user data...
