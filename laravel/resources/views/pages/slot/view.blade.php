@@ -21,14 +21,14 @@ if(!empty($slot->user))
 
     if(Auth::check() && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')))
     {
-        $url = "/slot/{$slot->id}/adminRelease";
+        $adminUrl = "/slot/{$slot->id}/adminRelease";
     }
 }
 else
 {
     if(Auth::check() && Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
     {
-        $url = "/slot/{$slot->id}/adminAssign";
+        $adminUrl = "/slot/{$slot->id}/adminAssign";
     }
 }
 
@@ -171,7 +171,7 @@ else
             Are you sure you want to remove this user for this shift?
             By releasing {{$slot->user->data->burner_name}}, their slot will be available for other people to take.
         </p>
-        <button type="submit" class="btn btn-danger">Release Shift</button>
+        <button formaction="{{ $adminUrl }}" type="submit" class="btn btn-danger">Release Shift</button>
         @endif
         @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && !$taken)
             <a class="btn btn-warning add-volunteer">Add Volunteer</a>
@@ -248,7 +248,7 @@ else
                             </tr>
                         </tbody>
                     </table>
-                    <button style="text-align: right;" class="btn btn-primary" type="submit">Assign User</button>
+                    <button formaction="{{ $adminUrl }}" class="btn btn-primary" type="submit">Assign User</button>
                 </div>
             </div>
         @endif
