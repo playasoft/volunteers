@@ -154,8 +154,12 @@ class Schedule extends Model
         $end = date_parse_from_format('H:i', $this->end_time);
         $duration = date_parse_from_format('H:i', $this->duration);
 
+        ($start['hour']<10) ? $this->start_time = '0'.$start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT) :
         $this->start_time = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
-        $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
+
+        ($duration['hour']<10) ? $this->duration = '0'.$duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT) : 
         $this->duration = $duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
+
+        $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
     }
 }
