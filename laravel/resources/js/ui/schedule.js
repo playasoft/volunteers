@@ -67,19 +67,6 @@ $(document).ready(function()
         }
     });
 
-    //format duration fields on the fly when the server can't
-    $('#duration-field').on('change', function()
-    {
-        if ($(this).value() == 'custom')
-        {
-            var currentVal = $('input[name=custom_duration]').value();
-            if(currentVal.length<5)
-            {   
-                $('input[name=custom_duration]').value('0'+currentVal); 
-            }
-        }
-    });
-
     $('.edit-schedule input[name="does-slot-repeat"]').on('change', function()
     {
         let slotRepeat = document.querySelector('.slot-repeat');

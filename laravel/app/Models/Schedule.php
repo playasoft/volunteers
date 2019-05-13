@@ -154,16 +154,8 @@ class Schedule extends Model
         $end = date_parse_from_format('H:i', $this->end_time);
         $duration = date_parse_from_format('H:i', $this->duration);
 
-        //check for any default start hours and if there are, don't pad start hours
-        (!in_array($start['hour'], [0,6,9,12,24])) ?
-        $this->start_time = str_pad($start['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT) :
-        $this->start_time = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
-        
-        //check for any default duration hours and if there are, don't pad duration hours
-        (!in_array( $duration['hour'], [3,6])) ?
-        $this->duration = str_pad($duration['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT) :
-        $this->duration = $duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
-
+        $this->start_time = str_pad($start['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+        $this->duration = str_pad($duration['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
         $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
     }
 }
