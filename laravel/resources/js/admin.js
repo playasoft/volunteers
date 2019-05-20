@@ -68,6 +68,7 @@ $(document).ready(function()
 
     $('.save-roles').on('click', function()
     {
+        prevData = [];
         var user = $('.user-id').value();
         var role = $('.user-role').value();
         var csrf = $('.csrf-token').value();
@@ -82,6 +83,7 @@ $(document).ready(function()
             if($(this).prop('checked'))
             {
                 data.roles.push($(this).value());
+                prevData.push($(this).value());
             }
         });
 
