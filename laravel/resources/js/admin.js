@@ -38,7 +38,15 @@ $(document).ready(function()
        
     });
 
-
+    //A variable here to store previous form data.
+    var prevData = []; 
+    $('.user-roles input').each(function()
+    {
+        if($(this).prop('checked'))
+        {
+            prevData.push($(this).value());
+        }
+    });
 
     // Display save / cancel buttons when changing user roles
     $('.user-roles input').on('change', function()
@@ -88,6 +96,21 @@ $(document).ready(function()
     {
         $('.user-role').value($('.user-role').data('role'));
         $('.buttons').attr('style', false);
+
+        //pull data array from earlier and assign the values based on prevData
+        $('.user-roles input').each(function(self)
+        {
+            self = $(this);
+            self.prop('checked',false);
+
+            prevData.forEach(function(el)
+            {
+                if (self.value() === el)
+                {
+                    self.prop('checked',true);
+                }
+            });
+        });
     });
 
     $('.save-upload').on('click', function()
