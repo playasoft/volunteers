@@ -18,15 +18,15 @@ homestead will handle some of the document root stuff for you and can be configu
 
 1. Install vagrant
 2. Install virtualbox
-3. mkdir Homestead and cd in
-4. vagrant box add laravel/homestead
-5. vagrant up
-6. vagrant global-staus to get vagrant box name
-7. vagrant ssh {vagrant box name}
-8. mkdir code
+3. ```mkdir Homestead``` and cd in
+4. ```vagrant box add laravel/homestead```
+5. ```vagrant up```
+6. ```vagrant global-staus``` to get vagrant box name
+7. ```vagrant ssh {vagrant box name}```
+8. ```mkdir code```
 9. clone volunteers repo into code directory 
 
-[optional] 10. In your local environment ssfs vagrant@192.168.10.10:/home/vagrant/code {local path of your choice here} to mount vagrant's code directory locally.
+[optional] 10. In your local environment ```ssfs vagrant@192.168.10.10:/home/vagrant/code {local path of your choice here}``` to mount vagrant's code directory locally.
 
 Homestead creates a mysql user "homestead" with password "secret".  You can create a new database with
 ```
