@@ -43,20 +43,17 @@ Then set your /laravel/.env file appropriately
 2. Set **laravel/public/** as your document root
 3. Run ```composer install``` within the **laravel** folder
 4. Run ```npm install``` within the **laravel** folder  
-5. Set up your environment configuration. See the [Setup / Configuration](#configuration) section below. 
+5 In the **laravel** folder, copy **.env.example** and rename it to **.env** .Configure your database and email settings in the **.env** file
 6. Run ```php artisan migrate``` within the **laravel** folder
-
 
 ## <a name="configuration"></a> Setup / Configuration
 
-1. In the **laravel** folder, copy **.env.example** and rename it to **.env**
-2. Configure your database and email settings in the **.env** file
-3. run `php artisan key:generate` to generate an application key for Laravel
-4. Optionally, configure your queue and broadcast drivers. If you want to use websockets, you'll need to use redis for broadcasting
-5. In the **laravel/resources/js/** folder, copy **config.example.js** and rename it to **config.js**
-6. Optionally, you may configure your websocket server to use a specific hostname, however by default it will use the current domain of the site
-7. Run ```npm run build``` within the **laravel** folder.
-8. Run ```php artisan db:seed``` within the **laravel** folder to populate the database with user roles
+1. run `php artisan key:generate` to generate an application key for Laravel
+2. Optionally, configure your queue and broadcast drivers. If you want to use websockets, you'll need to use redis for broadcasting
+3. In the **laravel/resources/js/** folder, copy **config.example.js** and rename it to **config.js**
+4. Optionally, you may configure your websocket server to use a specific hostname, however by default it will use the current domain of the site
+5. Run ```npm run build``` within the **laravel** folder.
+6. Run ```php artisan db:seed``` within the **laravel** folder to populate the database with user roles
 
 
 Alright! Now everything is compiled and the site is functional. You can register accounts, create events, and sign up for shifts.
