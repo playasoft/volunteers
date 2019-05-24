@@ -95,7 +95,7 @@ use App\Helpers;
                             @endif
                         </td>
                         <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
-                        <td><b>{{ Helpers::displayName($slot->user, '') }}</b></td>
+                        <td><b>{{ Helpers::displayName($slot->user) }}</b></td>
                         <td class="icon">◯</td>
                         <td class="icon">◯</td>
                     </tr>

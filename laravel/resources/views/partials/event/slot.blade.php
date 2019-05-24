@@ -19,7 +19,7 @@ if(is_null($slot->user))
 else
 {
     $class = "slot taken";
-    $name = Helpers::displayName($slot->user);
+    $name = Helpers::displayName($slot->user, false);
 
     // If the slot is taken by the current user, display a link to the release page
     if($slot->user->id === Auth::user()->id)

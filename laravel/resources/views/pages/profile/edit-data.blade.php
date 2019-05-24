@@ -28,7 +28,7 @@ use App\Helpers;
             'label' => 'Burner Name',
             'placeholder' => 'Your name on the Playa',
             'help' => "This name will be shown to other users when you sign up for a shift",
-            'value' => Helpers::displayName($user, '')
+            'value' => Helpers::displayName($user)
         ])
 
         @include('partials/form/text',

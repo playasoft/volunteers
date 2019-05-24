@@ -53,7 +53,7 @@ class ReportController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'full_name' => $user->data()->exists() && $user->data->full_name ? $user->data->full_name : '',
-                'burner_name' => Helpers::displayName($user,''),
+                'burner_name' => Helpers::displayName($user),
                 'email' => $user->email
             ];
         }
@@ -207,13 +207,13 @@ class ReportController extends Controller
             foreach($slots as $slot)
             {
                 $date = new Carbon($slot->start_date);
-                
+
                 $data[] =
                 [
                     'user' => $user->name,
                     'first_name' => $name['first'],
                     'last_name' => $name['last'],
-                    'burner_name' => Helpers::displayName($user,''),
+                    'burner_name' => Helpers::displayName($user),
                     'email' => $user->email,
                     'day' => $date->formatLocalized('%A'),
                     'date' => $date->format('m/d/Y'),
@@ -376,7 +376,7 @@ class ReportController extends Controller
                 'first_name' => $name['first'],
                 'user' => $user->name,
                 'email'=> $user->email,
-                'burner_name' => Helpers::displayName($user, ''),
+                'burner_name' => Helpers::displayName($user),
                 'shifts' => $slotsVolunteered,
                 'hours' => $hoursVolunteered
             ];

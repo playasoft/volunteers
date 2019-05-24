@@ -94,7 +94,7 @@ else
                 <button type="submit" class="btn btn-danger">Release Shift</button>
             @else
                 <p>
-                    This slot has been taken by <b>{{ Helpers::displayName($slot->user) }}</b>.
+                    This slot has been taken by <b>{{ Helpers::displayName($slot->user, false) }}</b>.
                 </p>
 
                 @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
