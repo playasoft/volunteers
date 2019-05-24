@@ -42,8 +42,9 @@ Then set your /laravel/.env file appropriately
 1. Git clone this repo
 2. Set **laravel/public/** as your document root
 3. Run ```composer install``` within the **laravel** folder
-4. Run ```npm install``` within the **laravel** folder  
-5 In the **laravel** folder, copy **.env.example** and rename it to **.env** .Configure your database and email settings in the **.env** file
+4. Run ```npm install``` within the **laravel** folder
+5. Run ```npm audit fix --force``` to clean up js dependencies
+5. In the **laravel** folder, copy **.env.example** and rename it to **.env** .Configure your database and email settings in the **.env** file
 6. Run ```php artisan migrate``` within the **laravel** folder
 
 ## <a name="configuration"></a> Setup / Configuration
