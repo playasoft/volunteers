@@ -28,6 +28,15 @@ homestead will handle some of the document root stuff for you and can be configu
 
 [optional] 10. In your local environment ssfs vagrant@192.168.10.10:/home/vagrant/code {local path of your choice here} to mount vagrant's code directory locally.
 
+Homestead creates a mysql user "homestead" with password "secret".  You can create a new database with
+```
+mysql -u homestead -p
+CREATE DATABASE volunteers;
+exit;
+```
+Then set your /laravel/.env file appropriately
+
+
 ## Installing
 
 1. Git clone this repo
