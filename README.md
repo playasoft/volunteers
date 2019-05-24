@@ -10,6 +10,22 @@ A volunteer database for events written using the Laravel 5.6 framework
 4. ```composer```, the PHP package manager
 5. ```redis```, if you want to use websockets
 
+## Environement Setup
+
+Instructions here for official laravel vagrant box: https://laravel.com/docs/5.8/homestead
+You can modify some of the networking settings or ssh settings before you install if you want.  
+homestead will handle some of the document root stuff for you and can be configured. 
+
+1. Install vagrant
+2. Install virtualbox
+3. mkdir Homestead and cd in
+4. vagrant box add laravel/homestead
+5. vagrant up
+6. vagrant global-staus to get vagrant box name
+7. vagrant ssh {vagrant box name}
+8. mkdir code
+9. clone volunteers repo into code directory 
+[optional] 10. In your local environment ssfs vagrant@192.168.10.10:/home/vagrant/code {local path of your choice here} to mount vagrant's code directory locally.
 
 ## Installing
 
