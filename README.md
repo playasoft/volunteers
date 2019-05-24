@@ -45,4 +45,11 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 4. Run ```node websocket-server.js``` within the **node** folder
 5. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
 
-  
+## Troubleshooting
+
+Issue: On composer install : PHP fatal error laravel/bootstrap/autoload.php on line 17
+resolve: 
+```
+composer install --no-scripts
+composer install
+```
