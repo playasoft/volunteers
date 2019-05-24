@@ -14,13 +14,16 @@ A volunteer database for events written using the Laravel 5.6 framework
 
 Instructions here for official laravel vagrant box: https://laravel.com/docs/5.8/homestead
 You can modify some of the networking settings or ssh settings before you install if you want.  
-homestead will handle some of the document root stuff for you and can be configured. 
+homestead will handle some of the document root stuff for you and can be configured.  You can either clone the git repo and modify the config before you build the vagrant box, or edit the config after the box is built and reprovision.
 
 1. Install vagrant
 2. Install virtualbox
 3. ```mkdir Homestead``` and cd in
 4. ```vagrant box add laravel/homestead```
 5. ```vagrant up```
+
+[optional] after your vagrant box has been created you can go into the Homestead.yaml and change the sites->map to whatever you want.  In your /etc/hosts file or equivalent add ```192.168.10.10  {domain you chose}```.  eg ```192.168.10.10  homestead.volunteers```.  If you change the Homestead.yaml you'll want to ```vagrant halt``` your box then ```vagrant --provision``` it. Then ```vagrant up``` again.
+
 6. ```vagrant global-staus``` to get vagrant box name
 7. ```vagrant ssh {vagrant box name}```
 8. ```mkdir code```
