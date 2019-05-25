@@ -1,3 +1,9 @@
+<?php
+
+use App\Helpers;
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -37,7 +43,7 @@
 
         <div class="row">
             <div class="col-sm-2 title">Burner Name</div>
-            <div class="col-sm-10 value">{{ $user->data->burner_name or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ Helpers::displayName($user, 'Not Provided') }}</div>
         </div>
 
         <div class="row">

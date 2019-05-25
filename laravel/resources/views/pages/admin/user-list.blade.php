@@ -1,3 +1,9 @@
+<?php
+
+use App\Helpers;
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -28,7 +34,7 @@
                 <tr>
                     <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
                     <td>{{ $user->data->full_name or '' }}</td>
-                    <td>{{ $user->data->burner_name or '' }}</td>
+                    <td>{{ Helpers::displayName($user) }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ implode(", ", $user->getRoleNames()) }}</a></td>
                     <td>{{ $user->created_at->format('Y-m-d') }}</td>

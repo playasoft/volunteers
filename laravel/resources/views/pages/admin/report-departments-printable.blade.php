@@ -2,6 +2,8 @@
 
 use Carbon\Carbon;
 
+use App\Helpers;
+
 ?>
 
 <style>
@@ -93,7 +95,7 @@ use Carbon\Carbon;
                             @endif
                         </td>
                         <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
-                        <td><b>{{ $slot->user->data->burner_name or '' }}</b></td>
+                        <td><b>{{ Helpers::displayName($slot->user) }}</b></td>
                         <td class="icon">◯</td>
                         <td class="icon">◯</td>
                     </tr>

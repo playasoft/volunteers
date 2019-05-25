@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers;
+
 $url = "/slot/{$slot->id}/take";
 
 $taken = false;
@@ -92,7 +94,7 @@ else
                 <button type="submit" class="btn btn-danger">Release Shift</button>
             @else
                 <p>
-                    This slot has been taken by <b>{{ $slot->user->data->burner_name or $slot->user->name }}</b>.
+                    This slot has been taken by <b>{{ Helpers::displayName($slot->user, false) }}</b>.
                 </p>
 
                 @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
@@ -109,7 +111,7 @@ else
 
                         <div class="row">
                             <div class="col-sm-2 title">Burner Name</div>
-                            <div class="col-sm-10 value">{{ $slot->user->data->burner_name or 'Not Provided' }}</div>
+                            <div class="col-sm-10 value">{{ Helpers::displayName($slot->user, 'Not Provided') }}</div>
                         </div>
 
                         <div class="row">
