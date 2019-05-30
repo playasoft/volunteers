@@ -181,10 +181,9 @@ class SlotController extends Controller
             $slot->save();
             event(new SlotChanged($slot, ['status' => 'released']));
 
-            $user = $slot->user;
-            Mail::send('emails/admin-removed-shift', compact('user'), function ($message) use ($user)
+            Mail::send('emails/admin-removed-shift', compact('slot'), function ($message) use ($slot)
             {
-                $message->to($user->email, $user->name)->subject('Got dunked on!');
+                $message->to($slot->user->email, $slot->user->name)->subject('Shift reschedule required!');
             });
 
 
