@@ -27,8 +27,10 @@ class SendAdminRemovedShift
      */
     public function handle(SlotChanged $event)
     {
-      if(isset($event->change) && isset($event->change['status'])) {
-        if($event->change['status'] === 'released') {
+      if(isset($event->change) && isset($event->change['status']) && isset($event->change['admin']))
+      {
+        if($event->change['status'] === 'released' && $event->change['admin'] === true)
+        {
           $slot = $event->slot;
           Mail::send('emails/admin-removed-shift', compact('slot'), function ($message) use ($slot)
           {
