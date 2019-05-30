@@ -180,14 +180,6 @@ class SlotController extends Controller
             $slot->user_id = null;
             $slot->save();
             event(new SlotChanged($slot, ['status' => 'released']));
-
-            //make volunteer aware of admin removal
-            Mail::send('emails/admin-removed-shift', compact('slot'), function ($message) use ($slot)
-            {
-                $message->to($slot->user->email, $slot->user->name)->subject('Shift reschedule required!');
-            });
-
-
             $request->session()->flash('success', $username.' is removed!!');
         }
         else
