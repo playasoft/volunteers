@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -179,6 +180,14 @@ class SlotController extends Controller
             $slot->user_id = null;
             $slot->save();
             event(new SlotChanged($slot, ['status' => 'released']));
+
+            $user = $slot->user;
+            Mail::send('emails/admin-removed-shift', compact('user'), function ($message) use ($user)
+            {
+                $message->to($user->email, $user->name)->subject('Got dunked on!');
+            });
+
+
             $request->session()->flash('success', $username.' is removed!!');
         }
         else
