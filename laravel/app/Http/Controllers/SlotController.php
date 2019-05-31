@@ -179,7 +179,7 @@ class SlotController extends Controller
 
             $slot->user_id = null;
             $slot->save();
-            event(new SlotChanged($slot, ['status' => 'released', 'admin' => true]));
+            event(new SlotChanged($slot, ['status' => 'released', 'admin_released' => true]));
             $request->session()->flash('success', $username.' is removed!!');
         }
         else
