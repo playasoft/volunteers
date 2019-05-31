@@ -101,36 +101,41 @@ class SlotController extends Controller
         if(is_null($slot->user))
         {
             $concurrentSlot = Slot::where('user_id', Auth::user()->id)
-                        ->where('start_date', $slot->start_date)
-                        ->where('start_time', '<', $slot->end_time)
-                        ->where('end_time', '>', $slot->start_time)
-                        ->first();
+                                    ->where('start_date', $slot->start_date)
+                                    ->where('start_time', '<', $slot->end_time)
+                                    ->where('end_time', '>', $slot->start_time)
+                                    ->first();
 
-            $slot->user_id = Auth::user()->id;
-            $slot->save();
-
-            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
-            if($concurrentSlot)
+            if( $concurrentSlot && $request->input('warned') === '' )
             {
-                $request->session()->flash('warning', 'You are currently also signed up elsewhere INSERT HERE');
+                $warning_message = 'You\'re currently signed up for another ';
+                $warning_message .= '<a href="'.env('SITE_URL').'/slot/'.$concurrentSlot->id.'/view">overlapping shift</a>';
+                $warning_message .= '. Are you sure you want to sign up?';
+                $request->session()->flash('warning', $warning_message);
+                $request->session()->flash('concurrentSlotWarning', true);
+                return back();
             }
             else
             {
+                $slot->user_id = Auth::user()->id;
+                $slot->save();
+
+                event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
                 $request->session()->flash('success', 'You signed up for a volunteer shift.');
-            }
 
-            // If a password was used
-            if($slot->schedule->password)
-            {
-                // Assign the user to any roles this shift requires
-                $roles = [];
-
-                foreach($slot->schedule->getRoles() as $role)
+                // If a password was used
+                if($slot->schedule->password)
                 {
-                    $roles[] = $role->role->name;
-                }
+                    // Assign the user to any roles this shift requires
+                    $roles = [];
 
-                UserRole::assign(Auth::user(), $roles);
+                    foreach($slot->schedule->getRoles() as $role)
+                    {
+                        $roles[] = $role->role->name;
+                    }
+
+                    UserRole::assign(Auth::user(), $roles);
+                }
             }
         }
         else
@@ -205,14 +210,32 @@ class SlotController extends Controller
     {
         $user = User::findorFail($request->get('user'));
 
+        $username = Helpers::displayName($user, false);
+
         if(is_null($slot->user))
         {
-            $username = Helpers::displayName($user, false);
+            $concurrentSlot = Slot::where('user_id', $user->id)
+                                    ->where('start_date', $slot->start_date)
+                                    ->where('start_time', '<', $slot->end_time)
+                                    ->where('end_time', '>', $slot->start_time)
+                                    ->first();
 
-            $slot->user_id=$user->data->user_id;
-            $slot->save();
-            event(new SlotChanged($slot, ['status' => 'taken']));
-            $request->session()->flash('success', 'You added '.$username.' to this shift');
+            if( $concurrentSlot && $request->input('warned') === '' )
+            {
+                $warning_message = $username.' is currently signed up for another ';
+                $warning_message .= '<a href="'.env('SITE_URL').'/slot/'.$concurrentSlot->id.'/view">overlapping shift</a>';
+                $warning_message .= '. Are you sure you want to sign them up?';
+                $request->session()->flash('warning', $warning_message);
+                $request->session()->flash('concurrentSlotWarning', true);
+                return back();
+            }
+            else
+            {
+                $slot->user_id=$user->data->user_id;
+                $slot->save();
+                event(new SlotChanged($slot, ['status' => 'taken']));
+                $request->session()->flash('success', 'You added '.$username.' to this shift');
+            }
         }
         return redirect('/event/'.$slot->event->id);
     }

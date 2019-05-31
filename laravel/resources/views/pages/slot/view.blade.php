@@ -163,6 +163,7 @@ else
                 Please arrive at least 15 minutes ahead of time to be briefed by the previous shift team and answer any questions you have.
             </p>
 
+            <input type="hidden" name="warned" value="{{ Session::get('concurrentSlotWarning') }}">
             <button type="submit" class="btn btn-success">Take Shift</button>
         @endif
 
