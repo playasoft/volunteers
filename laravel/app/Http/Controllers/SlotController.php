@@ -198,7 +198,7 @@ class SlotController extends Controller
 
             $slot->user_id=$user->data->user_id;
             $slot->save();
-            event(new SlotChanged($slot, ['status' => 'taken', 'adminAssigned' => true, 'name' => $user->name, 'email' => $user->email]));
+            event(new SlotChanged($slot, ['status' => 'taken', 'admin_assigned' => true, 'name' => $user->name, 'email' => $user->email]));
             $request->session()->flash('success', 'You added '.$username.' to this shift');
         }
         return redirect('/event/'.$slot->event->id);
