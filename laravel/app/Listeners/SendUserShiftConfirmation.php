@@ -20,7 +20,7 @@ class SendUserShiftConfirmation
     }
 
     /**
-     * Send a user welcome email
+     * Send a user a confimation email for taken/assigned shift
      *
      * @param  SlotChanged  $event
      * @return void
