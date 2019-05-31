@@ -100,11 +100,24 @@ class SlotController extends Controller
         // Has somebody else already taken this slot?
         if(is_null($slot->user))
         {
+            $concurrentSlot = Slot::where('user_id', Auth::user()->id)
+                        ->where('start_date', $slot->start_date)
+                        ->where('start_time', '<', $slot->end_time)
+                        ->where('end_time', '>', $slot->start_time)
+                        ->first();
+
             $slot->user_id = Auth::user()->id;
             $slot->save();
 
             event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
-            $request->session()->flash('success', 'You signed up for a volunteer shift.');
+            if($concurrentSlot)
+            {
+                $request->session()->flash('warning', 'You are currently also signed up elsewhere INSERT HERE');
+            }
+            else
+            {
+                $request->session()->flash('success', 'You signed up for a volunteer shift.');
+            }
 
             // If a password was used
             if($slot->schedule->password)
