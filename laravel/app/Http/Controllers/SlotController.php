@@ -100,44 +100,32 @@ class SlotController extends Controller
         // Has somebody else already taken this slot?
         if(is_null($slot->user))
         {
-            $concurrent_slot = Slot::where('user_id', Auth::user()->id)
-                                    ->where('start_date', $slot->start_date)
-                                    ->where('start_time', '<', $slot->end_time)
-                                    ->where('end_time', '>', $slot->start_time)
-                                    ->first();
-
-            if( $concurrent_slot && intval($request->input('warned-user-id')) !== Auth::user()->id )
+            $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, Auth::user());
+            if($concurrent_slot_warning)
             {
-                $layout = 'concurrent-slot';
-                $user_id = Auth::user()->id;
-                $concurrent_slot_id = $concurrent_slot->id;
-
-                $warning_data = compact('layout', 'user_id', 'concurrent_slot_id');
-
-                $request->session()->flash('warning', $warning_data);
-                return back();
+                return $concurrent_slot_warning;
             }
-            else
+
+
+
+            $slot->user_id = Auth::user()->id;
+            $slot->save();
+
+            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
+            $request->session()->flash('success', 'You signed up for a volunteer shift.');
+
+            // If a password was used
+            if($slot->schedule->password)
             {
-                $slot->user_id = Auth::user()->id;
-                $slot->save();
+                // Assign the user to any roles this shift requires
+                $roles = [];
 
-                event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
-                $request->session()->flash('success', 'You signed up for a volunteer shift.');
-
-                // If a password was used
-                if($slot->schedule->password)
+                foreach($slot->schedule->getRoles() as $role)
                 {
-                    // Assign the user to any roles this shift requires
-                    $roles = [];
-
-                    foreach($slot->schedule->getRoles() as $role)
-                    {
-                        $roles[] = $role->role->name;
-                    }
-
-                    UserRole::assign(Auth::user(), $roles);
+                    $roles[] = $role->role->name;
                 }
+
+                UserRole::assign(Auth::user(), $roles);
             }
         }
         else
@@ -216,33 +204,58 @@ class SlotController extends Controller
 
         if(is_null($slot->user))
         {
-            $concurrent_slot = Slot::where('user_id', $user->id)
-                                    ->where('start_date', $slot->start_date)
-                                    ->where('start_time', '<', $slot->end_time)
-                                    ->where('end_time', '>', $slot->start_time)
-                                    ->first();
-
-            if( $concurrent_slot && intval($request->input('warned-user-id')) !== $user->id )
+            $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, $user, true);
+            if($concurrent_slot_warning)
             {
-                $layout = 'concurrent-slot';
-                $user_id = $user->id;
-                $user_name = $user_name;
-                $concurrent_slot_id = $concurrent_slot->id;
-                $admin = true;
-
-                $warning_data = compact('layout', 'user_id', 'user_name', 'concurrent_slot_id', 'admin');
-
-                $request->session()->flash('warning', $warning_data);
-                return back();
+                return $concurrent_slot_warning;
             }
-            else
-            {
-                $slot->user_id=$user->data->user_id;
-                $slot->save();
-                event(new SlotChanged($slot, ['status' => 'taken']));
-                $request->session()->flash('success', 'You added '.$user_name.' to this shift');
-            }
+
+            $slot->user_id=$user->data->user_id;
+            $slot->save();
+            event(new SlotChanged($slot, ['status' => 'taken']));
+            $request->session()->flash('success', 'You added '.$user_name.' to this shift');
         }
         return redirect('/event/'.$slot->event->id);
+    }
+
+    /**
+     * Give a warning, if one hasn't already been delivered, to the client if a
+     * the user is trying to sign up or an admin is attempting to sign a user
+     * up for a slot one that overlaps with another slot the user is assigned
+     * to.
+     *
+     * @param  Request $request the client request
+     * @param  Slot    $slot    a currently unoccupied slot
+     * @param  User    $user    the user that will fill the slot
+     * @param  boolean $admin   whether or not this an admin request
+     * @return Response         a warning response or null
+     */
+    private function warnIfConcurrentSlotForUserExists(Request $request, Slot $slot, User $user, $admin=false)
+    {
+        //search for all user occupied slots that are concurrent with the given one
+        $concurrent_slot = Slot::where('user_id', $user->id)
+                                ->where('start_date', $slot->start_date)
+                                ->where('start_time', '<', $slot->end_time)
+                                ->where('end_time', '>', $slot->start_time)
+                                ->first();
+
+        //check if an overlapping slot for the user exists
+        if($concurrent_slot)
+        {
+            //check if the client has already been warned that the user has a concurrent slot
+            if(intval($request->input('concurrent-slot-warning-user-id')) !== $user->id)
+            {
+                $request->session()->flash('warning', [
+                    'layout' => 'concurrent-slot',
+                    'user' => $user,
+                    'slot' => $slot,
+                    'admin' => $admin,
+                    'user_id' => $user->id,
+                    'user_name' => Helpers::displayName($user, false),
+                    'concurrent_slot_id' => $concurrent_slot->id
+                ]);
+                return back();
+            }
+        }
     }
 }
