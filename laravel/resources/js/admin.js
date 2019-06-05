@@ -96,8 +96,8 @@ $(document).ready(function()
     $('.save-status').on('click', function()
     {
         var status = $(this).parents('.volunteer').find('.volunteer-status').value();
-        var csrf = $('.csrf-token').value();
-        var slot = $('.slot-number').value();
+        var csrf = $(this).parents('.volunteer').find('.csrf-token').value();
+        var slot = $(this).parents('.volunteer').find('.slot-number').value();
         var data =
         {
             status: status,
@@ -121,8 +121,10 @@ $(document).ready(function()
     // Is there a volunteer status field on this page?
     if($('.volunteer-status').el.length)
     {
-        // Populate status on page load
-        var status = $('.volunteer-status').data('status');
-        $('.volunteer-status').value(status);
+        // Populate status on page load for each one
+        $('.volunteer-status').each(function(){
+            var status = $(this).data('status');
+            $(this).value(status);
+        });
     }
 });

@@ -90,8 +90,12 @@ Route::post('/slot/{slot}/release', 'SlotController@release');
 //Routes for Admin
 Route::group(['middleware' => ['auth','admin']], function()
 {
-    Route::post('/slot/{slot}/edit','SlotController@edit');
     Route::post('/slot/{slot}/adminRelease', 'SlotController@adminRelease');
+});
+//Routes for Leads and admins
+Route::group(['middleware' => ['auth:admin','auth:lead']], function()
+{
+    Route::post('/slot/{slot}/edit','SlotController@edit');
 });
 
 // User profile routes

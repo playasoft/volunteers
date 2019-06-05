@@ -38,9 +38,6 @@
                             &mdash; <i>{{ $day->date->format('Y-m-d') }}</i>
                         </div>
 
-                        <div class="shift-wrap">
-        
-
                             <div class="department-wrap">
                                 @foreach($event->departments->sortBy('name') as $department)
                                     <?php
@@ -74,17 +71,64 @@
                                             @endcan
                                         </div>
 
-                                        <ul class="shifts">
                                             @foreach($department->schedule as $schedule)
-                                               
+                                                <?php
+                                                    if($schedule->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                                    continue;
+                                                ?>
+                                                    
+                                                    <div class="title">
+                                                        <b>{{$schedule->shift->name}}</b>
+                                                    </div>
+                                                    
+                                                <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Username</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Duration</th>
+                                                        <th>Performance</th>
+                                                    </tr>
+                                                </thead>
 
-                                                
+                                                <tbody>
+                                                    <?php $slots = $schedule->slots->where('start_date', $day->date->format('Y-m-d'))->where('user_id','!=',null)->sortBy('start_time');
+                                                    ?>
+
+                                                    @foreach($slots as $slot)
+                                                    <tr>
+                                                        <td>{{$slot->user['name']}}</td>
+                                                        <td>{{$slot->start_time}}</td>
+                                                        <td>{{$slot->end_time}}</td>
+                                                        <td>{{$schedule->duration}}</td>
+                                                        <td>
+                                                            <div class="value volunteer">
+                                                                <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+                                                                <input type="hidden" class="slot-number" value="{{ $slot->id }}">
+
+                                                                <select class="volunteer-status" data-status="{{ $slot->status }}">
+                                                                    <option value="">Select One</option>
+                                                                    <option value="flaked">Flaked</option>
+                                                                    <option value="late">Late</option>
+                                                                    <option value="ontime">On Time</option>
+                                                                    <option value="excellent">Excellent</option>
+                                                                </select>
+
+                                                                <span class="buttons">&ensp;
+                                                                    <a class="save-status">Save</a>&ensp;
+                                                                    <a class="cancel-status">Cancel</a>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                                </table>
                                             @endforeach
-                                        </ul>
                                     </div>
                                 @endforeach
                             </div> <!-- / .department-wrap -->
-                        </div> <!-- / .shift-wrap -->
                     </div>
                 @endforeach
             </div>
