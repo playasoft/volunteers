@@ -3,7 +3,8 @@
   "scripts": {
     "build": "./node_modules/.bin/webpack",
     "dev": "./node_modules/.bin/webpack --config webpack.dev.config.js --watch",
-    "test": "./vendor/bin/phpunit tests"
+    "test": "./vendor/bin/phpunit --debug tests",
+    "watch:test": "watch --color npm run --silent test"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
