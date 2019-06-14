@@ -1,13 +1,13 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\Department;
-use App\Models\Event;
 
 $factory->define(Department::class, function (Faker\Generator $faker)
 {
     return
     [
-        'event_id' => Event::all()->map->id->random(),
+        'event_id' => 1,
         'name' => $faker->company,
         'description' => $faker->bs
     ];

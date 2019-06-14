@@ -5,7 +5,7 @@ use App\Models\Event;
 
 $factory->define(Event::class, function (Faker\Generator $faker, $data)
 {
-    $start_date = Carbon::now();
+    $start_date = (isset($data['start_date']) ? $data['start_date'] : Carbon::now());
     return
     [
         'name' => $faker->sentence(2),
