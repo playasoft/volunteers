@@ -1,11 +1,6 @@
 <?php
 
-namespace Tests;
-
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Contracts\Console\Kernel;
-
-class TestCase extends BaseTestCase
+class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -23,7 +18,7 @@ class TestCase extends BaseTestCase
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Kernel::class)->bootstrap();
+        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
     }
