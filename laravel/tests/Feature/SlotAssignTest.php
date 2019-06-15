@@ -9,6 +9,7 @@ use App\Models\Shift;
 use App\Models\Slot;
 use App\Models\User;
 use App\Models\UserData;
+use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,7 +29,9 @@ class SlotAssignTest extends TestCase
             'user_id' => $this->user->id
         ]);
         $this->event = factory(Event::class)->create();
-        $this->department = factory(Department::class)->create();
+        $this->department = factory(Department::class)->create([
+            'event_id' => $this->event->id
+        ]);
         $this->shift = factory(Shift::class)->create();
         $this->schedule = factory(Schedule::class)->create();
         $this->slot = factory(Slot::class)->create();
