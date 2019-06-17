@@ -10,7 +10,7 @@ $factory->define(Role::class, function (Faker $faker)
     ];
 });
 
-$factory->state(Role::class, 'test', function (Faker $faker)
+$factory->state(Role::class, 'with_setup', function (Faker $faker)
 {
     return [
     ];

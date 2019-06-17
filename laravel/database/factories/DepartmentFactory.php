@@ -13,13 +13,13 @@ $factory->define(Department::class, function (Faker $faker)
     ];
 });
 
-$factory->state(Department::class, 'test', function (Faker $faker)
+$factory->state(Department::class, 'with_setup', function (Faker $faker)
 {
     return
         [
         'event_id' => function ()
         {
-            return factory(Event::class)->states('test')->create()->id;
+            return factory(Event::class)->states('with_setup')->create()->id;
         },
     ];
 });

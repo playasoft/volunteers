@@ -13,16 +13,16 @@ $factory->define(EventRole::class, function (Faker $faker)
     ];
 });
 
-$factory->state(EventRole::class, 'test', function (Faker $faker)
+$factory->state(EventRole::class, 'with_setup', function (Faker $faker)
 {
     return [
         'role_id' => function ()
         {
-            return factory(Role::class)->states('test')->create()->id;
+            return factory(Role::class)->states('with_setup')->create()->id;
         },
         'event_id' => function ()
         {
-            return factory(Event::class)->states('test')->create()->id;
+            return factory(Event::class)->states('with_setup')->create()->id;
         },
     ];
 });

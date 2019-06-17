@@ -13,16 +13,16 @@ $factory->define(UserRole::class, function (Faker $faker)
     ];
 });
 
-$factory->state(UserRole::class, 'test', function (Faker $faker)
+$factory->state(UserRole::class, 'with_setup', function (Faker $faker)
 {
     return [
         'role_id' => function ()
         {
-            return factory(Role::class)->states('test')->create()->id;
+            return factory(Role::class)->states('with_setup')->create()->id;
         },
         'user_id' => function ()
         {
-            return factory(User::class)->states('test')->create()->id;
+            return factory(User::class)->states('with_setup')->create()->id;
         },
     ];
 });

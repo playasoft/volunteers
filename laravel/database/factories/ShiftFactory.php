@@ -13,12 +13,12 @@ $factory->define(Shift::class, function (Faker $faker)
     ];
 });
 
-$factory->state(Shift::class, 'test', function (Faker $faker)
+$factory->state(Shift::class, 'with_setup', function (Faker $faker)
 {
     return [
         'department_id' => function ()
         {
-            return factory(Department::class)->states('test')->create()->id;
+            return factory(Department::class)->states('with_setup')->create()->id;
         },
         'event_id' => function ($shift)
         {

@@ -28,7 +28,7 @@ class TestCase extends BaseTestCase
         return $app;
     }
 
-    public static function factory($model_class) {
-        return factory($model_class)->states('test');
+    public static function factoryWithSetup($model_class) {
+        return factory($model_class)->states('with_setup');
     }
 }

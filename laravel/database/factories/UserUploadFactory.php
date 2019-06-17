@@ -14,16 +14,16 @@ $factory->define(UserUpload::class, function (Faker $faker)
     ];
 });
 
-$factory->state(UserUpload::class, 'test', function (Faker $faker)
+$factory->state(UserUpload::class, 'with_setup', function (Faker $faker)
 {
     return [
         'user_id' => function ()
         {
-            return factory(User::class)->states('test')->create()->id;
+            return factory(User::class)->states('with_setup')->create()->id;
         },
         'admin_id' => function ()
         {
-            return factory(User::class)->states('admin', 'test')->create()->id;
+            return factory(User::class)->states('admin', 'with_setup')->create()->id;
         },
     ];
 });

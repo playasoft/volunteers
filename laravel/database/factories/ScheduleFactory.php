@@ -31,17 +31,17 @@ $factory->define(Schedule::class, function (Faker $faker, $data)
     ];
 });
 
-$factory->state(Schedule::class, 'test', function (Faker $faker, $data)
+$factory->state(Schedule::class, 'with_setup', function (Faker $faker, $data)
 {
     return [
         'department_id' => function ()
         {
-            return factory(Department::class)->states('test')->create()->id;
+            return factory(Department::class)->states('with_setup')->create()->id;
         },
         'shift_id' => function ($schedule)
         {
             $department = Department::find($schedule['department_id']);
-            return factory(Shift::class)->states('test')->create([
+            return factory(Shift::class)->states('with_setup')->create([
                 'department_id' => $department->id,
                 'event_id' => $department->event->id,
             ])->id;

@@ -17,12 +17,12 @@ $factory->define(Slot::class, function (Faker $faker)
     ];
 });
 
-$factory->state(Slot::class, 'test', function (Faker $faker)
+$factory->state(Slot::class, 'with_setup', function (Faker $faker)
 {
     return [
         'schedule_id' => function ()
         {
-            return factory(Schedule::class)->states('test')->create()->id;
+            return factory(Schedule::class)->states('with_setup')->create()->id;
         },
     ];
 });

@@ -18,13 +18,13 @@ $factory->define(UserData::class, function (Faker $faker)
     ];
 });
 
-$factory->state(UserData::class, 'test', function (Faker $faker)
+$factory->state(UserData::class, 'with_setup', function (Faker $faker)
 {
     return
         [
         'user_id' => function ()
         {
-            return factory(User::class)->states('test')->create()->id;
+            return factory(User::class)->states('with_setup')->create()->id;
         },
     ];
 });

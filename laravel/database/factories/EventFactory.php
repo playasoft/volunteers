@@ -18,7 +18,7 @@ $factory->define(Event::class, function (Faker $faker)
     ];
 });
 
-$factory->state(Event::class, 'test', function (Faker $faker)
+$factory->state(Event::class, 'with_setup', function (Faker $faker)
 {
     return
         [
