@@ -49,8 +49,7 @@ class FactoryTest extends TestCase
      */
     public function event_role_factory_is_working()
     {
-        //WIP
-        //factory(EventRole::class)->states('with-setup')->create();
+        factory(EventRole::class)->states('with-setup')->create();
         $this->assertTrue(true); //tests no exception thrown
     }
 
