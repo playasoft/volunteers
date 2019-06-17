@@ -1,20 +1,27 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\Shift;
-use App\Models\Event;
 use App\Models\Department;
+use App\Models\Event;
+use App\Models\Shift;
+use Faker\Generator as Faker;
 
-$factory->define(Shift::class, function (Faker\Generator $faker)
+$factory->define(Shift::class, function (Faker $faker)
 {
-    return
-    [
+    return [
         'name' => $faker->jobTitle,
         'description' => $faker->bs,
-        'department_id' => function() {
-            return factory(Department::class)->create()->id;
+    ];
+});
+
+$factory->state(Shift::class, 'test', function (Faker $faker)
+{
+    return [
+        'department_id' => function ()
+        {
+            return factory(Department::class)->states('test')->create()->id;
         },
-        'event_id' => function($shift) {
+        'event_id' => function ($shift)
+        {
             return Department::find($shift['department_id'])->event->id;
         },
     ];
