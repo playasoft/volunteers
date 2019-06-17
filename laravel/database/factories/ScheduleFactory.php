@@ -16,19 +16,34 @@ $factory->define(Schedule::class, function (Faker\Generator $faker, $data)
     $start_datetime = Carbon::tomorrow();
     $end_datetime = $start_datetime->copy()->addWeeks($faker->randomDigitNotNull);
 
-    $duration = CarbonInterval::hours($faker->numberBetween($duration_min,$duration_max));
+    $duration = Carbon::createFromTime($faker->numberBetween($duration_min,$duration_max));
     $start_time = Carbon::createFromTime($faker->numberBetween(0,23));
-    $end_time = $start_time->addHours($duration);
+    $end_time = $start_time->addHours($duration->hour);
 
     return
         [
-        'department_id' => Department::all()->map->id->random(), //kill
-        'shift_id' => Shift::all()->map->id->random(), //kill
         'start_date' => $start_datetime->format('Y-m-d'),
         'end_date' => $end_datetime->format('Y-m-d'),
         'start_time' => $start_time->format('H:M:S'),
         'end_time' => $end_time->format('H:M:S'),
-        'duration' => $duration->format('%H:%M:%S'),
+        'duration' => $duration->format('H:M:S'),
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
+    ];
+});
+
+$factory->state(Schedule::class, 'with-setup', function (Faker\Generator $faker, $data)
+{
+    return
+        [
+        'department_id' => function() {
+            return factory(Department::class)->states('with-setup')->create()->id;
+        },
+        'shift_id' => function($schedule) {
+            $department = Department::find($schedule['department_id']);
+            return factory(Shift::class)->states('with-setup')->create([
+                'department_id' => $department->id,
+                'event_id' => $department->event->id
+            ])->id;
+        }
     ];
 });

@@ -18,7 +18,7 @@ $factory->state(Department::class, 'with-setup', function (Faker\Generator $fake
         [
         'event_id' => function ()
         {
-            return factory(Event::class)->create()->id;
+            return factory(Event::class)->states('with-setup')->create()->id;
         },
     ];
 });
