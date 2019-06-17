@@ -6,7 +6,7 @@ use App\Models\Shift;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-$factory->define(Schedule::class, function (Faker $faker, $data)
+$factory->define(Schedule::class, function (Faker $faker)
 {
     $duration_min = 2; //hours
     $duration_max = 8; //hours
@@ -31,7 +31,7 @@ $factory->define(Schedule::class, function (Faker $faker, $data)
     ];
 });
 
-$factory->state(Schedule::class, 'with_setup', function (Faker $faker, $data)
+$factory->state(Schedule::class, 'with_setup', function (Faker $faker)
 {
     return [
         'department_id' => function ()

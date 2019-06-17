@@ -27,7 +27,7 @@ $factory->state(User::class, 'admin', function (Faker $faker)
     return
         [
     ];
-})->afterCreating(User::class, function ($user, $faker)
+})->afterCreating(User::class, function (User $user, Faker $faker)
 {
     $admin_role = Role::where('name', 'admin')->first();
     if (!$admin_role)
@@ -41,10 +41,3 @@ $factory->state(User::class, 'admin', function (Faker $faker)
         'user_id' => $user->id,
     ]));
 });
-
-// $factory->afterCreatingState(User::class, 'admin', function ($user, Faker\Generator $faker)
-// {
-//     $user->roles()->save(factory(UserRole::class)->make([
-//         'name' => 'admin'
-//     ]));
-// });

@@ -104,8 +104,9 @@ class FactoryTest extends TestCase
      */
     public function user_factory_is_working()
     {
-        $this->factoryWithSetup(User::class)->create();
+        $user = $this->factoryWithSetup(User::class)->create();
         $this->assertTrue(true); //tests no exception thrown
+        $this->assertTrue($user->roles->isEmpty());
     }
 
     /**
