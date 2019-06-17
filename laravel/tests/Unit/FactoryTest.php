@@ -27,8 +27,8 @@ class FactoryTest extends TestCase
      */
     public function department_factory_is_working()
     {
-        $this->factoryWithSetup(Department::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $department = $this->factoryWithSetup(Department::class)->create();
+        $this->assertNotNull($department);
     }
 
     /**
@@ -38,8 +38,8 @@ class FactoryTest extends TestCase
      */
     public function event_factory_is_working()
     {
-        $this->factoryWithSetup(Event::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $event = $this->factoryWithSetup(Event::class)->create();
+        $this->assertNotNull($event);
     }
 
     /**
@@ -49,8 +49,8 @@ class FactoryTest extends TestCase
      */
     public function event_role_factory_is_working()
     {
-        $this->factoryWithSetup(EventRole::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $event_role = $this->factoryWithSetup(EventRole::class)->create();
+        $this->assertNotNull($event_role);
     }
 
     /**
@@ -60,8 +60,8 @@ class FactoryTest extends TestCase
      */
     public function role_factory_is_working()
     {
-        $this->factoryWithSetup(Role::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $role = $this->factoryWithSetup(Role::class)->create();
+        $this->assertNotNull($role);
     }
 
     /**
@@ -71,8 +71,8 @@ class FactoryTest extends TestCase
      */
     public function schedule_factory_is_working()
     {
-        $this->factoryWithSetup(Schedule::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $schedule = $this->factoryWithSetup(Schedule::class)->create();
+        $this->assertNotNull($schedule);
     }
 
     /**
@@ -82,8 +82,8 @@ class FactoryTest extends TestCase
      */
     public function shift_factory_is_working()
     {
-        $this->factoryWithSetup(Shift::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $shift = $this->factoryWithSetup(Shift::class)->create();
+        $this->assertNotNull($shift);
     }
 
     /**
@@ -93,8 +93,8 @@ class FactoryTest extends TestCase
      */
     public function slot_factory_is_working()
     {
-        $this->factoryWithSetup(Slot::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $slot = $this->factoryWithSetup(Slot::class)->create();
+        $this->assertNotNull($slot);
     }
 
     /**
@@ -105,7 +105,7 @@ class FactoryTest extends TestCase
     public function user_factory_is_working()
     {
         $user = $this->factoryWithSetup(User::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $this->assertNotNull($user);
         $this->assertTrue($user->roles->isEmpty());
     }
 
@@ -116,8 +116,8 @@ class FactoryTest extends TestCase
      */
     public function user_data_factory_is_working()
     {
-        $this->factoryWithSetup(UserData::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $user_data = $this->factoryWithSetup(UserData::class)->create();
+        $this->assertNotNull($user_data);
     }
 
     /**
@@ -127,8 +127,8 @@ class FactoryTest extends TestCase
      */
     public function user_role_factory_is_working()
     {
-        $this->factoryWithSetup(UserRole::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
+        $user_role = $this->factoryWithSetup(UserRole::class)->create();
+        $this->assertNotNull($user_role);
     }
 
     /**
@@ -138,8 +138,8 @@ class FactoryTest extends TestCase
      */
     public function user_upload_factory_is_working()
     {
-        $this->factoryWithSetup(UserUpload::class)->create();
-        $this->assertTrue(true); //tests no exception thrown
-    }
+        $user_upload = $this->factoryWithSetup(UserUpload::class)->create();
+        $this->assertNotNull($user_upload);
 
+    }
 }

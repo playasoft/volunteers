@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Role;
 use App\Models\User;
-use App\Models\UserRole;
 use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker)
@@ -20,24 +18,4 @@ $factory->state(User::class, 'with_setup', function (Faker $faker)
     return
         [
     ];
-});
-
-$factory->state(User::class, 'admin', function (Faker $faker)
-{
-    return
-        [
-    ];
-})->afterCreating(User::class, function (User $user, Faker $faker)
-{
-    $admin_role = Role::where('name', 'admin')->first();
-    if (!$admin_role)
-    {
-        $admin_role = factory(Role::class)->create([
-            'name' => 'admin',
-        ]);
-    }
-    $user->roles()->save(factory(UserRole::class)->make([
-        'role_id' => $admin_role->id,
-        'user_id' => $user->id,
-    ]));
 });
