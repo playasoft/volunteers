@@ -10,12 +10,11 @@ $factory->define(UserUpload::class, function (Faker $faker) {
         'description' => $faker->paragraph(),
         'file' => '',
         'notes' => $faker->sentence(),
-    ];
-});
-
-$factory->state(UserUpload::class, 'with-setup', function (Faker $faker) {
-    return [
-        'user_id' => factory(User::class)->states('with-setup')->create()->id,
-        'admin_id' => factory(User::class)->states('admin','with-setup')->create()->id,
+        'user_id' => function() {
+            return factory(User::class)->create()->id;
+        },
+        'admin_id' => function() {
+            return factory(User::class)->states('admin')->create()->id;
+        },
     ];
 });

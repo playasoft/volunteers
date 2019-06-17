@@ -14,13 +14,8 @@ $factory->define(UserData::class, function (Faker\Generator $faker)
         'emergency_name' => $faker->name,
         'emergency_phone' => $faker->phoneNumber,
         'camp' => "open camping",
-    ];
-});
-
-$factory->state(UserData::class, 'with-setup', function (Faker\Generator $faker)
-{
-    return
-        [
-        'user_id' => factory(User::class)->states('with-setup')->create()->id,
+        'user_id' => function() {
+            return factory(User::class)->create()->id;
+        }
     ];
 });

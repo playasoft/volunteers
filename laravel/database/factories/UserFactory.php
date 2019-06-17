@@ -16,13 +16,6 @@ $factory->define(User::class, function (Faker $faker)
     ];
 });
 
-$factory->state(User::class, 'with-setup', function (Faker $faker)
-{
-    return
-    [
-    ];
-});
-
 $factory->state(User::class, 'admin', function (Faker $faker)
 {
     return
