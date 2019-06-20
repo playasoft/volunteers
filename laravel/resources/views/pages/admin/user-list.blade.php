@@ -16,12 +16,13 @@
         
         <div class="form-group col-sm-3" style="padding-left:0; ">
             <select name="role" class="form-control filter-user" >
-                <option value="">--Filter Permissions--</option>
-                @if(!empty($_GET['role']))
-                    <option selected="true" value="{{$_GET['role'] or ''}}">{{$_GET['role']}}</option>
-                @endif
+                <option value="">Filter Permissions</option>
                 @foreach($userRoles as $role)
-                    <option value="{{ $role->name}}">{{$role->name}}</option>
+                    @if($_GET['role']==$role->id)
+                        <option selected="true" value="{{ $role->id }}">{{$role->name}}</option>
+                    @else
+                        <option value="{{ $role->id }}">{{$role->name}}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -54,6 +55,6 @@
         </tbody>
     </table>
 @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-{{ $users->links() }}
+{{ $users->appends(request()->input())->links() }}
 @endif()
 @endsection
