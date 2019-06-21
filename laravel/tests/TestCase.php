@@ -31,11 +31,11 @@ class TestCase extends BaseTestCase
     /**
      * create a factory with all dependencies automatically fulfilled
      *
-     * @param  String   $model_class    the models class name
-     * @return Factory                  the setup factory
+     * @param  String   $model_class_name   the models class name
+     * @return Factory                      the setup factory
      */
-    public static function factoryWithSetup($model_class)
+    public static function factoryWithSetup($model_class_name)
     {
-        return factory($model_class)->states('with_setup');
+        return factory($model_class_name)->states('with_setup');
     }
 }
