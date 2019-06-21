@@ -21,7 +21,8 @@ $factory->define(Schedule::class, function (Faker $faker)
     $start_time = Carbon::createFromTime($faker->numberBetween(0, 23));
     $end_time = $start_time->addHours($duration->hour);
 
-    return [
+    return
+    [
         'start_date' => $start_datetime->format('Y-m-d'),
         'end_date' => $end_datetime->format('Y-m-d'),
         'start_time' => $start_time->format('H:M:S'),
@@ -33,7 +34,8 @@ $factory->define(Schedule::class, function (Faker $faker)
 
 $factory->state(Schedule::class, 'with_setup', function (Faker $faker)
 {
-    return [
+    return
+    [
         'department_id' => function ()
         {
             return factory(Department::class)->states('with_setup')->create()->id;

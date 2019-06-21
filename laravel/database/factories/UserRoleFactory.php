@@ -7,7 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(UserRole::class, function (Faker $faker)
 {
-    return [
+    return
+    [
         'foreign_id' => 0,
         'foreign_type' => '',
     ];
@@ -15,7 +16,8 @@ $factory->define(UserRole::class, function (Faker $faker)
 
 $factory->state(UserRole::class, 'with_setup', function (Faker $faker)
 {
-    return [
+    return
+    [
         'role_id' => function ()
         {
             return factory(Role::class)->states('with_setup')->create()->id;

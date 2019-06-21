@@ -9,7 +9,8 @@ $factory->define(Slot::class, function (Faker $faker)
     $row_min = 1;
     $row_max = 3;
 
-    return [
+    return
+    [
         'start_date' => $faker->dateTimeThisYear->format('Y-m-d'),
         'start_time' => $faker->time('H:i'),
         'end_time' => $faker->time('H:i'),
@@ -19,7 +20,8 @@ $factory->define(Slot::class, function (Faker $faker)
 
 $factory->state(Slot::class, 'with_setup', function (Faker $faker)
 {
-    return [
+    return
+    [
         'schedule_id' => function ()
         {
             return factory(Schedule::class)->states('with_setup')->create()->id;

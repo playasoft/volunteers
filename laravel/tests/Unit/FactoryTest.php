@@ -106,7 +106,6 @@ class FactoryTest extends TestCase
     {
         $user = $this->factoryWithSetup(User::class)->create();
         $this->assertNotNull($user);
-        $this->assertTrue($user->roles->isEmpty());
     }
 
     /**
@@ -140,6 +139,5 @@ class FactoryTest extends TestCase
     {
         $user_upload = $this->factoryWithSetup(UserUpload::class)->create();
         $this->assertNotNull($user_upload);
-
     }
 }

@@ -9,7 +9,7 @@ $factory->define(Event::class, function (Faker $faker)
     $start_datetime = Carbon::tomorrow();
     $end_datetime = $start_datetime->copy()->addWeeks($faker->randomDigitNotNull);
     return
-        [
+    [
         'name' => $faker->unique()->sentence(2),
         'description' => $faker->paragraph(),
         'image' => '', //empty path
@@ -21,6 +21,6 @@ $factory->define(Event::class, function (Faker $faker)
 $factory->state(Event::class, 'with_setup', function (Faker $faker)
 {
     return
-        [
+    [
     ];
 });
