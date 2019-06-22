@@ -12,16 +12,9 @@ $factory->define(UserUpload::class, function (Faker $faker)
         'description' => $faker->paragraph(),
         'file' => '',
         'notes' => $faker->sentence(),
-    ];
-});
-
-$factory->state(UserUpload::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
         'user_id' => function ()
         {
-            return factory(User::class)->states('with_setup')->create()->id;
+            return factory(User::class)->create()->id;
         },
     ];
 });

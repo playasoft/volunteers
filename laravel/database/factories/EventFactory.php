@@ -17,10 +17,3 @@ $factory->define(Event::class, function (Faker $faker)
         'end_date' => $end_datetime->format('Y-m-d'),
     ];
 });
-
-$factory->state(Event::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
-    ];
-});

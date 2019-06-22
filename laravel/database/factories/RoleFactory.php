@@ -10,10 +10,3 @@ $factory->define(Role::class, function (Faker $faker)
         'name' => $faker->unique()->jobTitle,
     ];
 });
-
-$factory->state(Role::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
-    ];
-});

@@ -18,7 +18,7 @@ class ExampleTest extends TestCase
      *
      * Use...
      *
-     *      $this->factoryWithSetup($model_class);
+     *      factory($model_class);
      *
      * ...when a test calls for a particular model to use.
      * This minimizes the test code you need to write by
@@ -29,9 +29,6 @@ class ExampleTest extends TestCase
      * PHPUnit is used as the prime testing framework for
      * assertions in Feature and Unit test. Browser tests use
      * PHPUnit and a Laravel Dusk.
-     *
-     * NOTE: Factories must have a written "with_setup" state
-     * that support full dependency fill.
      *
      * NOTE: If tests require a complex setup, consider "seeders".
      * See the ExampleSeeder for more info.
@@ -46,7 +43,7 @@ class ExampleTest extends TestCase
         $user_id = 1; //first autoincrement id
 
         //When
-        $user = $this->factoryWithSetup(User::class)->create([
+        $user = factory(User::class)->create([
             'id' => $user_id,
         ]);
 

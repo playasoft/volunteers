@@ -29,21 +29,14 @@ $factory->define(Schedule::class, function (Faker $faker)
         'end_time' => $end_time->format('H:M:S'),
         'duration' => $duration->format('H:M:S'),
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
-    ];
-});
-
-$factory->state(Schedule::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
         'department_id' => function ()
         {
-            return factory(Department::class)->states('with_setup')->create()->id;
+            return factory(Department::class)->create()->id;
         },
         'shift_id' => function ($schedule)
         {
             $department = Department::find($schedule['department_id']);
-            return factory(Shift::class)->states('with_setup')->create([
+            return factory(Shift::class)->create([
                 'department_id' => $department->id,
                 'event_id' => $department->event->id,
             ])->id;

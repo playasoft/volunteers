@@ -15,16 +15,9 @@ $factory->define(Slot::class, function (Faker $faker)
         'start_time' => $faker->time('H:i'),
         'end_time' => $faker->time('H:i'),
         'row' => $faker->numberBetween($row_min, $row_max),
-    ];
-});
-
-$factory->state(Slot::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
         'schedule_id' => function ()
         {
-            return factory(Schedule::class)->states('with_setup')->create()->id;
+            return factory(Schedule::class)->create()->id;
         },
     ];
 });

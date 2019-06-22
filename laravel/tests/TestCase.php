@@ -27,15 +27,4 @@ class TestCase extends BaseTestCase
 
         return $app;
     }
-
-    /**
-     * create a factory with all dependencies automatically fulfilled
-     *
-     * @param  String   $model_class_name   the models class name
-     * @return Factory                      the setup factory
-     */
-    public static function factoryWithSetup($model_class_name)
-    {
-        return factory($model_class_name)->states('with_setup');
-    }
 }

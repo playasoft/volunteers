@@ -11,20 +11,13 @@ $factory->define(UserRole::class, function (Faker $faker)
     [
         'foreign_id' => 0,
         'foreign_type' => '',
-    ];
-});
-
-$factory->state(UserRole::class, 'with_setup', function (Faker $faker)
-{
-    return
-    [
         'role_id' => function ()
         {
-            return factory(Role::class)->states('with_setup')->create()->id;
+            return factory(Role::class)->create()->id;
         },
         'user_id' => function ()
         {
-            return factory(User::class)->states('with_setup')->create()->id;
+            return factory(User::class)->create()->id;
         },
     ];
 });

@@ -19,10 +19,10 @@ class ExampleSeeder extends Seeder
     {
         /**
          * If you wish to setup a model with dependencies met,
-         * use the "with_setup" state. Otherwise you'll have to
+         * use the "factory()". Otherwise you'll have to
          * fill out dependencies manually.
          */
-        factory(User::class)->states('with_setup')->create();
+        factory(User::class)->create();
 
         /**
          * If you want to break up repeating seeder functionality
