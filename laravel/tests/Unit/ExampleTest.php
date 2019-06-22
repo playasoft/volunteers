@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
+    //Use this to clear the database at the beginning of the test class
+    use RefreshDatabase;
+
     /**
      * Make sure to use either "test" in the method name
      * or use "@test" in the block comment above the test.
@@ -27,6 +30,12 @@ class ExampleTest extends TestCase
      * assertions in Feature and Unit test. Browser tests use
      * PHPUnit and a Laravel Dusk.
      *
+     * NOTE: Factories must have a written "with_setup" state
+     * that support full dependency fill.
+     *
+     * NOTE: If tests require a complex setup, consider "seeders".
+     * See the ExampleSeeder for more info.
+     *
      * @test
      *
      * @return void
@@ -34,16 +43,16 @@ class ExampleTest extends TestCase
     public function testExample()
     {
         //Given
-        $user_name = 'Frank the Tester';
+        $user_id = 1; //first autoincrement id
 
         //When
         $user = $this->factoryWithSetup(User::class)->create([
-            'name' => $user_name,
+            'id' => $user_id,
         ]);
 
         //Then
         $this->assertDatabaseHas('users', [
-            'name' => $user_name,
+            'id' => $user_id,
         ]);
     }
 }
