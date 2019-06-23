@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\User;
+
 class Helpers
 {
     /**
@@ -13,7 +15,7 @@ class Helpers
      * @param  string $alternative  the alternative display name
      * @return string               the appropriate display name
      */
-    public static function displayName($user, $alternative='')
+    public static function displayName(User $user, $alternative=false)
     {
         // assume the display name will be the alternative name
         $display_name = $alternative;

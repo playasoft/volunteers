@@ -34,8 +34,15 @@ class TestCase extends BaseTestCase
      * @param  String   $model_class_name   the models class name
      * @return Factory                      the setup factory
      */
-    public static function factoryWithSetup($model_class_name)
+    public static function factoryWithSetup($model_class_name, $count=1)
     {
-        return factory($model_class_name)->states('with_setup');
+        if($count > 1)
+        {
+            return factory($model_class_name, $count)->states('with_setup');
+        }
+        else
+        {
+            return factory($model_class_name)->states('with_setup');
+        }
     }
 }
