@@ -1,6 +1,11 @@
 <?php
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase
+namespace Tests;
+
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+
+class TestCase extends BaseTestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -16,10 +21,21 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make(Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    /**
+     * create a factory with all dependencies automatically fulfilled
+     *
+     * @param  String   $model_class_name   the models class name
+     * @return Factory                      the setup factory
+     */
+    public static function factoryWithSetup($model_class_name)
+    {
+        return factory($model_class_name)->states('with_setup');
     }
 }

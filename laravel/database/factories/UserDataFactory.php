@@ -1,9 +1,10 @@
 <?php
 
-use Carbon\Carbon;
+use App\Models\User;
 use App\Models\UserData;
+use Faker\Generator as Faker;
 
-$factory->define(UserData::class, function (Faker\Generator $faker)
+$factory->define(UserData::class, function (Faker $faker)
 {
     return
     [
@@ -14,5 +15,16 @@ $factory->define(UserData::class, function (Faker\Generator $faker)
         'emergency_name' => $faker->name,
         'emergency_phone' => $faker->phoneNumber,
         'camp' => "open camping",
+    ];
+});
+
+$factory->state(UserData::class, 'with_setup', function (Faker $faker)
+{
+    return
+    [
+        'user_id' => function ()
+        {
+            return factory(User::class)->states('with_setup')->create()->id;
+        },
     ];
 });
