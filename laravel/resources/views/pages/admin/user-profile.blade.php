@@ -2,6 +2,8 @@
 
 use App\Helpers;
 
+$display_name = Helpers::displayName($user, 'Not Provided');
+
 ?>
 
 @extends('app')
@@ -30,7 +32,7 @@ use App\Helpers;
 
         <div class="row">
             <div class="col-sm-2 title">Burner Name</div>
-            <div class="col-sm-10 value">{{ Helpers::displayName($user, 'Not Provided') }}</div>
+            <div class="col-sm-10 value">{{ $display_name }}</div>
         </div>
 
         <div class="row">

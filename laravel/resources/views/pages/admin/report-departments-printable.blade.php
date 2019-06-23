@@ -4,8 +4,6 @@ use Carbon\Carbon;
 
 use App\Helpers;
 
-$display_name = (isset($slot)) ? Helpers::displayName($slot->user) : '';
-
 ?>
 
 <style>
@@ -97,7 +95,7 @@ $display_name = (isset($slot)) ? Helpers::displayName($slot->user) : '';
                             @endif
                         </td>
                         <td><b>{{ $slot->user->data->full_name or '' }}</b></td>
-                        <td><b>{{ $display_name }}</b></td>
+                        <td><b>{{ Helpers::displayName($slot->user) }}</b></td>
                         <td class="icon">◯</td>
                         <td class="icon">◯</td>
                     </tr>

@@ -8,20 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Slot;
+use ErrorException;
 
 class ReportsTest extends TestCase
 {
     use RefreshDatabase;
-
-    /**
-     * [setUp description]
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-
-    }
 
     /**
      * @test
@@ -30,6 +21,8 @@ class ReportsTest extends TestCase
      */
     public function get_printable_department_reports()
     {
+        // $this->expectException(ErrorException::class);
+
         // Given
         $admin = $this->factoryWithSetup(User::class)->states('admin')->create();
         $this->actingAs($admin);
@@ -50,7 +43,11 @@ class ReportsTest extends TestCase
         ]);
 
         // Then
+        if($response->exception)
+        {
+            throw $response->exception;
+        }
+        // dd($response->exception);
         $response->assertStatus(200);
-        $this->assertNotNull($response->getContent());
     }
 }

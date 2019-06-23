@@ -109,11 +109,11 @@ class DisplayNameTest extends TestCase
      *
      * @return void
      */
-    public function display_name_is_alternative_name_if_given_and_no_burner_name_exists()
+    public function display_name_is_alternative_name_when_no_user_is_given()
     {
         // Given
         $alternative_name = 'The User';
-        $user = $this->factoryWithSetup(User::class)->create();
+        $user = null;
 
         // When
         $display_name = Helpers::displayName($user, $alternative_name);
