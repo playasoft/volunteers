@@ -37,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SlotChanged' =>
         [
             'App\Listeners\SendAdminRemovedShift',
+            'App\Listeners\SendUserShiftConfirmation',
         ],
     ];
 
