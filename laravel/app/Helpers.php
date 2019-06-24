@@ -13,21 +13,25 @@ class Helpers
      * @param  string $alternative  the alternative display name
      * @return string               the appropriate display name
      */
-    public static function displayName($user, $alternative='')
+    public static function displayName($user, string $alternative = '')
     {
-        // assume the display name will be the alternative name
-        $display_name = $alternative;
+        if ($user === null)
+        {
+            return $alternative;
+        }
+
+        // assume the display name will be the user name
+        $display_name = $user->name;
+
         // if there exists a burner name, use it as the display name instead.
-        if (!is_null($user->data) && !is_null($user->data->burner_name)) {
-            if (trim($user->data->burner_name) !== "") {
+        if (!is_null($user->data) && !is_null($user->data->burner_name))
+        {
+            if (trim($user->data->burner_name) !== "")
+            {
                 $display_name = $user->data->burner_name;
             }
         }
-        // if there isn't a burner name, use the user name instead if there is
-        // no alternative ($alternative === false)
-        if ($display_name === $alternative && $alternative === false) {
-            $display_name = $user->name;
-        }
+
         return $display_name;
     }
 }
