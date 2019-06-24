@@ -147,15 +147,15 @@ class Schedule extends Model
         return $input;
     }
 
-    // Helper function to format timestamps before displaying them in forms
+    // Helper function to format timestamps before submitting them to the server
     public function formatTimes()
     {
         $start = date_parse_from_format('H:i', $this->start_time);
         $end = date_parse_from_format('H:i', $this->end_time);
         $duration = date_parse_from_format('H:i', $this->duration);
 
-        $this->start_time = $start['hour'] . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+        $this->start_time = str_pad($start['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($start['minute'], 2, 0, STR_PAD_LEFT);
+        $this->duration = str_pad($duration['hour'], 2, 0, STR_PAD_LEFT) . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
         $this->end_time = $end['hour'] . ":" . str_pad($end['minute'], 2, 0, STR_PAD_LEFT);
-        $this->duration = $duration['hour'] . ":" . str_pad($duration['minute'], 2, 0, STR_PAD_LEFT);
     }
 }
