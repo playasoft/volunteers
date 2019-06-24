@@ -174,7 +174,7 @@ class SlotController extends Controller
     {
         if(!is_null($slot->user))
         {
-            $username = Helpers::displayName($slot->user, false);
+            $username = Helpers::displayName($slot->user);
 
             $slot->user_id = null;
             $slot->save();
@@ -194,7 +194,7 @@ class SlotController extends Controller
 
         if(is_null($slot->user))
         {
-            $username = Helpers::displayName($user, false);
+            $username = Helpers::displayName($user);
 
             $slot->user_id=$user->data->user_id;
             $slot->save();
