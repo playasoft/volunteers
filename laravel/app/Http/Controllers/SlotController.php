@@ -111,7 +111,7 @@ class SlotController extends Controller
             $slot->user_id = Auth::user()->id;
             $slot->save();
 
-            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
+            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name, 'email' => Auth::user()->email]));
             $request->session()->flash('success', 'You signed up for a volunteer shift.');
 
             // If a password was used
@@ -182,7 +182,7 @@ class SlotController extends Controller
     {
         if(!is_null($slot->user))
         {
-            $user_name = Helpers::displayName($slot->user, false);
+            $username = Helpers::displayName($slot->user);
 
             $slot->user_id = null;
             $slot->save();
@@ -212,7 +212,7 @@ class SlotController extends Controller
 
             $slot->user_id=$user->data->user_id;
             $slot->save();
-            event(new SlotChanged($slot, ['status' => 'taken']));
+            event(new SlotChanged($slot, ['status' => 'taken', 'admin_assigned' => true, 'name' => $user->name, 'email' => $user->email]));
             $request->session()->flash('success', 'You added '.$user_name.' to this shift');
         }
         return redirect('/event/'.$slot->event->id);
