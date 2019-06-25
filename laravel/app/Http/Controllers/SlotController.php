@@ -66,6 +66,8 @@ class SlotController extends Controller
             return redirect('/profile/data/edit');
         }
 
+        $this->warnIfConcurrentSlotForUserExists($request, $slot, Auth::user());
+
         return view('pages/slot/view', compact('slot'));
     }
 
@@ -103,7 +105,7 @@ class SlotController extends Controller
             $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, Auth::user());
             if($concurrent_slot_warning)
             {
-                return $concurrent_slot_warning;
+                return back();
             }
 
 
@@ -207,7 +209,7 @@ class SlotController extends Controller
             // $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, $user, true);
             // if($concurrent_slot_warning)
             // {
-            //     return $concurrent_slot_warning;
+            //     return back();
             // }
 
             $slot->user_id=$user->data->user_id;
@@ -254,8 +256,9 @@ class SlotController extends Controller
                     'user_name' => Helpers::displayName($user, false),
                     'concurrent_slot_id' => $concurrent_slot->id
                 ]);
-                return back();
+                return true;
             }
+            return false;
         }
     }
 }
