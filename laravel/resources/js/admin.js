@@ -118,6 +118,29 @@ $(document).ready(function()
         $(this).parents('.volunteer').find('.buttons').attr('style', false);
     });
 
+    //volunteer review page
+    $('.volunteer-status-review').on('change',function()
+    {
+        var status = $(this).parents('.volunteer').find('.volunteer-status-review').value();
+        var csrf = $(this).parents('.volunteer').find('.csrf-token').value();
+        var slot = $(this).parents('.volunteer').find('.slot-number').value();
+        var data =
+        {
+            status: status,
+            _token: csrf
+        };
+
+        ajaxOptions.body = JSON.stringify(data);
+        fetch('/slot/'+ slot +'/edit', ajaxOptions);
+
+        var message = $(this).parents('.volunteer').find('.toast-message').style({visibility: 'visible', opacity: 1});
+        setTimeout(function()
+        {
+            clearTimeout()
+            message.style({visibility: 'none', opacity: 0});
+        },1000);
+    });
+
     // Is there a volunteer status field on this page?
     if($('.volunteer-status').el.length)
     {
@@ -125,6 +148,16 @@ $(document).ready(function()
         $('.volunteer-status').each(function(){
             var status = $(this).data('status');
             $(this).value(status);
+        });
+    }
+
+    // Are we on the volunteer status review page?
+    if($('.volunteer-status-review').el.length)
+    {
+        $('.volunteer-status-review').each(function(){
+            var status = $(this).data('status');
+            $(this).value(status);
+            $(this).parents('.volunteer').find('.toast-message').style({visibility: 'none', opacity: 0})
         });
     }
 });

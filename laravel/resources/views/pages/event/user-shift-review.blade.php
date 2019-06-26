@@ -73,7 +73,8 @@
 
                                             @foreach($department->schedule as $schedule)
                                                 <?php
-                                                    if($schedule->slots->where('start_date', $day->date->format('Y-m-d'))->isEmpty())
+                                                    if($schedule->slots->where('start_date', $day->date->format('Y-m-d'))->
+                                                        where('user_id','!=',null)->isEmpty())
                                                     continue;
                                                 ?>
                                                     
@@ -107,7 +108,7 @@
                                                                 <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
                                                                 <input type="hidden" class="slot-number" value="{{ $slot->id }}">
 
-                                                                <select class="volunteer-status" data-status="{{ $slot->status }}">
+                                                                <select class="volunteer-status-review" data-status="{{ $slot->status }}">
                                                                     <option value="">Select One</option>
                                                                     <option value="flaked">Flaked</option>
                                                                     <option value="late">Late</option>
@@ -115,9 +116,8 @@
                                                                     <option value="excellent">Excellent</option>
                                                                 </select>
 
-                                                                <span class="buttons">&ensp;
-                                                                    <a class="save-status">Save</a>&ensp;
-                                                                    <a class="cancel-status">Cancel</a>
+                                                                <span class="toast-message">&ensp;
+                                                                    <a href="#">Saved!</a>&ensp;
                                                                 </span>
                                                             </div>
                                                         </td>
