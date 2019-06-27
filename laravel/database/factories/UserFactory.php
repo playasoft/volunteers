@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker)
