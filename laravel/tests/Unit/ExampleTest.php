@@ -18,7 +18,7 @@ class ExampleTest extends TestCase
      *
      * Use...
      *
-     *      $this->factoryWithSetup($model_class);
+     *      factoryWithSetup($model_class);
      *
      * ...when a test calls for a particular model to use.
      * This minimizes the test code you need to write by
@@ -36,6 +36,11 @@ class ExampleTest extends TestCase
      * NOTE: If tests require a complex setup, consider "seeders".
      * See the ExampleSeeder for more info.
      *
+     * NOTE: using the "@test" directive in the comments is
+     * preferable to adding "test" in the method signature, since
+     * you can write much more human readable method names like...
+     *      public function users_name_is_bob()
+     *
      * @test
      *
      * @return void
@@ -46,7 +51,7 @@ class ExampleTest extends TestCase
         $user_id = 1; //first autoincrement id
 
         //When
-        $user = $this->factoryWithSetup(User::class)->create([
+        $user = factoryWithSetup(User::class)->create([
             'id' => $user_id,
         ]);
 

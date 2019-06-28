@@ -18,11 +18,18 @@ class ExampleSeeder extends Seeder
     public function run()
     {
         /**
-         * If you wish to setup a model with dependencies met,
-         * use the "with_setup" state. Otherwise you'll have to
-         * fill out dependencies manually.
+         * If you wish to setup a model without key depedencies met,
+         * use "factory()". This way you're more cognisant of how you
+         * build seeders for non-testing purposes.
          */
-        factory(User::class)->states('with_setup')->create();
+        factory(User::class)->create();
+
+        /**
+         * If you wish to setup a model with dependencies met,
+         * use the "with_setup" state. factoryWithSetup() is an
+         * alias for "factory(<CLASS_NAME>)->states('with_setup')".
+         */
+        factoryWithSetup(User::class)->create();
 
         /**
          * If you want to break up repeating seeder functionality

@@ -4,7 +4,7 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-$factory->define(Event::class, function (Faker $faker)
+$factory->define(Event::class, function (Faker $faker, array $data)
 {
     $start_datetime = Carbon::tomorrow();
     $end_datetime = $start_datetime->copy()->addWeeks($faker->randomDigitNotNull);
