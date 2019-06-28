@@ -81,7 +81,7 @@ look so they can adjust time in-between shifts, see any overlaps they may have
 missed, etc. Instead of inserting all manually, ```factory()``` does all this for
 you, while still making you aware of the dependencies between the what models
 you're using. Later if they want to edit the schedules, event name, etc. you can
-fill all that in via "overriding" without putting redundent work in ahead of time.
+fill all that by replace the ```factory()``` declarations with ```insert()```.
 
 
 ### Test Cases
