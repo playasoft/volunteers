@@ -121,7 +121,7 @@ class Send extends Command
         }
 
         echo "Sending daily email to user: {$user->email}\n";
-        Mail::send('emails/user-daily-digest', $slot_metadata, function ($message) use ($user)
+        Mail::send('emails/user-daily-digest', compact('slot_metadata'), function ($message) use ($user)
         {
             $message->to($user->email, $user->name)->subject('Daily Volunteer Digest - Some things you may want to look over...');
         });
