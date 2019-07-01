@@ -50,6 +50,8 @@ class SendUserShiftConfirmation
             {
                 $message->to($user_email, $user_name)->subject('Confirmation Email - ' . $shift_name . ' shift!');
             });
+
+            Notification::queue($user_email, 'email', $event_data);
         }
     }
 }
