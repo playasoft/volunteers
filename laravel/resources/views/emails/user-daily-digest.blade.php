@@ -8,7 +8,7 @@
 @each()
 
 @foreach($slot_metadata as $metadata)
-    @include($metadata->layout, $metadata)
+    @include('emails/'.$metadata->layout, $metadata)
     <br>
 @endforeach
 
