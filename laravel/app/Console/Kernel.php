@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands =
     [
+        \App\Console\Commands\Notifications\Send::class,
         \App\Console\Commands\PopulateScheduleDates::class,
         \App\Console\Commands\FixDuplicateRoles::class,
     ];
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->command('inspire')->hourly();
+        //$schedule->command('inspire')->hourly();
+        $schedule->command('notifications:send')->daily();
     }
 }
