@@ -61,6 +61,11 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 
 ## Writing Test Cases and Factories
 
+Create a ``` .env.testing ``` file for running tests in a 
+separate test database.
+
+**NOTE:** Use ``` npm run test ``` to run tests.
+
 Writing tests are a powerful way to minimize the amount of time you spend developing
 solutions by having checks to see if functionality still succeeds when adding or
 changing parts of the project while avoiding nonessential additions.
