@@ -26,7 +26,7 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
     $volunteer_max = 3;
 
     $start_datetime = Carbon::tomorrow();
-    $end_datetime = $start_datetime->copy()->addWeeks($faker->randomDigitNotNull);
+    $end_datetime = $start_datetime->copy()->addDays($faker->numberBetween(2,4));
 
     $duration = Carbon::createFromTime($faker->numberBetween($duration_min, $duration_max));
     $start_time = Carbon::createFromTime($faker->numberBetween(0, 23));
