@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers;
+
 $url = "/slot/{$slot->id}/take";
 
 $taken = false;
@@ -21,14 +23,14 @@ if(!empty($slot->user))
 
     if(Auth::check() && (Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')))
     {
-        $url = "/slot/{$slot->id}/adminRelease";
+        $adminUrl = "/slot/{$slot->id}/adminRelease";
     }
 }
 else
 {
     if(Auth::check() && Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
     {
-        $url = "/slot/{$slot->id}/adminAssign";
+        $adminUrl = "/slot/{$slot->id}/adminAssign";
     }
 }
 
@@ -92,7 +94,7 @@ else
                 <button type="submit" class="btn btn-danger">Release Shift</button>
             @else
                 <p>
-                    This slot has been taken by <b>{{ $slot->user->data->burner_name or $slot->user->name }}</b>.
+                    This slot has been taken by <b>{{ Helpers::displayName($slot->user) }}</b>.
                 </p>
 
                 @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead'))
@@ -109,7 +111,7 @@ else
 
                         <div class="row">
                             <div class="col-sm-2 title">Burner Name</div>
-                            <div class="col-sm-10 value">{{ $slot->user->data->burner_name or 'Not Provided' }}</div>
+                            <div class="col-sm-10 value">{{ Helpers::displayName($slot->user, 'Not Provided') }}</div>
                         </div>
 
                         <div class="row">
@@ -166,31 +168,32 @@ else
 
         <a href="/event/{{ $slot->event->id }}" class="btn btn-primary">Back to Event</a>
 
-        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && $taken)
+        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && $taken && $other)
         <p>
             Are you sure you want to remove this user for this shift?
             By releasing {{$slot->user->data->burner_name}}, their slot will be available for other people to take.
         </p>
-        <button type="submit" class="btn btn-danger">Release Shift</button>
+        <button formaction="{{ $adminUrl }}" type="submit" class="btn btn-danger">Release Shift</button>
         @endif
         @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && !$taken)
             <a class="btn btn-warning add-volunteer">Add Volunteer</a>
             <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
             <div class="row user-search hidden">
-                    <div class="col-md-11">
-                        @include('partials/form/text',
-                        [
-                            'name' => 'user-search',
-                            'label' => 'Search for a user',
-                            'placeholder' => 'rachel@apogaea.com',
-                            'help' => 'You can search by user ID, username, or email'
-                        ])
-                    </div>
+                <div class="col-md-11">
+                    @include('partials/form/text',
+                    [
+                        'name' => 'user-search',
+                        'label' => 'Search for a user',
+                        'placeholder' => 'rachel@apogaea.com',
+                        'help' => 'You can search by user ID, username, or email'
+                    ])
+                </div>
 
-                    <div class="col-md-1 search">
-                        <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
+                <div class="col-md-1 search">
+                    <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
             </div>
+
             <div class="user-wrap">
                 <div class="loading hidden">
                     Loading user data...
@@ -248,7 +251,7 @@ else
                             </tr>
                         </tbody>
                     </table>
-                    <button style="text-align: right;" class="btn btn-primary" type="submit">Assign User</button>
+                    <button formaction="{{ $adminUrl }}" class="btn btn-primary" type="submit">Assign User</button>
                 </div>
             </div>
         @endif

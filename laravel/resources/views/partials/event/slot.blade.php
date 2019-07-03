@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers;
+
 $class = "slot empty";
 $href = "/slot/{$slot->id}/view";
 $name = "";
@@ -17,18 +19,12 @@ if(is_null($slot->user))
 else
 {
     $class = "slot taken";
-    $name = $slot->user->name;
+    $name = Helpers::displayName($slot->user);
 
     // If the slot is taken by the current user, display a link to the release page
     if($slot->user->id === Auth::user()->id)
     {
         $class = "slot taken-by-current-user";
-    }
-
-    // If the user has profile data saved, and has a burner name
-    if(!is_null($slot->user->data) && !is_null($slot->user->data->burner_name))
-    {
-        $name = $slot->user->data->burner_name;
     }
 }
 
@@ -42,7 +38,7 @@ $start_date = new \Carbon\Carbon($slot->start_date);
 
 if($start_date->lt(\Carbon\Carbon::now()))
 {
-    if (!Auth::user()->hasRole('department-lead') && !Auth::user()->hasRole('admin')) 
+    if (!Auth::user()->hasRole('department-lead') && !Auth::user()->hasRole('admin'))
     {
         $href = "";
     }

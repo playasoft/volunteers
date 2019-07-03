@@ -1,3 +1,9 @@
+<?php
+
+use App\Helpers;
+
+?>
+
 @extends('app')
 
 @section('content')
@@ -22,7 +28,7 @@
             'label' => 'Burner Name',
             'placeholder' => 'Your name on the Playa',
             'help' => "This name will be shown to other users when you sign up for a shift",
-            'value' => (is_null($user->data)) ? '' : $user->data->burner_name
+            'value' => Helpers::displayName($user)
         ])
 
         @include('partials/form/text',

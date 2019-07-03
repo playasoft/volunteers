@@ -1,14 +1,16 @@
+
 <?php 
     $userRoles = \App\Models\Role::get();
 ?>
+
 @extends('app')
 
 @section('content')
     <h1>Registered Users </h1>
-
     <form style="display: flex; flex-wrap: wrap; flex-basis: 0; align-items: flex-start; justify-content: space-between;" method="GET" action="/users">
         <div class="col-sm-8 input-group">
             <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
+
         <div class="input-group-btn">
             <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </div>
@@ -46,7 +48,7 @@
                 <tr>
                     <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
                     <td>{{ $user->data->full_name or '' }}</td>
-                    <td>{{ $user->data->burner_name or '' }}</td>
+                    <td>{{ Helpers::displayName($user) }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ implode(", ", $user->getRoleNames()) }}</a></td>
                     <td>{{ $user->created_at->format('Y-m-d') }}</td>
