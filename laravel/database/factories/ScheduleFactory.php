@@ -6,8 +6,18 @@ use App\Models\Shift;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-$factory->define(Schedule::class, function (Faker $faker)
+$factory->define(Schedule::class, function (Faker $faker, array $data)
 {
+    if(env('APP_DEBUG') && !isset($data['department_id']))
+    {
+        Log::warning("Using Factory[Schedule] without setting department_id");
+    }
+
+    if(env('APP_DEBUG') && !isset($data['shift_id']))
+    {
+        Log::warning("Using Factory[Schedule] without setting shift_id");
+    }
+
     $duration_min = 2; //hours
     $duration_max = 8; //hours
 
