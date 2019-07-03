@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 class RoleSeeder extends Seeder
 {
     private $roles =
-        [
+    [
         'admin',
         'volunteer',
         'medical',

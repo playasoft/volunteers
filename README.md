@@ -182,8 +182,8 @@ given model but in it's own isolated strand of randomly generated models to
 support its existance. So how do we connect the two? We easily change it to...
 
 ```
-$schedule = factoryWithSetup(Schedule::class)->create();
-$slots = factoryWithSetup(Slot::class, 2)->create([
+$schedule = factory(Schedule::class)->create();
+$slots = factory(Slot::class, 2)->create([
   'schedule_id' => $schedule->id;
 ]);
 ```
@@ -222,10 +222,10 @@ class SlotTest extends TestCase
     public function slots_created_on_the_same_schedule_are_on_the_same_schedule()
     {
       // Given
-      $schedule = factoryWithSetup(Schedule::class)->create();
+      $schedule = factory(Schedule::class)->create();
 
       // When
-      $slots = factoryWithSetup(Slot::class, 2)->create([
+      $slots = factory(Slot::class, 2)->create([
         'schedule_id' => $schedule->id;
       ]);
 

@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 $factory->define(Event::class, function (Faker $faker, array $data)
 {
     $start_datetime = Carbon::tomorrow();
-    $end_datetime = $start_datetime->copy()->addWeeks($faker->randomDigitNotNull);
+    $end_datetime = $start_datetime->copy()->addDays($faker->numberBetween(3,7));
     return
     [
         'name' => $faker->unique()->sentence(2),

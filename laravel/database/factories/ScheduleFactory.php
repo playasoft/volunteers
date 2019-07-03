@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Department;
+use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Shift;
 use Carbon\Carbon;
@@ -8,12 +9,12 @@ use Faker\Generator as Faker;
 
 $factory->define(Schedule::class, function (Faker $faker, array $data)
 {
-    if(env('APP_DEBUG') && !isset($data['department_id']))
+    if (env('APP_DEBUG') && !isset($data['department_id']))
     {
         Log::warning("Using Factory[Schedule] without setting department_id");
     }
 
-    if(env('APP_DEBUG') && !isset($data['shift_id']))
+    if (env('APP_DEBUG') && !isset($data['shift_id']))
     {
         Log::warning("Using Factory[Schedule] without setting shift_id");
     }
@@ -39,9 +40,18 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
         'end_time' => $end_time->format('H:M:S'),
         'duration' => $duration->format('H:M:S'),
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
-        'department_id' => function ()
+        'department_id' => function ($schedule)
         {
-            return factory(Department::class)->create()->id;
+            $event_id = function () use ($schedule)
+            {
+                return factory(Event::class)->create([
+                    'start_date' => $schedule['start_date'],
+                    'end_date' => $schedule['end_date'],
+                ]);
+            };
+            return factory(Department::class)->create([
+                'event_id' => $event_id,
+            ])->id;
         },
         'shift_id' => function ($schedule)
         {
