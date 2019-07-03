@@ -238,13 +238,6 @@ class SlotTest extends TestCase
 }
 ```
 
-In actuality **this would still fail and should**. The functionality shouldn't
-even exist for defining the model at this point. You should be defining the
-expected behavior ahead of time in the test and then fill out the implementation
-later. This is called **Test Driven Development** or **TDD**. It's a fantastic
-tool to add to your development process if you haven't already and if you're ready
-you should look into it's bigger brother **Behavior Driven Development (BDD)**.
-
 ### Factories
 
 Writing factories is a great way to generate a lot of test data. When writing
