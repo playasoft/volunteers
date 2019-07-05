@@ -61,8 +61,13 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 
 ## Writing Test Cases and Factories
 
-Create a ``` .env.testing ``` file for running tests in a 
-separate test database.
+Create a ``` .env.testing ``` file for running tests in a separate 
+test database. After creating this file, you may also need to run 
+the following command before your settings will take effect:
+
+```
+php artisan config:cache --env=testing
+```
 
 **NOTE:** Use ``` npm run test ``` to run tests.
 
