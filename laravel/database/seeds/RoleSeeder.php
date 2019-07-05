@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Role;
+use Illuminate\Database\Seeder;
 
-class CreateRoles extends Seeder
+class RoleSeeder extends Seeder
 {
     private $roles =
     [
@@ -27,23 +27,23 @@ class CreateRoles extends Seeder
      */
     public function run()
     {
-        foreach($this->roles as $name)
+        foreach ($this->roles as $name)
         {
             try
             {
-                $role = new Role;
-                $role->name = $name;
-                $role->save();
+                factory(Role::class)->create([
+                    'name' => $name,
+                ]);
 
                 dump("New role created: {$name}");
             }
-            catch(Exception $exception)
+            catch (Exception $exception)
             {
                 // Get the MySQL error number
                 $error = $exception->getPrevious()->errorInfo[1];
 
                 // Duplicate?
-                if($error == 1062)
+                if ($error == 1062)
                 {
                     dump("Role already exists: {$name}");
                 }
