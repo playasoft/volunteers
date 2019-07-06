@@ -5,10 +5,8 @@
     Here's your daily dump of some weird stuff.
 </p>
 
-@each()
-
 @foreach($slot_metadata as $metadata)
-    @include('emails/'.$metadata->layout, $metadata)
+    @include('emails.'.$metadata['layout'], $metadata)
     <br>
 @endforeach
 

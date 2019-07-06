@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use Mail;
+use App\Models\Notification;
+use App\Models\User;
 use App\Events\SlotChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,8 +36,10 @@ class SendUserShiftConfirmation
             {
                 $admin_assigned = $event->change['admin_assigned'];
             }
-            
-            Notification::queue($user_email, 'email', [
+
+            $user = User::where('name', $event->change['name'])->first();
+
+            Notification::queue($user, 'email', [
                 'layout' => 'user-shift-confirmation',
                 'slot_id' => $event->slot->id,
                 'user_email' => $event->change['email'],

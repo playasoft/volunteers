@@ -116,8 +116,8 @@ class Send extends Command
             }
 
             $notification_ids[] = $notification->id;
-            $slot_ids[] = $slot->id;
-            $slot_metadata[] = $metadata;
+            $slot_ids[] = $slot['id'];
+            $slot_metadata[] = (array) $metadata;
         }
 
         echo "Sending daily email to user: {$user->email}\n";
