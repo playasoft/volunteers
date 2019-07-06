@@ -1,17 +1,19 @@
 <?php
 
-use Carbon\Carbon;
 use App\Models\Event;
+use Carbon\Carbon;
+use Faker\Generator as Faker;
 
-$factory->define(Event::class, function (Faker\Generator $faker, $data)
+$factory->define(Event::class, function (Faker $faker, array $data)
 {
-    $start_date = (isset($data['start_date']) ? $data['start_date'] : Carbon::now());
+    $start_datetime = Carbon::tomorrow();
+    $end_datetime = $start_datetime->copy()->addDays($faker->numberBetween(3,7));
     return
     [
-        'name' => $faker->sentence(2),
+        'name' => $faker->unique()->sentence(2),
         'description' => $faker->paragraph(),
-        'image' => '',
-        'start_date' => $start_date,
-        'end_date' => $start_date->copy()->addWeek()
+        'image' => '', //empty path
+        'start_date' => $start_datetime->format('Y-m-d'),
+        'end_date' => $end_datetime->format('Y-m-d'),
     ];
 });
