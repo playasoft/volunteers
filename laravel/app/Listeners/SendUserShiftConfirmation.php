@@ -40,6 +40,7 @@ class SendUserShiftConfirmation
             $user = User::where('name', $event->change['name'])->first();
 
             Notification::queue($user, 'email', [
+                'event' => 'slot_taken',
                 'layout' => 'user-shift-confirmation',
                 'slot_id' => $event->slot->id,
                 'user_email' => $event->change['email'],

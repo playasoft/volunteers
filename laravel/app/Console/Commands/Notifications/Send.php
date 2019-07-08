@@ -28,8 +28,7 @@ class Send extends Command
     // Map of notification events and their handler functions
     private $eventHandler =
     [
-        'SlotCreated' => 'dailyDigest',
-        'SlotUpdated' => 'dailyDigest'
+        'slot_taken' => 'slotDailyDigest'
     ];
 
     /**
@@ -58,8 +57,8 @@ class Send extends Command
 
             // Get all notifications for this user
             $notifications = Notification::where('user_to', $user_id)->where('type', 'email')->where('status', 'new')->get();
-            // $this->dispatchToHandler($user, $notifications); //NOTE: re-enable once you have more than slots to write about
-            $this->dailyDigest($user, $notifications);
+            $this->dispatchToHandler($user, $notifications); //NOTE: re-enable once you have more than slots to write about
+            // $this->dailyDigest($user, $notifications);
         }
     }
 
@@ -93,7 +92,7 @@ class Send extends Command
         }
     }
 
-    private function dailyDigest($user, $notifications)
+    private function slotDailyDigest($user, $notifications)
     {
         $notification_ids = [];
         $slot_ids = [];
