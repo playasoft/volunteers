@@ -14,6 +14,7 @@ $factory->define(Notification::class, function (Faker $faker, array $data) {
     return [
         'type' => 'info',
         'status' => 'new',
+        'layout' => 'notification-test',
         'metadata' => json_encode([
             'event' => 'test_event',
         ]),

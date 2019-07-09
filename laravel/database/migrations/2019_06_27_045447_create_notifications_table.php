@@ -17,8 +17,9 @@ class CreateNotificationsTable extends Migration
          {
              $table->increments('id');
              $table->enum('type', ['info', 'warning', 'email']);
-             $table->enum('status', ['new', 'sent']);
-             $table->text('metadata');
+             $table->enum('status', ['new', 'sent', 'canceled']);
+             $table->text('layout');
+             $table->json('metadata');
              $table->integer('user_from')->unsigned()->nullable();
              $table->foreign('user_from')->references('id')->on('users')->onDelete('set null');
              $table->integer('user_to')->unsigned();

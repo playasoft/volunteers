@@ -10,6 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NotificationTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      *

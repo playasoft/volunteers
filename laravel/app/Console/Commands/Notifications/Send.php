@@ -24,13 +24,7 @@ class Send extends Command
      * @var string
      */
     protected $description = 'Send queued notifications';
-
-    // Map of notification events and their handler functions
-    private $eventHandler =
-    [
-        'slot_taken' => 'slotDailyDigest'
-    ];
-
+    
     /**
      * Create a new command instance.
      *
@@ -56,71 +50,33 @@ class Send extends Command
             $user = User::find($user_id);
 
             // Get all notifications for this user
-            $notifications = Notification::where('user_to', $user_id)->where('type', 'email')->where('status', 'new')->get();
-            $this->dispatchToHandler($user, $notifications); //NOTE: re-enable once you have more than slots to write about
-            // $this->dailyDigest($user, $notifications);
+            $notifications = Notification::where('user_to', $user_id)
+                                ->where('type', 'email')->where('status', 'new')
+                                ->get();
+            $this->sendUserBatchMail($user, $notifications);
         }
     }
 
-    //Helper function which dispatches notifications to their handler functions
-    private function dispatchToHandler($user, $notifications)
-    {
-        $queue = [];
-
-        // Determine which event handler should handle these notifications
-        foreach($notifications as $notification)
-        {
-            $metadata = json_decode($notification->metadata);
-
-            if(isset($this->eventHandler[$metadata->event]))
-            {
-                $handler = $this->eventHandler[$metadata->event];
-
-                if(!isset($queue[$handler]))
-                {
-                    $queue[$handler] = [];
-                }
-
-                $queue[$handler][] = $notification;
-            }
-        }
-
-        // Now loop through the queue and call the handler functions
-        foreach($queue as $function => $data)
-        {
-            $this->{$function}($user, $data);
-        }
-    }
-
-    private function slotDailyDigest($user, $notifications)
+    //Helper function which dispatches notifications to their users
+    private function sendUserBatchMail($user, $notifications)
     {
         $notification_ids = [];
-        $slot_ids = [];
-        $slot_metadata = [];
+        $notification_metadata = [];
 
-        // Loop through all notifications and find the associated slot
+        // store layout in metadata and track notifications that are sent
         foreach($notifications as $notification)
         {
+            $layout = $notification->layout;
             $metadata = json_decode($notification->metadata);
-            $slot = Slot::find($metadata->slot_id);
 
-            // Prevent displaying older copies of the same slot (question asked and user responded on the same day)
-            if(in_array($slot->id, $slot_ids))
-            {
-                $other_slot = Slot::find($slot_ids[$slot->id]);
-                if($slot->created_at->lt($other_slot)) //if newer than other slot
-                {
-                    continue;
-                }
-            }
+            $metadata->layout = $layout;
 
             $notification_ids[] = $notification->id;
-            $slot_ids[] = $slot['id'];
-            $slot_metadata[] = (array) $metadata;
+            $notification_metadata[] = (array) $metadata;
         }
 
         echo "Sending daily email to user: {$user->email}\n";
-        Mail::send('emails/user-daily-digest', compact('slot_metadata'), function ($message) use ($user)
+        Mail::send('emails/user-daily-digest', compact('notification_metadata'), function ($message) use ($user)
         {
             $message->to($user->email, $user->name)->subject('Daily Volunteer Digest - Some things you may want to look over...');
         });

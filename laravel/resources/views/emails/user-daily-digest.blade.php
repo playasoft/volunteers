@@ -5,7 +5,7 @@
     Here's your daily dump of some weird stuff.
 </p>
 
-@foreach($slot_metadata as $metadata)
+@foreach($notification_metadata as $metadata)
     @include('emails.'.$metadata['layout'], $metadata)
     <br>
 @endforeach

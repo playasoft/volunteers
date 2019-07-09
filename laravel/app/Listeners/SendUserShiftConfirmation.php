@@ -39,9 +39,8 @@ class SendUserShiftConfirmation
 
             $user = User::where('name', $event->change['name'])->first();
 
-            Notification::queue($user, 'email', [
+            Notification::queue($user, 'email', 'user-shift-confirmation', [
                 'event' => 'slot_taken',
-                'layout' => 'user-shift-confirmation',
                 'slot_id' => $event->slot->id,
                 'user_email' => $event->change['email'],
                 'user_name' => $event->change['name'],
@@ -52,6 +51,17 @@ class SendUserShiftConfirmation
                 'end_time' => $event->slot->end_time,
                 'admin_assigned' => $admin_assigned,
             ]);
+        }
+        else
+        {
+            // Get the most recently created notification for the slot
+            $notification = Notification::where('user_to', $event->slot->user->id)
+                ->where('metadata->slot_id', $event->slot->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            $notification->status = 'canceled';
+            $notification->save();
         }
     }
 }

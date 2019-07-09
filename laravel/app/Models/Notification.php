@@ -18,7 +18,7 @@ class Notification extends Model
         return $this->belongsTo('App\Models\User', 'user_to');
     }
 
-    public static function send(User $user_to, $type, $metadata, User $user_from = null)
+    public static function send(User $user_to, $type, $layout, $metadata, User $user_from = null)
     {
         // Email template variables
         $templateVars = ['user' => $user_to];
@@ -33,8 +33,9 @@ class Notification extends Model
 
         $notification = new Notification;
         $notification->type = $type;
+        $notification->layout = $layout;
         $notification->status = 'new';
-        $notification->metadata = json_encode($metadata);
+        $notification->metadata = $metadata;
         $notification->user_to = $user_to->id;
         $notification->user_from = $user_from ? $user_from->id : null;
         $notification->save();
@@ -53,12 +54,13 @@ class Notification extends Model
         return $notification;
     }
 
-    public static function queue(User $user_to, $type, $metadata, User $user_from = null)
+    public static function queue(User $user_to, $type, $layout, $metadata, User $user_from = null)
     {
         $notification = new Notification;
         $notification->type = $type;
+        $notification->layout = $layout;
         $notification->status = 'new';
-        $notification->metadata = json_encode($metadata);
+        $notification->metadata = $metadata;
         $notification->user_to = $user_to->id;
         $notification->user_from = $user_from ? $user_from->id : null;
         $notification->save();
