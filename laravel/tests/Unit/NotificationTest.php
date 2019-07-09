@@ -40,7 +40,7 @@ class NotificationTest extends TestCase
 
         $this->assertDatabaseHas('notifications', [
             'id' => $notification->id,
-            'status' => 'sent'
+            'status' => 'sent',
         ]);
     }
 }

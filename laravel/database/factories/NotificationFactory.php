@@ -15,9 +15,9 @@ $factory->define(Notification::class, function (Faker $faker, array $data) {
         'type' => 'info',
         'status' => 'new',
         'layout' => 'notification-test',
-        'metadata' => json_encode([
+        'metadata' => [
             'event' => 'test_event',
-        ]),
+        ],
         'user_to' => function() {
             return factory(User::class)->create();
         },

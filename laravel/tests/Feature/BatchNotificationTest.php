@@ -31,7 +31,7 @@ class BatchNotificationTest extends TestCase
 
         $metadata = Notification::where('user_to', $user->id)->first()->metadata;
 
-        $this->assertEquals($metadata->slot_id,$slot->id);
+        $this->assertEquals($metadata['slot_id'],$slot->id);
     }
 
     /**

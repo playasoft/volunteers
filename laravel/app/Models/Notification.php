@@ -8,6 +8,10 @@ use Mail;
 
 class Notification extends Model
 {
+    protected $casts = [
+        'metadata' => 'array',    
+    ];
+
     public function from()
     {
         return $this->belongsTo('App\Models\User', 'user_from');

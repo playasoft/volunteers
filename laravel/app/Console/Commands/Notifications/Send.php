@@ -24,7 +24,7 @@ class Send extends Command
      * @var string
      */
     protected $description = 'Send queued notifications';
-    
+
     /**
      * Create a new command instance.
      *
@@ -67,12 +67,12 @@ class Send extends Command
         foreach($notifications as $notification)
         {
             $layout = $notification->layout;
-            $metadata = json_decode($notification->metadata);
+            $metadata = $notification->metadata;
 
-            $metadata->layout = $layout;
+            $metadata['layout'] = $layout;
 
             $notification_ids[] = $notification->id;
-            $notification_metadata[] = (array) $metadata;
+            $notification_metadata[] = $metadata;
         }
 
         echo "Sending daily email to user: {$user->email}\n";
