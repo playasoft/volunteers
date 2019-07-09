@@ -75,7 +75,7 @@ class Send extends Command
             $notification_metadata[] = $metadata;
         }
 
-        echo "Sending daily email to user: {$user->email}\n";
+        Log::info("Sending daily email to user: {$user->email}");
         Mail::send('emails/user-daily-digest', compact('notification_metadata'), function ($message) use ($user)
         {
             $message->to($user->email, $user->name)->subject('Daily Volunteer Digest - Some things you may want to look over...');
