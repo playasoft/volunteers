@@ -2,11 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use App\Jobs\SendUserMailJob;
 use App\Models\Notification;
-use Artisan;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class NotificationTest extends TestCase
 {
@@ -36,7 +35,7 @@ class NotificationTest extends TestCase
             'type' => 'email',
         ]);
 
-        Artisan::call('notifications:send');
+        SendUserMailJob::dispatchNow();
 
         $this->assertDatabaseHas('notifications', [
             'id' => $notification->id,
