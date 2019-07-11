@@ -27,8 +27,6 @@ class SlotControllerTest extends TestCase
         ]);
         $release_response = $this->actingAs($user)->post("/slot/$slot->id/release");
 
-        dd($release_response, $slot->start_date, $slot->start_time);
-
         // Then
         $this->assertDatabaseMissing('slots', [
             'id' => $slot->id,
