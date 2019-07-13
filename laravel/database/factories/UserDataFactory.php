@@ -7,8 +7,6 @@ use Faker\Generator as Faker;
 $factory->define(UserData::class, function (Faker $faker, array $data)
 {   
 
-    //shouldn't this be if we're in production, we shouldn't be creating a 
-    //user data without a user id?
     if(env('APP_DEBUG') && !isset($userId))
     {
         Log::warning("Using Factory[UserData] without setting user_id");
