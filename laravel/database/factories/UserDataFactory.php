@@ -5,11 +5,16 @@ use App\Models\UserData;
 use Faker\Generator as Faker;
 
 $factory->define(UserData::class, function (Faker $faker, array $data)
-{
-    if(env('APP_DEBUG') && !isset($data['user_id']))
+{   
+
+    //shouldn't this be if we're in production, we shouldn't be creating a 
+    //user data without a user id?
+    if(env('APP_DEBUG') && !isset($userId))
     {
         Log::warning("Using Factory[UserData] without setting user_id");
     }
+
+    $user_id = isset($data['user_id']) ? $data['user_id'] : factory(User::class)->create()->id;
 
     return
     [
@@ -20,9 +25,6 @@ $factory->define(UserData::class, function (Faker $faker, array $data)
         'emergency_name' => $faker->name,
         'emergency_phone' => $faker->phoneNumber,
         'camp' => "open camping",
-        'user_id' => function ()
-        {
-            return factory(User::class)->create()->id;
-        },
+        'user_id' => $user_id,
     ];
 });

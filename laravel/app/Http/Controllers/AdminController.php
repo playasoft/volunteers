@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserUpload;
 use App\Events\FileChanged;
 use App\Models\Role;
+use App\Models\UserData;
 use App\Models\UserRole;
 
 class AdminController extends Controller
@@ -59,9 +60,24 @@ class AdminController extends Controller
         return view('pages/admin/user-profile', compact('user', 'roleNames'));
     }
 
+    // View an indivual user profile
+    function userProfileEdit(User $user)
+    {
+        $roles = Role::get();
+        $roleNames = [];
+
+        foreach($roles as $role)
+        {
+            $roleNames[$role->name] = $role->name;
+        }
+
+        return view('pages/admin/edit-user-profile', compact('user', 'roleNames'));
+    }
+
     // Update information about a user
     function userEdit(User $user, Request $request)
     {
+        
         $roles = $request->get('roles');
 
         if($roles)
@@ -70,7 +86,14 @@ class AdminController extends Controller
             UserRole::assign($user, $roles);
         }
 
-        return;
+        $requestUserData = $request->all();
+        $userData = $user->data;
+       
+        $userData->fill($requestUserData);
+        $userData->save();
+
+        $request->session()->flash('success', 'User '.$user->email.' has been updated');
+        return redirect('/user/' . $user->id );
     }
 
     // List of uploaded files
