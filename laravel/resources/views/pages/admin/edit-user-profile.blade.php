@@ -8,21 +8,43 @@ use App\Helpers;
 
 @section('content')
     <h1>Edit User Information</h1>
-    <p>Warning: you are about to change another user's information</P>
     <hr>
 
     <div class="profile">
 
         {!! Form::open(['url' => 'user/'.$user->id.'/edit']) !!}
         <input type="hidden" name="type" value="data">
+        <input type="hidden" class="user-id" value="{{ $user->id }}">
         <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
+
+        <h3>Account Information</h3>
+
+        @include('partials/form/text', 
+        [
+            'name' => 'name', 
+            'label' => 'Username', 
+            'placeholder' => 'Their login name',
+            'value' => (is_null($user->name)) ? '' : $user->name
+        ])
         
+        @include('partials/form/text', 
+        [
+            'name' => 'email', 
+            'label' => 'Email address', 
+            'placeholder' => 'Their email',
+            'value' => (is_null($user->email)) ? '' : $user->email
+        ])
+
+        <hr>
+
+        <h3>User details</h3>
+
         @include('partials/form/text',
         [
             'name' => 'full_name',
             'label' => 'Full Name',
-            'placeholder' => 'Your name in the Default World',
-            'help' => "Required. Your full name is used for reporting and ticketing purposes",
+            'placeholder' => "User's name in the Default World",
+            'help' => "Required. User's full name is used for reporting and ticketing purposes",
             'value' => (is_null($user->data)) ? '' : $user->data->full_name
         ])
 
@@ -30,8 +52,8 @@ use App\Helpers;
         [
             'name' => 'burner_name',
             'label' => 'Burner Name',
-            'placeholder' => 'Your name on the Playa',
-            'help' => "This name will be shown to other users when you sign up for a shift",
+            'placeholder' => 'Users name on the Playa',
+            'help' => "This name will be shown to other users when they sign up for a shift",
             'value' => Helpers::displayName($user)
         ])
 
@@ -40,7 +62,7 @@ use App\Helpers;
             'name' => 'camp',
             'label' => 'Your Camp',
             'placeholder' => 'Camp Creative Name',
-            'help' => "Enter your camp name if you have one, or 'open camping' if not",
+            'help' => "Enter their camp name if they have one, or 'open camping' if not",
             'value' => (is_null($user->data)) ? '' : $user->data->camp
         ])
 
@@ -74,24 +96,24 @@ use App\Helpers;
             'value' => (is_null($user->data)) ? '' : $user->data->birthday
         ])
 
+        <hr>
+
+        <h3>User Roles</h3>
+        <div class="user-roles">
+
+            @include('partials/form/checkbox', 
+            [
+                'name' => 'roles', 
+                'options' => $roleNames, 
+                'selected' => $user->getRoleNames()
+            ])
+
+        </div>
+
         <button type="submit" class="btn btn-success">Save Changes</button>
         <a href='/user/{{$user->id }}' class="btn btn-primary">Cancel</a>
-        {!! Form::close() !!}
         
-        <h3>User Roles</h3>
-
-        <div class="user-roles">
-            <input type="hidden" class="user-id" value="{{ $user->id }}">
-            <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
-
-            @include('partials/form/checkbox', ['name' => 'roles', 'options' => $roleNames, 'selected' => $user->getRoleNames()])
-        </div>
-
-        <div class="buttons">
-            <a class="save-roles btn btn-success">Save</a>
-            <a class="cancel-roles btn btn-danger">Cancel</a>
-        </div>
-
+        {!! Form::close() !!}
         
     </div>
 

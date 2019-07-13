@@ -74,7 +74,7 @@ class AdminController extends Controller
         return view('pages/admin/edit-user-profile', compact('user', 'roleNames'));
     }
 
-    // Update information about a user
+    // Update user, userData, userRole
     function userEdit(User $user, Request $request)
     {
         
@@ -86,11 +86,35 @@ class AdminController extends Controller
             UserRole::assign($user, $roles);
         }
 
-        $requestUserData = $request->all();
+        $allRequestFields = $request->all();
+
+        if(isset( $allRequestFields['name']) )
+        {
+            $user->name = $allRequestFields['name'];
+            $user->save();
+        }
+
+        if(isset( $allRequestFields['email'] ))
+        {
+            $user->email = $allRequestFields['email'];
+            $user->save();
+        }
+        
         $userData = $user->data;
-       
-        $userData->fill($requestUserData);
-        $userData->save();
+        
+        //make sure user data exists
+        if(isset($userData))
+        {
+            $userData->fill($allRequestFields);
+            $userData->save();
+        }
+        else
+        {
+            $userData = new UserData();
+            $userData->user_id = $user->id;
+            $userData->fill($allRequestFields);
+            $userData->save();
+        }
 
         $request->session()->flash('success', 'User '.$user->email.' has been updated');
         return redirect('/user/' . $user->id );
