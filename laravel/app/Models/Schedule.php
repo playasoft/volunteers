@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\CascadingSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Schedule extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadingSoftDeletes;
+
+    protected $cascading_deletes = ['slots'];
+
     protected $table = 'schedule';
     protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'password'];
 

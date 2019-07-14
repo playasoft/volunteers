@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\CascadingSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Department extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadingSoftDeletes;
+
+    protected $cascading_deletes = ['shifts', 'schedule'];
 
     protected $fillable = ['name', 'description'];
 

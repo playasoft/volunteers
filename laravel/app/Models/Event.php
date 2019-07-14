@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use App\Models\Schedule;
+use App\CascadingSoftDeletes;
 
 class Event extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadingSoftDeletes;
+
+    protected $cascading_deletes = ['departments', 'shifts'];
 
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
@@ -119,7 +122,7 @@ class Event extends Model
                 // remove duplicate dates
                 $shift_dates = array_unique( $merged_dates );
             }
-            
+
             // $date keeps track of the current date as we loop towards the end
             $date = $start_date;
 
