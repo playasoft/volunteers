@@ -21,6 +21,7 @@ class ShiftController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:shift');
     }
 
     // Display list of shifts in an event

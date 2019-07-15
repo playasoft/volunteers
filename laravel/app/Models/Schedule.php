@@ -21,9 +21,7 @@ class Schedule extends Model
     protected static function cascadeUpdateRelationshipFields()
     {
         return [
-            'published_at' => [
-                'slots',
-            ],
+            'published_at' => 'all',
         ];
     }
 
@@ -34,9 +32,7 @@ class Schedule extends Model
      */
     protected static function cascadeDeleteRelationships()
     {
-        return [
-            'slots',
-        ];
+        return 'all';
     }
 
     /**

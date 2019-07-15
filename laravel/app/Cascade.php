@@ -45,6 +45,10 @@ trait Cascade
                 {
                     continue;
                 }
+                if($update_relationships === 'all')
+                {
+                    $update_relationships = $relationships;
+                }
                 foreach($update_relationships as $update_relationship)
                 {
                     if(!in_array($update_relationship, $relationships))

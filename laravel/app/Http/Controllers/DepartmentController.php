@@ -18,6 +18,7 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:department');
     }
 
     // Display list of departments in an event
@@ -44,7 +45,7 @@ class DepartmentController extends Controller
         $department->event_id = $input['event_id'];
         $department->save();
         $department->update($input);
-        
+
         event(new EventChanged($department->event, ['type' => 'department', 'status' => 'created']));
 
         $request->session()->flash('success', 'Your department has been created.');

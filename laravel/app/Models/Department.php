@@ -18,10 +18,7 @@ class Department extends Model
     protected static function cascadeUpdateRelationshipFields()
     {
         return [
-            'published_at' => [
-                'shifts',
-                'schedule',
-            ],
+            'published_at' => 'all',
         ];
     }
 

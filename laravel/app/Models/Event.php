@@ -22,10 +22,7 @@ class Event extends Model
     protected static function cascadeUpdateRelationshipFields()
     {
         return [
-            'published_at' => [
-                'departments',
-                'shifts',    
-            ],
+            'published_at' => 'all',
         ];
     }
 

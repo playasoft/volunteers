@@ -51,5 +51,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'lead' => \App\Http\Middleware\IsLead::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'published' => \App\Http\Middleware\CheckPublished::class,
     ];
 }

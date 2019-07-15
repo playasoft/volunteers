@@ -15,13 +15,6 @@ $factory->define(User::class, function (Faker $faker, array $data)
     ];
 });
 
-$factory->state(User::class, 'admin', function (Faker $faker)
-{
-    return
-    [
-    ];
-});
-
 $factory->afterCreatingState(User::class, 'admin', function (User $user, Faker $faker)
 {
     //find the admin role
@@ -31,6 +24,25 @@ $factory->afterCreatingState(User::class, 'admin', function (User $user, Faker $
     {
         $admin_role = factory(Role::class)->create([
             'name' => 'admin',
+        ]);
+    }
+
+    $user->roles()->save(factory(UserRole::class)->make([
+        'role_id' => $admin_role->id,
+        'user_id' => $user->id,
+    ]));
+});
+
+$factory->afterCreatingState(User::class, 'department-lead', function (User $user, Faker $faker)
+{
+    //find the admin role
+    $role_name = 'department-lead';
+    $admin_role = Role::where('name', $role_name)->first();
+    //if there is no admin role, create it
+    if (!$admin_role)
+    {
+        $admin_role = factory(Role::class)->create([
+            'name' => $role_name,
         ]);
     }
 

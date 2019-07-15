@@ -22,6 +22,7 @@ class ScheduleController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:schedule');
     }
 
     // Helper function to convert form input into database-friendly information
@@ -136,7 +137,7 @@ class ScheduleController extends Controller
         $regenerateSlots = false;
         $volunteersChanged = false;
         $warnUser = false;
-        
+
         if($schedule->start_date != $input['start_date'] ||
             $schedule->end_date != $input['end_date'] ||
             $schedule->start_time != $input['start_time'] ||
@@ -187,7 +188,7 @@ class ScheduleController extends Controller
         }
 
         event(new EventChanged($schedule->event, ['type' => 'schedule', 'status' => 'edited']));
-        
+
         $request->session()->flash('success', 'Schedule schedule has been updated.');
         return redirect('/event/' . $schedule->event->id);
     }
