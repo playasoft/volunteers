@@ -2,12 +2,49 @@
 
 namespace App\Models;
 
+use App\Cascade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Department extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Cascade;
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeUpdateRelationshipFields()
+    {
+        return [
+            'published_at' => [
+                'shifts',
+                'schedule',
+            ],
+        ];
+    }
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeDeleteRelationships()
+    {
+        return 'all';
+    }
+
+    /**
+     *
+     */
+    protected static function relationships()
+    {
+        return [
+            'shifts',
+            'schedule',
+        ];
+    }
 
     protected $fillable = ['name', 'description'];
 

@@ -2,14 +2,52 @@
 
 namespace App\Models;
 
+use App\Cascade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Schedule extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Cascade;
+
     protected $table = 'schedule';
     protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'password'];
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeUpdateRelationshipFields()
+    {
+        return [
+            'published_at' => [
+                'slots',
+            ],
+        ];
+    }
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeDeleteRelationships()
+    {
+        return [
+            'slots',
+        ];
+    }
+
+    /**
+     *
+     */
+    protected static function relationships()
+    {
+        return [
+            'slots',
+        ];
+    }
 
     // Schedules belong to a shift
     public function shift()

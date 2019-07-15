@@ -41,7 +41,7 @@ trait Cascade
             $updated_fields = $model->getDirty();
             foreach($update_fields as $update_field => $update_relationships)
             {
-                if(!in_array($update_field, $updated_fields))
+                if(!in_array($update_field, array_keys($updated_fields)))
                 {
                     continue;
                 }
@@ -74,7 +74,7 @@ trait Cascade
                 {
                     throw new Exception($relationship.' relation not found!');
                 }
-                
+
                 static::cascadeRelationship($model->{$delete_relationship}, function(Model $model) {
                     $model->delete();
                 });
