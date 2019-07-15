@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Cascade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
@@ -9,9 +10,37 @@ use App\Models\Schedule;
 
 class Event extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Cascade;
 
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeUpdateRelationshipFields()
+    {
+        return [];
+    }
+
+    /**
+     * Structure:
+     *
+     * @return mixed
+     */
+    protected static function cascadeDeleteRelationships()
+    {
+        return 'all';
+    }
+
+    protected static function relationships()
+    {
+        return [
+            'departments',
+            'shifts',
+        ];
+    }
 
     // Helper functions to select events by date
     public static function future($preferFeatured = false)
@@ -119,7 +148,7 @@ class Event extends Model
                 // remove duplicate dates
                 $shift_dates = array_unique( $merged_dates );
             }
-            
+
             // $date keeps track of the current date as we loop towards the end
             $date = $start_date;
 
