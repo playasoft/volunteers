@@ -61,6 +61,31 @@ class ReportController extends Controller
         return json_encode($users);
     }
 
+    public function concurrentSlots(Request $request)
+    {
+        $user = User::find($request->get('user_id'));
+        $slot = Slot::find($request->get('slot_id'));
+
+        //search for all user occupied slots that are concurrent with the given one
+        $concurrent_slot = Slot::where('user_id', $user_id)
+                                ->where('start_date', $slot->start_date)
+                                ->where('start_time', '<', $slot->end_time)
+                                ->where('end_time', '>', $slot->start_time)
+                                ->first();
+
+        $concurrent_slots = [
+            'slot_ids' => false,
+        ];
+        //check if an overlapping slot for the user exists
+        if($concurrent_slot)
+        {
+            $concurrent_slots = [
+                'slot_ids' => true,
+            ];
+        }
+        return json_encode($concurrent_slots);
+    }
+
     public function getDepartments(Request $request)
     {
         $id = $request->get('event');
