@@ -54,6 +54,11 @@ class SlotController extends Controller
             }
         }
 
+        if($slotRoles->isEmpty())
+        {
+            $allowed = true;
+        }
+
         return $allowed;
     }
 
@@ -107,8 +112,6 @@ class SlotController extends Controller
             {
                 return back();
             }
-
-
 
             $slot->user_id = Auth::user()->id;
             $slot->save();
@@ -184,7 +187,7 @@ class SlotController extends Controller
     {
         if(!is_null($slot->user))
         {
-            $username = Helpers::displayName($slot->user);
+            $user_name = Helpers::displayName($slot->user);
 
             $slot->user_id = null;
             $slot->save();
