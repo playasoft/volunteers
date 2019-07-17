@@ -63,7 +63,6 @@ $(document).ready(function()
     //for the Admin User-list
     $('.filter-user').on('change', function()
     {
-        var role = $(this).value
         this.form.submit();
     });
 });
