@@ -59,4 +59,10 @@ $(document).ready(function()
     {
         $('.filter-departments').value(filterDepartment).trigger('change');
     }
+
+    //for the Admin User-list
+    $('.filter-user').on('change', function()
+    {
+        this.form.submit();
+    });
 });
