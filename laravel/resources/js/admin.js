@@ -72,7 +72,6 @@ $(document).ready(function()
             if($(this).prop('checked'))
             {
                 data.roles.push($(this).value());
-                prevData.push($(this).value());
             }
         });
 
