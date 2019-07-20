@@ -22,24 +22,45 @@ class AdminController extends Controller
         $this->middleware('admin');
         $this->middleware('bindings');
     }
-    
+
     // List of users
     function userList(Request $request)
     {
-        $users = User::paginate(100);
+        $search = $request->query('search');
+        $roleId = $request->query('role');
 
-        if($request->query('search'))
+        if (!empty($search) and !empty($roleId))
         {
-            $search = $request->query('search');
-
+            $users = User::whereHas('roles', function($query) use($roleId)
+            {
+                $query->where('role_id','=', $roleId);
+            })
+            ->where(function($query) use($search)
+            {
+                $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
+            })->paginate(100);
+        }
+        else if (!empty($search) and empty($roleId))
+        {
             if(is_numeric($search))
             {
                 $users = [User::find($search)];
             }
             else
             {
-                $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->get();
+                $users = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->paginate(100);
             }
+        }
+        else if (empty($search) and !empty($roleId))
+        {
+            $users = User::whereHas('roles', function($query) use($roleId)
+            {
+                $query->where('role_id','=', $roleId);
+            })->paginate(100);
+        }
+        else
+        {
+            $users = User::paginate(100);
         }
 
         return view('pages/admin/user-list', compact('users'));
