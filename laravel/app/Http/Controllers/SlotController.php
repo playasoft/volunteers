@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -178,7 +179,7 @@ class SlotController extends Controller
 
             $slot->user_id = null;
             $slot->save();
-            event(new SlotChanged($slot, ['status' => 'released']));
+            event(new SlotChanged($slot, ['status' => 'released', 'admin_released' => true]));
             $request->session()->flash('success', $username.' is removed!!');
         }
         else
