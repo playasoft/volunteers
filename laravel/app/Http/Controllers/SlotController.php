@@ -131,10 +131,9 @@ class SlotController extends Controller
     // Remove yourself from a slot
     public function release(Request $request, Slot $slot)
     {
-
         if($this->eventHasPassed($slot))
         {
-            $request->session()->flash('error', 'This event has already passed, you are no longer able to sign up for shifts.');
+            $request->session()->flash('error', 'This event has already passed, you are no longer able to make changes to your shifts.');
         }
         else
         {
