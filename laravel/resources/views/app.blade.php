@@ -35,13 +35,21 @@
 
             @if(Session::has('warning'))
                 <div class="general-alert alert alert-warning" role="alert">
+            @else
+                <div class="general-alert alert alert-warning hidden" role="alert">
+            @endif
                     @if(isset(Session::get('warning')['layout']))
-                        <b>Warning!</b> @include('partials.warning.'.Session::get('warning')['layout'], Session::get('warning'))
+                        <b>Warning!</b>
+                        <p class='warning-message'> @include('partials.warning.'.Session::get('warning')['layout'], Session::get('warning')) </p>
                     @else
-                        <b>Warning!</b> {{ Session::get('warning') }}
+                        <b>Warning!</b>
+                        @if(Session::get('warning'))
+                            <p class="warning-message"> {{ Session::get('warning') }} </p>
+                        @else
+                            <p class="warning-message"> False Alarm/Warning! (No warning yet) </p>
+                        @endif
                     @endif
                 </div>
-            @endif
 
             @if(Session::has('error'))
                 <div class="general-alert alert alert-danger" role="alert">

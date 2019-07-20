@@ -48,7 +48,7 @@ class ReportController extends Controller
 
         foreach($userSearch as $user)
         {
-            $users[] =
+            $user_search_data =
             [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -56,34 +56,27 @@ class ReportController extends Controller
                 'burner_name' => Helpers::displayName($user),
                 'email' => $user->email
             ];
+            $concurrent_slot = (int) $request->get('concurrentSlotCheck');
+            if($concurrent_slot)
+            {
+                $user_search_data['slot_conflict'] = $this->concurrentSlots($user, Slot::find($concurrent_slot));
+            }
+            $users[] = $user_search_data;
         }
 
         return json_encode($users);
     }
 
-    public function concurrentSlots(Request $request)
+    private function concurrentSlots(User $user, Slot $slot)
     {
-        $user = User::find($request->get('user_id'));
-        $slot = Slot::find($request->get('slot_id'));
-
         //search for all user occupied slots that are concurrent with the given one
-        $concurrent_slot = Slot::where('user_id', $user_id)
+        $concurrent_slot = Slot::where('user_id', $user->id)
                                 ->where('start_date', $slot->start_date)
                                 ->where('start_time', '<', $slot->end_time)
                                 ->where('end_time', '>', $slot->start_time)
                                 ->first();
 
-        $concurrent_slots = [
-            'slot_ids' => false,
-        ];
-        //check if an overlapping slot for the user exists
-        if($concurrent_slot)
-        {
-            $concurrent_slots = [
-                'slot_ids' => true,
-            ];
-        }
-        return json_encode($concurrent_slots);
+        return ($concurrent_slot !== null);
     }
 
     public function getDepartments(Request $request)

@@ -9,6 +9,8 @@ var ajaxOptions =
     }
 };
 
+var concurrentSlotUsers = [];
+
 $(document).ready(function()
 {
     $('.user-search input').on('keydown', function(event)
@@ -35,6 +37,7 @@ $(document).ready(function()
         var data =
         {
             search: $('.user-search input').value(),
+            concurrentSlotCheck: $('.slot-number').value(),
             _token: $('.csrf-token').value()
         };
 
@@ -49,6 +52,7 @@ $(document).ready(function()
                 $('.users').removeClass('hidden');
                 $('.users table tbody tr').remove();
 
+                concurrentSlotUsers = [];
                 for(var key in response)
                 {
                     var user = response[key];
@@ -61,10 +65,31 @@ $(document).ready(function()
                     template.innerHTML = template.innerHTML.replace(/{full_name}/g, user.full_name);
                     template.innerHTML = template.innerHTML.replace(/{email}/g, user.email);
 
+                    if(user.slot_conflict) {
+                      concurrentSlotUsers.push(user.id);
+                    }
+
                     $('.users table tbody').append(template);
                 }
+
+                $("input[name='user']").on('click', function(event)
+                {
+                  // console.log(event);
+                  let user_id = parseInt($(this).value());
+                  console.log(user_id);
+                  console.log(concurrentSlotUsers);
+                  console.log(concurrentSlotUsers.indexOf(user_id));
+                  if(concurrentSlotUsers.indexOf(user_id) !== -1)
+                  {
+                    // $('input[name=\'user\']');
+                    $('.warning-message').text('This user has a slot taken that overlaps with this one!');
+                    $('.alert-warning').removeClass('hidden');
+                  } else {
+                    $('.alert-warning').addClass('hidden');
+                    $('.warning-message').text('False Alarm!');
+                  }
+                });
             });
         });
     });
-
 });

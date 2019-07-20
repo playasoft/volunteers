@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class SlotControllerTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /**
      * @test
      *
@@ -20,7 +20,7 @@ class SlotControllerTest extends TestCase
      */
     public function same_time_shift_warned_on_view()
     {
-        // Given 
+        // Given
         $take_slot = factory(Slot::class)->create();
         $view_slot = factory(Slot::class)->create([
             'start_date' => $take_slot->start_date,
@@ -28,20 +28,20 @@ class SlotControllerTest extends TestCase
             'end_time' => $take_slot->end_time,
         ]);
         $user = factory(UserData::class)->create()->user;
-        
+
         $take_slot->user_id = $user->id;
         $take_slot->save();
-        
+
         $this->actingAs($user);
 
         // When
         $response = $this->get("/slot/{$view_slot->id}/view");
-        
+
         // Then
         $response->assertSee("You are currently signed up for another")
                 ->assertSee("overlapping shift");
     }
-    
+
     /**
      * @test
      *
@@ -49,7 +49,7 @@ class SlotControllerTest extends TestCase
      */
     public function same_time_shift_warned_on_admin_assign()
     {
-        // Given 
+        // Given
         $take_slot = factory(Slot::class)->create();
         $view_slot = factory(Slot::class)->create([
             'start_date' => $take_slot->start_date,
@@ -60,15 +60,18 @@ class SlotControllerTest extends TestCase
         $admin = factory(UserData::class)->create([
             'user_id' => factory(User::class)->states('admin')->create()->id,
         ])->user;
-        
+
         $take_slot->user_id = $user->id;
         $take_slot->save();
-        
+
         $this->actingAs($admin);
 
         // When
-        $response = $this->post("/slot/{$view_slot->id}/adminAssign");
-        
+        $response = $this->post("/report/users", [
+            'search' => $user->name,
+            'concurrentSlotCheck' => $view_slot->id,
+        ]);
+
         // Then
         $response->assertSee("You are currently signed up for another")
                 ->assertSee("overlapping shift");
