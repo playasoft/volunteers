@@ -9,6 +9,8 @@ use App\Helpers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Slot;
@@ -46,6 +48,14 @@ class ReportController extends Controller
             $userSearch = User::where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->take(5)->get();
         }
 
+        $concurrent_slot_id = (int) $request->get('concurrentSlotCheck');
+        $conflicted_users = new Collection();
+        if($concurrent_slot_id)
+        {
+            $concurrent_slot = Slot::find($concurrent_slot_id);
+            $conflicted_users = $this->concurrentSlots($concurrent_slot)->map->user;
+        }
+
         foreach($userSearch as $user)
         {
             $user_search_data =
@@ -57,9 +67,11 @@ class ReportController extends Controller
                 'email' => $user->email
             ];
             $concurrent_slot = (int) $request->get('concurrentSlotCheck');
-            if($concurrent_slot)
+            if(in_array($user_id, $conflicted_users))
             {
-                $user_search_data['slot_conflict'] = $this->concurrentSlots($user, Slot::find($concurrent_slot));
+                $target_slot = Slot::find($concurrent_slot);
+                $this->concurrentSlots()->map->user_id;
+                $user_search_data['slot_conflict'] = ;
             }
             $users[] = $user_search_data;
         }
@@ -67,16 +79,13 @@ class ReportController extends Controller
         return json_encode($users);
     }
 
-    private function concurrentSlots(User $user, Slot $slot)
+    private function concurrentSlots(Slot $slot)
     {
         //search for all user occupied slots that are concurrent with the given one
-        $concurrent_slot = Slot::where('user_id', $user->id)
-                                ->where('start_date', $slot->start_date)
-                                ->where('start_time', '<', $slot->end_time)
-                                ->where('end_time', '>', $slot->start_time)
-                                ->first();
-
-        return ($concurrent_slot !== null);
+        return Slot::where('start_date', $slot->start_date)
+                ->where('start_time', '<', $slot->end_time)
+                ->where('end_time', '>', $slot->start_time)
+                ->get();
     }
 
     public function getDepartments(Request $request)
