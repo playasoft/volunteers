@@ -1,18 +1,33 @@
-<?php
 
-use App\Helpers;
-
+<?php 
+    use \App\Helpers;
+    $userRoles = \App\Models\Role::get();
 ?>
 
 @extends('app')
 
 @section('content')
     <h1>Registered Users </h1>
+    <form class="user-list" method="GET" action="/users">
+        <div class="col-sm-8 input-group">
+            <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
 
-    <form class="input-group" method="GET" action="/users">
-        <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
         <div class="input-group-btn">
             <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+        </div>
+        
+        <div class="form-group col-sm-3">
+            <select name="role" class="form-control filter-user" >
+                <option value="">Filter Permissions</option>
+                @foreach($userRoles as $role)
+                    @if(!empty($_GET['role']) and $_GET['role'] == $role->id)
+                        <option selected="true" value="{{ $role->id }}">{{$role->name}}</option>
+                    @else
+                        <option value="{{ $role->id }}">{{$role->name}}</option>
+                    @endif
+                @endforeach
+            </select>
         </div>
     </form>
     <hr>
@@ -43,6 +58,6 @@ use App\Helpers;
         </tbody>
     </table>
 @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-{{ $users->links() }}
+{{ $users->appends(request()->input())->links() }}
 @endif()
 @endsection

@@ -74,4 +74,28 @@ class SlotControllerTest extends TestCase
         // Then
         $response->assertSee("Are you sure you want to sign them up for this shift?");
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function admin_assigns_user_releases()
+    {
+        // Given
+        $admin = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->create();
+        $slot = factory(Slot::class)->create();
+
+        // When
+        $assign_response = $this->actingAs($admin)->post("/slot/$slot->id/adminAssign", [
+            'user' => $user->id,
+        ]);
+        $release_response = $this->actingAs($user)->post("/slot/$slot->id/release");
+
+        // Then
+        $this->assertDatabaseMissing('slots', [
+            'id' => $slot->id,
+            'user_id' => $user->id,
+        ]);
+    }
 }
