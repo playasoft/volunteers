@@ -13,6 +13,15 @@ class Event extends Model
 
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->departments()->delete();
+            $model->shifts()->delete();
+        });
+    }
+
     // Helper functions to select events by date
     public static function future($preferFeatured = false)
     {
@@ -119,7 +128,7 @@ class Event extends Model
                 // remove duplicate dates
                 $shift_dates = array_unique( $merged_dates );
             }
-            
+
             // $date keeps track of the current date as we loop towards the end
             $date = $start_date;
 

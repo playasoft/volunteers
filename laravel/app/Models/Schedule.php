@@ -11,6 +11,14 @@ class Schedule extends Model
     protected $table = 'schedule';
     protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'password'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->slots()->delete();
+        });
+    }
+
     // Schedules belong to a shift
     public function shift()
     {
