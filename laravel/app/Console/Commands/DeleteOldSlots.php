@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Jobs\DeleteOldSlotsJob;
 
 class DeleteOldSlots extends Command
 {
@@ -11,14 +12,14 @@ class DeleteOldSlots extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'fix:slot:old';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Deletes slots that have already passed';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,6 @@ class DeleteOldSlots extends Command
      */
     public function handle()
     {
-        
+        DeleteOldSlotsJob::dispatchNow();
     }
 }

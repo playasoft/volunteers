@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     [
         \App\Console\Commands\PopulateScheduleDates::class,
         \App\Console\Commands\FixDuplicateRoles::class,
+        \App\Console\Commands\DeleteOldSlots::class,
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->command('inspire')->hourly();
+        //$schedule->command('inspire')->hourly();
+        $schedule->command('fix:slot:old')->daily();
     }
 }

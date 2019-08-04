@@ -8,8 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Carbon\Carbon;
+use App\Models\Slot;
 
-class DeleteOldSlots implements ShouldQueue
+class DeleteOldSlotsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,9 +32,13 @@ class DeleteOldSlots implements ShouldQueue
     public function handle()
     {
         $now = Carbon::now();
-
-        $old_slots = Slot::where('end_time', '<', $now);
-
-        dd($old_slots);
+        
+        //delete all slots yesterday and beyond
+        Slot::where('start_date', '<', $now->format('Y-m-d'))->delete();
+        
+        //delete all slots that already happened today
+        Slot::where('start_date', $now->format('Y-m-d'))
+                ->where('end_time', '<', $now->format('H:i:s'))
+                ->delete();
     }
 }
