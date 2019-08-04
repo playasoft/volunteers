@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ExampleTest extends TestCase
 {
     //Use this to clear the database at the beginning of the test class
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * Make sure to use either "test" in the method name

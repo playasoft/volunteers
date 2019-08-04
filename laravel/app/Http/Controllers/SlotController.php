@@ -202,11 +202,11 @@ class SlotController extends Controller
 
         if(is_null($slot->user))
         {
-            // $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, $user, true);
-            // if($concurrent_slot_warning)
-            // {
-            //     return back();
-            // }
+            $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, $user, true);
+            if($concurrent_slot_warning)
+            {
+                return back();
+            }
 
             $slot->user_id=$user->id;
             $slot->save();

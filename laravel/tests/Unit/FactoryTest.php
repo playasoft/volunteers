@@ -18,7 +18,7 @@ use Tests\TestCase;
 
 class FactoryTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * @test

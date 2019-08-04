@@ -110,11 +110,9 @@ class Event extends Model
             if($hideEmpty)
             {
                 // get an array of all the dates fields for this event
-                dd(Schedule::whereIn('shift_id', $this->shifts->pluck('id'))->get());
                 $shift_dates = Schedule::whereIn('shift_id', $this->shifts->pluck('id'))->pluck('dates');
                 $merged_dates = [];
                 //iterate through scheduled dates and merge them into one list
-                dd($shift_dates);
                 foreach ($shift_dates as $i) {
                     $merged_dates = array_merge($merged_dates, json_decode($i));
                 }

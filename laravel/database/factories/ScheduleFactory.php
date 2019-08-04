@@ -54,6 +54,10 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
             return $duration->format('H:i:s');
         },
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
+        'dates' => function($schedule)
+        {
+            return json_encode([$schedule['start_date'], $schedule['end_date']]);    
+        },
         'department_id' => function ($schedule)
         {
             $event_id = function () use ($schedule)
