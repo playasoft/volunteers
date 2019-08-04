@@ -18,7 +18,7 @@ class SlotControllerTest extends TestCase
      *
      * @return void
      */
-    public function same_time_shift_warned_on_view()
+    public function same_time_shift_warned_on_take()
     {
         // Given
         $take_slot = factory(Slot::class)->create();
@@ -35,7 +35,7 @@ class SlotControllerTest extends TestCase
         $this->actingAs($user);
 
         // When
-        $response = $this->get("/slot/{$view_slot->id}/view");
+        $response = $this->followingRedirects()->post("/slot/{$view_slot->id}/take");
 
         // Then
         $response->assertSee("You are currently signed up for another")
