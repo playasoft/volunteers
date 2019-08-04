@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ExampleTest extends TestCase
 {
     //Use this to clear the database at the beginning of the test class
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     /**
      * Make sure to use either "test" in the method name
@@ -40,16 +40,16 @@ class ExampleTest extends TestCase
     public function testExample()
     {
         //Given
-        $user_id = 1; //first autoincrement id
+        $user_name = 'Foo';
 
         //When
         $user = factory(User::class)->create([
-            'id' => $user_id,
+            'name' => $user_name,
         ]);
 
         //Then
         $this->assertDatabaseHas('users', [
-            'id' => $user_id,
+            'name' => $user_name,
         ]);
     }
 }

@@ -71,9 +71,7 @@ class SlotController extends Controller
             $request->session()->flash('error', "You must enter your name before you can sign up for shifts.");
             return redirect('/profile/data/edit');
         }
-
-        $this->warnIfConcurrentSlotForUserExists($request, $slot, Auth::user());
-
+        
         return view('pages/slot/view', compact('slot'));
     }
 
