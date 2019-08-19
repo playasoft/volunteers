@@ -88,6 +88,29 @@
 
             <hr>
 
+            <?php
+                $displaced_event_slots = App\Models\Slot::onlyTrashed()
+                    ->leftJoin('schedule', 'slots.schedule_id', '=', 'schedule.id')
+                    ->leftJoin('departments', 'schedule.department_id', '=', 'departments.id')
+                    ->leftJoin('events', 'departments.event_id', '=', 'events.id')
+                    ->where('event_id', $event->id)
+                    ->get();
+            ?>
+            @if($displaced_event_slots->isNotEmpty())
+            <div class="shift row alert alert-danger">
+                <h1>!!! Alert: Users need reassignment !!!</h1>
+                <div class="slots col-sm-3">
+                    @foreach($displaced_event_slots as $slot)
+                        <span class="">
+                            <a href="/slot/{{ $slot->id }}/view" class="slot taken" title="{{ App\Helpers::displayName($slot->user) }}">
+                                {{ App\Helpers::displayName($slot->user) }}
+                            </a>
+                        </span>                
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             <div class="days">
                 @foreach($event->days(true) as $day)
                     <div class="day" data-date="{{ $day->date->format('Y-m-d') }}">
