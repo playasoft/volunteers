@@ -119,3 +119,10 @@ Route::post('/report/users', 'ReportController@searchUsers');
 Route::post('/report/departments', 'ReportController@getDepartments');
 Route::post('/report/days', 'ReportController@getDays');
 Route::post('/report/generate', 'ReportController@generateReport');
+
+// API routes
+Route::get('/v1/profile', 'APIController@profile');
+Route::get('/v1/events', 'APIController@events');
+Route::get('/v1/event/{id}/departments', 'APIController@departments');
+Route::get('/v1/event/{id}/roles', 'APIController@roles');
+Route::get('/v1/event/{id}/shifts', 'APIController@shifts');
