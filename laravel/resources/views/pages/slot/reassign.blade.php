@@ -175,91 +175,63 @@ else
         </p>
         <button formaction="{{ $adminUrl }}" type="submit" class="btn btn-danger">Release Shift</button>
         @endif
-        @if((Auth::user()->hasRole('admin') || Auth::user()->hasRole('department-lead')) && !$taken)
-            <a class="btn btn-warning add-volunteer">Add Volunteer</a>
-            <input type="hidden" class="csrf-token" name="_token" value="{{ csrf_token() }}">
-            <div class="row user-search hidden">
-                <div class="col-md-11">
-                    @include('partials/form/text',
-                    [
-                        'name' => 'user-search',
-                        'label' => 'Search for a user',
-                        'placeholder' => 'rachel@apogaea.com',
-                        'help' => 'You can search by user ID, username, or email'
-                    ])
-                </div>
+    {!! Form::close() !!}
 
-                <div class="col-md-1 search">
-                    <button class="user-search btn btn-success"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
+    <?php
+        $event = $slot->event;
+    ?>
+    @if($event->departments->count())
+        <h2>Available Shifts</h2>
+
+        <form class="form-inline event-filter">
+            Filter:
+
+            <div class="form-group">
+                <select class="form-control filter-days">
+                    <option value="all">Show All Days</option>
+
+                    @foreach($event->days(true) as $day)
+                        <option value="{{ $day->date->format('Y-m-d') }}">{{ $day->name }} - {{ $day->date->format('Y-m-d') }}</option>
+                    @endforeach
+                </select>
             </div>
 
-            <div class="user-wrap">
-                <div class="loading hidden">
-                    Loading user data...
+            <div class="form-group">
+                <select class="form-control filter-departments">
+                    <option value="all">Show All Departments</option>
 
-                    <div class="spinner"></div>
-                </div>
-
-                <div class="users hidden">
-                    <h3>Search results</h3>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>User</th>
-                                <th>Real Name</th>
-                                <th>Burner Name</th>
-                                <th>Email</th>
-                                <th>Assign to Shift?</th>
-                            </tr>
-
-                            <tr class="template hidden">
-                                <td><b>{user_id}</b></td>
-                                <td><a href="/user/{user_id}">{username}</a></td>
-                                <td>{full_name}</td>
-                                <td>{burner_name}</td>
-                                <td>{email}</td>
-                                <td>
-                                    <input type="radio" name="user" value="{user_id}">
-
-                                </td>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td><b>1</b></td>
-                                <td><a href="/user/1">username</a></td>
-                                <td>Example User</td>
-                                <td>example@user.com</td>
-                                <td>softburnedbeanie<input type="hidden" name="user-name" value="softburnedbeanie"></td>
-                                <td>
-                                    <input type="radio" name="user-report[]" value="1">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><b>2</b></td>
-                                <td><a href="/user/2">user2</a></td>
-                                <td>Another User</td>
-                                    <td>another@user.com</td>
-                                <td>
-                                    <input type="radio" name="user-report[]" value="2">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button formaction="{{ $adminUrl }}" class="btn btn-primary" type="submit">Assign User</button>
-                </div>
+                    @foreach($event->departments->sortBy('name') as $department)
+                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                    @endforeach
+                </select>
             </div>
+        </form>
+
+        <hr>
+
+        <?php
+            $displaced_event_slots = App\Models\Slot::onlyTrashed()
+                ->leftJoin('schedule', 'slots.schedule_id', '=', 'schedule.id')
+                ->leftJoin('departments', 'schedule.department_id', '=', 'departments.id')
+                ->leftJoin('events', 'departments.event_id', '=', 'events.id')
+                ->where('event_id', $event->id)
+                ->get();
+        ?>
+        @if($displaced_event_slots->isNotEmpty())
+        <div class="shift row alert alert-danger">
+            <h1>!!! Alert: Users need reassignment !!!</h1>
+            <div class="slots col-sm-3">
+                @foreach($displaced_event_slots as $slot)
+                    <span class="">
+                        <a href="/slot/{{ $slot->id }}/view" class="slot taken" title="{{ App\Helpers::displayName($slot->user) }}">
+                            {{ App\Helpers::displayName($slot->user) }}
+                        </a>
+                    </span>                
+                @endforeach
+            </div>
+        </div>
         @endif
 
-        @if($slot->displaced)
-        <?php
-            $event = $slot->event;
-        ?>
         <div class="days">
             @foreach($event->days(true) as $day)
                 <div class="day" data-date="{{ $day->date->format('Y-m-d') }}">
@@ -356,6 +328,15 @@ else
                 </div>
             @endforeach
         </div>
-        @endif
-    {!! Form::close() !!}
+
+        <hr>
+
+        @can('create-department')
+            <a href="/event/{{ $event->id }}/department/create" class="btn btn-primary">Create Department</a>
+        @endcan
+
+        @can('create-shift')
+            <a href="/event/{{ $event->id }}/shift/create" class="btn btn-primary">Create Shift</a>
+        @endcan
+    @endif
 @endsection

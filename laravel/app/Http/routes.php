@@ -88,6 +88,7 @@ Route::post('/slot/{slot}/release', 'SlotController@release');
 // Routes for Admins / Deparment Leads
 Route::group(['middleware' => ['auth', 'lead']], function()
 {
+    // Route::get('/slot/{slot}/adminReassign', 'SlotController@adminReassignView');
     Route::post('/slot/{slot}/edit','SlotController@edit');
     Route::post('/slot/{slot}/adminRelease', 'SlotController@adminRelease');
     Route::post('/slot/{slot}/adminAssign', 'SlotController@adminAssign');

@@ -196,4 +196,9 @@ class SlotController extends Controller
         }
         return redirect('/event/'.$slot->event->id);
     }
+
+    public function adminReassignView(Request $request, Slot $slot)
+    {
+        return view('pages/slots/reassign', compact($slot));
+    }
 }

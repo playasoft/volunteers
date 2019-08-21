@@ -89,21 +89,30 @@
             <hr>
 
             <?php
-                $displaced_event_slots = App\Models\Slot::onlyTrashed()
+                $displaced_event_slots = DB::Table('slots')
                     ->leftJoin('schedule', 'slots.schedule_id', '=', 'schedule.id')
                     ->leftJoin('departments', 'schedule.department_id', '=', 'departments.id')
                     ->leftJoin('events', 'departments.event_id', '=', 'events.id')
                     ->where('event_id', $event->id)
+                    ->where('slots.displaced', true)
+                    ->select('slots.id', 'slots.user_id')
                     ->get();
+
+                // $displaced_event_slots = App\Models\Slot::where('displaced', true)->get();
+                
+                // dd($displaced_event_slots);
             ?>
             @if($displaced_event_slots->isNotEmpty())
             <div class="shift row alert alert-danger">
                 <h1>!!! Alert: Users need reassignment !!!</h1>
                 <div class="slots col-sm-3">
                     @foreach($displaced_event_slots as $slot)
+                        <?php
+                            $slot_user = App\Models\User::find($slot->user_id);
+                        ?>
                         <span class="">
-                            <a href="/slot/{{ $slot->id }}/view" class="slot taken" title="{{ App\Helpers::displayName($slot->user) }}">
-                                {{ App\Helpers::displayName($slot->user) }}
+                            <a href="/slot/{{ $slot->id }}/view" class="slot taken" title="{{ App\Helpers::displayName($slot_user) }}">
+                                {{ App\Helpers::displayName($slot_user) }}
                             </a>
                         </span>                
                     @endforeach

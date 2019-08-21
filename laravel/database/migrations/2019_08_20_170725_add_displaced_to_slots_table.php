@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSoftDeletesToSlotsTable extends Migration
+class AddDisplacedToSlotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddSoftDeletesToSlotsTable extends Migration
     public function up()
     {
         Schema::table('slots', function (Blueprint $table) {
-            $table->softDeletes();
+            $table->boolean('displaced')->default(false);
         });
     }
 
@@ -26,7 +26,7 @@ class AddSoftDeletesToSlotsTable extends Migration
     public function down()
     {
         Schema::table('slots', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+            $table->dropColumn('displaced');
         });
     }
 }
