@@ -25,7 +25,7 @@ class APIControllerTest extends TestCase
      *
      * @return void
      */
-    public function profile_endpoint_returns_right_keys()
+    public function profile_endpoint_validation()
     {
         // Given 
         $user = factory(UserData::class)->create([
@@ -51,7 +51,7 @@ class APIControllerTest extends TestCase
      * 
      * @return void
      */
-    public function events_endpoint_returns_right_keys()
+    public function events_endpoint_validation()
     {
         // Given 
         $user = factory(User::class)->states('admin')->create();
@@ -76,7 +76,7 @@ class APIControllerTest extends TestCase
      * 
      * @return void
      */
-    public function departments_endpoint_returns_right_keys()
+    public function departments_endpoint_validation()
     {
         // Given 
         $user = factory(User::class)->states('admin')->create();
@@ -100,7 +100,7 @@ class APIControllerTest extends TestCase
      * 
      * @return void
      */
-    public function roles_endpoint_returns_right_keys()
+    public function roles_endpoint_validation()
     {
         // Given 
         $user = factory(User::class)->states('admin')->create();
@@ -125,7 +125,7 @@ class APIControllerTest extends TestCase
      * 
      * @return void
      */
-    public function shifts_endpoint_returns_right_keys()
+    public function shifts_endpoint_validation()
     {
         // Given 
         $user = factory(UserData::class)->create([
@@ -163,7 +163,7 @@ class APIControllerTest extends TestCase
      * 
      * @return void
      */
-    public function update_shifts()
+    public function update_shift_endpoint_validation()
     {
         // Given 
         $user = factory(User::class)->states('admin')->create();

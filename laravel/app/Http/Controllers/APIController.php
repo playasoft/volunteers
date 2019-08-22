@@ -10,7 +10,7 @@ use App\Models\Event;
 use App\Models\Slot;
 
 /**
- * TODO: add auth bullshit
+ * 
  */
 class APIController extends Controller
 {
