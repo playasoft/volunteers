@@ -27,28 +27,22 @@ class APIControllerTest extends TestCase
      */
     public function profile_endpoint_returns_right_keys()
     {
-        // Given    
-        $user = factory(User::class)->states('admin')->create([
-            'name' => 'George',
-            'email' => 'george@gmail.com',
-        ]);
-        $user->data()->save(factory(UserData::class)->make([
-            'full_name' => 'George Curious',
-            'burner_name' => 'CGjungle',
-            'phone' => '(123) 456-7890'
-        ]));
+        // Given 
+        $user = factory(UserData::class)->create([
+            'user_id' => factory(User::class)->states('admin')->create()->id,
+        ])->user;
 
         // When 
         $response = $this->actingAs($user)->get('/v1/profile');
 
         // Then 
         $response->assertJson([
-            'username' => 'George',
-            'email' => 'george@gmail.com',
-            'full_name' => 'George Curious',
-            'burner_name' => 'CGjungle',
-            'phone_number' => '(123) 456-7890',
-            'permissions' => ['admin'],
+            'username' => $user->name,
+            'email' => $user->email,
+            'full_name' => $user->data->full_name,
+            'burner_name' => $user->data->burner_name,
+            'phone_number' => $user->data->phone,
+            'permissions' => $user->getRoleNames(),
         ]);
     }
 
@@ -61,12 +55,7 @@ class APIControllerTest extends TestCase
     {
         // Given 
         $user = factory(User::class)->states('admin')->create();
-        $event1 = factory(Event::class)->create([
-            'name' => 'CoolCon'
-        ]);
-        $event2 = factory(Event::class)->create([
-            'name' => 'LameCon',
-        ]);
+        $event = factory(Event::class)->create();
 
         // When 
         $response = $this->actingAs($user)->get('/v1/events');
@@ -74,16 +63,10 @@ class APIControllerTest extends TestCase
         // Then 
         $response->assertJson([
             [
-                'id' => $event1->id,
-                'name' => $event1->name,
-                'start_date' => $event1->start_date,
-                'end_date' => $event1->end_date,
-            ],
-            [
-                'id' => $event2->id,
-                'name' => $event2->name,
-                'start_date' => $event2->start_date,
-                'end_date' => $event2->end_date,
+                'id' => $event->id,
+                'name' => $event->name,
+                'start_date' => $event->start_date,
+                'end_date' => $event->end_date,
             ],
         ]);
     }
@@ -96,11 +79,9 @@ class APIControllerTest extends TestCase
     public function departments_endpoint_returns_right_keys()
     {
         // Given 
-        $user = factory(User::class)->create();
-        $event = factory(Event::class)->create();
-        $departments = factory(Department::class,2)->create([
-            'event_id' => $event->id,
-        ]);
+        $user = factory(User::class)->states('admin')->create();
+        $department = factory(Department::class)->create();
+        $event = $department->event;
 
         // Then 
         $response = $this->actingAs($user)->get("/v1/event/{$event->id}/departments");
@@ -108,12 +89,8 @@ class APIControllerTest extends TestCase
         // When 
         $response->assertJson([
             [
-                'id' => $departments[0]->id,
-                'name' => $departments[0]->name,
-            ],
-            [
-                'id' => $departments[1]->id,
-                'name' => $departments[1]->name,
+                'id' => $department->id,
+                'name' => $department->name,
             ],
         ]);
     }
@@ -126,15 +103,9 @@ class APIControllerTest extends TestCase
     public function roles_endpoint_returns_right_keys()
     {
         // Given 
-        $user = factory(User::class)->create();
-        $event = factory(Event::class)->create();
-        $department = factory(Department::class)->create([
-            'event_id' => $event->id,
-        ]);
-        $roles = factory(Shift::class,2)->create([
-            'event_id' => $event->id,
-            'department_id' => $department->id,
-        ]);
+        $user = factory(User::class)->states('admin')->create();
+        $role = factory(Shift::class)->create();
+        $event = $role->event;
 
         // Then 
         $response = $this->actingAs($user)->get("/v1/event/{$event->id}/roles");
@@ -142,14 +113,9 @@ class APIControllerTest extends TestCase
         // When 
         $response->assertJson([
             [
-                'id' => $roles[0]->id,
-                'department_id' => $department->id,
-                'name' => $roles[0]->name,
-            ],
-            [
-                'id' => $roles[1]->id,
-                'department_id' => $department->id,
-                'name' => $roles[1]->name,
+                'id' => $role->id,
+                'department_id' => $role->department->id,
+                'name' => $role->name,
             ],
         ]);
     }
@@ -162,27 +128,59 @@ class APIControllerTest extends TestCase
     public function shifts_endpoint_returns_right_keys()
     {
         // Given 
-        $user = factory(UserData::class)->create()->user;
+        $user = factory(UserData::class)->create([
+            'user_id' => factory(User::class)->states('admin')->create()->id,
+        ])->user;
         $shift = factory(Slot::class)->create([
             'user_id' => $user->id,
         ]);
+        $event = $shift->schedule->department->event;
 
 
         // Then 
         $response = $this->actingAs($user)->get("/v1/event/{$event->id}/shifts");
 
         // When 
-        // $response->assertJson([
-        //     [
-        //         'id' => $shift->id,
-        //         'department_id' => $shift->department->id,
-        //     ],
-        //     [
-        //         'id' => $roles[1]->id,
-        //         'department_id' => $department->id,
-        //         'name' => $roles[1]->name,
-        //     ],
-        // ]);
-        dd($response);
+        $response->assertJson([
+            [
+                'id' => $shift->id,
+                'department_id' => $shift->department->id,
+                'role_id' => $shift->schedule->shift->id,
+                'start_date' => $shift->schedule->start_date,
+                'end_date' => $shift->schedule->end_date,
+                'start_time' => $shift->schedule->start_time,
+                'end_time' => $shift->schedule->end_time,
+                'user_id' => $shift->user->id,
+                'email' => $shift->user->email,
+                'full_name' => $shift->user->data->full_name,
+                'status' => $shift->status,
+            ],
+        ]);
+    }
+
+    /**
+     * @test
+     * 
+     * @return void
+     */
+    public function update_shifts()
+    {
+        // Given 
+        $user = factory(User::class)->states('admin')->create();
+        $shift = factory(Slot::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        // When 
+        $response = $this->actingAs($user)->post("/v1/shift/{$shift->id}", [
+            'status' => 'test',
+        ]);
+
+        // Then 
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('slots', [
+            'id' => $shift->id,
+            'status' => 'test',
+        ]);
     }
 }

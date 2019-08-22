@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Event;
+use App\Models\Slot;
 
 /**
  * TODO: add auth bullshit
@@ -54,8 +56,6 @@ class APIController extends Controller
      */
     public function roles(Request $request, $id)
     {
-        // TODO
-
         $event = Event::find($id);
         $roles = $event->shifts()->select('id', 'department_id', 'name')->get();
 
@@ -67,31 +67,43 @@ class APIController extends Controller
      */
     public function shifts(Request $request, $id)
     {
-        // TODO
-
         $event = Event::find($id);
-        $data = DB::table('slots')
+        $shifts = DB::table('slots')
             ->leftJoin('schedule', 'slots.schedule_id', '=', 'schedule.id')
             ->leftJoin('departments', 'schedule.department_id', '=', 'departments.id')
             ->leftJoin('events', 'departments.event_id', '=', 'events.id')
             ->leftJoin('users', 'slots.user_id', '=', 'users.id')
             ->leftJoin('user_data', 'user_data.user_id', '=', 'users.id')
-            ->leftJoin('event_roles', 'events.id', '=', 'event_roles.id')
-            ->leftJoin('roles', 'event_roles.role_id', '=', 'roles.id')
             ->whereNotNull('slots.user_id')
             ->select(
-                'events.id', 
+                'slots.id', 
                 'schedule.department_id',
-                // 'schedule.id', //replace with role_id
-                'slots.start_time',
-                'slots.end_time',
+                'schedule.shift_id',
+                'schedule.start_date',
+                'schedule.end_date',
+                'schedule.start_time',
+                'schedule.end_time',
                 'slots.user_id',
                 'users.email',
                 'user_data.full_name',
                 'slots.status'
             )->get();
 
-        return response()->json($data->toArray());
+        $shifts->each(function($shift) {
+            $shift->role_id = $shift->shift_id;
+            unset($shift->shift_id);
+        });
+
+        return response()->json($shifts->toArray());
     }
 
+    /**
+     * 
+     */
+    public function updateShift(Request $request, $id)
+    {
+        $slot = Slot::find($id);
+        $slot->status = $request->get('status');
+        $slot->save();
+    }
 }

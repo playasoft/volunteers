@@ -126,3 +126,4 @@ Route::get('/v1/events', 'APIController@events');
 Route::get('/v1/event/{id}/departments', 'APIController@departments');
 Route::get('/v1/event/{id}/roles', 'APIController@roles');
 Route::get('/v1/event/{id}/shifts', 'APIController@shifts');
+Route::post('/v1/shift/{id}', 'APIController@updateShift');
