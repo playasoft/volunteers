@@ -74,9 +74,8 @@ class APIController extends Controller
             ->leftJoin('events', 'departments.event_id', '=', 'events.id')
             ->leftJoin('users', 'slots.user_id', '=', 'users.id')
             ->leftJoin('user_data', 'user_data.user_id', '=', 'users.id')
-            ->whereNotNull('slots.user_id')
             ->select(
-                'slots.id', 
+                'slots.id',
                 'schedule.department_id',
                 'schedule.shift_id',
                 'schedule.start_date',
@@ -87,9 +86,11 @@ class APIController extends Controller
                 'users.email',
                 'user_data.full_name',
                 'slots.status'
-            )->get();
+            )
+            ->whereNotNull('slots.user_id') // get only shifts with users
+            ->get();
 
-        $shifts->each(function($shift) {
+        $shifts->each(function ($shift) {
             $shift->role_id = $shift->shift_id;
             unset($shift->shift_id);
         });
@@ -105,5 +106,7 @@ class APIController extends Controller
         $slot = Slot::find($id);
         $slot->status = $request->get('status');
         $slot->save();
+
+        return response('Success: Changed Status!', 200);
     }
 }

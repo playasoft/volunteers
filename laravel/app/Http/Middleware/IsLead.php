@@ -34,7 +34,10 @@ class IsLead
      */
     public function handle($request, Closure $next)
     {
-        if(!$this->auth->user()->hasRole('admin') && !$this->auth->user()->hasRole('department-lead'))
+        $is_guest = $this->auth->guest();
+        $is_admin = $this->auth->user()->hasRole('admin');
+        $is_department_lead = !$this->auth->user()->hasRole('department-lead');
+        if($is_guest || (!$is_admin && !$is_department_lead))
         {
             return response('Unauthorized.', 401);
         }

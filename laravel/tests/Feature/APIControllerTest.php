@@ -8,8 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\User;
 use App\Models\UserData;
-use App\Models\UserRole;
-use App\Models\Role;
 use App\Models\Event;
 use App\Models\Department;
 use App\Models\Shift;
@@ -182,5 +180,19 @@ class APIControllerTest extends TestCase
             'id' => $shift->id,
             'status' => 'test',
         ]);
+    }
+
+    /**
+     * @test
+     * 
+     * @return void
+     */
+    public function profile_returns_401_when_no_user()
+    {
+        // When 
+        $response = $this->get('/v1/profile');
+
+        // Then 
+        $response->assertStatus(401);
     }
 }
