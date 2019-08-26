@@ -24,6 +24,7 @@ class SlotController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:slot');
     }
 
     // Helper function to determine if an event has passed
