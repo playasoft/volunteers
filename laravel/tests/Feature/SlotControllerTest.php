@@ -27,7 +27,8 @@ class SlotControllerTest extends TestCase
             'start_time' => $take_slot->start_time,
             'end_time' => $take_slot->end_time,
         ]);
-        $user = factory(UserData::class)->create()->user;
+        $user = factory(User::class)->create();
+        $user->data()->save(factory(UserData::class)->make());
 
         $take_slot->user_id = $user->id;
         $take_slot->save();

@@ -15,11 +15,22 @@ $factory->define(User::class, function (Faker $faker, array $data)
     ];
 });
 
-$factory->state(User::class, 'admin', function (Faker $faker)
+$factory->afterCreating(User::class, function (User $user, Faker $faker)
 {
-    return
-    [
-    ];
+    //find the volunteer role
+    $volunteer_role = Role::where('name', 'volunteer')->first();
+    //if there is no volunteer role, create it
+    if (!$volunteer_role)
+    {
+        $volunteer_role = factory(Role::class)->create([
+            'name' => 'volunteer',
+        ]);
+    }
+
+    $user->roles()->save(factory(UserRole::class)->make([
+        'role_id' => $volunteer_role->id,
+        'user_id' => $user->id,
+    ]));
 });
 
 $factory->afterCreatingState(User::class, 'admin', function (User $user, Faker $faker)
