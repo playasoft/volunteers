@@ -189,6 +189,9 @@ class APIControllerTest extends TestCase
      */
     public function profile_returns_401_when_no_user()
     {
+        // Given 
+        $user = factory(User::class)->create();
+
         // When 
         $response = $this->get('/v1/profile');
 
