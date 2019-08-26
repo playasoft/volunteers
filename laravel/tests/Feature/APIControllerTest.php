@@ -193,7 +193,7 @@ class APIControllerTest extends TestCase
         $user = factory(User::class)->create();
 
         // When 
-        $response = $this->get('/v1/profile');
+        $response = $this->actingAs($user)->get('/v1/profile');
 
         // Then 
         $response->assertStatus(401);
