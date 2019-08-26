@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use App\Models\Slot;
+use App\Models\Department;
+use App\Models\Schedule;
+use App\Models\Shift;
 
 class CheckPublished
 {
@@ -35,19 +38,7 @@ class CheckPublished
      */
     public function handle($request, Closure $next, $model_name)
     {
-        $event = $request->{$model_name};
-        if($request->{$model_name} === 'department') {
-            $event = $request->{$model_name}->event;
-        }
-        if($request->{$model_name} === 'shift') {
-            $event = $request->{$model_name}->event;
-        }
-        if($request->{$model_name} === 'schedule') {
-            $event = $request->{$model_name}->shift->event;
-        }
-        if($request->{$model_name} === 'slot') {
-            $event = $request->{$model_name}->schedule->shift->event;
-        }
+        $event = $this->childModelToEvent($request->{$model_name});
 
         $is_published = ($event->published_at !== null);
         $is_admin= $this->auth->user()->hasRole('admin');
@@ -57,5 +48,24 @@ class CheckPublished
             return response('Unauthorized.', 401);
         }
         return $next($request);
+    }
+
+    public static function childModelToEvent($model)
+    {
+        $model_class = get_class($model);
+        $event = $model;
+        if($model_class === Department::class) {
+            $event = $model->event;
+        }
+        if($model_class === Shift::class) {
+            $event = $model->event;
+        }
+        if($model_class === Schedule::class) {
+            $event = $model->shift->event;
+        }
+        if($model_class === Slot::class) {
+            $event = $model->schedule->shift->event;
+        }
+        return $event;
     }
 }

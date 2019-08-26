@@ -14,7 +14,7 @@ class AddPublishedAtToEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->timestamp('published_at');
+            $table->timestamp('published_at')->nullable();
         });
     }
 
