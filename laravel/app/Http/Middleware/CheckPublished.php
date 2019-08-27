@@ -54,6 +54,12 @@ class CheckPublished
         return $next($request);
     }
 
+    /**
+     * Get parent event of shift, slot, schedule, or department
+     *
+     * @param   Model   $model  descendent model of Event
+     * @return  Event           Event or parent Event
+     */
     public static function childModelToEvent($model)
     {
         

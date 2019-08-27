@@ -284,16 +284,16 @@ class EventController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Publish/Unpublish an event
      *
-     * @param Request $request
-     * @param Event $event
-     * @return void
+     * @param   Request   $request  
+     * @param   Event     $event    targeted event in the query string
+     * @return  Response            redirect to the targeted event
      */
     public function publish(Request $request, Event $event)
     {
         $publish = $request->input('publish');
-
+        
         // toggle if publish does not exist
         if($publish === null) {
             $publish = ($event->published_at === null);

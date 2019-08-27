@@ -46,8 +46,7 @@ Route::post('/event/{event}/clone', 'EventController@cloneEvent');
 
 Route::get('/event/{event}', 'EventController@view');
 
-Route::get('/event/{event}/publish', 'EventController@publish');
-
+Route::post('/event/{event}/publish', 'EventController@publish');
 
 // Department routes
 Route::get('/event/{event}/departments', 'DepartmentController@listDepartments');
