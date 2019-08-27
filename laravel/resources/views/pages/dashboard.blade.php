@@ -41,14 +41,21 @@
         <hr>
 
         @foreach($future as $event)
-            <p>
-                @if($event->featured)
-                    <span class="burn glyphicon glyphicon-fire"></span>
-                @endif
+            <?php
+                $user_roles = Auth::user()->getRoleNames();
+                $is_lead = in_array('department-lead', $user_roles);
+                $is_admin = in_array('admin', $user_roles);
+            ?>
+            @if($event->published_at !== null || $is_lead || $is_admin)
+                <p>
+                    @if($event->featured)
+                        <span class="burn glyphicon glyphicon-fire"></span>
+                    @endif
 
-                <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
-                <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
-            </p>
+                    <b><a href='/event/{{ $event->id }}'>{{ $event->name }}</a></b>
+                    <i>from {{ $event->start_date }} until {{ $event->end_date }}</i>
+                </p>
+            @endif
         @endforeach
 
         <br>

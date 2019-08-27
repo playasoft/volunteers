@@ -282,4 +282,30 @@ class EventController extends Controller
         $request->session()->flash('success', 'Event has been cloned.');
         return redirect('/event/' . $newEvent->id);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return void
+     */
+    public function publish(Request $request, Event $event)
+    {
+        $publish = $request->input('publish');
+
+        // toggle if publish does not exist
+        if($publish === null) {
+            $publish = ($event->published_at === null);
+        }
+        
+        if($publish) { // publish
+            $event->published_at = Carbon::now();
+        } else { // unpublish
+            $event->published_at = null;
+        }
+        $event->save();
+
+        return redirect("/event/{$event->id}");
+    }
 }

@@ -38,20 +38,25 @@ class CheckPublished
      */
     public function handle($request, Closure $next, $model_name)
     {
-        $event = $this->childModelToEvent($request->{$model_name});
-
-        $is_published = ($event->published_at !== null);
-        $is_admin= $this->auth->user()->hasRole('admin');
-        $is_department_lead = $this->auth->user()->hasRole('department-lead');
-        if(!$is_published && !$is_admin && !$is_department_lead)
+        if($request->{$model_name}) 
         {
-            return response('Unauthorized.', 401);
+            $event = $this->childModelToEvent($request->{$model_name});
+
+            $is_published = ($event->published_at !== null);
+            $is_admin= $this->auth->user()->hasRole('admin');
+            $is_department_lead = $this->auth->user()->hasRole('department-lead');
+            if(!$is_published && !$is_admin && !$is_department_lead)
+            {
+                return response('Unauthorized.', 401);
+            }
         }
+        
         return $next($request);
     }
 
     public static function childModelToEvent($model)
     {
+        
         $model_class = get_class($model);
         $event = $model;
         if($model_class === Department::class) {

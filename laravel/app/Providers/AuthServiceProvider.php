@@ -35,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
             'create-event',
             'edit-event',
             'delete-event',
+            'publish-event',
             'read-department',
             'create-department',
             'edit-department',
@@ -52,6 +53,7 @@ class AuthServiceProvider extends ServiceProvider
 
         'department-lead' =>
         [
+            'publish-event',
             'create-schedule',
             'edit-schedule',
             'delete-schedule',

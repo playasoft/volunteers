@@ -3,6 +3,14 @@
 @section('content')
     <section class="event" data-id="{{ $event->id }}">
         <div class="pull-right relative" style="z-index: 1">
+            @can('publish-event')
+                @if($event->published_at === null)
+                    <a href="/event/{{ $event->id }}/publish" class="btn btn-primary">Publish Event</a>
+                @else 
+                    <a href="/event/{{ $event->id }}/publish" class="btn btn-primary">Unpublish Event</a>
+                @endif
+            @endcan
+
             @can('create-event')
                 <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a>
             @endcan
