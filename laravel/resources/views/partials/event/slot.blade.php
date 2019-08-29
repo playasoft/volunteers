@@ -44,6 +44,10 @@ if($start_date->lt(\Carbon\Carbon::now()))
     }
 }
 
+if($slot->trashed()) {
+    $class = 'slot taken-by-current-user';
+}
+
 ?>
 
 <span class="slot-wrap" data-start="{{ $slot->start_time }}" data-duration="{{ $schedule->duration }}" data-row="{{ $slot->row }}">
