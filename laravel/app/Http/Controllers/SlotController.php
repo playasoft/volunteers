@@ -53,10 +53,6 @@ class SlotController extends Controller
                 $allowed = true;
             }
         }
-        if($slotRoles->isEmpty())
-        {
-            $allowed = true;
-        }
 
         return $allowed;
     }

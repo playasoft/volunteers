@@ -47,7 +47,7 @@ class SendUserShiftConfirmation
                 'event_name' => $event->slot->schedule->shift->event->name,
                 'shift_name' => $event->slot->schedule->shift->name,
                 'start_date' => $event->slot->start_date,
-                'start_time' => $event->slot->start_date,
+                'start_time' => $event->slot->start_time,
                 'end_time' => $event->slot->end_time,
                 'admin_assigned' => $admin_assigned,
             ]);
