@@ -121,7 +121,7 @@ Route::post('/report/days', 'ReportController@getDays');
 Route::post('/report/generate', 'ReportController@generateReport');
 
 // API routes
-Route::group(['middleware' => ['auth', 'admin', 'lead']], function()
+Route::group(['middleware' => ['auth', 'lead']], function()
 {
     Route::get('/v1/profile', 'APIController@profile');
     Route::get('/v1/events', 'APIController@events');

@@ -49,7 +49,7 @@ class APIController extends Controller
      */
     public function events(Request $request)
     {
-        $events = Event::select('id', 'name', 'start_date', 'end_date')->get();
+        $events = Event::select('id AS event_id', 'name', 'start_date', 'end_date')->get();
 
         return response()->json($events->toArray());
     }
@@ -64,7 +64,7 @@ class APIController extends Controller
     public function departments(Request $request, $id)
     {
         $event = Event::find($id);
-        $departments = $event->departments()->select('id', 'name')->get();
+        $departments = $event->departments()->select('id AS department_id', 'name')->get();
 
         return response()->json($departments->toArray());
     }
@@ -82,7 +82,7 @@ class APIController extends Controller
     public function roles(Request $request, $id)
     {
         $event = Event::find($id);
-        $roles = $event->shifts()->select('id', 'department_id', 'name')->get();
+        $roles = $event->shifts()->select('id AS role_id', 'department_id', 'name')->get();
 
         return response()->json($roles->toArray());
     }
@@ -120,9 +120,9 @@ class APIController extends Controller
             ->whereNotNull('slots.user_id');
         
         $shifts = $query->select(
-            'slots.id',
+            'slots.id AS shift_id',
             'schedule.department_id',
-            'schedule.shift_id', // TEMP: Rename this after nomenclature change
+            'schedule.shift_id AS role_id', // TEMP: Rename this after nomenclature change
             'schedule.start_date',
             'schedule.end_date',
             'schedule.start_time',
@@ -132,13 +132,6 @@ class APIController extends Controller
             'user_data.full_name',
             'slots.status'
         )->get();
-        
-        // TEMP: Remove this after nomenclature change
-        // Rename "shift_id" column to "role_id"
-        $shifts->each(function ($shift) {
-            $shift->role_id = $shift->shift_id;
-            unset($shift->shift_id);
-        });
 
         return response()->json($shifts->toArray());
     }

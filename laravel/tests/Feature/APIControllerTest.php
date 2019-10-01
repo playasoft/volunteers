@@ -27,7 +27,7 @@ class APIControllerTest extends TestCase
     {
         // Given 
         $user = factory(UserData::class)->create([
-            'user_id' => factory(User::class)->states('admin')->create()->id,
+            'user_id' => factory(User::class)->states('department-lead')->create()->id,
         ])->user;
 
         // When 
@@ -52,7 +52,7 @@ class APIControllerTest extends TestCase
     public function events_endpoint_validation()
     {
         // Given 
-        $user = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->states('department-lead')->create();
         $event = factory(Event::class)->create();
 
         // When 
@@ -61,7 +61,7 @@ class APIControllerTest extends TestCase
         // Then 
         $response->assertJson([
             [
-                'id' => $event->id,
+                'event_id' => $event->id,
                 'name' => $event->name,
                 'start_date' => $event->start_date,
                 'end_date' => $event->end_date,
@@ -77,7 +77,7 @@ class APIControllerTest extends TestCase
     public function departments_endpoint_validation()
     {
         // Given 
-        $user = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->states('department-lead')->create();
         $department = factory(Department::class)->create();
         $event = $department->event;
 
@@ -87,7 +87,7 @@ class APIControllerTest extends TestCase
         // When 
         $response->assertJson([
             [
-                'id' => $department->id,
+                'department_id' => $department->id,
                 'name' => $department->name,
             ],
         ]);
@@ -101,7 +101,7 @@ class APIControllerTest extends TestCase
     public function roles_endpoint_validation()
     {
         // Given 
-        $user = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->states('department-lead')->create();
         $role = factory(Shift::class)->create();
         $event = $role->event;
 
@@ -111,7 +111,7 @@ class APIControllerTest extends TestCase
         // When 
         $response->assertJson([
             [
-                'id' => $role->id,
+                'role_id' => $role->id,
                 'department_id' => $role->department->id,
                 'name' => $role->name,
             ],
@@ -127,7 +127,7 @@ class APIControllerTest extends TestCase
     {
         // Given 
         $user = factory(UserData::class)->create([
-            'user_id' => factory(User::class)->states('admin')->create()->id,
+            'user_id' => factory(User::class)->states('department-lead')->create()->id,
         ])->user;
         $shift = factory(Slot::class)->create([
             'user_id' => $user->id,
@@ -141,7 +141,7 @@ class APIControllerTest extends TestCase
         // When 
         $response->assertJson([
             [
-                'id' => $shift->id,
+                'shift_id' => $shift->id,
                 'department_id' => $shift->department->id,
                 'role_id' => $shift->schedule->shift->id,
                 'start_date' => $shift->schedule->start_date,
@@ -164,7 +164,7 @@ class APIControllerTest extends TestCase
     public function update_shift_endpoint_validation()
     {
         // Given 
-        $user = factory(User::class)->states('admin')->create();
+        $user = factory(User::class)->states('department-lead')->create();
         $shift = factory(Slot::class)->create([
             'user_id' => $user->id,
         ]);
