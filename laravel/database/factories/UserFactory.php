@@ -12,15 +12,7 @@ $factory->define(User::class, function (Faker $faker, array $data)
         'name' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt($faker->password),
-  
   ];
-});
-
-$factory->state(User::class, 'admin', function (Faker $faker)
-{
-    return
-    [
-    ];
 });
 
 $factory->afterCreatingState(User::class, 'admin', function (User $user, Faker $faker)

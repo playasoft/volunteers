@@ -46,6 +46,33 @@ class APIControllerTest extends TestCase
 
     /**
      * @test
+     *
+     * @return void
+     */
+    public function profile_endpoint_validation_admin()
+    {
+        // Given 
+        $user = factory(UserData::class)->create([
+            'user_id' => factory(User::class)->states('admin')->create()->id,
+        ])->user;
+
+        // When 
+        $response = $this->actingAs($user)->get('/v1/profile');
+
+        // Then 
+        $response->assertJson([
+            'username' => $user->name,
+            'email' => $user->email,
+            'full_name' => $user->data->full_name,
+            'burner_name' => $user->data->burner_name,
+            'phone_number' => $user->data->phone,
+            'permissions' => $user->getRoleNames(),
+        ]);
+    }
+
+
+    /**
+     * @test
      * 
      * @return void
      */
