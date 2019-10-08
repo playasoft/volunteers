@@ -93,6 +93,18 @@ class Event extends Model
         return $this->hasMany('App\Models\Shift');
     }
 
+    // Events have schedules
+    public function schedules()
+    {
+        return $this->hasMany('App\Models\Schedule');
+    }
+
+    // Events have slots
+    public function slots()
+    {
+        return $this->hasMany('App\Models\Slot');
+    }
+
     // Helper function to generate a list of days the event will take place
     public function days($hideEmpty = false)
     {

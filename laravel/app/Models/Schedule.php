@@ -11,6 +11,17 @@ class Schedule extends Model
     protected $table = 'schedule';
     protected $fillable = ['department_id', 'shift_id', 'start_date', 'end_date', 'dates', 'start_time', 'end_time', 'duration', 'volunteers', 'password'];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($model) {
+            if(!isset($model->event_id)) {
+                $model->event_id = $model->shift->event->id;
+            }
+        });
+    }
+
     // Schedules belong to a shift
     public function shift()
     {
@@ -23,16 +34,16 @@ class Schedule extends Model
         return $this->belongsTo('App\Models\Department');
     }
 
+    // Schedules belong to an event
+    public function event()
+    {
+        return $this->belongsTo('App\Models\Event');
+    }
+
     // Schedules have slots
     public function slots()
     {
         return $this->hasMany('App\Models\Slot');
-    }
-
-    // Convenience for getting the event of a scheduled shift
-    public function getEventAttribute()
-    {
-        return $this->department->event;
     }
 
     // Shedules have roles

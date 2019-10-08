@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Slot;
 use Faker\Generator as Faker;
@@ -19,20 +20,27 @@ $factory->define(Slot::class, function (Faker $faker, array $data)
     [
         'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
         'start_time' => Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s'),
-        'end_time' => function($schedule) use ($faker, $duration_min, $duration_max)
+        'end_time' => function($slot) use ($faker, $duration_min, $duration_max)
         {
             $duration = $faker->numberBetween($duration_min, $duration_max);
-            $start_time = Carbon::createFromFormat('H:i:s', $schedule['start_time']);
+            $start_time = Carbon::createFromFormat('H:i:s', $slot['start_time']);
             $end_time = $start_time->addHours($duration);
             return $end_time->format('H:i:s');
         },
         'row' => 1,
-        'schedule_id' => function ($schedule)
+        'event_id' => function ($slot)
+        {
+            return factory(Event::class)->create([
+                'start_date' => $slot['start_date'],
+            ])->id;
+        },
+        'schedule_id' => function ($slot)
         {
             return factory(Schedule::class)->create([
-                'start_date' => $schedule['start_date'],
-                'start_time' => $schedule['start_time'],
-                'end_time' => $schedule['end_time'],
+                'start_date' => $slot['start_date'],
+                'start_time' => $slot['start_time'],
+                'end_time' => $slot['end_time'],
+                'event_id' => $slot['event_id'],
             ])->id;
         },
     ];

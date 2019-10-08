@@ -51,28 +51,27 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
             $start_time = Carbon::createFromFormat('H:i:s', $schedule['start_time']);
             $end_time = Carbon::createFromFormat('H:i:s', $schedule['end_time']);
             $duration = $end_time->diff($start_time);
-            return $duration->format('H:i:s');
+            return $duration->format('%H:%I:%S');
         },
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
+        'event_id' => function ($schedule)
+        {
+            return factory(Event::class)->create([
+                'start_date' => $schedule['start_date'],
+                'end_date' => $schedule['end_date'],
+            ])->id;
+        },
         'department_id' => function ($schedule)
         {
-            $event_id = function () use ($schedule)
-            {
-                return factory(Event::class)->create([
-                    'start_date' => $schedule['start_date'],
-                    'end_date' => $schedule['end_date'],
-                ]);
-            };
             return factory(Department::class)->create([
-                'event_id' => $event_id,
+                'event_id' => $schedule['event_id'],
             ])->id;
         },
         'shift_id' => function ($schedule)
         {
-            $department = Department::find($schedule['department_id']);
             return factory(Shift::class)->create([
-                'department_id' => $department->id,
-                'event_id' => $department->event->id,
+                'department_id' => $schedule['department_id'],
+                'event_id' => $schedule['event_id'],
             ])->id;
         },
     ];

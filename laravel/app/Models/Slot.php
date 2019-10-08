@@ -9,10 +9,27 @@ class Slot extends Model
 {
     protected $fillable = ['schedule_id', 'start_date', 'start_time', 'end_time', 'row', 'status'];
 
+    public static function boot()
+    {
+        parent::boot();
+        
+        self::creating(function($model) {
+            if(!isset($model->event_id)) {
+                $model->event_id = $model->schedule->event->id;
+            }
+        });
+    }
+
     // Slots belong to the schedule
     public function schedule()
     {
         return $this->belongsTo('App\Models\Schedule');
+    }
+
+    // Slots belong to an event
+    public function event()
+    {
+        return $this->belongsTo('App\Models\Event');
     }
 
     // Slots can also belong to a user
@@ -25,12 +42,6 @@ class Slot extends Model
     public function getDepartmentAttribute()
     {
         return $this->schedule->department;
-    }
-
-    // Convenience for getting the event of a slot
-    public function getEventAttribute()
-    {
-        return $this->schedule->event;
     }
 
     // Helper function to get the number of seconds in a timestamp
