@@ -17,10 +17,14 @@ class EventSeeder extends Seeder
 {
     private function seedEvent($startDate = null)
     {
-        $event = factory(Event::class)->create(['start_date' => $startDate ?: Carbon::now()]);
+        $event = factory(Event::class)->create(
+            ['start_date' => $startDate ?: Carbon::now()
+        ]);
         echo "Created Event: {$event->name}" . PHP_EOL;
 
-        $department = factory(Department::class)->create(['event_id' => $event->id]);
+        $department = factory(Department::class)->create([
+            'event_id' => $event->id
+        ]);
         echo "Created Department: {$department->name}" . PHP_EOL;
 
         $shift = factory(Shift::class)->create(['event_id' => $event->id, 'department_id' => $department->id]);

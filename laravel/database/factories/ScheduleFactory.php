@@ -28,6 +28,7 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
     $volunteer_min = 1;
     $volunteer_max = 3;
 
+    dd($data);
     return
     [
         'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
