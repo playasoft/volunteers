@@ -27,7 +27,10 @@ class EventSeeder extends Seeder
         ]);
         echo "Created Department: {$department->name}" . PHP_EOL;
 
-        $shift = factory(Shift::class)->create(['event_id' => $event->id, 'department_id' => $department->id]);
+        $shift = factory(Shift::class)->create([
+            'event_id' => $event->id, 
+            'department_id' => $department->id
+        ]);
         echo "Created Shift: {$shift->name}" . PHP_EOL;
 
         // Create a list of dates between the start and end date of the event
@@ -37,7 +40,11 @@ class EventSeeder extends Seeder
             $dates[] = $day->date->toDateString();
         }
 
-        $schedule = factory(Schedule::class)->create(['department_id' => $department->id, 'shift_id' => $shift->id, 'dates' => json_encode($dates)]);
+        $schedule = factory(Schedule::class)->create([
+            'department_id' => $department->id, 
+            'shift_id' => $shift->id, 
+            'dates' => json_encode($dates)
+        ]);
         echo "Created Schedule: {$schedule->id}". PHP_EOL;
         echo "\tin department: {$schedule->department->name}". PHP_EOL;
         echo "\tfor shift: {$schedule->shift->name}" . PHP_EOL;

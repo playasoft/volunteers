@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers;
 use App\Models\Department;
 use App\Models\Event;
 use App\Models\Schedule;
@@ -28,15 +29,24 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
     $volunteer_min = 1;
     $volunteer_max = 3;
 
-    dd($data);
     return
     [
-        'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
+        'start_date' => function($schedule) use ($data) {
+            $start_date = Carbon::tomorrow()->addDays(1)->format('Y-m-d');
+            if(isset($data['event_id'])) {
+                $start_date = Event::find($data['event_id'])->start_date;
+            }
+            return $start_date;
+        },
         'end_date' => function($schedule) use ($faker, $days_min, $days_max)
         {
             $duration = $faker->numberBetween($days_min,$days_max);
             $start_date = Carbon::createFromFormat('Y-m-d', $schedule['start_date']);
             $end_date = $start_date->addDays($duration);
+            $start_date = Carbon::tomorrow()->addDays(1)->format('Y-m-d');
+            if(isset($data['event_id'])) {
+                $start_date = Event::find($data['event_id'])->end_date;
+            }
             return $end_date->format('Y-m-d');
         },
         'start_time' => Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s'),
@@ -62,18 +72,18 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
                 'end_date' => $schedule['end_date'],
             ])->id;
         },
+        'shift_id' => function ($schedule) use ($data)
+        {
+            $shift_subset = Helpers::subsetArray($data, [
+                'department_id', 
+                'event_id',
+            ]);
+            $shift_subset['event_id'] = $schedule['event_id'];
+            return factory(Shift::class)->create($shift_subset)->id;
+        },
         'department_id' => function ($schedule)
         {
-            return factory(Department::class)->create([
-                'event_id' => $schedule['event_id'],
-            ])->id;
-        },
-        'shift_id' => function ($schedule)
-        {
-            return factory(Shift::class)->create([
-                'department_id' => $schedule['department_id'],
-                'event_id' => $schedule['event_id'],
-            ])->id;
+            return Shift::find($schedule['shift_id'])->department->id;
         },
     ];
 });

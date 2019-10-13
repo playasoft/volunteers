@@ -34,4 +34,20 @@ class Helpers
 
         return $display_name;
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $array
+     * @param [type] $keys
+     * @return void
+     */
+    public static function subsetArray($array, $keys) 
+    {
+        if(!is_array($keys)) {
+            $keys = [$keys];
+        }
+        $subset_associative_keys = array_flip($keys);
+        return array_intersect_key($array, $subset_associative_keys);
+    }
 }

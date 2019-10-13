@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers;
 use App\Models\Event;
 use App\Models\Schedule;
 use App\Models\Slot;
@@ -16,10 +17,21 @@ $factory->define(Slot::class, function (Faker $faker, array $data)
     $duration_min = 2; //hours
     $duration_max = 8; //hours
 
+    $duration = $faker->numberBetween($duration_min, $duration_max);
+
     return
     [
         'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
-        'start_time' => Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s'),
+        'start_time' => function($slot) use ($data, $duration) {
+            if(isset($data['end_time']))
+            {
+                
+            }
+
+            
+
+            Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s');
+        },
         'end_time' => function($slot) use ($faker, $duration_min, $duration_max)
         {
             $duration = $faker->numberBetween($duration_min, $duration_max);
@@ -28,20 +40,19 @@ $factory->define(Slot::class, function (Faker $faker, array $data)
             return $end_time->format('H:i:s');
         },
         'row' => 1,
+        'schedule_id' => function ($slot) use ($data)
+        {
+            $schedule_subset = Helpers::subsetArray($data, [
+                'start_date', 
+                'start_time', 
+                'end_time', 
+                'event_id'
+            ]);
+            return factory(Schedule::class)->create($schedule_subset)->id;
+        },
         'event_id' => function ($slot)
         {
-            return factory(Event::class)->create([
-                'start_date' => $slot['start_date'],
-            ])->id;
-        },
-        'schedule_id' => function ($slot)
-        {
-            return factory(Schedule::class)->create([
-                'start_date' => $slot['start_date'],
-                'start_time' => $slot['start_time'],
-                'end_time' => $slot['end_time'],
-                'event_id' => $slot['event_id'],
-            ])->id;
+            return Schedule::find($slot['schedule_id'])->event->id;
         },
     ];
 });
