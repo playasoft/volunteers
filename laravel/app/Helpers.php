@@ -36,11 +36,11 @@ class Helpers
     }
 
     /**
-     * Undocumented function
+     * Find the subset key/value pairs of an array by given keys.
      *
-     * @param [type] $array
-     * @param [type] $keys
-     * @return void
+     * @param Array $array  Superset Array
+     * @param Array $keys   Subset Keys
+     * @return Array        Subset Array
      */
     public static function subsetArray($array, $keys) 
     {
@@ -49,5 +49,21 @@ class Helpers
         }
         $subset_associative_keys = array_flip($keys);
         return array_intersect_key($array, $subset_associative_keys);
+    }
+
+    /**
+     * Turn timestamp strings in Carbon Objects.
+     * If the timestamp is already a Carbon Object, return it.
+     *
+     * @param mixed $timestamp
+     * @return Carbon
+     */
+    public static function carbonize($timestamp)
+    {
+        if(is_string($timestamp))
+        {
+            return Carbon::parse($timestamp);
+        }
+        return $timestamp;
     }
 }

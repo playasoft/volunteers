@@ -22,34 +22,49 @@ $factory->define(Slot::class, function (Faker $faker, array $data)
     return
     [
         'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
-        'start_time' => function($slot) use ($data, $duration) {
+
+        'start_time' => function($slot) use ($faker, $data, $duration) {
+            //default randomized hour
+            $start_hour = $faker->numberBetween(0, 23);
+
+            //set same day hour if end_time has been set
             if(isset($data['end_time']))
             {
-                
+                $end_time = Helpers::carbonize($data['end_time']);
+                $start_hour = $end_time->hour - $duration;
+                if($start_hour < 0) 
+                {
+                    $start_hour = 0;
+                }
             }
 
-            
+            return Carbon::createFromTime($start_hour)->format('H:i:s');
+        },
 
-            Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s');
-        },
-        'end_time' => function($slot) use ($faker, $duration_min, $duration_max)
+        'end_time' => function($slot) use ($faker, $duration)
         {
-            $duration = $faker->numberBetween($duration_min, $duration_max);
-            $start_time = Carbon::createFromFormat('H:i:s', $slot['start_time']);
-            $end_time = $start_time->addHours($duration);
-            return $end_time->format('H:i:s');
+            $start_time = Helpers::carbonize($slot['start_time']);
+            $end_hour = $start_time->hour + $duration;
+            if($end_hour > 23)
+            {
+                $end_hour = 23;
+            }
+            return Carbon::createFromTime($end_hour)->format('H:i:s');
         },
+
         'row' => 1,
-        'schedule_id' => function ($slot) use ($data)
+
+        'schedule_id' => function ($slot) use ($faker, $data)
         {
             $schedule_subset = Helpers::subsetArray($data, [
-                'start_date', 
-                'start_time', 
-                'end_time', 
-                'event_id'
+                'event_id',
             ]);
+            $schedule_subset['start_date'] = $slot['start_date'];
+            $schedule_subset['start_time'] = $slot['start_time'];
+            $schedule_subset['end_time'] = $slot['end_time'];
             return factory(Schedule::class)->create($schedule_subset)->id;
         },
+
         'event_id' => function ($slot)
         {
             return Schedule::find($slot['schedule_id'])->event->id;
