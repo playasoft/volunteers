@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Helpers;
 use App\Models\Event;
 use App\Models\Slot;
+use App\Models\User;
 
 /**
  * Controller for the API
@@ -132,6 +134,10 @@ class APIController extends Controller
             'user_data.full_name',
             'slots.status'
         )->get();
+
+        $shifts->each(function ($shift) {
+            $shift->display_name = Helpers::displayName(User::find($shift->user_id));
+        });
 
         return response()->json($shifts->toArray());
     }
