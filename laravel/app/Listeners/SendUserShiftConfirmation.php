@@ -34,9 +34,9 @@ class SendUserShiftConfirmation
             $user_name = $event->change['name'];
             $event_name = $event->slot->schedule->shift->event->name;
             $shift_name = $event->slot->schedule->shift->name;
-            $start_date = $event->slot->start_date;
-            $start_time = $event->slot->start_date;
-            $end_time = $event->slot->end_time;
+            $start_date = date('l M d',strtotime($event->slot->start_date));
+            $start_time = date('h:i a',strtotime($event->slot->start_time . $event->slot->start_date));
+            $end_time = date('h:i a',strtotime($event->slot->end_time . $event->slot->start_date));
 
             $admin_assigned = false;
             if (isset($event->change['admin_assigned']))
