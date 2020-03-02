@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Helpers;
 use App\Models\User;
 use App\Models\UserData;
 use App\Models\Event;
@@ -179,6 +180,7 @@ class APIControllerTest extends TestCase
                 'email' => $shift->user->email,
                 'full_name' => $shift->user->data->full_name,
                 'status' => $shift->status,
+                'display_name' => Helpers::displayName($user),
             ],
         ]);
     }
