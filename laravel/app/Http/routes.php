@@ -87,10 +87,11 @@ Route::get('/slot/{slot}/view', 'SlotController@view');
 Route::post('/slot/{slot}/take', 'SlotController@take');
 Route::post('/slot/{slot}/release', 'SlotController@release');
 
-//Routes for Admin
-Route::group(['middleware' => ['auth','admin']], function()
+// Routes for Admins / Deparment Leads
+Route::group(['middleware' => ['auth', 'lead']], function()
 {
     Route::post('/slot/{slot}/adminRelease', 'SlotController@adminRelease');
+    Route::post('/slot/{slot}/adminAssign', 'SlotController@adminAssign');
 });
 //Routes for Leads and admins
 Route::group(['middleware' => ['auth:admin','auth:lead']], function()
@@ -117,10 +118,21 @@ Route::get('/user/{user}', 'AdminController@userProfile');
 Route::post('/user/{user}/edit', 'AdminController@userEdit');
 
 Route::get('/uploads', 'AdminController@uploadList');
-Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit'); 
+Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit');
 
 Route::get('/reports', 'ReportController@reportList');
 Route::post('/report/users', 'ReportController@searchUsers');
 Route::post('/report/departments', 'ReportController@getDepartments');
 Route::post('/report/days', 'ReportController@getDays');
 Route::post('/report/generate', 'ReportController@generateReport');
+
+// API routes
+Route::group(['middleware' => ['auth', 'lead']], function()
+{
+    Route::get('/v1/profile', 'APIController@profile');
+    Route::get('/v1/events', 'APIController@events');
+    Route::get('/v1/event/{id}/departments', 'APIController@departments');
+    Route::get('/v1/event/{id}/roles', 'APIController@roles');
+    Route::get('/v1/event/{id}/shifts', 'APIController@shifts');
+    Route::post('/v1/shift/{id}', 'APIController@updateShift');
+});

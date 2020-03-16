@@ -2,7 +2,9 @@
   "private": true,
   "scripts": {
     "build": "./node_modules/.bin/webpack",
-    "dev": "./node_modules/.bin/webpack --config webpack.dev.config.js --watch"
+    "dev": "./node_modules/.bin/webpack --config webpack.dev.config.js --watch",
+    "test": "./vendor/bin/phpunit tests || true",
+    "watch:test": "watch --color npm run test"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

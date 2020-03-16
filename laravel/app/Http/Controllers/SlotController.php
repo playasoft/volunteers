@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SlotRequest;
-use App\Http\Requests\SlotEditRequest; 
+use App\Http\Requests\SlotEditRequest;
 use App\Models\Slot;
+use App\Models\User;
 use App\Models\UserRole;
+use App\Helpers;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -101,7 +104,7 @@ class SlotController extends Controller
             $slot->user_id = Auth::user()->id;
             $slot->save();
 
-            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name]));
+            event(new SlotChanged($slot, ['status' => 'taken', 'name' => Auth::user()->name, 'email' => Auth::user()->email]));
             $request->session()->flash('success', 'You signed up for a volunteer shift.');
 
             // If a password was used
@@ -122,38 +125,30 @@ class SlotController extends Controller
         {
             $request->session()->flash('error', 'This slot has already been taken by someone else.');
         }
-        
+
         return redirect('/event/' . $slot->event->id);
     }
 
     // Remove yourself from a slot
     public function release(Request $request, Slot $slot)
     {
-
-        if(!$this->userAllowed($slot))
+        if($this->eventHasPassed($slot))
         {
-            $request->session()->flash('error', 'This shift is only available to certain user groups, your account must be approved by an administrator before signing up.');
+            $request->session()->flash('error', 'This event has already passed, you are no longer able to make changes to your shifts.');
         }
         else
         {
-            if($this->eventHasPassed($slot))
+            if(!is_null($slot->user) && $slot->user->id === Auth::user()->id)
             {
-                $request->session()->flash('error', 'This event has already passed, you are no longer able to sign up for shifts.');
+                $slot->user_id = null;
+                $slot->save();
+
+                event(new SlotChanged($slot, ['status' => 'released']));
+                $request->session()->flash('success', 'You are no longer volunteering for your shift.');
             }
             else
             {
-                if(!is_null($slot->user) && $slot->user->id === Auth::user()->id)
-                {
-                    $slot->user_id = null;
-                    $slot->save();
-
-                    event(new SlotChanged($slot, ['status' => 'released']));
-                    $request->session()->flash('success', 'You are no longer volunteering for your shift.');
-                }
-                else
-                {
-                    $request->session()->flash('error', 'You are not currently scheduled to volunteer for this shift.');
-                }
+                $request->session()->flash('error', 'You are not currently scheduled to volunteer for this shift.');
             }
         }
 
@@ -167,25 +162,38 @@ class SlotController extends Controller
         $slot->save();
         return;
     }
+
     public function adminRelease(Request $request, Slot $slot)
     {
-        
-        if(Auth::user()->hasRole('admin'))
+        if(!is_null($slot->user))
         {
-            $username = $slot->user->data->burner_name;
-            if(!is_null($slot->user))
-            {
-                $slot->user_id = null;
-                $slot->save();
+            $username = Helpers::displayName($slot->user);
 
-                event(new SlotChanged($slot, ['status' => 'released']));
-                $request->session()->flash('success', ''.$username.' is removed!!');
-            }
-            else
-            {
-                $request->session()->flash('error', 'there is nobody currently scheduled to volunteer for this shift.');
-            }
-            return redirect('/event/' . $slot->event->id);
+            $slot->user_id = null;
+            $slot->save();
+            event(new SlotChanged($slot, ['status' => 'released', 'admin_released' => true]));
+            $request->session()->flash('success', $username.' is removed!!');
         }
+        else
+        {
+            $request->session()->flash('error', 'there is nobody currently scheduled to volunteer for this shift.');
+        }
+        return redirect('/event/' . $slot->event->id);
+    }
+
+    public function adminAssign(Request $request, Slot $slot)
+    {
+        $user = User::findorFail($request->get('user'));
+
+        if(is_null($slot->user))
+        {
+            $username = Helpers::displayName($user);
+
+            $slot->user_id=$user->id;
+            $slot->save();
+            event(new SlotChanged($slot, ['status' => 'taken', 'admin_assigned' => true, 'name' => $user->name, 'email' => $user->email]));
+            $request->session()->flash('success', 'You added '.$username.' to this shift');
+        }
+        return redirect('/event/'.$slot->event->id);
     }
 }
