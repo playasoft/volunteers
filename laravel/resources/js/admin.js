@@ -134,9 +134,10 @@ $(document).ready(function()
         fetch('/slot/'+ slot +'/edit', ajaxOptions);
 
         var message = $(this).parents('.volunteer').find('.toast-message').style({visibility: 'visible', opacity: 1});
-        setTimeout(function()
+
+        clearTimeout(timeOut)
+        var timeOut = setTimeout(function()
         {
-            clearTimeout()
             message.style({visibility: 'none', opacity: 0});
         },1000);
     });
