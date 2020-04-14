@@ -38,8 +38,6 @@ $(document).ready(function()
        
     });
 
-
-
     // Display save / cancel buttons when changing user roles
     $('.user-roles input').on('change', function()
     {
@@ -86,8 +84,7 @@ $(document).ready(function()
 
     $('.cancel-roles').on('click', function()
     {
-        $('.user-role').value($('.user-role').data('role'));
-        $('.buttons').attr('style', false);
+        window.history.back();
     });
 
     $('.save-upload').on('click', function()
