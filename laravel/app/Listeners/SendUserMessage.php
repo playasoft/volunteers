@@ -45,9 +45,16 @@ class SendUserMessage
     {
         $user = $event->user;
 
-        Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
+        try
         {
-            $message->to($user->email, $user->name)->subject('Your Password Reset Code');
-        });
+            Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
+            {
+                $message->to($user->email, $user->name)->subject('Your Password Reset Code');
+            });
+        }
+        catch (\Exception $exception)
+        {
+            app('request')->session()->flash('error', "Unable to send email, SMTP error. Please notify the administrator of this volunteer database.");
+        }
     }
 }
