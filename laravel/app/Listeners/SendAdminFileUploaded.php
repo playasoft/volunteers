@@ -34,9 +34,16 @@ class SendAdminFileUploaded
         // TODO: Options to choose which admins to notify
         $admin = User::where('id', 1)->first();
 
-        Mail::send('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
+        try
         {
-            $message->to($admin->email, $admin->name)->subject('New file uploaded!');
-        });
+            Mail::send('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
+            {
+                $message->to($admin->email, $admin->name)->subject('New file uploaded!');
+            });
+        }
+        catch (\Exception $exception)
+        {
+            app('request')->session()->flash('warning', "Unable to send email notification, SMTP error. Please notify the administrator of this volunteer database.");
+        }
     }
 }

@@ -39,6 +39,12 @@
                 </div>
             @endif
 
+            @if(Session::has('warning'))
+                <div class="general-alert alert alert-warning" role="alert">
+                    <b>Warning:</b> {{ Session::get('warning')}}
+                </div>
+            @endif
+
             @yield('content')
         </section>
 

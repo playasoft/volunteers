@@ -29,9 +29,16 @@ class SendUserWelcome
     {
         $user = $event->user;
         
-        Mail::send('emails/user-welcome', compact('user'), function ($message) use ($user)
+        try
         {
-            $message->to($user->email, $user->name)->subject('Welcome to the Volunteer Database!');
-        });
+            Mail::send('emails/user-welcome', compact('user'), function ($message) use ($user)
+            {
+                $message->to($user->email, $user->name)->subject('Welcome to the Volunteer Database!');
+            });
+        }
+        catch (\Exception $exception)
+        {
+            app('request')->session()->flash('warning', "Unable to send email confirmation, SMTP error. Please notify the administrator of this volunteer database.");
+        }
     }
 }
