@@ -5,7 +5,7 @@ namespace App\Listeners;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
+use App\Helpers;
 use App\Models\User;
 
 class SendUserMessage
@@ -45,16 +45,9 @@ class SendUserMessage
     {
         $user = $event->user;
 
-        try
+        Helpers::sendMail('emails/forgot-password', compact('user'), function ($message) use ($user)
         {
-            Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
-            {
-                $message->to($user->email, $user->name)->subject('Your Password Reset Code');
-            });
-        }
-        catch (\Exception $exception)
-        {
-            app('request')->session()->flash('error', "Unable to send email, SMTP error. Please notify the administrator of this volunteer database.");
-        }
+            $message->to($user->email, $user->name)->subject('Your Password Reset Code');
+        });
     }
 }

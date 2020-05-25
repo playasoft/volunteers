@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,16 +34,9 @@ class SendAdminWelcome
         // TODO: Options to choose which admins to notify
         $admin = User::where('id', 1)->first();
 
-        try
+        Helpers::sendMail('emails/admin-welcome', compact('user'), function ($message) use ($admin)
         {
-            Mail::send('emails/admin-welcome', compact('user'), function ($message) use ($admin)
-            {
-                $message->to($admin->email, $admin->name)->subject('New user registered!');
-            });
-        }
-        catch (\Exception $exception)
-        {
-            app('request')->session()->flash('warning', "Unable to send email confirmation, SMTP error. Please notify the administrator of this volunteer database.");
-        }
+            $message->to($admin->email, $admin->name)->subject('New user registered!');
+        });
     }
 }
