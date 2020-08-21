@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    image: bitnami/nginx
+    volumes:
+      - ./nginx/conf/server_block.conf:/opt/bitnami/nginx/conf/server_blocks/my_server_block.conf:ro
+    ports:
+      - "80:8000"
+      - "443:8443"
+    networks:
+      - voldb-net
+  mariadb:
+    image: bitnami/mariadb
+    volumes:
+      - ./mariadb/conf:/bitnami/mariadb
+    ports:
+      - "3306"
+    networks:
+      - voldb-net
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=correcthorsebatterystaple
+      - MARIADB_USER=volunteers
+      - MARIADB_PASSWORD=freelabor
+      - MARIADB_DATABASE=voldb
+  voldb:
+    image: voldb:latest
+    volumes:
+      - ./voldb/conf:/home/volunteers/volunteers/laravel
+      - ./voldb/conf/js:/home/volunteers/volunteers/laravel/resources/js
+    networks:
+      - voldb-net
+networks:
+  voldb-net:
+    driver: bridge
