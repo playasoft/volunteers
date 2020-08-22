@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: bitnami/nginx
+    image: bitnami/nginx:latest
     volumes:
       - ./nginx/conf/server_block.conf:/opt/bitnami/nginx/conf/server_blocks/my_server_block.conf:ro
     ports:
@@ -10,9 +10,9 @@ services:
     networks:
       - voldb-net
   mariadb:
-    image: bitnami/mariadb
+    image: bitnami/mariadb:latest
     volumes:
-      - ./mariadb/conf:/bitnami/mariadb
+      - mariadb:/bitnami
     ports:
       - "3306"
     networks:
@@ -33,3 +33,6 @@ services:
 networks:
   voldb-net:
     driver: bridge
+volumes:
+  mariadb:
+    driver: local
