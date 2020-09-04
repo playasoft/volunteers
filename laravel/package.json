@@ -13,7 +13,7 @@
     "css-loader": "^0.26.1",
     "dotenv": "^4.0.0",
     "extract-text-webpack-plugin": "^2.1.0",
-    "node-sass": "^4.5.1",
+    "node-sass": "^4.13.1",
     "path": "^0.12.7",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
