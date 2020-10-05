@@ -26,6 +26,11 @@ A volunteer database for events written using the Laravel 5.6 framework
     * _Note_: You must set this up ahead of time, an [easy guide for Ubuntu users is available](#mysql).
 6. Run ```php artisan migrate``` within the **laravel** folder
 
+### Docker
+
+1. Git clone this repo
+2. Configure your database and email settings in the **laravel/.env** file
+3. Run ```docker-compose up -d```
 
 ## <a name="configuration"></a> Setup / Configuration
 

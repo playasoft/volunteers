@@ -1,0 +1,89 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: laravel
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - /var/secrets
+      - ./laravel:/var/www
+    networks:
+      - app-network
+
+  #NodeJS - uncomment for websockets
+  sockets:
+    build:
+      context: node
+      dockerfile: Dockerfile
+    volumes:
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./laravel/:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+    links:
+      - db:db
+      - app
+    depends_on:
+      - db
+      - app
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_HOST: /var/secrets/host
+      MYSQL_DATABASE_FILE: /var/secrets/database
+      MYSQL_USER: /var/secrets/user
+      MYSQL_PASSWORD: /var/secrets/dbpass
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - /var/secrets
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+    dbdata:
+      driver: local
