@@ -1,11 +1,13 @@
-# npm bits
-FROM node:7.7.2-alpine
+FROM node:current
 
 COPY package.json websocket-server.js /usr/app/
+COPY config.example.js /usr/app/config.js
 
 WORKDIR /usr/app
 
 RUN npm install
+RUN npm install pm2 -g
+
 EXPOSE 3000
 
-RUN node /usr/app/websocket-server.js
+CMD [ "pm2-runtime", "websocket-server.js" ]
