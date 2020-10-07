@@ -5,6 +5,11 @@
 - [x] Login
 - [x] Permissions per page
 
+## Docker
+- [ ] Set APP_KEY in .env
+- [ ] mysql interaction with php
+- [ ] npm correctly building in php
+
 ### User groups
 - [x] Admin
 - [x] Volunteer
