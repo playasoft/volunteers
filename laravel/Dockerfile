@@ -1,15 +1,7 @@
 FROM php:7.2-fpm
 
-# Copy composer.lock and composer.json
+# Move files over
 COPY composer.lock composer.json /var/www/
-
-# Set up our /secrets
-RUN mkdir /var/secrets
-COPY .env /var/secrets/env
-RUN sed -n 's/DB_HOST=//p' /var/secrets/env > /var/secrets/host
-RUN sed -n 's/DB_DATABASE=//p' /var/secrets/env > /var/secrets/database
-RUN sed -n 's/DB_USERNAME=//p' /var/secrets/env > /var/secrets/user
-RUN sed -n 's/DB_PASSWORD=//p' /var/secrets/env > /var/secrets/dbpass
 
 # Set working directory
 WORKDIR /var/www
@@ -26,12 +18,16 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
-    curl\
-    npm\
+    curl \
+    python \
     nodejs
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install npm
+# This ships with npm v. 5.6 or so, and that doesn't play well with the node version in the repos
+RUN curl -sS https://www.npmjs.com/install.sh | sh
 
 # Install extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
@@ -51,17 +47,22 @@ COPY --chown=nginx:nginx . /var/www
 # Run composer
 RUN composer install
 
-# Set up node
+# Set up our /secrets
+RUN mkdir -p /var/www/secrets
+RUN sed -n 's/DB_HOST=//p' /var/www/.env > /var/www/secrets/host
+RUN sed -n 's/DB_DATABASE=//p' /var/www/.env > /var/www/secrets/database
+RUN sed -n 's/DB_USERNAME=//p' /var/www/.env > /var/www/secrets/user
+RUN sed -n 's/DB_PASSWORD=//p' /var/www/.env > /var/www/secrets/dbpass
+
 RUN npm install
 
-# Migrate - this requires sql up and running, maybe move for testing?
-#RUN php artisan migrate
 RUN php artisan key:generate
 RUN php artisan config:cache
 
 # May want this tunable
 COPY resources/js/config.example.js resources/js/config.js
-RUN npm run build
+# This currently fails
+#RUN npm run build
 
 # Seed the database with user roles
 RUN php artisan db:seed
