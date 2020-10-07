@@ -6,7 +6,6 @@ services:
     build:
       context: laravel
       dockerfile: Dockerfile
-    image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
     tty: true
@@ -15,7 +14,7 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
-      - /var/secrets
+      - secret:/var/www/secrets/
       - ./laravel:/var/www
     networks:
       - app-network
@@ -25,14 +24,13 @@ services:
     build:
       context: node
       dockerfile: Dockerfile
-    volumes:
-      - /usr/app/node_modules
+    container_name: sockets
     ports:
       - "3000:3000"
     networks:
       - app-network
     depends_on:
-      - db
+      - app
 
   #Nginx Service
   webserver:
@@ -48,35 +46,33 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
-    links:
-      - db:db
-      - app
     depends_on:
       - db
       - app
 
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    image: mysql
     container_name: db
     restart: unless-stopped
     tty: true
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_HOST: /var/secrets/host
+      MYSQL_ROOT_HOST_FILE: /var/secrets/host
+      # We want to eventually have a separate field in .env for this
+      MYSQL_ROOT_PASSWORD_FILE: /var/secrets/dbpass
       MYSQL_DATABASE_FILE: /var/secrets/database
-      MYSQL_USER: /var/secrets/user
-      MYSQL_PASSWORD: /var/secrets/dbpass
+      MYSQL_USER_FILE: /var/secrets/user
+      MYSQL_PASSWORD_FILE: /var/secrets/dbpass
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - /var/secrets
+      - secret:/var/secrets/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - dbdata:/var/lib/mysql-files
     networks:
       - app-network
-    depends_on:
-      - app
 
 #Docker Networks
 networks:
@@ -86,4 +82,6 @@ networks:
 #Volumes
 volumes:
     dbdata:
+      driver: local
+    secret:
       driver: local
