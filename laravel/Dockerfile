@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.1.3-fpm
 
 # Move files over
 COPY composer.lock composer.json /var/www/
@@ -6,36 +6,14 @@ COPY composer.lock composer.json /var/www/
 # Set working directory
 WORKDIR /var/www
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl \
-    python \
-    nodejs
+RUN apt-get update && apt-get install -y libmcrypt-dev git zip\
+    mysql-client libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install mcrypt pdo_mysql mbstring dom
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install npm
-# This ships with npm v. 5.6 or so, and that doesn't play well with the node version in the repos
-RUN curl -sS https://www.npmjs.com/install.sh | sh
-
-# Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -\
+    && apt-get install -y nodejs
 
 # Add user for laravel application
 RUN groupadd -g 1000 nginx
@@ -44,8 +22,17 @@ RUN useradd -u 1000 -ms /bin/bash -g nginx nginx
 # Change owner for the directory (for nginx)
 COPY --chown=nginx:nginx . /var/www
 
-# Run composer
+RUN mkdir -p /usr/lib/node_modules
+RUN chown -R nginx:nginx /usr/lib/node_modules
+
+# Set up composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
+
+# Make sure we have access
+RUN mkdir -p /usr/lib/node_modules
+RUN chown -R nginx:nginx /usr/lib/node_modules
+COPY resources/js/config.example.js resources/js/config.js
 
 # Set up our /secrets
 RUN mkdir -p /var/www/secrets
@@ -54,21 +41,25 @@ RUN sed -n 's/DB_DATABASE=//p' /var/www/.env > /var/www/secrets/database
 RUN sed -n 's/DB_USERNAME=//p' /var/www/.env > /var/www/secrets/user
 RUN sed -n 's/DB_PASSWORD=//p' /var/www/.env > /var/www/secrets/dbpass
 
-RUN npm install
-
+# DB
+#RUN php artisan migrate
 RUN php artisan key:generate
 RUN php artisan config:cache
-
-# May want this tunable
-COPY resources/js/config.example.js resources/js/config.js
-# This currently fails
-#RUN npm run build
 
 # Seed the database with user roles
 RUN php artisan db:seed
 
-# Change current user
+# Do our dirty work
+RUN npm install
+
+# node-sass throws errors from the package.json, unsure what issues are causing this at this time
+RUN npm install -g node-sass@latest --unsafe-perm=true
+
+# Run as nginx tho 
 USER nginx
+
+RUN php artisan migrate
+RUN npm run build
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
