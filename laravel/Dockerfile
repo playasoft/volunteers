@@ -41,25 +41,19 @@ RUN sed -n 's/DB_DATABASE=//p' /var/www/.env > /var/www/secrets/database
 RUN sed -n 's/DB_USERNAME=//p' /var/www/.env > /var/www/secrets/user
 RUN sed -n 's/DB_PASSWORD=//p' /var/www/.env > /var/www/secrets/dbpass
 
-# DB
-#RUN php artisan migrate
-RUN php artisan key:generate
-RUN php artisan config:cache
-
-# Seed the database with user roles
-RUN php artisan db:seed
-
 # Do our dirty work
 RUN npm install
 
 # node-sass throws errors from the package.json, unsure what issues are causing this at this time
-RUN npm install -g node-sass@latest --unsafe-perm=true
+RUN npm install -g node-sass --unsafe-perm=true
 
 # Run as nginx tho 
 USER nginx
 
-RUN php artisan migrate
-RUN npm run build
+# Seed the database with user roles
+RUN php artisan db:seed
+RUN php artisan key:generate
+RUN php artisan config:cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
