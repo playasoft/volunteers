@@ -1,6 +1,6 @@
 # Laravel VolDB
-A volunteer database for events written using the Laravel 5.6 framework
 
+A volunteer database for events written using the Laravel 5.6 framework
 
 ## Dependencies
 
@@ -13,8 +13,7 @@ A volunteer database for events written using the Laravel 5.6 framework
     * ext-mysql (```apt instal php-mysql```)
 5. ```composer```, the PHP package manager
 6. ```laravel```, the projects PHP framework
-6. ```redis```, if you want to use websockets
-
+7. ```redis```, if you want to use websockets
 
 ## Installing
 
@@ -23,7 +22,7 @@ A volunteer database for events written using the Laravel 5.6 framework
 3. Run ```composer install``` within the **laravel** folder
 4. Run ```npm install``` within the **laravel** folder (_Note_: currently only works with Node v10)
 5. Run ```cp .env.example .env``` and configure ```DB_DATABASE```, ```DB_USERNAME```, and ```DB_PASSWORD```
-    * _Note_: You must set this up ahead of time, an [easy guide for Ubuntu users is available](#mysql).
+    * _Note_: You must set this up ahead of time, an [easy guide for Ubuntu users is available](#mysql-server-setup-ubuntu).
 6. Run ```php artisan migrate``` within the **laravel** folder
 
 ### Docker
@@ -35,7 +34,7 @@ A volunteer database for events written using the Laravel 5.6 framework
 5. Run ```docker-compose exec app npm run build```
 6. Run ```docker-compose exec app php artisan migrate``` *first time*
 
-## <a name="configuration"></a> Setup / Configuration
+## Setup / Configuration
 
 1. Configure your database and email settings in the **.env** file
 2. run `php artisan key:generate` to generate an application key for Laravel
@@ -45,10 +44,8 @@ A volunteer database for events written using the Laravel 5.6 framework
 6. Run ```npm run build``` within the **laravel** folder.
 7. Run ```php artisan db:seed``` within the **laravel** folder to populate the database with user roles
 
-
 Alright! Now everything is compiled and the site is functional. You can register accounts, create events, and sign up for shifts.
 If you want to use websockets for a couple extra features (auto-updating when shifts are taken or departments are changed), follow these steps:
-
 
 ## Extra websockets steps
 
@@ -58,22 +55,21 @@ If you want to use websockets for a couple extra features (auto-updating when sh
 4. Run ```node websocket-server.js``` within the **node** folder
 5. Use a ```screen``` session or a process manager like ```pm2``` to keep the websocket server running indefinitely
 
+## MySQL Server Setup (Ubuntu)
 
-## <a name="mysql"></a> MySQL Server Setup (Ubuntu)
 1. Run ```sudo mysql -u root``` and enter your root password
 2. Run ```create database $DB_DATABASE;```, replacing ```$DB_DATABASE``` with your database name
 3. Run ```GRANT ALL PRIVILEGES ON $DB_DATABASE.* TO '$DB_USERNAME'@'localhost' IDENTIFIED BY '$DB_PASSWORD';```, replacing ```$DB_DATABASE``` with the database name picked previously, and ```$DB_USERNAME``` and ```$DB_PASSWORD``` with what you like
 4. Run ```FLUSH PRIVILEGES;``` so the changes take effect
 5. Edit your ```.env``` file to reflect the ```$DB_DATABASE```, ```$DB_USERNAME```, ```$DB_PASSWORD``` you picked.
 
-
 ## Writing Test Cases and Factories
 
-Create a ``` .env.testing ``` file for running tests in a separate 
-test database. After creating this file, you may also need to run 
+Create a ``` .env.testing ``` file for running tests in a separate
+test database. After creating this file, you may also need to run
 the following command before your settings will take effect:
 
-```
+```/bin/sh
 php artisan config:cache --env=testing
 ```
 
@@ -98,6 +94,7 @@ If **slots are put on the same schedule**, then **they should be on
 the same schedule**.
 
 We can split that into a _Condition_ and an _Assertion_
+
 * The Condition: Slots are put on the same schedule
 * The Assertion: The slots are on the same schedule
 
@@ -181,13 +178,13 @@ class SlotTest extends TestCase
 Great! We have the skeleton, now we need to fill it with a meaningful test.
 Let's start by making a few slots...
 
-```
+```php
 $slots = factory(Slot::class, 2)->create();
 ```
 
 Once we have that for setup, we can then test if they share the same schedule...
 
-```
+```php
 $first_slots_schedule = $slot[0]->schedule;
 $second_slots_schedule = $slot[1]->schedule;
 $this->assertEquals($first_slots_schedule->id, $second_slots_schedule->id);
@@ -199,7 +196,7 @@ The reason why is that when you use ``` factory() ```, it creates the
 given model but in it's own isolated strand of randomly generated models to
 support its existance. So how do we connect the two? We easily change it to...
 
-```
+```php
 $schedule = factory(Schedule::class)->create();
 $slots = factory(Slot::class, 2)->create([
   'schedule_id' => $schedule->id;
