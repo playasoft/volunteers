@@ -24,6 +24,7 @@ COPY --chown=nginx:nginx . /var/www
 
 # Set up composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install
 
 # Make sure we have access
 RUN mkdir -p /usr/lib/node_modules
@@ -39,6 +40,7 @@ RUN sed -n 's/DB_PASSWORD=//p' /var/www/.env > /var/www/secrets/dbpass
 
 # Do our dirty work
 RUN npm install
+RUN npm run build
 
 # Run as nginx tho 
 USER nginx

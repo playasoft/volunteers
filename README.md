@@ -30,9 +30,7 @@ A volunteer database for events written using the Laravel 5.6 framework
 1. Git clone this repo
 2. Configure your database and email settings in the **laravel/.env** file
 3. Run ```docker-compose up -d```
-4. Run ```docker-compose exec app composer install```
-5. Run ```docker-compose exec app npm run build```
-6. Run ```docker-compose exec app php artisan migrate``` *first time*
+4. Run ```docker-compose exec app php artisan migrate``` *requires mysql, which starts second*
 
 ## Setup / Configuration
 
