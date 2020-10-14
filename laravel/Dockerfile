@@ -6,13 +6,13 @@ COPY composer.lock composer.json /var/www/
 # Set working directory
 WORKDIR /var/www
 
-RUN apt-get update && apt-get install -y libmcrypt-dev git zip\
+RUN apt-get update && apt-get install -y libmcrypt-dev git zip unzip\
     mysql-client libmagickwand-dev --no-install-recommends \
     && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && docker-php-ext-install mcrypt pdo_mysql mbstring dom
+    && docker-php-ext-enable imagick\
+    && docker-php-ext-install mcrypt pdo_mysql mbstring dom zip
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -\
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -\
     && apt-get install -y nodejs
 
 # Add user for laravel application
@@ -22,12 +22,8 @@ RUN useradd -u 1000 -ms /bin/bash -g nginx nginx
 # Change owner for the directory (for nginx)
 COPY --chown=nginx:nginx . /var/www
 
-RUN mkdir -p /usr/lib/node_modules
-RUN chown -R nginx:nginx /usr/lib/node_modules
-
 # Set up composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install
 
 # Make sure we have access
 RUN mkdir -p /usr/lib/node_modules
@@ -43,9 +39,6 @@ RUN sed -n 's/DB_PASSWORD=//p' /var/www/.env > /var/www/secrets/dbpass
 
 # Do our dirty work
 RUN npm install
-
-# node-sass throws errors from the package.json, unsure what issues are causing this at this time
-RUN npm install -g node-sass --unsafe-perm=true
 
 # Run as nginx tho 
 USER nginx

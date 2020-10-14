@@ -1,6 +1,5 @@
 require('dotenv').config();
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // I don't really like doing it this way but it works for a limited number
 // of configuration options.
 const socketsEnabled = process.env.WEBSOCKETS_ENABLED &&
@@ -21,29 +20,37 @@ module.exports = {
     },
     module: {
         rules: [
-            { // sass / scss loader for webpack
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                  // Creates `style` nodes from JS strings
+                  'style-loader',
+                  // Translates CSS into CommonJS
+                  'css-loader',
+                  // Compiles Sass to CSS
+                  'sass-loader',
+                ],
             },
             {
                 test: /\.html\.tpl$/,
-                loader: 'ejs-loader'
+                loader: 'ejs-loader',
+                options: {
+                    variable: 'data',
+                }
             },
             {
                 test: /\.js$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['@babel/preset-env']
+                  }
                 }
             }
         ]
     },
     plugins: [
-        new ExtractTextPlugin({ // define where to save the file
-            filename: 'public/css/[name].css',
-            allChunks: true
-        }),
         new webpack.ProvidePlugin({
             _: 'lodash'
         })
