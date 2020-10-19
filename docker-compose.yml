@@ -6,20 +6,21 @@ services:
     build:
       context: laravel
       dockerfile: Dockerfile
+      args:
+        - USERNAME=$DB_USERNAME
     container_name: app
     restart: unless-stopped
     tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
-      - secret:/var/www/secrets/
+      - ./env:/var/www/env
       - ./laravel:/var/www
       - vendor:/var/www/vendor
       - node_modules:/var/www/node_modules
     networks:
       - app-network
+    depends_on:
+      - db
 
   #NodeJS - uncomment for websockets
   sockets:
@@ -61,17 +62,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_HOST_FILE: /var/secrets/host
-      # We want to eventually have a separate field in .env for this
-      MYSQL_ROOT_PASSWORD_FILE: /var/secrets/dbpass
-      MYSQL_DATABASE_FILE: /var/secrets/database
-      MYSQL_USER_FILE: /var/secrets/user
-      MYSQL_PASSWORD_FILE: /var/secrets/dbpass
+      MYSQL_ROOT_HOST: $DB_HOST
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - secret:/var/secrets/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
       - dbdata:/var/lib/mysql-files
     networks:
       - app-network
@@ -84,8 +82,6 @@ networks:
 #Volumes
 volumes:
     dbdata:
-      driver: local
-    secret:
       driver: local
     vendor:
       driver: local
