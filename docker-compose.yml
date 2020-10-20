@@ -12,6 +12,8 @@ services:
     restart: unless-stopped
     tty: true
     working_dir: /var/www
+    env_file:
+      - ./.env
     volumes:
       - ./env:/var/www/env
       - ./laravel:/var/www
@@ -61,6 +63,7 @@ services:
       args:
         - USERNAME=$DB_USERNAME
         - SECRET=$DB_PASSWORD
+        - DATABASE=$DB_DATABASE
     image: mysql:5.7.22
     container_name: db
     restart: unless-stopped
