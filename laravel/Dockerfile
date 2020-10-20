@@ -41,10 +41,14 @@ USER $USERNAME
 
 # Seed the database with user roles
 RUN php artisan db:seed
-RUN export APP_KEY="$(php artisan key:generate | sed -r -n 's/.*\[base64:(.*)\].*/\1/p')"
+RUN php artisan key:generate
 RUN php artisan config:cache
 
 # RUN php artisan migrate
+
+# Export the useful env
+ENV DB_HOST=$HOST
+ENV DB_PORT=$PORT
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

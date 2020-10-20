@@ -55,18 +55,15 @@ services:
 
   #MySQL Service
   db:
-    image: mysql
+    image: mysql:5.7.22
     container_name: db
     restart: unless-stopped
     tty: true
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_HOST: $DB_HOST
       MYSQL_ROOT_PASSWORD: $DB_PASSWORD
       MYSQL_DATABASE: $DB_DATABASE
-      MYSQL_USER: $DB_USERNAME
-      MYSQL_PASSWORD: $DB_PASSWORD
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
