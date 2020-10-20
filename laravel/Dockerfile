@@ -44,11 +44,8 @@ RUN php artisan db:seed
 RUN php artisan key:generate
 RUN php artisan config:cache
 
+# Eventually we would like to do this here, once mysql is initialized correctly
 # RUN php artisan migrate
-
-# Export the useful env
-ENV DB_HOST=$HOST
-ENV DB_PORT=$PORT
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

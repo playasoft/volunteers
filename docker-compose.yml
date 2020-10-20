@@ -55,6 +55,12 @@ services:
 
   #MySQL Service
   db:
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+      args:
+        - USERNAME=$DB_USERNAME
+        - SECRET=$DB_PASSWORD
     image: mysql:5.7.22
     container_name: db
     restart: unless-stopped
