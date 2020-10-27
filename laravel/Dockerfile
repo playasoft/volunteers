@@ -25,7 +25,7 @@ RUN useradd -u 1000 -ms /bin/bash -g $USERNAME $USERNAME
 COPY --chown=$USERNAME:$USERNAME . /var/www
 
 # Set up composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.16
 RUN composer install
 
 # Make sure we have access
