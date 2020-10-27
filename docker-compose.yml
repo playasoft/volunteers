@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USERNAME=$DB_USERNAME
+    image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
     tty: true
@@ -15,7 +16,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./env:/var/www/env
+      - ./.env:/var/www/.env
       - ./laravel:/var/www
       - vendor:/var/www/vendor
       - node_modules:/var/www/node_modules

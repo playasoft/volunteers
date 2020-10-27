@@ -1,7 +1,7 @@
 FROM php:7.1.3-fpm
 
 # Move files over
-COPY .env composer.lock composer.json /var/www/
+COPY composer.lock composer.json /var/www/
 
 # Set working directory
 WORKDIR /var/www
