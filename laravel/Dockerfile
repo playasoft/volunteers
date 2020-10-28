@@ -37,10 +37,6 @@ COPY resources/js/config.example.js resources/js/config.js
 RUN npm install
 RUN npm run build
 
-# Seed the database with user roles
-RUN php artisan db:seed
-RUN php artisan config:cache
-
 USER $USERNAME
 
 # Eventually we would like to do this here, once mysql is initialized correctly
