@@ -14,10 +14,10 @@ services:
     tty: true
     working_dir: /var/www
     env_file:
-      - ./.env
+      - ${PWD}/.env
     volumes:
-      - ./.env:/var/www/.env
-      - ./laravel:/var/www
+      - ${PWD}/laravel:/var/www
+      - ${PWD}/.env:/var/www/.env
       - vendor:/var/www/vendor
       - node_modules:/var/www/node_modules
     networks:
