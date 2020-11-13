@@ -22,7 +22,8 @@ RUN groupadd -g 1000 $USERNAME
 RUN useradd -u 1000 -ms /bin/bash -g $USERNAME $USERNAME
 
 # You're awesome. Just own it
-COPY --chown=$USERNAME:$USERNAME . /var/www
+COPY . /var/www
+RUN chown -R $USERNAME:$USERNAME /var/www
 
 # Set up composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.16

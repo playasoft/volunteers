@@ -7,7 +7,7 @@ services:
       context: laravel
       dockerfile: Dockerfile
       args:
-        - USERNAME=$DB_USERNAME
+        USERNAME: $DB_USERNAME
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
@@ -40,16 +40,22 @@ services:
 
   #Nginx Service
   webserver:
-    image: nginx:alpine
-    container_name: webserver
+    image: ghcr.io/linuxserver/swag
+    container_name: swag
     restart: unless-stopped
-    tty: true
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: $TIMEZONE
+      URL: $SITE_URL
+      VALIDATION: http
+      EMAIL: $EMAIL # optional
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./laravel/:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/site-confs:/config/nginx/site-confs
+      - ./laravel/:/config/www
     networks:
       - app-network
     depends_on:
@@ -62,9 +68,9 @@ services:
       context: mysql
       dockerfile: Dockerfile
       args:
-        - USERNAME=$DB_USERNAME
-        - SECRET=$DB_PASSWORD
-        - DATABASE=$DB_DATABASE
+        USERNAME: $DB_USERNAME
+        SECRET: $DB_PASSWORD
+        DATABASE: $DB_DATABASE
     image: mysql:5.7.22
     container_name: db
     restart: unless-stopped

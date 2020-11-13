@@ -1,0 +1,36 @@
+## Version 2020/05/23 - Changelog: https://github.com/linuxserver/docker-swag/commits/master/root/defaults/default
+
+# redirect all traffic to https
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	server_name _;
+	return 301 https://$host$request_uri;
+}
+
+# main server block
+server {
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
+
+	root /config/www/public;
+	index index.php index.html;
+
+	# all ssl related config moved to ssl.conf
+	include /config/nginx/ssl.conf;
+
+	client_max_body_size 0;
+
+	location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass app:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+	}
+	location / {
+        try_files $uri $uri/ /index.php?$query_string;
+        gzip_static on;
+    }
