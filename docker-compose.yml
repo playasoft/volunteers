@@ -48,14 +48,18 @@ services:
       PGID: 1000
       TZ: $TIMEZONE
       URL: $SITE_URL
+      SUBDOMAINS: $SUBDOMAINS
       VALIDATION: http
+      ONLY_SUBDOMAINS: "true"
       EMAIL: $EMAIL # optional
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/site-confs:/config/nginx/site-confs
+      - ./nginx/fastcgi_params:/config/nginx/fastcgi_params
       - ./laravel/:/config/www
+      - config:/config
     networks:
       - app-network
     depends_on:
@@ -101,4 +105,6 @@ volumes:
     vendor:
       driver: local
     node_modules:
+      driver: local
+    config:
       driver: local
