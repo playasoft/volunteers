@@ -6,9 +6,11 @@
 - [x] Permissions per page
 
 ## Docker
-- [ ] Set APP_KEY in .env
-- [ ] mysql interaction with php
-- [ ] npm correctly building in php
+- [x] Set APP_KEY in .env
+- [x] mysql interaction with php
+- [x] npm correctly building in php
+- [x] allow for SSL and non-SSL volunteer sites with .env variable USE_SSL=
+- [ ] publish images for app, etc. Use a preset username everywhere
 
 ### User groups
 - [x] Admin
