@@ -6,8 +6,6 @@ services:
     build:
       context: laravel
       dockerfile: Dockerfile
-      args:
-        USERNAME: $DB_USERNAME
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
@@ -25,56 +23,64 @@ services:
     depends_on:
       - db
 
-  #NodeJS - uncomment for websockets
-  sockets:
-    build:
-      context: node
-      dockerfile: Dockerfile
-    container_name: sockets
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
-    depends_on:
-      - app
+  ##NodeJS - uncomment to enable websockets
+  #sockets:
+  #  build:
+  #    context: node
+  #    dockerfile: Dockerfile
+  #  container_name: sockets
+  #  ports:
+  #    - "3000:3000"
+  #  networks:
+  #    - app-network
+  #  depends_on:
+  #    - app
 
-  #Nginx Service
   webserver:
-    image: ghcr.io/linuxserver/swag
-    container_name: swag
+    image: nginx:alpine
     restart: unless-stopped
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: $TIMEZONE
-      URL: $SITE_URL
-      SUBDOMAINS: $SUBDOMAINS
-      ONLY_SUBDOMAINS: $ONLY_SUBDOMAINS
-      VALIDATION: http
-      EMAIL: $EMAIL # optional
-    ports:
+    ports: 
       - "80:80"
-      - "443:443"
     volumes:
-      - ./nginx/site-confs:/config/nginx/site-confs
-      - ./nginx/fastcgi_params:/config/nginx/fastcgi_params
-      - ./laravel/:/config/www
-      - config:/config
+      - ./laravel/:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d/
     networks:
       - app-network
     depends_on:
       - db
       - app
 
-  #MySQL Service
+  ##SSL-enabled Nginx Service; uncomment to use
+  ##Make sure to comment out the above webserver block
+  #webserver:
+  #  image: ghcr.io/linuxserver/swag
+  #  container_name: swag
+  #  restart: unless-stopped
+  #  environment:
+  #    PUID: 1000
+  #    PGID: 1000
+  #    TZ: $TIMEZONE
+  #    URL: $SITE_URL
+  #    SUBDOMAINS: $SUBDOMAINS
+  #    ONLY_SUBDOMAINS: $ONLY_SUBDOMAINS
+  #    VALIDATION: http
+  #    EMAIL: $EMAIL # optional
+  #  ports:
+  #    - "80:80"
+  #    - "443:443"
+  #  volumes:
+  #    - ./swag/site-confs:/config/nginx/site-confs
+  #    - ./swag/fastcgi_params:/config/nginx/fastcgi_params
+  #    - ./laravel/:/config/www
+  #    - config:/config
+  #  networks:
+  #    - app-network
+  #  depends_on:
+  #    - db
+  #    - app
+
+  # MySQL Service
   db:
-    build:
-      context: mysql
-      dockerfile: Dockerfile
-      args:
-        USERNAME: $DB_USERNAME
-        SECRET: $DB_PASSWORD
-        DATABASE: $DB_DATABASE
     image: mysql:5.7.22
     container_name: db
     restart: unless-stopped
