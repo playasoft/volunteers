@@ -49,8 +49,8 @@ services:
       TZ: $TIMEZONE
       URL: $SITE_URL
       SUBDOMAINS: $SUBDOMAINS
+      ONLY_SUBDOMAINS: $ONLY_SUBDOMAINS
       VALIDATION: http
-      ONLY_SUBDOMAINS: "true"
       EMAIL: $EMAIL # optional
     ports:
       - "80:80"
