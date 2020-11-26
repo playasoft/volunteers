@@ -6,7 +6,7 @@ use App\Events\FileUploaded;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
+use App\Helpers;
 use App\Models\User;
 
 class SendAdminFileUploaded
@@ -34,16 +34,9 @@ class SendAdminFileUploaded
         // TODO: Options to choose which admins to notify
         $admin = User::where('id', 1)->first();
 
-        try
+        Helpers::sendMail('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
         {
-            Mail::send('emails/admin-file-uploaded', compact('file'), function ($message) use ($admin)
-            {
-                $message->to($admin->email, $admin->name)->subject('New file uploaded!');
-            });
-        }
-        catch (\Exception $exception)
-        {
-            app('request')->session()->flash('warning', "Unable to send email notification, SMTP error. Please notify the administrator of this volunteer database.");
-        }
+            $message->to($admin->email, $admin->name)->subject('New file uploaded!');
+        });
     }
 }

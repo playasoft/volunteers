@@ -48,6 +48,7 @@ class SendUserFileChanged
         }
         catch (\Exception $exception)
         {
+            \Log::error($exception);
             // Todo: Have a warning show up when the admin clicks save.
         }
     }

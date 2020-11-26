@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\SlotChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -46,17 +46,10 @@ class SendUserShiftConfirmation
 
             $event_data = compact('slot', 'user_email', 'user_name', 'event_name', 'shift_name', 'start_date', 'start_time', 'end_time', 'admin_assigned');
 
-            try
+            Helpers::sendMail('emails/user-shift-confirmation', $event_data, function ($message) use ($user_email, $user_name, $shift_name)
             {
-                Mail::send('emails/user-shift-confirmation', $event_data, function ($message) use ($user_email, $user_name, $shift_name)
-                {
-                    $message->to($user_email, $user_name)->subject('Confirmation Email - ' . $shift_name . ' shift!');
-                });
-            }
-            catch (\Exception $exception)
-            {
-                app('request')->session()->flash('warning', "Unable to send email confirmation, SMTP error. Please notify the administrator of this volunteer database.");
-            }
+                $message->to($user_email, $user_name)->subject('Confirmation Email - ' . $shift_name . ' shift!');
+            });
         }
     }
 }

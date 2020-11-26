@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\SlotChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,17 +41,11 @@ class SendAdminRemovedShift
                 $shift_time = $schedule->start_time;
 
                 $event_data = compact('slot', 'user_email', 'user_name', 'shift_name', 'shift_date', 'shift_time');
-                try
+
+                Helpers::sendMail('emails/admin-removed-shift', $event_data, function ($message) use ($user_email, $user_name)
                 {
-                    Mail::send('emails/admin-removed-shift', $event_data, function ($message) use ($user_email, $user_name)
-                    {
-                        $message->to($user_email, $user_name)->subject('Shift reschedule required!');
-                    });
-                }
-                catch (\Exception $exception)
-                {
-                    app('request')->session()->flash('warning', "Unable to send email notification, SMTP error. Please notify the administrator of this volunteer database.");
-                }
+                    $message->to($user_email, $user_name)->subject('Shift reschedule required!');
+                });
             }
         }
     }
