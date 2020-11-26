@@ -40,16 +40,16 @@ class ExampleTest extends TestCase
     public function testExample()
     {
         //Given
-        $user_id = 1; //first autoincrement id
+        $user_name = 'Foo';
 
         //When
         $user = factory(User::class)->create([
-            'id' => $user_id,
+            'name' => $user_name,
         ]);
 
         //Then
         $this->assertDatabaseHas('users', [
-            'id' => $user_id,
+            'name' => $user_name,
         ]);
     }
 }

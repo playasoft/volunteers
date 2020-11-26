@@ -11,6 +11,15 @@ class Department extends Model
 
     protected $fillable = ['name', 'description'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->shifts()->delete();
+            $model->schedule()->delete();
+        });
+    }
+
     // Departments belong to an event
     public function event()
     {
