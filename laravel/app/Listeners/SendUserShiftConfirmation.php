@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\SlotChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,9 +34,9 @@ class SendUserShiftConfirmation
             $user_name = $event->change['name'];
             $event_name = $event->slot->schedule->shift->event->name;
             $shift_name = $event->slot->schedule->shift->name;
-            $start_date = $event->slot->start_date;
-            $start_time = $event->slot->start_date;
-            $end_time = $event->slot->end_time;
+            $start_date = date('l M d',strtotime($event->slot->start_date));
+            $start_time = date('h:i a',strtotime($event->slot->start_time . $event->slot->start_date));
+            $end_time = date('h:i a',strtotime($event->slot->end_time . $event->slot->start_date));
 
             $admin_assigned = false;
             if (isset($event->change['admin_assigned']))
@@ -46,7 +46,7 @@ class SendUserShiftConfirmation
 
             $event_data = compact('slot', 'user_email', 'user_name', 'event_name', 'shift_name', 'start_date', 'start_time', 'end_time', 'admin_assigned');
 
-            Mail::send('emails/user-shift-confirmation', $event_data, function ($message) use ($user_email, $user_name, $shift_name)
+            Helpers::sendMail('emails/user-shift-confirmation', $event_data, function ($message) use ($user_email, $user_name, $shift_name)
             {
                 $message->to($user_email, $user_name)->subject('Confirmation Email - ' . $shift_name . ' shift!');
             });

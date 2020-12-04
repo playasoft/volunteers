@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,7 +34,7 @@ class SendAdminWelcome
         // TODO: Options to choose which admins to notify
         $admin = User::where('id', 1)->first();
 
-        Mail::send('emails/admin-welcome', compact('user'), function ($message) use ($admin)
+        Helpers::sendMail('emails/admin-welcome', compact('user'), function ($message) use ($admin)
         {
             $message->to($admin->email, $admin->name)->subject('New user registered!');
         });

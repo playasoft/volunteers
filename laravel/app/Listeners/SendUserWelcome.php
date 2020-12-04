@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use Mail;
+use App\Helpers;
 use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,7 +29,7 @@ class SendUserWelcome
     {
         $user = $event->user;
         
-        Mail::send('emails/user-welcome', compact('user'), function ($message) use ($user)
+        Helpers::sendMail('emails/user-welcome', compact('user'), function ($message) use ($user)
         {
             $message->to($user->email, $user->name)->subject('Welcome to the Volunteer Database!');
         });

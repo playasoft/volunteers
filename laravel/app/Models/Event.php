@@ -13,6 +13,15 @@ class Event extends Model
 
     protected $fillable = ['name', 'description', 'start_date', 'end_date', 'featured'];
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->departments()->delete();
+            $model->shifts()->delete();
+        });
+    }
+
     // Helper functions to select events by date
     public static function future($preferFeatured = false)
     {
