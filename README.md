@@ -33,6 +33,8 @@ A volunteer database for events written using the Laravel 5.6 framework
 4. Run ```docker-compose up -d```
 5. Run ```docker-compose exec app php artisan migrate```
 6. Run ```docker-compose exec app php artisan db:seed```
+7. Run ```docker-compose exec app npm install```
+8. Run ```docker-compose exec app npm run build```
 
 ## Setup / Configuration
 
