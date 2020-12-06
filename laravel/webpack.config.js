@@ -1,6 +1,8 @@
 require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 // I don't really like doing it this way but it works for a limited number
 // of configuration options.
 const socketsEnabled = process.env.WEBSOCKETS_ENABLED &&
@@ -24,17 +26,19 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
-                use: [
-                  // Creates `style` nodes from JS strings
-                  'style-loader',
-                  // Translates CSS into CommonJS
-                  'css-loader',
-                  // Compiles Sass to CSS
-                  'sass-loader',
-                ],
-            },
-            {
+                test: /\.s?css$/i,
+		        use: [
+		            {
+            	        loader: MiniCssExtractPlugin.loader,
+            		    options: {
+             		        publicPath: './public/css/',
+            		    },
+	                },
+            	    'css-loader',
+		            'sass-loader',
+		        ],
+	        },
+	        {
                 test: /\.html\.tpl$/,
                 loader: 'ejs-loader',
                 options: {
@@ -45,15 +49,18 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['@babel/preset-env']
-                  }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
                 }
             }
         ]
     },
     plugins: [
+	new MiniCssExtractPlugin({
+	    filename: '../css/[name].css',
+	}),
         new webpack.ProvidePlugin({
             _: 'lodash'
         })
