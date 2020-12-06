@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const webpack = require('webpack');
 // I don't really like doing it this way but it works for a limited number
 // of configuration options.
@@ -16,7 +17,9 @@ module.exports = {
     },
     output:
     {
-        filename: './public/js/bundle.js'
+	filename: "bundle.js",
+    	path: path.resolve(__dirname, "./public/js/"),
+    	publicPath: "/js/"
     },
     module: {
         rules: [
