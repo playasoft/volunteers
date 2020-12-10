@@ -4,3 +4,4 @@ config.js
 main.css
 .dir-locals.el
 npm-debug.log
+.env
