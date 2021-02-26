@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y libmcrypt-dev git zip unzip apt-utils\
     && docker-php-ext-enable imagick\
     && docker-php-ext-install mcrypt pdo_mysql mbstring dom zip
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -\
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -\
     && apt-get install -y nodejs
 
 # Add user for laravel application
@@ -24,8 +24,8 @@ COPY . /var/www
 RUN chown -R homestead:homestead /var/www
 
 # Set up composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.16
-RUN composer install
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.0.2
+RUN composer update --no-scripts && composer install
 
 COPY resources/js/config.example.js resources/js/config.js
 
