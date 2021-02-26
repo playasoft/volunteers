@@ -14,9 +14,9 @@ if(old($name))
         class="form-control"
         name="{{ $name }}"
         id="{{ $name }}-field"
-        placeholder="{{ $placeholder or '' }}"
+        placeholder="{{ $placeholder ?? '' }}"
         @if(isset($limit))
                 maxlength="{{ $limit }}"
         @endif
-        >{{ $value or '' }}</textarea>
+        >{{ $value ?? '' }}</textarea>
 @overwrite

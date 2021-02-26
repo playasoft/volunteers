@@ -14,8 +14,8 @@ if(old($name))
             class="form-control"
             name="{{ $name }}"
             id="{{ $name }}-field"
-            placeholder="{{ $placeholder or '' }}"
-            value="{{ $value or '' }}"
+            placeholder="{{ $placeholder ?? '' }}"
+            value="{{ $value ?? '' }}"
             @if(isset($limit))
                 maxlength="{{ $limit }}"
             @endif

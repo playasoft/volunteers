@@ -27,16 +27,12 @@ RUN chown -R homestead:homestead /var/www
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.16
 RUN composer install
 
-# Make sure we have access
-RUN mkdir -p /usr/lib/node_modules
-RUN chown -R homestead:homestead /usr/lib/node_modules
 COPY resources/js/config.example.js resources/js/config.js
 
 # Do our dirty work
-RUN npm install
-RUN npm run build
-
 USER homestead
+RUN npm install && npm run build
+
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

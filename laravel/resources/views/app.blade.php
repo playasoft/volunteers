@@ -26,7 +26,7 @@
 
                 <div class="general-alert alert alert-success" role="alert">
                     @if(is_array($success))
-                        <b>{{ $success['title'] or 'Success!'}}</b> {{ $success['message'] or '' }}
+                        <b>{{ $success['title'] ?? 'Success!'}}</b> {{ $success['message'] ?? '' }}
                     @else
                         <b>Success!</b> {{ $success }}
                     @endif
