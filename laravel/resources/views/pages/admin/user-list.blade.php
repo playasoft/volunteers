@@ -10,7 +10,7 @@
     <h1>Registered Users </h1>
     <form class="user-list" method="GET" action="/users">
         <div class="col-sm-8 input-group">
-            <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] or '' }}">
+            <input type="text" name="search" class=" form-control" placeholder="Search by email or username" value="{{ $_GET['search'] ?? '' }}">
 
         <div class="input-group-btn">
             <button type="submit" class=" btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
@@ -48,7 +48,7 @@
             @foreach($users as $user)
                 <tr>
                     <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
-                    <td>{{ $user->data->full_name or '' }}</td>
+                    <td>{{ $user->data->full_name ?? '' }}</td>
                     <td>{{ Helpers::displayName($user) }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ implode(", ", $user->getRoleNames()) }}</a></td>
