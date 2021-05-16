@@ -1,4 +1,4 @@
-FROM php:7.1.3-fpm
+FROM php:7.4-fpm-alpine
 
 # Move files over
 COPY composer.lock composer.json /var/www/
@@ -6,33 +6,46 @@ COPY composer.lock composer.json /var/www/
 # Set working directory
 WORKDIR /var/www
 
-RUN apt-get update && apt-get install -y libmcrypt-dev git zip unzip apt-utils\
-    mysql-client libmagickwand-dev --no-install-recommends \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick\
-    && docker-php-ext-install mcrypt pdo_mysql mbstring dom zip
+RUN apk add --no-cache \
+	git \
+	bash \
+	nodejs \
+	npm \
+	freetype \
+	libjpeg-turbo \
+	libpng \
+	freetype-dev \
+	libjpeg-turbo-dev \
+	libpng-dev \
+	&& docker-php-ext-configure gd \
+		--with-freetype=/usr/include \
+		--with-jpeg=/usr/include \
+	&& docker-php-ext-install -j$(nproc) gd \
+	&& docker-php-ext-enable gd \
+	&& apk del --no-cache \
+		freetype-dev \
+		libjpeg-turbo-dev \
+		libpng-dev \
+	&& rm -rf /tmp/*
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -\
-    && apt-get install -y nodejs
+RUN apk add libzip-dev \
+	&& docker-php-ext-install pdo pdo_mysql zip bcmath 
 
 # Add user for laravel application
-RUN groupadd -g 1000 homestead
-RUN useradd -u 1000 -ms /bin/bash -g homestead homestead
+RUN addgroup -S -g 1000 homestead && adduser -u 1000 -S -G homestead homestead
 
 # You're awesome. Just own it
-COPY . /var/www
-RUN chown -R homestead:homestead /var/www
+COPY --chown=homestead:homestead . /var/www
 
 # Set up composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.0.2
 RUN composer update --no-scripts && composer install
 
 COPY resources/js/config.example.js resources/js/config.js
+RUN npm install && npm run build
 
 # Do our dirty work
 USER homestead
-RUN npm install && npm run build
-
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

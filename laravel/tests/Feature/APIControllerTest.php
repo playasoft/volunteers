@@ -192,6 +192,7 @@ class APIControllerTest extends TestCase
      */
     public function update_shift_endpoint_validation()
     {
+	$this->withoutMiddleWare();
         // Given 
         $user = factory(User::class)->states('department-lead')->create();
         $shift = factory(Slot::class)->create([
