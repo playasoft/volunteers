@@ -90,70 +90,82 @@ foreach($event->days() as $day)
                 @endcan
             </div>
 
-            @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Event Dates', 'options' => $days])
-
-            <div class="custom-wrap">
-                @include('partials/form/select',
-                [
-                    'name' => 'start_time',
-                    'label' => 'Start Time',
-                    'help' => "The time of day when the first shift starts",
-                    'options' =>
-                    [
-                        '' => 'Select a time',
-                        '0:00' => 'Midnight (beginning of day)',
-                        '6:00' => '6 AM',
-                        '9:00' => '9 AM',
-                        '12:00' => 'Noon',
-                        'custom' => 'Other'
-                    ]
-                ])
-
-                <div class="custom hidden">
-                    @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time'])
-                </div>
-            </div>
-
-            <div class="custom-wrap">
-                @include('partials/form/select',
-                [
-                    'name' => 'duration',
-                    'label' => 'Shift Length',
-                    'help' => "The duration of each slot in this shift",
-                    'options' =>
-                    [
-                        '' => 'Select a duration',
-                        '3:00' => 'Regular Shift (3 hours)',
-                        '6:00' => 'Shift Lead (6 hours)',
-                        'custom' => 'Other'
-                    ]
-                ])
-
-                <div class="custom hidden">
-                    @include('partials/form/text', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'placeholder' => 'hh:mm'])
-                </div>
-            </div>
-
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="does_slot_repeat" value="true">
-                    Does this shift repeat?
+                    <input type="checkbox" name="date_enabled" value="true">
+                    Does this shift happen on a specific date &amp; time?
                 </label>
             </div>
 
-            <div class="slot-repeat custom-wrap hidden">
-                @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
-                <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
-            </div>
+            <div class="date-fields hidden">
+                @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Event Dates', 'options' => $days])
 
-            <input type="hidden", name="end_time"/>
-            <input type="hidden", name="custom_end_time"/>
+                <div class="custom-wrap">
+                    @include('partials/form/select',
+                    [
+                        'name' => 'start_time',
+                        'label' => 'Start Time',
+                        'help' => "The time of day when the first shift starts",
+                        'options' =>
+                        [
+                            '' => 'Select a time',
+                            '0:00' => 'Midnight (beginning of day)',
+                            '6:00' => '6 AM',
+                            '9:00' => '9 AM',
+                            '12:00' => 'Noon',
+                            'custom' => 'Other'
+                        ]
+                    ])
+
+                    <div class="custom hidden">
+                        @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time'])
+                    </div>
+                </div>
+
+                <div class="custom-wrap">
+                    @include('partials/form/select',
+                    [
+                        'name' => 'duration',
+                        'label' => 'Shift Length',
+                        'help' => "The duration of each slot in this shift",
+                        'options' =>
+                        [
+                            '' => 'Select a duration',
+                            '3:00' => 'Regular Shift (3 hours)',
+                            '6:00' => 'Shift Lead (6 hours)',
+                            'custom' => 'Other'
+                        ]
+                    ])
+
+                    <div class="custom hidden">
+                        @include('partials/form/text', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'placeholder' => 'hh:mm'])
+                    </div>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="does_slot_repeat" value="true">
+                        Does this shift repeat?
+                    </label>
+                </div>
+
+                <div class="slot-repeat custom-wrap hidden">
+                    @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
+                    <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
+                </div>
+
+                <input type="hidden", name="end_time"/>
+                <input type="hidden", name="custom_end_time"/>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/event/{{ $event->id }}" class="btn btn-danger">Cancel</a>
+        </div>
 
-        <br><br>
-        <div class='preview'></div>
+        <div class="col-md-12" style="margin-top: 1em">
+            <div class='preview hidden'></div>
+        </div>
     {!! Form::close() !!}
 @endsection

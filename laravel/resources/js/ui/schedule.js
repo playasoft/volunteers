@@ -67,22 +67,32 @@ $(document).ready(function()
         }
     });
 
-    $('.edit-schedule input[name="does-slot-repeat"]').on('change', function()
+    $('.edit-schedule input[name="date_enabled"]').on('change', function()
     {
-        let slotRepeat = document.querySelector('.slot-repeat');
-        if(this.checked){
-            slotRepeat.classList.remove('hidden');
-            //show repeat field and calculate end time
+        if(this.checked)
+        {
+            $('.date-fields, .preview').removeClass('hidden');
         }
-        else{
-            slotRepeat.classList.add('hidden');
-            //hide repeat field and calculate end time
-            document.querySelector('form.edit-schedule [name="end_time"]');
+        else
+        {
+            $('.date-fields, .preview').addClass('hidden');
         }
     });
 
+    $('.edit-schedule input[name="does-slot-repeat"]').on('change', function()
+    {
+        if(this.checked)
+        {
+            $('.slot-repeat').removeClass('hidden');
+        }
+        else
+        {
+            $('.slot-repeat').addClass('hidden');
+        }
+    });
 
     // Trigger change on page load to show / hide custom fields
     $('.department-dropdown').trigger('change');
     $('.custom-wrap select').trigger('change');
+    $('.edit-schedule input[name="date_enabled"]').trigger('change');
 });

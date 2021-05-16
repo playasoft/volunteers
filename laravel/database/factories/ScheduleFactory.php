@@ -51,7 +51,7 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
             $start_time = Carbon::createFromFormat('H:i:s', $schedule['start_time']);
             $end_time = Carbon::createFromFormat('H:i:s', $schedule['end_time']);
             $duration = $end_time->diff($start_time);
-            return $duration->format('H:i:s');
+            return $duration->format('%H:%i:%s');
         },
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
         'department_id' => function ($schedule)
