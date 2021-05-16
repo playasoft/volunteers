@@ -92,7 +92,7 @@ foreach($event->days() as $day)
 
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="date_enabled" value="true">
+                    <input type="checkbox" name="date_enabled" value="true" @if(old('date_enabled')) checked @endif>
                     Does this shift happen on a specific date &amp; time?
                 </label>
             </div>

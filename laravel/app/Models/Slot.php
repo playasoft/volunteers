@@ -53,8 +53,21 @@ class Slot extends Model
         return date('H:i', $seconds);
     }
 
-    // Helper function to generate slots based on shift information
+    // Helper function to generate slots based on schedule information
     static public function generate($schedule, $existingRows = null)
+    {
+        if(is_null($schedule->start_date))
+        {
+            self::generateWithoutDate($schedule, $existingRows);
+        }
+        else
+        {
+            self::generateWithDate($schedule, $existingRows);
+        }
+    }
+
+    // Generate slots based on the day and time of the schedule
+    static public function generateWithDate($schedule, $existingRows = null)
     {
         // Do we want to keep any existing rows?
         if($existingRows)
@@ -110,6 +123,38 @@ class Slot extends Model
                 $date->addDay();
             }
 
+            $row++;
+        }
+    }
+
+    // Generate slots based on the number of volunteers needed
+    static public function generateWithoutDate($schedule, $existingRows = null)
+    {
+        // Do we want to keep any existing rows?
+        if($existingRows)
+        {
+            $row = $existingRows + 1;
+        }
+        else
+        {
+            // Delete all existing slots for this shift
+            Slot::where('schedule_id', $schedule->id)->whereNull('user_id')->delete();
+            $row = 1;
+        }
+
+        // Set up required variables
+        $volunteers = (int)$schedule->volunteers;
+
+        // Generate slots for each requested volunteer
+        while($row <= $volunteers)
+        {
+            $slot =
+            [
+                'schedule_id' => $schedule->id,
+                'row' => $row
+            ];
+
+            Slot::create($slot);
             $row++;
         }
     }
