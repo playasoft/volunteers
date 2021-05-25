@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.2-fpm-alpine
 
 # Move files over
 COPY composer.lock composer.json /var/www/
@@ -18,8 +18,8 @@ RUN apk add --no-cache \
 	libjpeg-turbo-dev \
 	libpng-dev \
 	&& docker-php-ext-configure gd \
-		--with-freetype=/usr/include \
-		--with-jpeg=/usr/include \
+		--with-freetype-dir=/usr/include \
+		--with-jpeg-dir=/usr/include \
 	&& docker-php-ext-install -j$(nproc) gd \
 	&& docker-php-ext-enable gd \
 	&& apk del --no-cache \

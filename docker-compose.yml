@@ -14,7 +14,6 @@ services:
       - ./laravel:/var/www
       - ./.env:/var/www/.env
       - vendor:/var/www/vendor
-      - node_modules:/var/www/node_modules
     networks:
       - app-network
     depends_on:
@@ -67,9 +66,10 @@ services:
 
   # MySQL Service
   db:
-    image: mysql:5.7.22
+    image: mariadb
     container_name: voldb-mysql
     restart: unless-stopped
+    command: mysqld --sql_mode=""
     tty: true
     ports:
       - "3306:3306"
