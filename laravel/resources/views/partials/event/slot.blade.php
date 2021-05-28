@@ -9,10 +9,17 @@ $name = "";
 // If there is no slot user, display a link to the take shift page
 if(is_null($slot->user))
 {
-    $start = strtotime($slot->start_time);
-    $end = strtotime($slot->end_time);
+    if(is_null($slot->start_date))
+    {
+        $name = "Open for Volunteers";
+    }
+    else
+    {
+        $start = strtotime($slot->start_time);
+        $end = strtotime($slot->end_time);
 
-    $name = date("h:i a", $start) . " - " . date("h:i a", $end);
+        $name = date("h:i a", $start) . " - " . date("h:i a", $end);
+    }
 }
 
 // If there is a slot user, set the class to taken
@@ -33,14 +40,17 @@ if($href)
     $href = "href='{$href}'";
 }
 
-// If the event has passed, remove any links
-$start_date = new \Carbon\Carbon($slot->start_date);
-
-if($start_date->lt(\Carbon\Carbon::now()))
+if(!is_null($slot->start_date))
 {
-    if (!Auth::user()->hasRole('department-lead') && !Auth::user()->hasRole('admin'))
+    // If the event has passed, remove any links
+    $start_date = new \Carbon\Carbon($slot->start_date);
+
+    if($start_date->lt(\Carbon\Carbon::now()))
     {
-        $href = "";
+        if (!Auth::user()->hasRole('department-lead') && !Auth::user()->hasRole('admin'))
+        {
+            $href = "";
+        }
     }
 }
 

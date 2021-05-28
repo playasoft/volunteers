@@ -25,7 +25,7 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     ports: 
-      - "80:80"
+      - "8888:80"
     volumes:
       - ./laravel/:/var/www
       - ./nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf
@@ -71,7 +71,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: $DB_PASSWORD
       MYSQL_DATABASE: $DB_DATABASE

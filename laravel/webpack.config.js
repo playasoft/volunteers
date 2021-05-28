@@ -6,11 +6,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // I don't really like doing it this way but it works for a limited number
 // of configuration options.
 const socketsEnabled = process.env.WEBSOCKETS_ENABLED &&
-          process.env.WEBSOCKETS_ENABLED != ('false' || '0');
+process.env.WEBSOCKETS_ENABLED != ('false' || '0');
 
 const appEntry = socketsEnabled ?
-          './resources/app.js' :
-          './resources/app_nosockets.js';
+'./resources/app.js' :
+'./resources/app_nosockets.js';
 
 module.exports = {
     entry:
@@ -19,30 +19,30 @@ module.exports = {
     },
     output:
     {
-	filename: "bundle.js",
-    	path: path.resolve(__dirname, "./public/js/"),
-    	publicPath: "/js/"
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "./public/js/"),
+        publicPath: "/js/"
     },
     module: {
         rules: [
             {
                 test: /\.s?css$/i,
-		        use: [
-		            {
-            	        loader: MiniCssExtractPlugin.loader,
-            		    options: {
-             		        publicPath: './public/css/',
-            		    },
-	                },
-            	    'css-loader',
-		            'sass-loader',
-		        ],
-	        },
-	        {
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: './public/css/',
+                        },
+                    },
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+            {
                 test: /\.html\.tpl$/,
                 loader: 'ejs-loader',
                 options: {
-                    variable: 'data',
+                    esModule: false
                 }
             },
             {
@@ -58,9 +58,9 @@ module.exports = {
         ]
     },
     plugins: [
-	new MiniCssExtractPlugin({
-	    filename: '../css/[name].css',
-	}),
+        new MiniCssExtractPlugin({
+            filename: '../css/[name].css',
+        }),
         new webpack.ProvidePlugin({
             _: 'lodash'
         })

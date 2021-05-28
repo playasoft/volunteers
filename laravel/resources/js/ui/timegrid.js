@@ -31,7 +31,7 @@ function calculateSlotSizes()
     if($('.desktop').style('display') != "none")
     {
         // Set the height of the shift based on the number of rows
-        $('.shift.row').each(function()
+        $('.days .shift.row').each(function()
         {
             var rows = parseInt($(this).data('rows'));
             var height = (2 * rows) + 'em';
@@ -40,7 +40,7 @@ function calculateSlotSizes()
         });
 
         // Set the position and size of the slots
-        $('.slot-wrap').each(function()
+        $('.days .slot-wrap').each(function()
         {
             var day = timeToSeconds('24:00:00');
             var start = timeToSeconds($(this).data('start')) * 1.009; // Magic number to make the slots align better with the bootstrap grid >_>
@@ -55,7 +55,7 @@ function calculateSlotSizes()
         });
 
         // Set the height of the grid backgrounds
-        $('.shift-wrap').each(function()
+        $('.days .shift-wrap').each(function()
         {
             var height = $(this).find('.department-wrap').height();
             $(this).find('.timegrid .background').style({'height': height + 'px'});
@@ -63,7 +63,7 @@ function calculateSlotSizes()
     }
     else
     {
-        $('.slot-wrap').attr('style', false);
+        $('.days .slot-wrap').attr('style', false);
     }
 }
 
