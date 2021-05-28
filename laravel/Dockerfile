@@ -1,7 +1,4 @@
-FROM php:7.2-fpm-alpine
-
-# Move files over
-COPY composer.lock composer.json /var/www/
+FROM php:7.3-fpm-alpine
 
 # Set working directory
 WORKDIR /var/www
@@ -39,6 +36,7 @@ COPY --chown=homestead:homestead . /var/www
 
 # Set up composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.0.2
+COPY composer.lock composer.json /var/www/
 RUN composer update --no-scripts && composer install
 
 COPY resources/js/config.example.js resources/js/config.js

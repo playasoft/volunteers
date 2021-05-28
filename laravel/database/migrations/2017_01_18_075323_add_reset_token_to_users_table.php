@@ -14,7 +14,7 @@ class AddResetTokenToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table)
         {
-            $table->string('reset_token');
+            $table->string('reset_token')->nullable();
             $table->timestamp('reset_time')->nullable();
         });
     }

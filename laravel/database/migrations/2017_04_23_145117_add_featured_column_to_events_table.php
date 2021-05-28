@@ -14,7 +14,7 @@ class AddFeaturedColumnToEventsTable extends Migration
     {
         Schema::table('events', function (Blueprint $table)
         {
-            $table->boolean('featured');
+            $table->boolean('featured')->default(0);
         });
     }
 
