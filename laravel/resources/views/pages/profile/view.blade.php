@@ -38,7 +38,7 @@ use App\Helpers;
 
         <div class="row">
             <div class="col-sm-2 title">Full Name</div>
-            <div class="col-sm-10 value">{{ $user->data->full_name or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->full_name ?? 'Not Provided' }}</div>
         </div>
 
         <div class="row">
@@ -48,27 +48,27 @@ use App\Helpers;
 
         <div class="row">
             <div class="col-sm-2 title">Camp</div>
-            <div class="col-sm-10 value">{{ $user->data->camp or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->camp ?? 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Phone</div>
-            <div class="col-sm-10 value">{{ $user->data->phone or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->phone ?? 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Emergency Contact</div>
-            <div class="col-sm-10 value">{{ $user->data->emergency_name or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->emergency_name ?? 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Emergency Phone</div>
-            <div class="col-sm-10 value">{{ $user->data->emergency_phone or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->emergency_phone ?? 'Not Provided' }}</div>
         </div>
 
         <div class="row">
             <div class="col-sm-2 title">Birthday</div>
-            <div class="col-sm-10 value">{{ $user->data->birthday or 'Not Provided' }}</div>
+            <div class="col-sm-10 value">{{ $user->data->birthday ?? 'Not Provided' }}</div>
         </div>
 
         <br>

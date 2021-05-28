@@ -14,6 +14,6 @@ if(old($name))
             class="form-control"
             name="{{ $name }}"
             id="{{ $name }}-field"
-            placeholder="{{ $placeholder or 'hh:mm' }}"
-            value="{{ $value or '' }}">
+            placeholder="{{ $placeholder ?? 'hh:mm' }}"
+            value="{{ $value ?? '' }}">
 @overwrite

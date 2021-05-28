@@ -7,7 +7,7 @@
                 <input type="radio"
                         name="{{ $name }}"
                         id="{{ $name }}-field"
-                        placeholder="{{ $placeholder or '' }}"
+                        placeholder="{{ $placeholder ?? '' }}"
                         value="{{ $option }}"
                         {{ (isset($value) && $value == $option) ? 'selected' : '' }}>
 

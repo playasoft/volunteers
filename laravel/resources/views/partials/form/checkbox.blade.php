@@ -16,7 +16,7 @@ if(old($name))
                 <input type="checkbox"
                         name="{{ $name }}[]"
                         id="{{ $name }}-field"
-                        placeholder="{{ $placeholder or '' }}"
+                        placeholder="{{ $placeholder ?? '' }}"
                         value="{{ $value }}"
                         {{ (!empty($selected) && in_array($value, $selected)) ? 'checked' : '' }}>
                 {{ $option }}
