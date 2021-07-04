@@ -66,7 +66,7 @@ class SlotController extends Controller
             $request->session()->flash('error', "You must enter your name before you can sign up for shifts.");
             return redirect('/profile/data/edit');
         }
-
+        
         return view('pages/slot/view', compact('slot'));
     }
 
@@ -101,6 +101,12 @@ class SlotController extends Controller
         // Has somebody else already taken this slot?
         if(is_null($slot->user))
         {
+            $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, Auth::user());
+            if($concurrent_slot_warning)
+            {
+                return back();
+            }
+
             $slot->user_id = Auth::user()->id;
             $slot->save();
 
@@ -167,7 +173,7 @@ class SlotController extends Controller
     {
         if(!is_null($slot->user))
         {
-            $username = Helpers::displayName($slot->user);
+            $user_name = Helpers::displayName($slot->user);
 
             $slot->user_id = null;
             $slot->save();
@@ -185,15 +191,63 @@ class SlotController extends Controller
     {
         $user = User::findorFail($request->get('user'));
 
+        $user_name = Helpers::displayName($user, false);
+
         if(is_null($slot->user))
         {
-            $username = Helpers::displayName($user);
+            $concurrent_slot_warning = $this->warnIfConcurrentSlotForUserExists($request, $slot, $user, true);
+            if($concurrent_slot_warning)
+            {
+                return back();
+            }
 
             $slot->user_id=$user->id;
             $slot->save();
             event(new SlotChanged($slot, ['status' => 'taken', 'admin_assigned' => true, 'name' => $user->name, 'email' => $user->email]));
-            $request->session()->flash('success', 'You added '.$username.' to this shift');
+            $request->session()->flash('success', 'You added '.$user_name.' to this shift');
         }
         return redirect('/event/'.$slot->event->id);
+    }
+
+    /**
+     * Give a warning, if one hasn't already been delivered, to the client if a
+     * the user is trying to sign up or an admin is attempting to sign a user
+     * up for a slot one that overlaps with another slot the user is assigned
+     * to.
+     *
+     * @param  Request $request the client request
+     * @param  Slot    $slot    a currently unoccupied slot
+     * @param  User    $user    the user that will fill the slot
+     * @param  boolean $admin   whether or not this an admin request
+     * @return Response         a warning response or null
+     */
+    private function warnIfConcurrentSlotForUserExists(Request $request, Slot $slot, User $user, $admin=false)
+    {
+        //search for all user occupied slots that are concurrent with the given one
+        $concurrent_slot = Slot::where('user_id', $user->id)
+                                ->where('start_date', $slot->start_date)
+                                ->where('start_time', '<', $slot->end_time)
+                                ->where('end_time', '>', $slot->start_time)
+                                ->first();
+
+        //check if an overlapping slot for the user exists
+        if($concurrent_slot)
+        {
+            //check if the client has already been warned that the user has a concurrent slot
+            if(intval($request->input('concurrent-slot-warning-user-id')) !== $user->id)
+            {
+                $request->session()->flash('warning', [
+                    'layout' => 'concurrent-slot',
+                    'user' => $user,
+                    'slot' => $slot,
+                    'admin' => $admin,
+                    'user_id' => $user->id,
+                    'user_name' => Helpers::displayName($user, false),
+                    'concurrent_slot_id' => $concurrent_slot->id
+                ]);
+                return true;
+            }
+        }
+        return false;
     }
 }

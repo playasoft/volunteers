@@ -2,6 +2,8 @@
 
 use App\Models\Department;
 use App\Models\Event;
+use App\Models\EventRole;
+use App\Models\Role;
 use App\Models\Schedule;
 use App\Models\Shift;
 use Carbon\Carbon;
@@ -54,6 +56,10 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
             return $duration->format('%H:%i:%s');
         },
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
+        'dates' => function($schedule)
+        {
+            return json_encode([$schedule['start_date'], $schedule['end_date']]);    
+        },
         'department_id' => function ($schedule)
         {
             $event_id = function () use ($schedule)
@@ -76,4 +82,22 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
             ])->id;
         },
     ];
+});
+
+$factory->afterCreating(Schedule::class, function(Schedule $schedule, Faker $faker) 
+{
+        //find the admin role
+        $volunteer_role = Role::where('name', 'volunteer')->first();
+        //if there is no admin role, create it
+        if (!$volunteer_role)
+        {
+            $volunteer_role = factory(Role::class)->create([
+                'name' => 'volunteer',
+            ]);
+        }
+    
+        $schedule->roles()->save(factory(EventRole::class)->make([
+            'role_id' => $volunteer_role->id,
+            'foreign_id' => $schedule->id,
+        ]));
 });

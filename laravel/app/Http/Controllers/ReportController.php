@@ -60,7 +60,7 @@ class ReportController extends Controller
 
         return json_encode($users);
     }
-
+    
     public function getDepartments(Request $request)
     {
         $id = $request->get('event');

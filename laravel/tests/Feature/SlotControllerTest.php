@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Slot;
+use App\Models\UserData;
 use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,6 +11,71 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SlotControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function same_time_shift_warned_on_take()
+    {
+        // Given
+        $take_slot = factory(Slot::class)->create();
+        $view_slot = factory(Slot::class)->create([
+            'start_date' => $take_slot->start_date,
+            'start_time' => $take_slot->start_time,
+            'end_time' => $take_slot->end_time,
+        ]);
+        $user = factory(User::class)->create();
+        $user->data()->save(factory(UserData::class)->make());
+
+        $take_slot->user_id = $user->id;
+        $take_slot->save();
+
+        $this->actingAs($user);
+
+        // When
+        $response = $this->followingRedirects()->post("/slot/{$view_slot->id}/take");
+
+        // Then
+        $response->assertSee("You are currently signed up for another")
+                ->assertSee("overlapping shift");
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function same_time_shift_warned_on_admin_assign()
+    {
+        // Given
+        $take_slot = factory(Slot::class)->create();
+        $view_slot = factory(Slot::class)->create([
+            'start_date' => $take_slot->start_date,
+            'start_time' => $take_slot->start_time,
+            'end_time' => $take_slot->end_time,
+        ]);
+        $user = factory(UserData::class)->create()->user;
+        $admin = factory(UserData::class)->create([
+            'user_id' => factory(User::class)->states('admin')->create()->id,
+        ])->user;
+
+        $this->actingAs($admin);
+
+        // When
+        $take_slot->user_id = $user->id;
+        $take_slot->save();
+
+        $response = $this->followingRedirects()->post("/slot/{$view_slot->id}/adminAssign", [
+            'user' => $user->id,
+        ]);
+
+        // Then
+        $response->assertSee("Are you sure you want to sign them up for this shift?");
+    }
+
     /**
      * @test
      * @return void

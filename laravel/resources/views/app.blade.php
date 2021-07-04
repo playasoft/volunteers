@@ -33,6 +33,16 @@
                 </div>
             @endif
 
+            @if(Session::has('warning'))
+                <div class="general-alert alert alert-warning" role="alert">
+                    @if(isset(Session::get('warning')['layout']))
+                        <b>Warning!</b> @include('partials.warning.'.Session::get('warning')['layout'], Session::get('warning'))
+                    @else
+                        <b>Warning!</b> {{ Session::get('warning') }}
+                    @endif
+                </div>
+            @endif
+
             @if(Session::has('error'))
                 <div class="general-alert alert alert-danger" role="alert">
                     <b>Error!</b> {{ Session::get('error') }}
