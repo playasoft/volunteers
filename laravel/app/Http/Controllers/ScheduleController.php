@@ -22,6 +22,7 @@ class ScheduleController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:schedule');
     }
 
     // Helper function to convert form input into database-friendly information

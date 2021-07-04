@@ -3,6 +3,19 @@
 @section('content')
     <section class="event" data-id="{{ $event->id }}">
         <div class="pull-right relative" style="z-index: 1">
+            @can('publish-event')
+                <span style="display:inline-block">
+                    {!! Form::open(['url' => "/event/{$event->id}/publish", 'method' => 'post']) !!}
+                    <?php
+                        $unpublished = ($event->published_at === null);
+                        $publish_text = ($unpublished) ? 'Publish Event' : 'Unpublish Event';
+                    ?>
+                        <input type="hidden" name="publish" value="{{ $unpublished }}">
+                        <button type="submit" class="btn btn-success">{{ $publish_text }}</button>
+                    {!! Form::close() !!}
+                </span>
+            @endcan
+
             @can('create-event')
                 <a href="/event/{{ $event->id }}/clone" class="btn btn-primary">Clone Event</a>
             @endcan

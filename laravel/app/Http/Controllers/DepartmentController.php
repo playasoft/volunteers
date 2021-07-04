@@ -18,6 +18,7 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:department');
     }
 
     // Display list of departments in an event

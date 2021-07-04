@@ -23,6 +23,7 @@ class EventController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('bindings');
+        $this->middleware('published:event');
     }
 
     // Private function to manage file uploads
@@ -280,5 +281,31 @@ class EventController extends Controller
 
         $request->session()->flash('success', 'Event has been cloned.');
         return redirect('/event/' . $newEvent->id);
+    }
+
+    /**
+     * Publish/Unpublish an event
+     *
+     * @param   Request   $request  
+     * @param   Event     $event    targeted event in the query string
+     * @return  Response            redirect to the targeted event
+     */
+    public function publish(Request $request, Event $event)
+    {
+        $publish = $request->input('publish');
+        
+        // toggle if publish does not exist
+        if($publish === null) {
+            $publish = ($event->published_at === null);
+        }
+        
+        if($publish) { // publish
+            $event->published_at = Carbon::now();
+        } else { // unpublish
+            $event->published_at = null;
+        }
+        $event->save();
+
+        return redirect("/event/{$event->id}");
     }
 }

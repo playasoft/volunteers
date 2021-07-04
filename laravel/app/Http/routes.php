@@ -39,13 +39,14 @@ Route::get('/event/{event}/edit', 'EventController@editForm');
 Route::post('/event/{event}/edit', 'EventController@edit');
 
 Route::get('/event/{event}/delete', 'EventController@deleteForm');
-Route::post('/event/{event}/delete', 'EventController@delete');
+Route::post('/event{event}/delete', 'EventController@delete');
 
 Route::get('/event/{event}/clone', 'EventController@cloneForm');
 Route::post('/event/{event}/clone', 'EventController@cloneEvent');
 
 Route::get('/event/{event}', 'EventController@view');
 
+Route::post('/event/{event}/publish', 'EventController@publish');
 
 // Department routes
 Route::get('/event/{event}/departments', 'DepartmentController@listDepartments');

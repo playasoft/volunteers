@@ -10,6 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SlotControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      * @return void
