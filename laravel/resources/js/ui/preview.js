@@ -180,7 +180,7 @@ function parseForm(formValues)
         const formattedDay =
         {
             date: day.value,
-            name: day.description.match(/^[a-zA-z]+/)[0]
+            name: day.description.trim().match(/^[a-zA-z]+/)[0]
         };
         return formattedDay;
     });

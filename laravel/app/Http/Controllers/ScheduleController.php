@@ -40,31 +40,6 @@ class ScheduleController extends Controller
         $department = Department::find($input['department_id']);
         $shift = Shift::find($input['shift_id']);
 
-        // Conditional validation rules for custom inputs
-        if($request->input('start_time') == 'custom')
-        {
-            $this->validate($request, ['custom_start_time' => 'required|time']);
-            $input['start_time'] = $input['custom_start_time'];
-        }
-
-        if($request->input('end_time') == 'custom')
-        {
-            $this->validate($request, ['custom_end_time' => 'required|time']);
-            $input['end_time'] = $input['custom_end_time'];
-        }
-
-        if($request->input('duration') == 'custom')
-        {
-            $this->validate($request, ['custom_duration' => 'required|date_format:h:i']);
-            $input['duration'] = $input['custom_duration'];
-        }
-
-        // Determine the schedule start and end dates
-        // TODO: Actually parse the dates and make sure they're sorted properly
-        $input['start_date'] = array_slice($input['dates'], 0, 1)[0];
-        $input['end_date'] = array_slice($input['dates'], -1, 1)[0];
-        $input['dates'] = json_encode($input['dates']);
-
         if(isset($input['roles']))
         {
             // Check if the current roles match the shift roles
@@ -75,10 +50,37 @@ class ScheduleController extends Controller
             }
         }
 
-        // Make sure dates and times are properly formatted
-        $input = Schedule::setDates($department, $input);
-        $input = Schedule::setTimes($input);
+        if(isset($input['date_enabled']))
+        {
+            // Conditional validation rules for custom inputs
+            if($request->input('start_time') == 'custom')
+            {
+                $this->validate($request, ['custom_start_time' => 'required|time']);
+                $input['start_time'] = $input['custom_start_time'];
+            }
 
+            if($request->input('end_time') == 'custom')
+            {
+                $this->validate($request, ['custom_end_time' => 'required|time']);
+                $input['end_time'] = $input['custom_end_time'];
+            }
+
+            if($request->input('duration') == 'custom')
+            {
+                $this->validate($request, ['custom_duration' => 'required|date_format:h:i']);
+                $input['duration'] = $input['custom_duration'];
+            }
+
+            // Determine the schedule start and end dates
+            // TODO: Actually parse the dates and make sure they're sorted properly
+            $input['start_date'] = array_slice($input['dates'], 0, 1)[0];
+            $input['end_date'] = array_slice($input['dates'], -1, 1)[0];
+            $input['dates'] = json_encode($input['dates']);
+
+            // Make sure dates and times are properly formatted
+            $input = Schedule::setDates($department, $input);
+            $input = Schedule::setTimes($input);
+        }
         return $input;
     }
 
@@ -136,7 +138,7 @@ class ScheduleController extends Controller
         $regenerateSlots = false;
         $volunteersChanged = false;
         $warnUser = false;
-        
+
         if($schedule->start_date != $input['start_date'] ||
             $schedule->end_date != $input['end_date'] ||
             $schedule->start_time != $input['start_time'] ||
@@ -187,7 +189,7 @@ class ScheduleController extends Controller
         }
 
         event(new EventChanged($schedule->event, ['type' => 'schedule', 'status' => 'edited']));
-        
+
         $request->session()->flash('success', 'Schedule schedule has been updated.');
         return redirect('/event/' . $schedule->event->id);
     }

@@ -65,7 +65,7 @@ class EventSeeder extends Seeder
         }
         echo "Done!";
     }
-    
+
     /**
      * Run the database seeds.
      * Usage: php artisan db:seed --class=EventSeeder

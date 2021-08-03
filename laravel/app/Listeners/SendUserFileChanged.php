@@ -29,20 +29,27 @@ class SendUserFileChanged
     {
         $file = $event->file;
         $user = $event->file->user;
-
-        if($file->status == 'approved')
+        try
         {
-            Mail::send('emails/user-file-approved', compact('file', 'user'), function ($message) use ($user)
+            if($file->status == 'approved')
             {
-                $message->to($user->email, $user->name)->subject('Uploaded File Approved');
-            });
+                Mail::send('emails/user-file-approved', compact('file', 'user'), function ($message) use ($user)
+                {
+                    $message->to($user->email, $user->name)->subject('Uploaded File Approved');
+                });
+            }
+            elseif($file->status == 'denied')
+            {
+                Mail::send('emails/user-file-denied', compact('file', 'user'), function ($message) use ($user)
+                {
+                    $message->to($user->email, $user->name)->subject('Uploaded File Denied');
+                });
+            }
         }
-        elseif($file->status == 'denied')
+        catch (\Exception $exception)
         {
-            Mail::send('emails/user-file-denied', compact('file', 'user'), function ($message) use ($user)
-            {
-                $message->to($user->email, $user->name)->subject('Uploaded File Denied');
-            });
+            \Log::error($exception);
+            // Todo: Have a warning show up when the admin clicks save.
         }
     }
 }
