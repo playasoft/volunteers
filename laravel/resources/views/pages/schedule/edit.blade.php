@@ -83,77 +83,88 @@ foreach($schedule->event->days() as $day)
         </div>
 
         <div class="col-md-6">
-            @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Days', 'help' => 'The event days which have this shift.', 'options' => $days, 'selected' => json_decode($schedule->dates)])
-
-            <div class="custom-wrap">
-                @include('partials/form/select',
-                [
-                    'name' => 'start_time',
-                    'label' => 'Start Time',
-                    'help' => "The time of day when the first shift starts",
-                    'options' =>
-                    [
-                        '' => 'Select a time',
-                        '00:00' => 'Midnight (beginning of day)',
-                        '06:00' => '6 AM',
-                        '09:00' => '9 AM',
-                        '12:00' => 'Noon',
-                        'custom' => 'Other'
-                    ],
-                    'value' => $schedule->start_time
-                ])
-
-                <div class="custom hidden">
-                    @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time', 'value' => $schedule->start_time])
-                </div>
-            </div>
-
-            <div class="custom-wrap">
-                @include('partials/form/select',
-                [
-                    'name' => 'duration',
-                    'label' => 'Shift Length',
-                    'help' => "The duration of each slot in this shift",
-                    'options' =>
-                    [
-                        '' => 'Select a duration',
-                        '03:00' => 'Regular Shift (3 hours)',
-                        '06:00' => 'Shift Lead (6 hours)',
-                        'custom' => 'Other'
-                    ],
-                    'value' => $schedule->duration
-                ])
-
-                <div class="custom hidden">
-                    @include('partials/form/text', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'placeholder' => 'hh:mm', 'value' => $schedule->duration])
-                </div>
-            </div>
-
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="does_slot_repeat" value="true">
-                    Does this shift repeat?
+                    <input type="checkbox" name="date_enabled" value="true" @if(!empty($schedule->dates)) checked @endif>
+                    Does this shift happen on a specific date &amp; time?
                 </label>
             </div>
 
-            <div class="slot-repeat custom-wrap hidden">
-                @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
-                <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
-            </div>
+            <div class="date-fields hidden">
+                @include('partials/form/checkbox', ['name' => 'dates', 'label' => 'Days', 'help' => 'The event days which have this shift.', 'options' => $days, 'selected' => json_decode($schedule->dates)])
 
-            <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
-            <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
+                <div class="custom-wrap">
+                    @include('partials/form/select',
+                    [
+                        'name' => 'start_time',
+                        'label' => 'Start Time',
+                        'help' => "The time of day when the first shift starts",
+                        'options' =>
+                        [
+                            '' => 'Select a time',
+                            '00:00' => 'Midnight (beginning of day)',
+                            '06:00' => '6 AM',
+                            '09:00' => '9 AM',
+                            '12:00' => 'Noon',
+                            'custom' => 'Other'
+                        ],
+                        'value' => $schedule->start_time
+                    ])
+
+                    <div class="custom hidden">
+                        @include('partials/form/time', ['name' => 'custom_start_time', 'label' => 'Custom Start Time', 'value' => $schedule->start_time])
+                    </div>
+                </div>
+
+                <div class="custom-wrap">
+                    @include('partials/form/select',
+                    [
+                        'name' => 'duration',
+                        'label' => 'Shift Length',
+                        'help' => "The duration of each slot in this shift",
+                        'options' =>
+                        [
+                            '' => 'Select a duration',
+                            '03:00' => 'Regular Shift (3 hours)',
+                            '06:00' => 'Shift Lead (6 hours)',
+                            'custom' => 'Other'
+                        ],
+                        'value' => $schedule->duration
+                    ])
+
+                    <div class="custom hidden">
+                        @include('partials/form/text', ['name' => 'custom_duration', 'label' => 'Custom Duration', 'placeholder' => 'hh:mm', 'value' => $schedule->duration])
+                    </div>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="does_slot_repeat" value="true">
+                        Does this shift repeat?
+                    </label>
+                </div>
+
+                <div class="slot-repeat custom-wrap hidden">
+                    @include('partials/form/text', ['name' => 'slot_repeat', 'label' => 'How many times?'])
+                    <span class="help-block">Shifts will end at <span class="slot-end"></span></span>
+                </div>
+
+                <input type="hidden", name="end_time" value="{{ $schedule->end_time }}"/>
+                <input type="hidden", name="custom_end_time" value="{{ $schedule->end_time }}"/>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-success">Save Changes</button>
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+            <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
 
-        <a href="/event/{{ $schedule->event->id }}" class="btn btn-primary">Cancel</a>
+            @can('delete-schedule')
+                <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>
+            @endcan
+        </div>
 
-        @can('delete-schedule')
-            <a href="/schedule/{{ $schedule->id }}/delete" class="btn btn-danger">Delete from the Schedule</a>
-        @endcan
-
-        <br><br>
-        <div class='preview'></div>
+        <div class="col-md-12" style="margin-top: 1em">
+            <div class='preview hidden'></div>
+        </div>
     {!! Form::close() !!}
 @endsection

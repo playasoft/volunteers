@@ -5,7 +5,7 @@ namespace App\Listeners;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Mail;
+use App\Helpers;
 use App\Models\User;
 
 class SendUserMessage
@@ -45,7 +45,7 @@ class SendUserMessage
     {
         $user = $event->user;
 
-        Mail::send('emails/forgot-password', compact('user'), function ($message) use ($user)
+        Helpers::sendMail('emails/forgot-password', compact('user'), function ($message) use ($user)
         {
             $message->to($user->email, $user->name)->subject('Your Password Reset Code');
         });

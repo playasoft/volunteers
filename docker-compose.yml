@@ -1,0 +1,102 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    image: fishnet/volunteers:latest
+    container_name: voldb-php
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    env_file:
+      - ./.env
+    volumes:
+      - ./laravel:/var/www
+      - ./.env:/var/www/.env
+      - vendor:/var/www/vendor
+      - node_modules:/var/www/node_modules
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  webserver:
+    container_name: voildb-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    ports: 
+      - "8888:80"
+    volumes:
+      - ./laravel/:/var/www
+      - ./nginx/conf.d/app.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - app
+
+  ##SSL-enabled Nginx Service; uncomment to use
+  ##Make sure to comment out the above webserver block
+  #webserver:
+  #  image: ghcr.io/linuxserver/swag
+  #  container_name: swag
+  #  restart: unless-stopped
+  #  environment:
+  #    PUID: 1000
+  #    PGID: 1000
+  #    TZ: $TIMEZONE
+  #    URL: $SITE_URL
+  #    SUBDOMAINS: $SUBDOMAINS
+  #    ONLY_SUBDOMAINS: $ONLY_SUBDOMAINS
+  #    VALIDATION: http
+  #    EMAIL: $EMAIL # optional
+  #  ports:
+  #    - "80:80"
+  #    - "443:443"
+  #  volumes:
+  #    - ./swag/site-confs:/config/nginx/site-confs
+  #    - ./swag/fastcgi_params:/config/nginx/fastcgi_params
+  #    - ./laravel/:/config/www
+  #    - config:/config
+  #  networks:
+  #    - app-network
+  #  depends_on:
+  #    - db
+  #    - app
+
+  # MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: voldb-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+    dbdata:
+      driver: local
+    vendor:
+      driver: local
+    node_modules:
+      driver: local
+    config:
+      driver: local

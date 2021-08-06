@@ -22,23 +22,37 @@ $factory->define(Schedule::class, function (Faker $faker, array $data)
     $duration_min = 2; //hours
     $duration_max = 8; //hours
 
+    $days_min = 2;
+    $days_max = 4;
+
     $volunteer_min = 1;
     $volunteer_max = 3;
 
-    $start_datetime = Carbon::tomorrow();
-    $end_datetime = $start_datetime->copy()->addDays($faker->numberBetween(2,4));
-
-    $duration = Carbon::createFromTime($faker->numberBetween($duration_min, $duration_max));
-    $start_time = Carbon::createFromTime($faker->numberBetween(0, 23));
-    $end_time = $start_time->addHours($duration->hour);
-
     return
     [
-        'start_date' => $start_datetime->format('Y-m-d'),
-        'end_date' => $end_datetime->format('Y-m-d'),
-        'start_time' => $start_time->format('H:M:S'),
-        'end_time' => $end_time->format('H:M:S'),
-        'duration' => $duration->format('H:M:S'),
+        'start_date' => Carbon::tomorrow()->addDays(1)->format('Y-m-d'),
+        'end_date' => function($schedule) use ($faker, $days_min, $days_max)
+        {
+            $duration = $faker->numberBetween($days_min,$days_max);
+            $start_date = Carbon::createFromFormat('Y-m-d', $schedule['start_date']);
+            $end_date = $start_date->addDays($duration);
+            return $end_date->format('Y-m-d');
+        },
+        'start_time' => Carbon::createFromTime($faker->numberBetween(0, 23))->format('H:i:s'),
+        'end_time' => function($schedule) use ($faker, $duration_min, $duration_max)
+        {
+            $duration = $faker->numberBetween($duration_min, $duration_max);
+            $start_time = Carbon::createFromFormat('H:i:s', $schedule['start_time']);
+            $end_time = $start_time->addHours($duration);
+            return $end_time->format('H:i:s');
+        },
+        'duration' => function($schedule)
+        {
+            $start_time = Carbon::createFromFormat('H:i:s', $schedule['start_time']);
+            $end_time = Carbon::createFromFormat('H:i:s', $schedule['end_time']);
+            $duration = $end_time->diff($start_time);
+            return $duration->format('%H:%i:%s');
+        },
         'volunteers' => $faker->numberBetween($volunteer_min, $volunteer_max),
         'department_id' => function ($schedule)
         {

@@ -88,6 +88,90 @@
 
             <hr>
 
+            <div class="shift-wrap">
+                <div class="department-wrap">
+                    @foreach($event->departments->sortBy('name') as $department)
+                        <?php
+
+                        if($department->slots->whereStrict('start_date', null)->isEmpty())
+                            continue;
+
+                        ?>
+
+                        <div class="department" data-id="{{ $department->id }}">
+                            <div class="title">
+                                <b>{{ $department->name }}</b>
+
+                                @if($department->description)
+                                    <span class="description">
+                                        <span class="glyphicon glyphicon-question-sign"></span>
+
+                                        <div class="tip hidden">
+                                            {!! nl2br(e($department->description)) !!}
+
+                                            <hr>
+                                            <a class="btn btn-primary">Close</a>
+                                        </div>
+                                    </span>
+                                @endif
+
+                                @can('edit-department')
+                                    <span class="edit">
+                                        <a href="/department/{{ $department->id }}/edit">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                    </span>
+                                @endcan
+                            </div>
+
+                            <ul class="shifts">
+                                @foreach($department->schedule as $schedule)
+                                    <?php
+
+                                    if($schedule->slots->whereStrict('start_date', null)->isEmpty())
+                                        continue;
+
+                                    ?>
+
+                                    <li class="shift row" data-rows="{{ $schedule->volunteers }}">
+                                        <div class="title col-sm-2">
+                                            <b>{{ $schedule->shift->name }}</b>
+
+                                            @if($schedule->shift->description)
+                                                <span class="description">
+                                                    <span class="glyphicon glyphicon-question-sign"></span>
+
+                                                    <div class="tip hidden">
+                                                        {!! nl2br(e($schedule->shift->description)) !!}
+
+                                                        <hr>
+                                                        <a class="btn btn-primary">Close</a>
+                                                    </div>
+                                                </span>
+                                            @endif
+
+                                            @can('edit-schedule')
+                                                <span class="edit">
+                                                    <a href="/schedule/{{ $schedule->id }}/edit">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                    </a>
+                                                </span>
+                                            @endcan
+                                        </div>
+
+                                        <div class="slots col-sm-10">
+                                            @foreach($schedule->slots->whereStrict('start_date', null) as $slot)
+                                                @include('partials/event/slot')
+                                            @endforeach
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <div class="days">
                 @foreach($event->days(true) as $day)
                     <div class="day" data-date="{{ $day->date->format('Y-m-d') }}">

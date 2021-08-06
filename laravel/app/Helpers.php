@@ -34,4 +34,29 @@ class Helpers
 
         return $display_name;
     }
+
+    /**
+     * Mail sender Helper
+     * Sends an email and catches exceptions
+     * @param string    $view       The name of the view containing the email
+     * @param array     $data       Array of data to pass to the view
+     * @param Closure   $callback   Closure which recieves the email instance
+     */
+    public static function sendMail($view, $data, $callback)
+    {
+        try
+        {
+            \Mail::send($view, $data, $callback);
+        }
+        catch(\Exception $exception)
+        {
+            if (config('app.debug'))
+            {
+                throw $exception;
+            }
+            \Log::error($exception);
+
+            app('request')->session()->flash('warning', "Unable to send email, SMTP error. Please notify the administrator of this volunteer database.");
+        }
+    }
 }

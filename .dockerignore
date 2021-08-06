@@ -1,0 +1,14 @@
+laravel/vendor
+laravel/node_modules
+laravel/bootstrap/cache/services.php
+laravel/storage/app/*
+laravel/storage/framework/cache/*
+laravel/storage/framework/sessions/*
+laravel/storage/framework/views/*
+laravel/storage/logs/*
+
+**.git
+**.gitignore
+**.gitattributes
+**.sass-cache
+.env

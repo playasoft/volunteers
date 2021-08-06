@@ -26,11 +26,28 @@ $factory->afterCreatingState(User::class, 'admin', function (User $user, Faker $
         $admin_role = factory(Role::class)->create([
             'name' => 'admin',
         ]);	
-
-        $user->roles()->save(factory(UserRole::class)->make([
-            'role_id' => $admin_role->id,
-            'user_id' => $user->id,
-        ]));
     }
-    
+
+    $user->roles()->save(factory(UserRole::class)->make([
+        'role_id' => $admin_role->id,
+        'user_id' => $user->id,
+    ]));
+});
+
+$factory->afterCreatingState(User::class, 'department-lead', function (User $user, Faker $faker)
+{
+    //find the department-lead role
+    $department_lead = Role::where('name', 'department-lead')->first();
+    //if there is no department-lead role, create it
+    if (!$department_lead)
+    {
+        $department_lead = factory(Role::class)->create([
+            'name' => 'department-lead',
+        ]);
+    }
+
+    $user->roles()->save(factory(UserRole::class)->make([
+        'role_id' => $department_lead->id,
+        'user_id' => $user->id,
+    ]));
 });
