@@ -111,6 +111,7 @@ Route::get('/user/{user}/edit', 'AdminController@userProfileEdit');
 Route::get('/users', 'AdminController@userList');
 Route::get('/user/{user}', 'AdminController@userProfile');
 Route::post('/user/{user}/edit', 'AdminController@userEdit');
+Route::post('/user/{user}/update', 'AdminController@userProfileUpdate');
 
 Route::get('/uploads', 'AdminController@uploadList');
 Route::post('/upload/{upload}/edit', 'AdminController@uploadEdit');

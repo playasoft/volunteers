@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -81,7 +82,7 @@ class AdminController extends Controller
         return view('pages/admin/user-profile', compact('user', 'roleNames'));
     }
 
-    // View an indivual user profile
+    // View an individual user profile
     function userProfileEdit(User $user)
     {
         $roles = Role::get();
@@ -95,10 +96,9 @@ class AdminController extends Controller
         return view('pages/admin/edit-user-profile', compact('user', 'roleNames'));
     }
 
-    // Update user, userData, userRole
+    // Update information about a user
     function userEdit(User $user, Request $request)
     {
-        
         $roles = $request->get('roles');
 
         if($roles)
@@ -107,33 +107,42 @@ class AdminController extends Controller
             UserRole::assign($user, $roles);
         }
 
-        $allRequestFields = $request->all();
+        return;
+    }
 
-        if(isset( $allRequestFields['name']) )
+    // Update user, userData, userRole
+    function userProfileUpdate(User $user, Request $request)
+    {
+        $inputs = Input::all();
+        $roles = $request->get('roles');
+
+        if($roles)
         {
-            $user->name = $allRequestFields['name'];
-            $user->save();
+            UserRole::clear($user);
+            UserRole::assign($user, $roles);
         }
 
-        if(isset( $allRequestFields['email'] ))
-        {
-            $user->email = $allRequestFields['email'];
-            $user->save();
-        }
+        $user->update(Input::only('name', 'email'));
+        $user->save();
         
+        foreach ($inputs as $key => $value)
+            if($inputs[$key] == '') {
+                $inputs[$key] = null;
+            }
+
         $userData = $user->data;
-        
+
         //make sure user data exists
         if(isset($userData))
         {
-            $userData->fill($allRequestFields);
+            $userData->fill($inputs);
             $userData->save();
         }
         else
         {
             $userData = new UserData();
             $userData->user_id = $user->id;
-            $userData->fill($allRequestFields);
+            $userData->fill($inputs);
             $userData->save();
         }
 

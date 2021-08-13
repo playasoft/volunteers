@@ -12,7 +12,7 @@ use App\Helpers;
 
     <div class="profile">
 
-        {!! Form::open(['url' => 'user/'.$user->id.'/edit']) !!}
+        {!! Form::open(['url' => 'user/'.$user->id.'/update']) !!}
         <input type="hidden" name="type" value="data">
         <input type="hidden" class="user-id" value="{{ $user->id }}">
         <input type="hidden" class="csrf-token" value="{{ csrf_token() }}">
@@ -24,7 +24,7 @@ use App\Helpers;
             'name' => 'name', 
             'label' => 'Username', 
             'placeholder' => 'Their login name',
-            'value' => (is_null($user->name)) ? '' : $user->name
+            'value' => $user->name
         ])
         
         @include('partials/form/text', 
@@ -32,7 +32,7 @@ use App\Helpers;
             'name' => 'email', 
             'label' => 'Email address', 
             'placeholder' => 'Their email',
-            'value' => (is_null($user->email)) ? '' : $user->email
+            'value' => $user->email
         ])
 
         <hr>
@@ -45,7 +45,7 @@ use App\Helpers;
             'label' => 'Full Name',
             'placeholder' => "User's name in the Default World",
             'help' => "Required. User's full name is used for reporting and ticketing purposes",
-            'value' => (is_null($user->data)) ? '' : $user->data->full_name
+            'value' => optional($user->data)->full_name
         ])
 
         @include('partials/form/text',
@@ -63,28 +63,28 @@ use App\Helpers;
             'label' => 'Your Camp',
             'placeholder' => 'Camp Creative Name',
             'help' => "Enter their camp name if they have one, or 'open camping' if not",
-            'value' => (is_null($user->data)) ? '' : $user->data->camp
+            'value' => optional($user->data)->camp
         ])
 
         @include('partials/form/text',
         [
             'name' => 'phone',
             'label' => 'Phone Number',
-            'value' => (is_null($user->data)) ? '' : $user->data->phone
+            'value' => optional($user->data)->phone
         ])
 
         @include('partials/form/text',
         [
             'name' => 'emergency_name',
             'label' => 'Emergency Contact',
-            'value' => (is_null($user->data)) ? '' : $user->data->emergency_name
+            'value' => optional($user->data)->emergency_name
         ])
 
         @include('partials/form/text',
         [
             'name' => 'emergency_phone',
             'label' => 'Emergency Phone Number',
-            'value' => (is_null($user->data)) ? '' : $user->data->emergency_phone
+            'value' => optional($user->data)->emergency_phone
         ])
 
         @include('partials/form/date',
@@ -93,7 +93,7 @@ use App\Helpers;
             'label' => 'Birthday',
             'placeholder' => 'YYYY-MM-DD',
             'help' => 'This will only be used as a part of the event census',
-            'value' => (is_null($user->data)) ? '' : $user->data->birthday
+            'value' => optional($user->data)->birthday
         ])
 
         <hr>
