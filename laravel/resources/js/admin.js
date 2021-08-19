@@ -56,37 +56,6 @@ $(document).ready(function()
         $(this).parents('.volunteer').find('.buttons').style({visibility: 'visible', opacity: 1});
     });
 
-    $('.save-roles').on('click', function()
-    {
-        var user = $('.user-id').value();
-        var role = $('.user-role').value();
-        var csrf = $('.csrf-token').value();
-        var data =
-        {
-            roles: [],
-            _token: csrf
-        };
-
-        $('.user-roles input').each(function()
-        {
-            if($(this).prop('checked'))
-            {
-                data.roles.push($(this).value());
-            }
-        });
-
-        ajaxOptions.body = JSON.stringify(data);
-        fetch('/user/' + user + '/edit', ajaxOptions);
-
-        $('.user-role').data('role', role);
-        $('.buttons').attr('style', false);
-    });
-
-    $('.cancel-roles').on('click', function()
-    {
-        window.history.back();
-    });
-
     $('.save-upload').on('click', function()
     {
         var upload = $(this).parents('.upload').data('id');
