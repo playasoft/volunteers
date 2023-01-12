@@ -29,7 +29,7 @@ A volunteer database for events written using the Laravel 5.6 framework
 
 1. Git clone this repo
 2. Run ```./generate_app_key.sh to create a unique key```
-3. Run ```cp .env.example .env```, and copy and paste the key you generated into the new ***.env*** file. Set your SITE_NAME, SITE_URL, DB_PASSWORD, and any other variables you requre.
+3. Run ```cp .env.example .env```, and copy and paste the key you generated into the new ***.env*** file. Set your SITE_NAME, SITE_URL, DB_PASSWORD, and any other variables you require.
 4. Run ```docker-compose up -d```
 5. Run ```docker-compose exec app php artisan migrate```
 6. Run ```docker-compose exec app php artisan db:seed```
