@@ -70,6 +70,19 @@ class UserController extends Controller
             $user->save();
         }
 
+        // Check if an event ID was passed into the URL
+        $urlEvent = $request->get('event');
+
+        if(is_numeric($urlEvent))
+        {
+            $event = Event::find($urlEvent);
+
+            if(!empty($event))
+            {
+                return redirect('/event/' . $event->id);
+            }
+        }
+
         // Check if there's an ongoing or upcoming event to redirect the user to
         $event = Event::ongoingOrUpcoming();
 
