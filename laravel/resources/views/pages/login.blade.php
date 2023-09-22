@@ -5,13 +5,15 @@
     <hr>
 
     {!! Form::open() !!}
+        <input type="hidden" name="event" value="{{ request()->get('event') }}">
+
         @include('partials/form/text', ['name' => 'name', 'label' => 'Username or Email', 'placeholder' => 'You can use your username or your email address'])
         @include('partials/form/password', ['name' => 'password', 'label' => 'Password', 'placeholder' => 'Your password'])
 
         <p>
             <a href="/forgot">Forgot password?</a>
         </p>
- 
+
         <button type="submit" class="btn btn-primary">Submit</button>
     {!! Form::close() !!}
 @endsection
