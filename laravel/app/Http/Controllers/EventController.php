@@ -243,28 +243,46 @@ class EventController extends Controller
 
                 foreach($scheduled as $schedule)
                 {
-                    $newStartDate = new Carbon($schedule->start_date);
-                    $newEndDate = new Carbon($schedule->end_date);
-                    $newDates = json_decode($schedule->dates);
-
-                    foreach($newDates as $index => $date)
+                    if(is_null($schedule->start_date))
                     {
-                        $newDate = new Carbon($date);
-                        $newDates[$index] = $newDate->addSeconds($difference)->format('Y-m-d');
+                        $newSchedule = Schedule::create([
+                            'department_id' => $newDepartment->id,
+                            'shift_id' => $newShift->id,
+                            'start_date' => null,
+                            'end_date' => null,
+                            'start_time' => null,
+                            'end_time' => null,
+                            'duration' => null,
+                            'volunteers' => $schedule->volunteers,
+                            'dates' => '',
+                            'password' => $schedule->password,
+                        ]);
                     }
+                    else
+                    {
+                        $newStartDate = new Carbon($schedule->start_date);
+                        $newEndDate = new Carbon($schedule->end_date);
+                        $newDates = json_decode($schedule->dates);
 
-                    $newSchedule = Schedule::create([
-                        'department_id' => $newDepartment->id,
-                        'shift_id' => $newShift->id,
-                        'start_date' => $newStartDate->addSeconds($difference)->format('Y-m-d'),
-                        'end_date' => $newEndDate->addSeconds($difference)->format('Y-m-d'),
-                        'start_time' => $schedule->start_time,
-                        'end_time' => $schedule->end_time,
-                        'duration' => $schedule->duration,
-                        'volunteers' => $schedule->volunteers,
-                        'dates' => json_encode($newDates),
-                        'password' => $schedule->password,
-                    ]);
+                        foreach($newDates as $index => $date)
+                        {
+                            $newDate = new Carbon($date);
+                            $newDates[$index] = $newDate->addSeconds($difference)->format('Y-m-d');
+                        }
+
+                        $newSchedule = Schedule::create([
+                            'department_id' => $newDepartment->id,
+                            'shift_id' => $newShift->id,
+                            'start_date' => $newStartDate->addSeconds($difference)->format('Y-m-d'),
+                            'end_date' => $newEndDate->addSeconds($difference)->format('Y-m-d'),
+                            'start_time' => $schedule->start_time,
+                            'end_time' => $schedule->end_time,
+                            'duration' => $schedule->duration,
+                            'volunteers' => $schedule->volunteers,
+                            'dates' => json_encode($newDates),
+                            'password' => $schedule->password,
+                        ]);
+                    }
 
                     // Loop through roles for this schedule
                     $scheduleRoles = $schedule->roles;
