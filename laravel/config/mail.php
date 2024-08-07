@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@volunteer.wetfish.net', 'name' => 'Volunteer Database'],
+    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'noreply@volunteer.wetfish.net'), 'name' => env('MAIL_FROM_NAME', 'Volunteer Database')],
 
     /*
     |--------------------------------------------------------------------------
