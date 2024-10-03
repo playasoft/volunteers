@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands =
     [
+        \App\Console\Commands\AuditSlots::class,
         \App\Console\Commands\PopulateScheduleDates::class,
         \App\Console\Commands\FixDuplicateRoles::class,
     ];
