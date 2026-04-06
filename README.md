@@ -1,6 +1,6 @@
 # Volunteer Database
 
-A volunteer scheduling system for festivals and community events, originally built for [Apogaea](https://www.apogaea.com/) and now maintained by [DenverBurners](https://volunteer.denverburners.org).
+A volunteer scheduling system for festivals and community events, originally built for [Apogaea](https://www.apogaea.com/) and now maintained by [DenverBurners](https://denverburners.org).
 
 ## What It Does
 
@@ -15,6 +15,42 @@ This platform helps event organizers coordinate volunteer shifts across departme
 **Training Verification** — Volunteers can upload certification documents (CPR cards, fire training certificates, etc.) through their profile. Administrators review and approve uploads before granting the corresponding role, ensuring nobody signs up for a shift they aren't qualified for.
 
 **Password-Protected Shifts** — Shifts can also be gated by password, giving department leads another way to control access to sensitive positions.
+
+## Roadmap
+
+This project has been in production use for over 10 years. We're actively modernizing the codebase and expanding it into a broader open source event management platform. Most volunteer coordination and event management tools are proprietary and expensive. We believe event organizers deserve software they can own, modify, and self-host.
+
+### Phase 1: Infrastructure Modernization
+
+Bringing the project up to current standards while keeping it stable for existing users.
+
+- [x] Dockerized development and deployment environment
+- [x] Upgraded to MariaDB 10.11 (from MySQL 5.7)
+- [x] Upgraded to Node 16 and Composer 2
+- [x] Dynamic UID/GID configuration for portable deployments
+- [x] Nginx security hardening (restricted PHP execution)
+- [ ] Upgrade from Laravel 5.6 to the latest Laravel release
+- [ ] Upgrade frontend build tooling (webpack to Vite)
+- [ ] Update PHP from 7.4 to current supported version
+
+### Phase 2: Multi-Event Platform
+
+Building out support for multiple organizations and events on a single installation.
+
+- [ ] Multi-event database consolidation and import tooling
+- [ ] Dedicated Playasoft website (replacing the current GitHub redirect)
+- [ ] Improved onboarding for new organizations
+- [ ] Modernized UI and mobile experience
+
+### Phase 3: Event Management Suite
+
+Expanding beyond volunteer scheduling into a full suite of open source event management tools.
+
+- [ ] Broader event coordination features
+- [ ] Hosted option for organizations that don't want to self-host
+- [ ] Plugin architecture for community extensions
+
+Contributions are welcome at every phase. See the [issues page](https://github.com/playasoft/volunteers/issues) for current tasks.
 
 ## Quick Start
 
