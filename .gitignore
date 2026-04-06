@@ -5,3 +5,4 @@ main.css
 .dir-locals.el
 npm-debug.log
 .env
+docker/nginx/production.conf

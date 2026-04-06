@@ -1,0 +1,12 @@
+services:
+  nginx:
+    ports:
+      - "443:443"
+    volumes:
+      - ./docker/nginx/production.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - certbot-webroot:/var/www/certbot
+
+volumes:
+  certbot-webroot:
+    driver: local

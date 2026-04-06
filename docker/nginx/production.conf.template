@@ -1,0 +1,57 @@
+# Redirect HTTP to HTTPS
+server {
+    listen 80;
+    server_name _;
+
+    # Allow ACME challenges for certificate renewal
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# HTTPS server
+server {
+    listen 443 ssl;
+    server_name _;
+    client_max_body_size 10M;
+
+    ssl_certificate /etc/letsencrypt/live/${SSL_DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${SSL_DOMAIN}/privkey.pem;
+
+    # Modern SSL configuration
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+
+    # HSTS (tell browsers to always use HTTPS)
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+    root /var/www/laravel/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ ^/index\.php(/|$) {
+        fastcgi_pass app:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $document_root;
+    }
+
+    # Return 404 for all other .php files (security hardening)
+    location ~ \.php$ {
+        return 404;
+    }
+
+    # Deny access to hidden files (except .well-known for ACME)
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
