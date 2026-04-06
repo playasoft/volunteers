@@ -14,16 +14,16 @@ class AddDuplicateConstraintToRoles extends Migration
     {
         Schema::table('event_roles', function (Blueprint $table)
         {
-            $table->integer('foreign_id')->unsigned()->nullable(false)->change();
-            $table->string('foreign_type')->nullable(false)->change();
+            $table->integer('foreign_id')->unsigned()->default(0)->nullable(false)->change();
+            $table->string('foreign_type')->default('')->nullable(false)->change();
 
             $table->unique(['role_id', 'event_id', 'foreign_id', 'foreign_type'], 'event_role_unique');
         });
 
         Schema::table('user_roles', function (Blueprint $table)
         {
-            $table->integer('foreign_id')->unsigned()->nullable(false)->change();
-            $table->string('foreign_type')->nullable(false)->change();
+            $table->integer('foreign_id')->unsigned()->default(0)->nullable(false)->change();
+            $table->string('foreign_type')->default('')->nullable(false)->change();
 
             $table->unique(['role_id', 'user_id', 'foreign_id', 'foreign_type'], 'user_role_unique');
         });
@@ -36,7 +36,7 @@ class AddDuplicateConstraintToRoles extends Migration
      */
     public function down()
     {
-        // TODO: 
+        // TODO:
         // Upgrade to Laravel 5.2+ and use Schema::disableForeignKeyConstraints()
         // Instead of dropping the foreign keys.
         Schema::table('event_roles', function (Blueprint $table)
@@ -46,7 +46,7 @@ class AddDuplicateConstraintToRoles extends Migration
 
             $table->dropUnique('event_role_unique');
 
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');            
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
             $table->integer('foreign_id')->unsigned()->nullable()->change();

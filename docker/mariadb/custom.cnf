@@ -1,0 +1,5 @@
+[mysqld]
+# Use permissive SQL mode to match legacy MySQL 5.7 behavior.
+# Laravel 5.6 with Doctrine DBAL 2.6 generates ALTER TABLE statements
+# that are rejected by MariaDB 10.11's default strict mode.
+sql_mode = ""
